@@ -1,0 +1,26 @@
+// user-card.scss
+
+.user-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  
+    .user-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+  
+    .user-email, .user-id, .user-role {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 4px;
+    }
+  
+    .user-role {
+      font-weight: bold;
+    }
+  }
+  
