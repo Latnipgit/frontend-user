@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-
 import { Row, Col, CardBody, Card, Alert, Container, Form, Input, FormFeedback, Label } from "reactstrap";
 
 //redux
@@ -12,13 +11,8 @@ import withRouter from "components/Common/withRouter";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
-//Social Media Imports
-import { GoogleLogin } from "react-google-login";
-// import TwitterLogin from "react-twitter-auth"
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-
 // actions
-import { loginUser, socialLogin } from "../../store/actions";
+import { registerUser_login } from "../../store/actions";
 
 // import images
 import profile from "assets/images/profile-img.png";
@@ -27,7 +21,7 @@ import logo from "assets/images/logo.svg";
 //Import config
 import { facebook, google } from "../../config";
 
-const Login = props => {
+const Register2 = props => {
 
   //meta title
   document.title = "Login | Bafana - User Dashboard";
@@ -48,46 +42,13 @@ const Login = props => {
     }),
     onSubmit: (values) => {
        
-      dispatch(loginUser(values, props.router.navigate));
+      dispatch(registerUser_login(values, props.router.navigate));
     }
   });
 
   const { error } = useSelector(state => ({
-    error: state.Login.error,
+    error: state.register.error,
   }));
-
-  const signIn = (res, type) => {
-    if (type === "google" && res) {
-      const postData = {
-        name: res.profileObj.name,
-        email: res.profileObj.email,
-        token: res.tokenObj.access_token,
-        idToken: res.tokenId,
-      };
-      dispatch(socialLogin(postData, props.router.navigate, type));
-    } else if (type === "facebook" && res) {
-      const postData = {
-        name: res.name,
-        email: res.email,
-        token: res.accessToken,
-        idToken: res.tokenId,
-      };
-      dispatch(socialLogin(postData, props.router.navigate, type));
-    }
-  };
-
-  //handleGoogleLoginResponse
-  const googleResponse = response => {
-    signIn(response, "google");
-  };
-
-  //handleTwitterLoginResponse
-  // const twitterResponse = e => {}
-
-  //handleFacebookLoginResponse
-  const facebookResponse = response => {
-    signIn(response, "facebook");
-  };
 
   return (
     <React.Fragment>
@@ -200,44 +161,7 @@ const Login = props => {
                         </button>
                       </div>
 
-                      <div className="mt-4 text-center">
-                        <h5 className="font-size-14 mb-3">Sign in with</h5>
-
-                        <ul className="list-inline">
-                          <li className="list-inline-item">
-                            <FacebookLogin
-                              appId={facebook.APP_ID}
-                              autoLoad={false}
-                              callback={facebookResponse}
-                              render={renderProps => (
-                                <Link
-                                  to="#"
-                                  className="social-list-item bg-primary text-white border-primary"
-                                  onClick={renderProps.onClick}
-                                >
-                                  <i className="mdi mdi-facebook" />
-                                </Link>
-                              )}
-                            />
-                          </li>
-                          <li className="list-inline-item">
-                            <GoogleLogin
-                              clientId={google.CLIENT_ID}
-                              render={renderProps => (
-                                <Link
-                                  to="#"
-                                  className="social-list-item bg-danger text-white border-danger"
-                                  onClick={renderProps.onClick}
-                                >
-                                  <i className="mdi mdi-google" />
-                                </Link>
-                              )}
-                              onSuccess={googleResponse}
-                              onFailure={() => { }}
-                            />
-                          </li>
-                        </ul>
-                      </div>
+                
 
                       <div className="mt-4 text-center">
                         <Link to="/forgot-password" className="text-muted">
@@ -270,8 +194,8 @@ const Login = props => {
   );
 };
 
-export default withRouter(Login);
+export default withRouter(Register2);
 
-Login.propTypes = {
+Register2.propTypes = {
   history: PropTypes.object,
 };

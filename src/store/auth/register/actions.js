@@ -4,17 +4,16 @@ import {
   REGISTER_USER_FAILED,
 } from "./actionTypes"
 
-export const registerUser = (user, history) => {
-  debugger
-  console.log("User",user);
+export const registerUser = user => {
+   
   return {
     type: REGISTER_USER,
-    payload: { user, history },
+    payload: user
   }
 }
 
 export const registerUserSuccessful = user => {
-  debugger
+   
   return {
     type: REGISTER_USER_SUCCESSFUL,
     payload: user,
@@ -22,7 +21,6 @@ export const registerUserSuccessful = user => {
 }
 
 export const registerUserFailed = user => {
-  debugger
   return {
     type: REGISTER_USER_FAILED,
     payload: user,

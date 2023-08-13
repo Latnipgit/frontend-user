@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
 import { isEmpty } from "lodash";
+import { Link } from 'react-router-dom';
 
 import {
   Button,
@@ -103,8 +104,8 @@ const ApprovedTranction = props => {
           return (
             <div className="card-drop">
             <i className="mdi mdi-eye font-size-16 text-primary me-1" onClick={toggleViewModal} />
-            <i className="mdi mdi-pencil font-size-16 text-success me-1" onClick={() => handleProjectClick(project)} />
-            <i className="mdi mdi-trash-can font-size-16 text-danger me-1" onClick={() => onClickDelete(project)} />
+            <i className="mdi mdi-pencil font-size-16 text-success me-1"  />
+            <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />
             </div>
           );
         },
@@ -113,7 +114,7 @@ const ApprovedTranction = props => {
     []
   );
   const handleFilter = (filters) => {
-    debugger
+     
     const filteredResults = ApprovedTranctionData.filter(item => {
       const aadharMatch =  item.AADHAR === filters.aadhar.trim();
       const panMatch =  item.PANCARD === filters.pan.trim();
@@ -123,19 +124,27 @@ const ApprovedTranction = props => {
   
     setFilteredData(filteredResults);
   };
-
+  const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
-      <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} />
-      <Button type="button" color="primary" className="btn-sm btn-rounded float-left-button" onClick={toggleViewModal}>
-          <i className="mdi mdi-eye font-size-16 text-primary me-1" />
-          View Details
-          </Button>
+      <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/>
+   
       <InlineFilterForm onFilter={handleFilter} />
       <Card>
         <CardBody>
        
-          <div className="mb-4 h4 card-title">Company List</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="mb-4 h4 card-title">Company List</div>
+            <Link to="/add-company">
+            <Button
+              type="button"
+              color="primary"
+              className="btn-sm btn-rounded"
+            >
+              Add Company
+            </Button>
+            </Link>
+          </div>
           <TableContainer
             columns={columns}
             data={filteredData.length > 0 ? filteredData : ApprovedTranctionData}

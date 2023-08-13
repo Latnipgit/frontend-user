@@ -11,7 +11,7 @@ import {
 
 
 const ApprovedTranctionModel = props => {
-  const { isOpen, toggle } = props
+  const { isOpen, toggle ,additionalValue } = props
   return (
     <Modal
       isOpen={isOpen}
@@ -20,13 +20,13 @@ const ApprovedTranctionModel = props => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
+      toggle={toggle} 
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>User Details</ModalHeader>
+        <ModalHeader toggle={toggle}>Company Details</ModalHeader>
         <ModalBody>
           <p className="mb-2">
-            User id: <span className="text-primary">#SK2540</span>
+            User id: <span className="text-primary">{additionalValue}</span>
           </p>
           <p className="mb-4">
             User Name: <span className="text-primary">Neal Matthews</span>

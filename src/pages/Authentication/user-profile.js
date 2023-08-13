@@ -47,7 +47,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (localStorage.getItem("authUser")) {
-      debugger
+       
       const obj = JSON.parse(localStorage.getItem("authUser"));
      if (
         process.env.REACT_APP_DEFAULTAUTH === "jwt"

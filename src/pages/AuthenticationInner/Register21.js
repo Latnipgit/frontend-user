@@ -13,7 +13,7 @@ import logolight from "../../assets/images/logo-light.png";
 import CarouselPage from "./CarouselPage";
 
 
-const Register2 = props => {
+const Register21 = props => {
 
   //meta title
   document.title="User Register  | Bafana ";
@@ -54,7 +54,7 @@ const Register2 = props => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      debugger
+       
       dispatch(loginUser(values, props.router.navigate));
     }
   });
@@ -382,8 +382,8 @@ const Register2 = props => {
   );
 };
 
-export default withRouter(Register2);
+export default withRouter(Register21);
 
-Register2.propTypes = {
+Register21.propTypes = {
   history: PropTypes.object,
 };

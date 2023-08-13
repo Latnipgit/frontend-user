@@ -33,14 +33,9 @@ export async function get(url, config = {}) {
 }
 
 export async function post(url, data, config = {}) {
-   
-debugger
     return axiosApi
         .post(url, { ...data }, { ...config })
-        .then((response) => {
-          debugger
-          response.data
-        })
+        .then((response) =>response)
         .catch((error) => {
           if (error.response) {
             console.log("Server responded with an error:", error.response.status);

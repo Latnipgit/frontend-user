@@ -5,6 +5,7 @@ import Layout from "./layout/reducer";
 
 // Authentication
 import Login from "./auth/login/reducer";
+import register_login_reducer from "./auth/register2/reducer";
 import Account from "./auth/register/reducer";
 import ForgetPassword from "./auth/forgetpwd/reducer";
 import Profile from "./auth/profile/reducer";
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
   // public
   Layout,
   Login,
+  register_login_reducer,
   Account,
   ForgetPassword,
   Profile,

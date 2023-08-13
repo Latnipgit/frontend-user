@@ -1,5 +1,6 @@
 import React, { useEffect ,useState} from "react";
-
+import PropTypes from "prop-types";
+import withRouter from "components/Common/withRouter";
 import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
 
 // Formik Validation
@@ -7,7 +8,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 // action
-import { registerUser, apiError } from "../../store/actions";
+import { registerUser_login, apiError } from "../../store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -107,6 +108,7 @@ const Register = props => {
 
   const dispatch = useDispatch();
 
+
   const formik = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -131,25 +133,15 @@ const Register = props => {
       mobileNumber: Yup.string().required("Please Enter Your Mobile Number"),
       gstNumber: Yup.string().required("Please Enter Your gst Number"),
       panNumber: Yup.string().required("Please Enter Your pan Number"),
-    }),
-    onSubmit: (values) => {
-      debugger
-      console.log(values);
-      dispatch(registerUser(values , props.router.navigate));
-    }
+    })
   });
-  // const aadharNumber = validation.values.aadharNumber || "";
-  // const isValidAadhar = isAadharNumberValid(aadharNumber);
 
-  //   if (!isValidAadhar) {
-  //     validation.errors.aadharNumber = "Invalid Aadhar number";
-  //   } 
-  const { user, registrationError, loading } = useSelector(state => (
-    {
-    user: state.Account.user,
-    registrationError: state.Account.registrationError,
-    loading: state.Account.loading,
-  }));
+  // const { user, registrationError, loading } = useSelector(state => (
+  //   {
+  //   user: state.Account.user,
+  //   registrationError: state.Account.registrationError,
+  //   loading: state.Account.loading,
+  // }));
   // const { error } = useSelector(state => ({
   //   error: state.Account.error,
   // }));
@@ -202,17 +194,23 @@ const Register = props => {
                   <div className="p-2">
                     <Form
                       className="form-horizontal"
-                      // onSubmit={formik.handleSubmit}  
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        formik.handleSubmit();
+                        const user = {
+                          name: formik.values.name,
+                          password: formik.values.password,
+                          companyName: formik.values.companyName,
+                          gstNumber: formik.values.gstNumber,
+                          aadharNumber: formik.values.aadharNumber,
+                          panNumber: formik.values.panNumber,
+                          email: formik.values.email,
+                        };
+                        dispatch(registerUser_login(user ,props.router.navigate));
+                        return false;
+                      }}
                     >
-                      {user && user ? (
-                        <Alert color="success">
-                          Register User Successfully
-                        </Alert>
-                      ) : null}
-
-                      {registrationError && registrationError ? (
-                        <Alert color="danger">{registrationError}</Alert>
-                      ) : null}
+                
 
                         <Row>
                         <Col md={6}>
@@ -394,10 +392,8 @@ const Register = props => {
                           <div className="mt-4 d-grid">
                             <button
                               className="btn btn-primary waves-effect waves-light "
-                              // type="submit"
-                              onClick={()=>{
-                                dispatch(registerUser(formik.values,props.router.navigate));
-                              }}
+                              type="submit"
+                      
                             >
                               Register Now
                             </button>
@@ -427,4 +423,7 @@ const Register = props => {
   );
 };
 
-export default Register;
+export default withRouter(Register);
+Register.propTypes = {
+  history: PropTypes.object,
+};

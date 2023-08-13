@@ -59,7 +59,7 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Login1 from "../pages/AuthenticationInner/Login";
 import Login2 from "../pages/AuthenticationInner/Login2";
 import Register1 from "../pages/AuthenticationInner/Register";
-import Register2 from "../pages/AuthenticationInner/Register2";
+import Register21 from "../pages/AuthenticationInner/Register21";
 import Recoverpw from "../pages/AuthenticationInner/Recoverpw";
 import Recoverpw2 from "../pages/AuthenticationInner/Recoverpw2";
 import ForgetPwd1 from "../pages/AuthenticationInner/ForgetPassword";
@@ -179,6 +179,8 @@ import Pages500 from "../pages/Utility/pages-500";
 import ContactsGrid from "../pages/Contacts/contacts-grid";
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
+import Register2 from "pages/Authentication/register2";
+import AddCompany from "pages/admin/ApprovedTransaction/add-company";
 
 const authProtectedRoutes = [
   { path: "/dashboard", component: <Dashboard /> },
@@ -193,6 +195,12 @@ const authProtectedRoutes = [
   { path: "/registered-company", component: <RegisteredCompanyList /> },
   { path: "/disputed-billings", component: <DiputedBillings /> },
  { path: "/company-search", component: <ApprovedTranction /> },
+ { path: "/companies", component: <ApprovedTranction /> },
+ { path: "/login-register", component: <Register2 /> },
+
+ //Company 
+ { path: "/add-company", component: <AddCompany /> },
+ 
  
 
 
@@ -363,7 +371,7 @@ const publicRoutes = [
   { path: "/user-logi2n", component: <Login1 /> },
   { path: "/pages-login-2", component: <Login2 /> },
   { path: "/pages-register", component: <Register1 /> },
-  { path: "/user-register", component: <Register2 /> },
+  { path: "/user-register", component: <Register21 /> },
   { path: "/page-recoverpw", component: <Recoverpw /> },
   { path: "/page-recoverpw-2", component: <Recoverpw2 /> },
   { path: "/pages-forgot-pwd", component: <ForgetPwd1 /> },

@@ -20,7 +20,7 @@ function* registerUser({ payload: { user } }) {
   try {
     console.log("Trying to register user (within try block)")
    if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-    debugger
+     
       const response = yield call(postJwtRegister, { 
         name: user.name,
         password: user.password,

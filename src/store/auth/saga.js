@@ -17,19 +17,21 @@ const fireBaseBackend = getFirebaseBackend();
 function* loginUser({ payload: { user, history } }) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-       debugger
+        
       const response = yield call(postJwtLogin, {
         userName: user.email,
         password: user.password,
       });
       if(response!=undefined && response!=null){
-          localStorage.setItem("authUser", JSON.stringify(response));
+          window.alert('User Login Succussfully...');
+          localStorage.setItem("authUser", JSON.stringify(response.data));
           yield put(loginSuccess(response));    
+          history('/companies');
       }else{
         window.alert('Server responed failed');
       }
     }
-    history('/dashboard');
+    
   } catch (error) {
     yield put(apiError(error));
   }

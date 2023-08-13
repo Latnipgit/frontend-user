@@ -1,5 +1,5 @@
 //REGISTER
-export const POST_FAKE_REGISTER = "https://bafana-backend.azurewebsites.net/api/user/signup";
+export const POST_FAKE_REGISTER = "api/user/signup";
 //LOGIN
 export const POST_FAKE_JWT_LOGIN = "/api/user/login";
 
