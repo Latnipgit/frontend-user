@@ -18,15 +18,16 @@ function* registerUser_login_2({ payload: { user, history } }) {
         gstin:user.gstNumber,
         aadharCardNo:user.aadharNumber,
         companyPan:user.panNumber,
-        emailId:user.email
-        });
-      if(response!=undefined && response!=null){
+        emailId:user.email,
+        mobile: user.mobile    });
+      if(response!=undefined && response!=null ){
+        debugger
           window.alert('User Register Succussfully...');
-          localStorage.setItem("authUser", JSON.stringify(response.data));
-          yield put(registerSuccess_login(response));    
+          localStorage.setItem("authUser", JSON.stringify(response.data.response));
+          yield put(registerSuccess_login(response.data.response));    
           history('/companies');
       }else{
-        window.alert('Server responed failed');
+        window.alert(response.data.message);
       }
     }
     

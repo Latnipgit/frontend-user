@@ -252,7 +252,7 @@ const Login = props => {
               <div className="mt-5 text-center">
                 <p>
                   Don&#39;t have an account ?{" "}
-                  <Link to="/user-register" className="fw-medium text-primary">
+                  <Link to="/register" className="fw-medium text-primary">
                     {" "}
                     Signup now{" "}
                   </Link>{" "}
