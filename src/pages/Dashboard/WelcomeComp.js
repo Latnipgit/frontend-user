@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState ,useEffect} from "react"
 
 import { Row, Col, Card, CardBody } from "reactstrap"
 import { Link } from "react-router-dom"
@@ -6,20 +6,44 @@ import { Link } from "react-router-dom"
 import avatar1 from "../../assets/images/users/avatar-1.jpg"
 import profileImg from "../../assets/images/profile-img.png"
 
-const WelcomeComp = () => {
+
+const WelcomeComp = props =>{
+  function capitalizeWords(str) {
+    return str.replace(/\b\w/g, (match) => match.toUpperCase());
+  }
+  const [username, setusername] = useState("");
+  const [rol, setrole] = useState("");
+  const [emailId, setemailId] = useState("");
+  useEffect(() => {
+    if (localStorage.getItem("authUser")) {
+      if (process.env.REACT_APP_DEFAULTAUTH === "jwt"
+      ) {
+             
+        const obj = JSON.parse(localStorage.getItem("authUser"));
+        setusername(capitalizeWords(obj.name));
+        setrole(capitalizeWords('User'));
+        setemailId(obj.emailId);
+  
+      }
+    }
+  }, [props.success]);
+  
   return (
     <React.Fragment>
       <Card className="overflow-hidden">
         <div className="bg-primary bg-soft">
           <Row>
-            <Col xs="7">
-              <div className="text-primary p-3">
-                <h5 className="text-primary">Welcome Back !</h5>
-                <p>Skote Dashboard</p>
-              </div>
+            <Col xs="3">
+            <div className="text-primary p-3">
+            <h5 className="text-primary">Welcome Back !</h5>
+            <p className="mb-0">Bafana Dashboard</p>
+            </div>
             </Col>
-            <Col xs="5" className="align-self-end">
-              <img src={profileImg} alt="" className="img-fluid" />
+            <Col xs="6">
+             
+            </Col>
+            <Col xs="2" className="align-self-end">
+            <img src={profileImg} alt="" className="img-fluid" />
             </Col>
           </Row>
         </div>
@@ -33,30 +57,37 @@ const WelcomeComp = () => {
                   className="img-thumbnail rounded-circle"
                 />
               </div>
-              <h5 className="font-size-15 text-truncate">Henry Price</h5>
-              <p className="text-muted mb-0 text-truncate">UI/UX Designer</p>
+              <h5 className="font-size-15 text-truncate">{username}</h5>
+              <p className="text-muted mb-0 text-truncate">{rol}</p>
             </Col>
 
             <Col sm="8">
               <div className="pt-4">
                 <Row>
                   <Col xs="6">
-                    <h5 className="font-size-15">125</h5>
-                    <p className="text-muted mb-0">Projects</p>
+                    {/* <h5 className="font-size-15">125</h5>
+                    <p className="text-muted mb-0">Projects</p> */}
                   </Col>
                   <Col xs="6">
-                    <h5 className="font-size-15">$1245</h5>
-                    <p className="text-muted mb-0">Revenue</p>
+                    {/* <h5 className="font-size-15">$1245</h5>
+                    <p className="text-muted mb-0">Revenue</p> */}
                   </Col>
                 </Row>
-                <div className="mt-4">
+                <Row>
+                  <Col xs="9">
+                  </Col>
+                  <Col xs="3">
+                  <div className="mt-4">
                   <Link
-                    to=""
+                    to="/profile"
                     className="btn btn-primary  btn-sm"
                   >
                     View Profile <i className="mdi mdi-arrow-right ms-1"></i>
                   </Link>
                 </div>
+                  </Col>
+                </Row>
+               
               </div>
             </Col>
           </Row>
@@ -65,4 +96,5 @@ const WelcomeComp = () => {
     </React.Fragment>
   )
 }
+
 export default WelcomeComp

@@ -81,10 +81,10 @@ const InlineFilterForm = ({ onFilter }) => {
 
   return (
 
-    <Container fluid={true} className="mt-4">
+    <Container fluid={true} className="mt-5">
     <Row>
         <Col lg={12}>
-            <Card className="mt-4">
+            <Card className="mt-5">
             <CardBody>
                 <CardTitle className="h5 mb-4">Company Search</CardTitle>
 

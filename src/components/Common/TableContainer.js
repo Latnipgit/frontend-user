@@ -27,36 +27,29 @@ function GlobalFilter({
   }, 200);
 
   return (
-    <React.Fragment>
-      <Col md={4}>
-        <div className="search-box me-xxl-2 my-3 my-xxl-0 d-inline-block">
-          <div className="position-relative">
-            <label htmlFor="search-bar-0" className="search-label">
-              <span id="search-bar-0-label" className="sr-only">
-                Search this table
-              </span>
-              <input
-                onChange={e => {
-                  setValue(e.target.value);
-                  onChange(e.target.value);
-                }}
-                id="search-bar-0"
-                type="text"
-                className="form-control"
-                placeholder={`${count} records...`}
-                value={value || ""}
-              />
-            </label>
-            <i className="bx bx-search-alt search-icon"></i>
-          </div>
-        </div>
 
-      </Col>
-      {isJobListGlobalFilter && (
-        <JobListGlobalFilter />
-      )}
-
-    </React.Fragment>
+    <div className="search-box me-2">
+    <div className="position-relative">
+      <label htmlFor="search-bar-0" className="search-label">
+        <span id="search-bar-0-label" className="sr-only">
+          Search this table
+        </span>
+        <input
+          onChange={e => {
+            setValue(e.target.value);
+            onChange(e.target.value);
+          }}
+          id="search-bar-0"
+          type="text"
+          className="form-control"
+          placeholder={`Search Here...`}
+          value={value || ""}
+        />
+      </label>
+      <i className="bx bx-search-alt search-icon"></i>
+    </div>
+  </div>
+  
   );
 }
 
@@ -130,8 +123,8 @@ const TableContainer = ({
   };
   return (
     <Fragment>
-      <Row className="mb-2">
-        <Col md={customPageSizeOptions ? 2 : 1}>
+      <Row className="mb-8 justify-content-start">
+        <Col md={2}>
           <select
             className="form-select"
             value={pageSize}
@@ -144,15 +137,20 @@ const TableContainer = ({
             ))}
           </select>
         </Col>
+        
+        <Col md={6} className="d-flex align-items-center">
         {isGlobalFilter && (
-          <GlobalFilter
-            preGlobalFilteredRows={preGlobalFilteredRows}
-            globalFilter={state.globalFilter}
-            setGlobalFilter={setGlobalFilter}
-            isJobListGlobalFilter={isJobListGlobalFilter}
-          />
+        <GlobalFilter
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        globalFilter={state.globalFilter}
+        setGlobalFilter={setGlobalFilter}
+        isJobListGlobalFilter={isJobListGlobalFilter}
+        />
         )}
-        {isAddOptions && (
+         <style>
+  </style>
+        </Col>
+        {/* {isAddOptions && (
           <Col sm="7">
             <div className="text-sm-end">
               <Button
@@ -196,7 +194,7 @@ const TableContainer = ({
               </Button>
             </div>
           </Col>
-        )}
+        )} */}
       </Row>
 
       <div className="table-responsive react-table">

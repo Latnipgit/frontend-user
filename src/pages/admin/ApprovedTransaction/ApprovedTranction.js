@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
 import { isEmpty } from "lodash";
 import { Link } from 'react-router-dom';
-
+import SidebarContent from '../../../components/VerticalLayout/SidebarContent';
+import { useMenu } from '../../../components/VerticalLayout/MenuContext';
 import {
   Button,
   Card,
@@ -43,12 +44,16 @@ import ApprovedTranctionModel from "./ApprovedTranModel";
 import InlineFilterForm from './InlineFilterForm';
 
 const ApprovedTranction = props => {
-
+  const { toggleMenuItems } = useMenu();
   const [filteredData, setFilteredData] = useState([]);
   const [modal1, setModal1] = useState(false);
-
+  const [showMenuItems, setShowMenuItems] = useState(true);
+  console.log('showMenuItems:', showMenuItems);
   const toggleViewModal = () => setModal1(!modal1);
-
+  const handleEyeIconClick = () => {
+    const newPageUrl = '/company-dashboard';
+    window.open(newPageUrl, '_blank');
+  };
   const columns = useMemo(
     () => [
       {
@@ -102,11 +107,18 @@ const ApprovedTranction = props => {
         accessor: "view",
         Cell: cellProps => {
           return (
-            <div className="card-drop">
-            <i className="mdi mdi-eye font-size-16 text-primary me-1" onClick={toggleViewModal} />
-            <i className="mdi mdi-pencil font-size-16 text-success me-1"  />
-            <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />
-            </div>
+            <div className="d-flex">
+                  <div className="d-flex flex-column align-items-center me-3" style={{ cursor: 'pointer' }}>
+                    <i className="mdi mdi-eye font-size-16 text-primary me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View"  onClick={handleEyeIconClick}/>
+                  </div>
+                  <div className="d-flex flex-column align-items-center me-3"  style={{ cursor: 'pointer' }}>
+                    <i className="mdi mdi-pencil font-size-16 text-success me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" />
+                  </div>
+              
+                      <div className="d-flex flex-column align-items-center" style={{ cursor: 'pointer' }}>
+                          <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="delete" />
+                      </div>
+                </div>
           );
         },
       },
@@ -127,14 +139,15 @@ const ApprovedTranction = props => {
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
+      
       <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/>
    
       <InlineFilterForm onFilter={handleFilter} />
-      <Card>
+      <Card >
         <CardBody>
        
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div className="mb-4 h4 card-title">Company List</div>
+            <div className="mb-4 h4 card-title mt-5">Company List</div>
             <Link to="/add-company">
             <Button
               type="button"
@@ -148,9 +161,9 @@ const ApprovedTranction = props => {
           <TableContainer
             columns={columns}
             data={filteredData.length > 0 ? filteredData : ApprovedTranctionData}
-            isGlobalFilter={false}
+            isGlobalFilter={true}
             isAddOptions={false}
-            customPageSize={6}
+            customPageSize={20}
           />
         </CardBody>
       </Card>

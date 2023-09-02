@@ -21,8 +21,6 @@ function* registerUser_login_2({ payload: { user, history } }) {
         emailId:user.email,
         mobile: user.mobile    });
       if(response!=undefined && response!=null ){
-        debugger
-          window.alert('User Register Succussfully...');
           localStorage.setItem("authUser", JSON.stringify(response.data.response));
           yield put(registerSuccess_login(response.data.response));    
           history('/companies');

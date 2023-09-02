@@ -45,35 +45,50 @@ import { withTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 
 const Dashboard = props => {
-    
+      
   const [modal, setmodal] = useState(false);
   const [subscribemodal, setSubscribemodal] = useState(false);
 
-  // const { chartsData } = useSelector(state => ({
-  //   chartsData: state.Dashboard.chartsData
-  // }));
 
   const reports = [
-    { title: "Orders", iconClass: "bx-copy-alt", description: "1,235" },
-    { title: "Revenue", iconClass: "bx-archive-in", description: "$35, 723" },
+    { title: "Total Members", iconClass: "bx-group", description: "1,235" },
+    { title: "Amount Due", iconClass: "bx bx-money", description: "₹35,723" },
     {
-      title: "Average Price",
-      iconClass: "bx-purchase-tag-alt",
-      description: "$16.2",
+      "title": "Amount Recovered",
+      "iconClass": "bx bx-check",
+      "description": "₹7,894,56.00"
     },
+    {
+      "title": "Total Reviews",
+      "iconClass": "bx bx-star",
+      "description": "1,447"
+    }
+    // {
+    //   title: "Total Reviews",
+    //   iconClass: "bx-purchase-tag-alt",
+    //   description: "1,447",
+    // },
   ];
-
+  const isPopupOpen = JSON.parse(localStorage.getItem("IspopupOpen"));
   useEffect(() => {
-    setTimeout(() => {
-      setSubscribemodal(true);
-    }, 2000);
+      
+  if (isPopupOpen) {
+      setTimeout(() => {
+       
+        setSubscribemodal(true);
+        localStorage.setItem("IspopupOpen", JSON.stringify(false));
+      }, 500);  
+    }
   }, []);
 
   const [periodData, setPeriodData] = useState([]);
   const [periodType, setPeriodType] = useState("yearly");
+  const handleSignUp = () => {
+    setSubscribemodal(false);
+  };
 
   // useEffect(() => {
-  //    
+  //      
   //   setPeriodData(chartsData);
   // }, [chartsData]);
 
@@ -101,15 +116,15 @@ const Dashboard = props => {
           />
 
           <Row>
-            <Col xl="4">
-              <WelcomeComp /> 
-              <MonthlyEarning />
+            <Col xl="12">
+            <WelcomeComp /> 
             </Col>
-            <Col xl="8">
+          </Row>
+          <Row>
+          <Col xl="12">
               <Row>
-                {/* Reports Render */}
                 {reports.map((report, key) => (
-                  <Col md="4" key={"_col_" + key}>
+                  <Col md="3" key={"_col_" + key}>
                     <Card className="mini-stats-wid">
                       <CardBody>
                         <div className="d-flex">
@@ -135,7 +150,7 @@ const Dashboard = props => {
                 ))}
               </Row>
 
-              <Card>
+              {/* <Card>
                 <CardBody>
                   <div className="d-sm-flex flex-wrap">
                     <h4 className="card-title mb-4">Cash flow</h4>
@@ -189,10 +204,10 @@ const Dashboard = props => {
                       </ul>
                     </div>
                   </div>
-                  {/* <div className="clearfix"></div> */}
+                  
                   <StackedColumnChart periodData={periodData} dataColors='["--bs-primary", "--bs-warning", "--bs-success"]' />
                 </CardBody>
-              </Card>
+              </Card> */}
             </Col>
           </Row>
 {/* 
@@ -218,7 +233,7 @@ const Dashboard = props => {
       </div>
 
       {/* subscribe ModalHeader */}
-      <Modal
+      {/* <Modal
         isOpen={subscribemodal}
         role="dialog"
         autoFocus={true}
@@ -267,7 +282,50 @@ const Dashboard = props => {
             </div>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
+          <Modal
+  isOpen={subscribemodal}
+  role="dialog"
+  autoFocus={true}
+  centered
+  data-toggle="modal"
+  toggle={() => {
+    setSubscribemodal(!subscribemodal);
+  }}
+>
+  <div>
+    <ModalHeader
+      className="border-bottom-0"
+      toggle={() => {
+        setSubscribemodal(!subscribemodal);
+      }}
+    ></ModalHeader>
+  </div>
+  <div className="modal-body">
+    <div className="text-center mb-4">
+      <div className="avatar-md mx-auto mb-4">
+        <div className="avatar-title bg-light rounded-circle text-primary h1">
+          <i className="mdi mdi-email-open"></i>
+        </div>
+      </div>
+
+      <div className="row justify-content-center">
+        <div className="col-xl-10">
+          <h4 className="text-primary">Confirmation</h4>
+          <p className="text-muted font-size-14 mb-4">
+            By signing up, you agree not to post false information about any party and to take complete responsibility if your posts or reviews lead to defamation of any party.
+          </p>
+
+          <Button color="primary" type="button" onClick={handleSignUp}>
+            Confirm
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Modal>
+
+
 
       <Modal
         isOpen={modal}

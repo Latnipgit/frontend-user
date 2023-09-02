@@ -23,12 +23,10 @@ function* loginUser({ payload: { user, history } }) {
         password: user.password,
       });
       if(response!=undefined && response!=null){
-        debugger  
         if(response.data.success){
-          window.alert('User Login Succussfully...');
           localStorage.setItem("authUser", JSON.stringify(response.data.response));
           yield put(loginSuccess(response.data.response));    
-          history('/dashboard');
+          history('/companies');
         }else{
           window.alert(response.data.message);
         }

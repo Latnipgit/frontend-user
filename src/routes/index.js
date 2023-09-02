@@ -183,7 +183,7 @@ import Register2 from "pages/Authentication/register2";
 import AddCompany from "pages/admin/ApprovedTransaction/add-company";
 
 const authProtectedRoutes = [
-  { path: "/dashboard", component: <Dashboard /> },
+  { path: "/company-dashboard", component: <Dashboard /> },
   { path: "/dashboard-saas", component: <DashboardSaas /> },
   { path: "/dashboard-crypto", component: <DashboardCrypto /> },
   { path: "/blog", component: <Blog /> },

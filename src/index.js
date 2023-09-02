@@ -5,6 +5,7 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import "./i18n";
 import { Provider } from "react-redux";
+import { MenuProvider } from './components/VerticalLayout/MenuContext';
 
 import store from "./store";
 
@@ -13,7 +14,9 @@ root.render(
     <Provider store={store}>
       <React.Fragment>
         <BrowserRouter>
-          <App />
+        <MenuProvider>
+      <App />
+    </MenuProvider>
         </BrowserRouter>
       </React.Fragment>
     </Provider>
