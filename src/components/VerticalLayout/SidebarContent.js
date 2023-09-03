@@ -9,8 +9,17 @@ import { withTranslation } from "react-i18next";
 import { useMenu } from './MenuContext';
 
 const SidebarContent = (props) => {
-  const { showMenuItems } = useMenu();
+  var { showMenuItems } = useMenu();
   debugger
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    console.log(currentPath);
+    if (currentPath === '/companies' || currentPath === '/documents' || currentPath === '/profile' ||currentPath === '/notification') {
+      showMenuItems=false;
+    } else {
+      showMenuItems=true;
+    }
+  }, []);
   const ref = useRef();
   const activateParentDropdown = useCallback((item) => {
     item.classList.add("active");
@@ -150,43 +159,43 @@ const SidebarContent = (props) => {
           <>
             <li>
               <Link to="/dashboard">
-                <i className="bx bx-some-icon"></i>
+                <i className="bx bxs-dashboard"></i>
                 {props.t("Dashboard")}
               </Link>
             </li>
             <li>
-              <Link to="/another-route">
-                <i className="bx bx-group"></i>
+              <Link to="/bad-debts">
+                <i className="bx bx-rupee"></i>
                 {props.t("Bad debts")}
               </Link>
             </li>
             <li>
               <Link to="/company-search">
-                <i className="bx bx-group"></i>
+                <i className="bx bx-search"></i>
                 {props.t("Company Search")}
               </Link>
             </li>
             <li>
-            <Link to="/another-route">
-                <i className="bx bx-group"></i>
+            <Link to="/debtors">
+                <i className="bx bx-user"></i>
                 {props.t("Debtors(buyers)")}
               </Link>
             </li>
             <li>
-            <Link to="/another-route">
-                <i className="bx bx-group"></i>
+            <Link to="/creditors">
+                <i className="bx bx-user"></i>
                 {props.t("Creditors(Seller)")}
               </Link>
             </li>
             <li>
-            <Link to="/another-route">
-                <i className="bx bx-group"></i>
+            <Link to="/send-bill-transaction">
+                <i className="bx bx-send"></i>
                 {props.t("Send Bill Transaction")}
               </Link>
             </li>
             <li>
-            <Link to="/another-route">
-                <i className="bx bx-group"></i>
+            <Link to="/recieved-payment">
+                <i className="bx bx-money"></i>
                 {props.t("Recieved Payment")}
               </Link>
             </li>
@@ -200,21 +209,21 @@ const SidebarContent = (props) => {
               </Link>
             </li>
              <li>
-              <Link to="/registration" >
+              <Link to="/documents" >
                 <i className="bx bxs-file-plus"></i>
                 
                 {props.t("Documents")}
               </Link>
             </li>
             <li>
-              <Link to="/registration" >
+              <Link to="/profile" >
                 <i className="bx bx-user-circle"></i>
                 
                 {props.t("Profile")}
               </Link>
             </li>
             <li>
-              <Link to="/registration" >
+              <Link to="/notification" >
                 <i className="bx bxs-notification"></i>
                 
                 {props.t("Notification")}

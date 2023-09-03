@@ -199,7 +199,7 @@ const Login = props => {
                           Log In
                         </button>
                       </div>
-
+{/* 
                       <div className="mt-4 text-center">
                         <h5 className="font-size-14 mb-3">Sign in with</h5>
 
@@ -237,9 +237,9 @@ const Login = props => {
                             />
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
 
-                      <div className="mt-4 text-center">
+                      <div className="mt-2 text-center">
                         <Link to="/forgot-password" className="text-muted">
                           <i className="mdi mdi-lock me-1" />
                           Forgot your password?
@@ -249,7 +249,7 @@ const Login = props => {
                   </div>
                 </CardBody>
               </Card>
-              <div className="mt-5 text-center">
+              <div className="mt-3 text-center">
                 <p>
                   Don&#39;t have an account ?{" "}
                   <Link to="/register" className="fw-medium text-primary">

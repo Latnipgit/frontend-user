@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import {
   Container,
   Row,
@@ -12,9 +12,11 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  CardHeader,
   Table,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import Chart from "chart.js";
 
 import classNames from "classnames";
 
@@ -45,30 +47,31 @@ import { withTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 
 const Dashboard = props => {
-      
-  const [modal, setmodal] = useState(false);
-  const [subscribemodal, setSubscribemodal] = useState(false);
+  const renderStarRating = (rating) => {
+    const starCount = 5;
+    const fullStarCount = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
 
+    const stars = [];
 
-  const reports = [
-    { title: "Total Members", iconClass: "bx-group", description: "1,235" },
-    { title: "Amount Due", iconClass: "bx bx-money", description: "₹35,723" },
-    {
-      "title": "Amount Recovered",
-      "iconClass": "bx bx-check",
-      "description": "₹7,894,56.00"
-    },
-    {
-      "title": "Total Reviews",
-      "iconClass": "bx bx-star",
-      "description": "1,447"
+    for (let i = 0; i < fullStarCount; i++) {
+        stars.push(<i key={i} className="fas fa-star"></i>);
     }
-    // {
-    //   title: "Total Reviews",
-    //   iconClass: "bx-purchase-tag-alt",
-    //   description: "1,447",
-    // },
-  ];
+
+    if (hasHalfStar) {
+        stars.push(<i key="half" className="fas fa-star-half-alt"></i>);
+    }
+
+    const remainingStars = starCount - fullStarCount - (hasHalfStar ? 1 : 0);
+    for (let i = 0; i < remainingStars; i++) {
+        stars.push(<i key={`empty-${i}`} className="far fa-star"></i>);
+    }
+
+    return stars;
+};
+  const [subscribemodal, setSubscribemodal] = useState(false);
+  const chartRef = useRef(null);
+  const chartRef1 = useRef(null);
   const isPopupOpen = JSON.parse(localStorage.getItem("IspopupOpen"));
   useEffect(() => {
       
@@ -81,209 +84,162 @@ const Dashboard = props => {
     }
   }, []);
 
-  const [periodData, setPeriodData] = useState([]);
-  const [periodType, setPeriodType] = useState("yearly");
   const handleSignUp = () => {
     setSubscribemodal(false);
   };
 
-  // useEffect(() => {
-  //      
-  //   setPeriodData(chartsData);
-  // }, [chartsData]);
+  useEffect(() => {
+    if (chartRef1.current) {
+      const ctx = chartRef1.current.getContext("2d");
 
-  const onChangeChartPeriod = pType => {
-    setPeriodType(pType);
-    dispatch(onGetChartsData(pType));
-  };
+      new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["Due Amount", "Paid Amount", "In-Disbute"],
+          datasets: [
+            {
+              data: [40, 20, 15],
+              backgroundColor: ["#FF5733", "#FFC300", "#C70039"],
+            },
+          ],
+        },
+        options: {
+          legend: {
+            display: true,
+            position: "right",
+          },
+        },
+      });
+    }
+  }, [chartRef1]);
+  useEffect(() => {
+    if (chartRef.current) {
+      const ctx = chartRef.current.getContext("2d");
 
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(onGetChartsData("yearly"));
-  // }, [dispatch]);
+      new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["Due Amount", "Paid Amount", "In-Disbute"],
+          datasets: [
+            {
+              data: [40, 20, 15],
+              backgroundColor: ["#FF5733", "#FFC300", "#C70039"],
+            },
+          ],
+        },
+        options: {
+          legend: {
+            display: true,
+            position: "right",
+          },
+        },
+      });
+    }
+  }, [chartRef]);
 
+  const tableData = [
+    { status: "Due", percentage: 40, outstanding: 10000, review: "4.5" },
+    { status: "Paid", percentage: 20, outstanding: 5000, review: "3.5" },
+    { status: "In-Disbute", percentage: 15, outstanding: 3750, review: "4.5" },
+    // { status: "Issue", percentage: 10, outstanding: 2500, review: "2.5" },
+    // { status: "In Court", percentage: 15, outstanding: 3750, review: "3.5" },
+  ];
   //meta title
   document.title = "Dashboard | Bafana";
 
   return (
     <React.Fragment>
-      <div className="page-content">
-        <Container fluid>
-          {/* Render Breadcrumb */}
-          <Breadcrumbs
-            title={props.t("Dashboards")}
-            breadcrumbItem={props.t("Dashboard")}
-          />
-
-          <Row>
-            <Col xl="12">
-            <WelcomeComp /> 
-            </Col>
-          </Row>
-          <Row>
-          <Col xl="12">
-              <Row>
-                {reports.map((report, key) => (
-                  <Col md="3" key={"_col_" + key}>
-                    <Card className="mini-stats-wid">
-                      <CardBody>
-                        <div className="d-flex">
-                          <div className="flex-grow-1">
-                            <p className="text-muted fw-medium">
-                              {report.title}
-                            </p>
-                            <h4 className="mb-0">{report.description}</h4>
-                          </div>
-                          <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
-                            <span className="avatar-title rounded-circle bg-primary">
-                              <i
-                                className={
-                                  "bx " + report.iconClass + " font-size-24"
-                                }
-                              ></i>
-                            </span>
-                          </div>
-                        </div>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                ))}
-              </Row>
-
-              {/* <Card>
-                <CardBody>
-                  <div className="d-sm-flex flex-wrap">
-                    <h4 className="card-title mb-4">Cash flow</h4>
-                    <div className="ms-auto">
-                      <ul className="nav nav-pills">
-                        <li className="nav-item">
-                          <Link
-                            to="#"
-                            className={classNames(
-                              { active: periodType === "weekly" },
-                              "nav-link"
-                            )}
-                            onClick={() => {
-                              onChangeChartPeriod("weekly");
-                            }}
-                            id="one_month"
-                          >
-                            This Fiscal Year
-                          </Link>{" "}
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="#"
-                            className={classNames(
-                              { active: periodType === "monthly" },
-                              "nav-link"
-                            )}
-                            onClick={() => {
-                              onChangeChartPeriod("monthly");
-                            }}
-                            id="one_month"
-                          >
-                            Previous Fiscal Year
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="#"
-                            className={classNames(
-                              { active: periodType === "yearly" },
-                              "nav-link"
-                            )}
-                            onClick={() => {
-                              onChangeChartPeriod("yearly");
-                            }}
-                            id="one_month"
-                          >
-                            Last 12 Months
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                  <StackedColumnChart periodData={periodData} dataColors='["--bs-primary", "--bs-warning", "--bs-success"]' />
-                </CardBody>
-              </Card> */}
-            </Col>
-          </Row>
-{/* 
-          <Row>
-            <Col xl="4">
-              <SocialSource />
-            </Col>
-            <Col xl="4">
-              <ActivityComp />
-            </Col>
-
-            <Col xl="4">
-              <TopCities />
-            </Col>
-          </Row> */}
-
-          <Row>
-            <Col lg="12">
-              <LatestTranaction />
-            </Col>
-          </Row>
-        </Container>
-      </div>
-
-      {/* subscribe ModalHeader */}
-      {/* <Modal
-        isOpen={subscribemodal}
-        role="dialog"
-        autoFocus={true}
-        centered
-        data-toggle="modal"
-        toggle={() => {
-          setSubscribemodal(!subscribemodal);
-        }}
-      >
-        <div>
-          <ModalHeader
-            className="border-bottom-0"
-            toggle={() => {
-              setSubscribemodal(!subscribemodal);
-            }}
-          ></ModalHeader>
-        </div>
-        <div className="modal-body">
-          <div className="text-center mb-4">
-            <div className="avatar-md mx-auto mb-4">
-              <div className="avatar-title bg-light  rounded-circle text-primary h1">
-                <i className="mdi mdi-email-open"></i>
-              </div>
-            </div>
-
-            <div className="row justify-content-center">
-              <div className="col-xl-10">
-                <h4 className="text-primary">Subscribe !</h4>
-                <p className="text-muted font-size-14 mb-4">
-                  Subscribe our newletter and get notification to stay update.
-                </p>
-
-                <div
-                  className="input-group rounded bg-light"
-                >
-                  <Input
-                    type="email"
-                    className="form-control bg-transparent border-0"
-                    placeholder="Enter Email address"
-                  />
-                  <Button color="primary" type="button" id="button-addon2">
-                    <i className="bx bxs-paper-plane"></i>
-                  </Button>
+    <div className="page-content">
+      <Container fluid>
+        <Row>
+        <Col md="6">
+            <Card>
+            <div className="card-header">Debtors</div>
+              <CardBody>
+                <div className="chart-container">
+                  <canvas ref={chartRef1}></canvas>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Modal> */}
-          <Modal
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Percentage</th>
+                      <th>Outstanding</th>
+                      <th>Review</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableData.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.status}</td>
+                        <td>{item.percentage}%</td>
+                        <td>${item.outstanding}</td>
+                        <td>
+                        <div className="review-rating d-flex align-items-center " style={{ color: 'goldenrod', fontSize: '12px' }}>
+                                    {renderStarRating(item.review)}
+                                    <h5
+                                        className="ml-2 mb-1 mt-2 mx-2"
+                                        style={{ color: 'goldenrod', fontSize: '12px' }} // Inline CSS
+                                    >
+                                      {item.review}
+                                    </h5>
+                                </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="6">
+            <Card>
+            <div className="card-header">Creditors</div>
+              <CardBody>
+                <div className="chart-container">
+                  <canvas ref={chartRef}></canvas>
+                </div>
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Percentage</th>
+                      <th>Outstanding</th>
+                      <th>Review</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableData.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.status}</td>
+                        <td>{item.percentage}%</td>
+                        <td>${item.outstanding}</td>
+                        <td>
+                        <div className="review-rating d-flex align-items-center " style={{ color: 'goldenrod', fontSize: '12px' }}>
+                                    {renderStarRating(item.review)}
+                                    <h5
+                                        className="ml-2 mb-1 mt-2 mx-2"
+                                        style={{ color: 'goldenrod', fontSize: '12px' }} // Inline CSS
+                                    >
+                                      {item.review}
+                                    </h5>
+                                </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        
+      </Container>
+   
+    </div>
+
+
+             <Modal
   isOpen={subscribemodal}
   role="dialog"
   autoFocus={true}
@@ -326,119 +282,14 @@ const Dashboard = props => {
 </Modal>
 
 
-
-      <Modal
-        isOpen={modal}
-        role="dialog"
-        autoFocus={true}
-        centered={true}
-        className="exampleModal"
-        tabIndex="-1"
-        toggle={() => {
-          setmodal(!modal);
-        }}
-      >
-        <div>
-          <ModalHeader
-            toggle={() => {
-              setmodal(!modal);
-            }}
-          >
-            Order Details
-          </ModalHeader>
-          <ModalBody>
-            <p className="mb-2">
-              Product id: <span className="text-primary">#SK2540</span>
-            </p>
-            <p className="mb-4">
-              Billing Name: <span className="text-primary">Neal Matthews</span>
-            </p>
-
-            <div className="table-responsive">
-              <Table className="table table-centered table-nowrap">
-                <thead>
-                  <tr>
-                    <th scope="col">Product</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      <div>
-                        <img src={modalimage1} alt="" className="avatar-sm" />
-                      </div>
-                    </th>
-                    <td>
-                      <div>
-                        <h5 className="text-truncate font-size-14">
-                          Wireless Headphone (Black)
-                        </h5>
-                        <p className="text-muted mb-0">$ 225 x 1</p>
-                      </div>
-                    </td>
-                    <td>$ 255</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <div>
-                        <img src={modalimage2} alt="" className="avatar-sm" />
-                      </div>
-                    </th>
-                    <td>
-                      <div>
-                        <h5 className="text-truncate font-size-14">
-                          Hoodie (Blue)
-                        </h5>
-                        <p className="text-muted mb-0">$ 145 x 1</p>
-                      </div>
-                    </td>
-                    <td>$ 145</td>
-                  </tr>
-                  <tr>
-                    <td colSpan="2">
-                      <h6 className="m-0 text-end">Sub Total:</h6>
-                    </td>
-                    <td>$ 400</td>
-                  </tr>
-                  <tr>
-                    <td colSpan="2">
-                      <h6 className="m-0 text-end">Shipping:</h6>
-                    </td>
-                    <td>Free</td>
-                  </tr>
-                  <tr>
-                    <td colSpan="2">
-                      <h6 className="m-0 text-end">Total:</h6>
-                    </td>
-                    <td>$ 400</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </div>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              type="button"
-              color="secondary"
-              onClick={() => {
-                setmodal(!modal);
-              }}
-            >
-              Close
-            </Button>
-          </ModalFooter>
-        </div>
-      </Modal>
     </React.Fragment>
   );
 };
 
 Dashboard.propTypes = {
   t: PropTypes.any,
-  chartsData: PropTypes.any,
-  onGetChartsData: PropTypes.func,
+  // chartsData: PropTypes.any,
+  // onGetChartsData: PropTypes.func,
 };
 
 export default withTranslation()(Dashboard);

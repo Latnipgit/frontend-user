@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState ,useEffect} from 'react';
 
 const MenuContext = createContext();
 
@@ -9,9 +9,17 @@ export function useMenu() {
 export function MenuProvider({ children }) {
   debugger
   const [showMenuItems, setShowMenuItems] = useState(false);
-
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    console.log(currentPath);
+    if (currentPath === '/company-dashboard') {
+      setShowMenuItems(true);
+    } else {
+      setShowMenuItems(false);
+    }
+  }, []);
   const toggleMenuItems = () => {
-    setShowMenuItems(true);
+    setShowMenuItems(!showMenuItems);
   };
 
   return (

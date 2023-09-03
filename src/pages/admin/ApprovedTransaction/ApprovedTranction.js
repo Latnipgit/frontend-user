@@ -51,8 +51,9 @@ const ApprovedTranction = props => {
   console.log('showMenuItems:', showMenuItems);
   const toggleViewModal = () => setModal1(!modal1);
   const handleEyeIconClick = () => {
+    // toggleMenuItems();
     const newPageUrl = '/company-dashboard';
-    window.open(newPageUrl, '_blank');
+    window.location.href = newPageUrl;
   };
   const columns = useMemo(
     () => [
@@ -167,6 +168,7 @@ const ApprovedTranction = props => {
           />
         </CardBody>
       </Card>
+
     </React.Fragment>
   );
 };
