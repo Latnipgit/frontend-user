@@ -16,27 +16,15 @@ import {
   ModalFooter, Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
   Table,
 } from "reactstrap";
-// import { OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
-import { getOrders as onGetOrders } from "store/actions";
 
-import EcommerceOrdersModal from "../Ecommerce/EcommerceOrders/EcommerceOrdersModal";
-import InvoiceModal from "./InvoicePopupModal";
-// import ConfirmModal from "./ConfirmRefertoSeio";
+import InvoiceModal from "../Dashboard/InvoicePopupModal";
 import { latestTransaction } from "../../common/data/dashboard";
 
-import {
-  OrderId,
-  BillingName,
-  DueSince,
-  Total,
-  PaymentStatus,
-  PaymentMethod,
-  Status
-} from "./LatestTranactionCol";
+import {OrderId,BillingName,DueSince,Total} from "./creditorsCol";
 
 import TableContainer from "../../components/Common/TableContainer";
 
-const LatestTranaction = props => {
+const Creditors = props => {
   const [showReferModal, setShowReferModal] = useState(false);
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showInProcessModal, setShowInProcessModal] = useState(false);
@@ -179,7 +167,7 @@ const LatestTranaction = props => {
 
       <Card>
         <CardBody>
-          <div className="mb-4 h4 card-title">Latest Transaction</div>
+          <div className="mb-4 h4 card-title">Creditors</div>
           <TableContainer
             columns={columns}
             data={latestTransaction}
@@ -213,9 +201,9 @@ const LatestTranaction = props => {
   );
 };
 
-LatestTranaction.propTypes = {
+Creditors.propTypes = {
   orders: PropTypes.array,
   onGetOrders: PropTypes.func,
 };
 
-export default withRouter(LatestTranaction);
+export default withRouter(Creditors);

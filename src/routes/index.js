@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import UserList from "../pages/admin/UserList";
-
+import SendBillTransaction from "../pages/Dashboard/users/send-bill-transaction/sendbillTransaction";
 import MembersList from "../pages/admin/Members/memberlist/MembersList";
 import RegisteredCompanyList from "../pages/admin/Members/RegisteredCompany/RegisteredCompanyList";
 import DiputedBillings from "../pages/admin/DisputedBillings/DiputedBillings";
@@ -194,7 +194,7 @@ const authProtectedRoutes = [
   { path: "/company-search", component: <ApprovedTranction /> },
   { path: "/debtors", component: <MembersList /> },
   { path: "/creditors", component: <RegisteredCompanyList /> },
-  { path: "/send-bill-transaction", component: <DiputedBillings /> },
+  { path: "/send-bill-transaction", component: <SendBillTransaction /> },
   { path: "/recieved-payment", component: <DiputedBillings /> },
  
 

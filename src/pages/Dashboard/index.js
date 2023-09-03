@@ -17,26 +17,8 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Chart from "chart.js";
-
-import classNames from "classnames";
-
-//import Charts
-import StackedColumnChart from "./StackedColumnChart";
-
-//import action
-import { getChartsData as onGetChartsData } from "../../store/actions";
-
-import modalimage1 from "../../assets/images/product/img-7.png";
-import modalimage2 from "../../assets/images/product/img-4.png";
-
-// Pages Components
-import WelcomeComp from "./WelcomeComp";
-import MonthlyEarning from "./MonthlyEarning";
-import SocialSource from "./SocialSource";
-import ActivityComp from "./ActivityComp";
-import TopCities from "./TopCities";
-import LatestTranaction from "./LatestTranaction";
-
+import Creditors from "./users/creditors";
+import Debtors from "./users/debtors";
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb";
 
@@ -45,6 +27,7 @@ import { withTranslation } from "react-i18next";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
+// import { Creditor } from "pages/admin/DisputedBillings/disputedCol";
 
 const Dashboard = props => {
   const renderStarRating = (rating) => {
@@ -99,7 +82,7 @@ const Dashboard = props => {
           datasets: [
             {
               data: [40, 20, 15],
-              backgroundColor: ["#FF5733", "#FFC300", "#C70039"],
+              backgroundColor: ["#28a745", "#ffc107", "#dc3545"],
             },
           ],
         },
@@ -123,7 +106,7 @@ const Dashboard = props => {
           datasets: [
             {
               data: [40, 20, 15],
-              backgroundColor: ["#FF5733", "#FFC300", "#C70039"],
+              backgroundColor: ["#28a745", "#ffc107", "#dc3545"],
             },
           ],
         },
@@ -233,7 +216,24 @@ const Dashboard = props => {
             </Card>
           </Col>
         </Row>
-        
+        <Row>
+        <Col md="6">
+            <Card>
+            {/* <div className="card-header">Debtors</div> */}
+              <CardBody>
+              <Creditors/>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="6">
+            <Card>
+            {/* <div className="card-header">Creditors</div> */}
+            <CardBody>
+                <Debtors/>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
       </Container>
    
     </div>
