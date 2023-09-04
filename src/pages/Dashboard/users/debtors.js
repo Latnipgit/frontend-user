@@ -16,7 +16,7 @@ import {
   ModalFooter, Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
   Table,
 } from "reactstrap";
-
+import InvoicePopupForCredtiors from "../users/InvoicePopupForCredtiors";
 import InvoiceModal from "../InvoicePopupModal";
 import { latestTransaction } from "../../../common/data/dashboard";
 
@@ -141,7 +141,7 @@ const Debtors = props => {
 
   return (
     <React.Fragment>
-      <InvoiceModal isOpen={modal1} toggle={toggleViewModal} />
+      <InvoicePopupForCredtiors isOpen={modal1} toggle={toggleViewModal} />
       {/* <ConfirmModal isOpen={isModalOpen} toggle={toggleModal} /> */}
       <Modal isOpen={showReferModal} toggle={() => setShowReferModal(false)}>
         <ModalHeader toggle={() => setShowReferModal(false)}>Confirm Asclation</ModalHeader>

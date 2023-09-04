@@ -50,7 +50,7 @@ const SendBillTransaction = () => {
                 <Col lg={12}>
                     <Card className="mt-5">
                         <CardBody>
-                            <CardTitle className="h5 mb-4">Add Company</CardTitle>
+                            <CardTitle className="h5 mb-4">Send Bill Transactions</CardTitle>
 
                             <form className="row row-cols-lg-auto g-3 align-items-center" onSubmit={handleSubmit}>
 
@@ -73,7 +73,7 @@ const SendBillTransaction = () => {
                                     </InputGroup>
                                 </Col>
 
-                                {/* <Col xs={12} md={6}>
+                                <Col xs={12} md={6}>
                                     <label className="visually-hidden" htmlFor="gstNumber">
                                         Bill Date
                                     </label>
@@ -214,7 +214,7 @@ const SendBillTransaction = () => {
                                             placeholder="Remarks" // Change the placeholder to "Remarks"
                                         />
                                     </InputGroup>
-                                </Col> */}
+                                </Col>
 
                                 <Col xs={12}>
                                     <button type="submit" className="btn btn-primary w-md">

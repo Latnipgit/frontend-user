@@ -156,7 +156,7 @@ const Dashboard = props => {
                       <tr key={index}>
                         <td>{item.status}</td>
                         <td>{item.percentage}%</td>
-                        <td>${item.outstanding}</td>
+                        <td>₹{item.outstanding}</td>
                         <td>
                         <div className="review-rating d-flex align-items-center " style={{ color: 'goldenrod', fontSize: '12px' }}>
                                     {renderStarRating(item.review)}
@@ -196,7 +196,7 @@ const Dashboard = props => {
                       <tr key={index}>
                         <td>{item.status}</td>
                         <td>{item.percentage}%</td>
-                        <td>${item.outstanding}</td>
+                        <td>₹{item.outstanding}</td>
                         <td>
                         <div className="review-rating d-flex align-items-center " style={{ color: 'goldenrod', fontSize: '12px' }}>
                                     {renderStarRating(item.review)}

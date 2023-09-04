@@ -158,7 +158,7 @@ const SidebarContent = (props) => {
         {showMenuItems ? (
           <>
             <li>
-              <Link to="/dashboard">
+              <Link to="/company-dashboard">
                 <i className="bx bxs-dashboard"></i>
                 {props.t("Dashboard")}
               </Link>
