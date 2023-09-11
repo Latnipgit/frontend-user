@@ -236,7 +236,7 @@ const TableContainer = ({
         </Table>
       </div>
 
-      <Row className="justify-content-md-end justify-content-center align-items-center">
+      <Row className="justify-content-md-end justify-content-center align-items-center row pb-5">
         <Col className="col-md-auto">
           <div className="d-flex gap-1">
             <Button

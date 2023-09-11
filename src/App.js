@@ -13,9 +13,10 @@ import Authmiddleware from "./routes/route";
 import VerticalLayout from "./components/VerticalLayout/";
 import HorizontalLayout from "./components/HorizontalLayout/";
 import NonAuthLayout from "./components/NonAuthLayout";
-
+// import Loader from "../src/components/loader";
 // Import scss
 import "./assets/scss/theme.scss";
+// import Loader from "./components/loader"
 
 // Import Firebase Configuration file
 // import { initFirebaseBackend } from "./helpers/firebase_helper";
@@ -57,14 +58,16 @@ const getLayout = (layoutType) => {
 
 const App = () => {
 
-  const { layoutType } = useSelector((state) => ({
+  const { layoutType, isLoading } = useSelector((state) => ({
     layoutType: state.Layout.layoutType,
+    isLoading: state.isLoading,
   }));
 
   const Layout = getLayout(layoutType);
 
   return (
     <React.Fragment>
+      {/* <Loader/> */}
       <Routes>
         {publicRoutes.map((route, idx) => (
           <Route

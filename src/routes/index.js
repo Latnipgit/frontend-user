@@ -6,6 +6,7 @@ import MembersList from "../pages/admin/Members/memberlist/MembersList";
 import RegisteredCompanyList from "../pages/admin/Members/RegisteredCompany/RegisteredCompanyList";
 import DiputedBillings from "../pages/admin/DisputedBillings/DiputedBillings";
 import ApprovedTranction from "../pages/admin/ApprovedTransaction/ApprovedTranction";
+import Document from "../pages/Dashboard/users/Documents/documents";
 // Pages Component
 import Chat from "../pages/Chat/Chat";
 
@@ -185,7 +186,7 @@ import AddCompany from "pages/admin/ApprovedTransaction/add-company";
 const authProtectedRoutes = [
   //User Panel Step 1
   { path: "/companies", component: <ApprovedTranction /> },
-  { path: "/documents", component: <ApprovedTranction /> },
+  { path: "/documents", component: <Document /> },
   { path: "/profile", component: <ApprovedTranction /> },
   { path: "/notification", component: <ApprovedTranction /> },
   //USer Panel Step 2
@@ -220,7 +221,7 @@ const publicRoutes = [
   // { path: "/pages-500", component: <Pages500 /> },
   // { path: "/crypto-ico-landing", component: <CryptoIcoLanding /> },
 
-  // // Authentication Inner
+  // // Authentication Inner  
   // { path: "/user-logi2n", component: <Login1 /> },
   // { path: "/pages-login-2", component: <Login2 /> },
   // { path: "/pages-register", component: <Register1 /> },
