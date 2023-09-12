@@ -13,7 +13,7 @@ import {
   Form,
   CardBody,
   CardSubtitle,
-  Container,
+  Container,Button
 } from "reactstrap";
 import Dropzone from "react-dropzone";
 
@@ -199,7 +199,11 @@ const Document = props => {
     ))}
   </div>
 </div>
-
+<div className="text-center mt-4">
+                <Button type="button" color="primary">
+                  Upload Files
+                </Button>
+              </div>
 
 
             </CardBody>
