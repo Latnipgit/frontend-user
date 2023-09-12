@@ -1,9 +1,6 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import withRouter from "components/Common/withRouter";
-import { map } from "lodash";
 import {
   Card,
   CardBody,
@@ -14,33 +11,21 @@ import {
   Table,
 } from "reactstrap";
 
-// TableContainer
-
-import { Pdate, Ddate, Name, Idno, Budget } from "./CryptoCol";
-
-import TableContainer from "../../../components/Common/TableContainer";
-
-//Import Breadcrumb
 import Breadcrumbs from "components/Common/Breadcrumb";
-
-//Import mini card widgets
-import MiniCards from "./mini-card";
-
-//Import Images
+// import MiniCards from "./mini-card";
 import profile1 from "assets/images/profile-img.png";
+// import {
+//   Pdate,
+//   Ddate,
+//   Name,
+//   Idno,
+//   Budget,
+// } from "./CryptoCol";
 
-// import charts
-import ApexRevenue from "../ApexRevenue";
-import { getUserProfile } from "store/actions";
-
-const ContactsProfile = props => {
-
-  //meta title
+const ContactsProfile = (props) => {
   document.title = "Profile | Skote - React Admin & Dashboard Template";
 
-  const { userProfile, onGetUserProfile } = props;
-  // eslint-disable-next-line no-unused-vars
-  const [miniCards, setMiniCards] = useState([
+  const miniCards = [
     {
       title: "Completed Projects",
       iconClass: "bx-check-circle",
@@ -48,72 +33,96 @@ const ContactsProfile = props => {
     },
     { title: "Pending Projects", iconClass: "bx-hourglass", text: "12" },
     { title: "Total Revenue", iconClass: "bx-package", text: "$36,524" },
-  ]);
+  ];
 
-  // useEffect(() => {
-  //   onGetUserProfile();
-  // }, [onGetUserProfile]);
-
-  const columns = useMemo(
-    () => [
+  const userProfile = {
+    img: profile1,
+    name: "John Doe",
+    designation: "Software Developer",
+    projectCount: 10,
+    revenue: "$50,000",
+    personalDetail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    phone: "123-456-7890",
+    email: "john@example.com",
+    location: "New York, USA",
+    experiences: [
       {
-        Header: "#",
-        accessor: "id",
-        disableFilters: true,
-        filterable: true,
-        Cell: cellProps => {
-          return <Idno {...cellProps} />;
-        },
+        id: 1,
+        iconClass: "bx bx-building",
+        designation: "Software Developer",
+        timeDuration: "2020 - Present",
+        link: "/experience1",
       },
       {
-        Header: "Project",
-        accessor: "name",
-        disableFilters: true,
-        filterable: true,
-        Cell: cellProps => {
-          return <Name {...cellProps} />;
-        },
-      },
-      {
-        Header: "Start Date",
-        accessor: "startDate",
-        disableFilters: true,
-        filterable: true,
-        Cell: cellProps => {
-          return <Pdate {...cellProps} />;
-        },
-      },
-      {
-        Header: "Deadline",
-        accessor: "deadline",
-        disableFilters: true,
-        filterable: true,
-        Cell: cellProps => {
-          return <Ddate {...cellProps} />;
-        },
-      },
-      {
-        Header: "Budget",
-        accessor: "budget",
-        disableFilters: true,
-        filterable: true,
-        Cell: cellProps => {
-          return <Budget {...cellProps} />;
-        },
+        id: 2,
+        iconClass: "bx bx-building",
+        designation: "Frontend Developer",
+        timeDuration: "2018 - 2020",
+        link: "/experience2",
       },
     ],
-    []
-  );
+    projects: [
+      { id: 1, name: "Project 1", startDate: "2022-01-01", deadline: "2022-12-31", budget: "$10,000" },
+      { id: 2, name: "Project 2", startDate: "2022-03-15", deadline: "2022-11-30", budget: "$15,000" },
+    ],
+  };
+
+//   const columns = [
+//     {
+//       Header: "#",
+//       accessor: "id",
+//       disableFilters: true,
+//       filterable: true,
+//       Cell: (cellProps) => {
+//         return <Idno {...cellProps} />;
+//       },
+//     },
+//     {
+//       Header: "Project",
+//       accessor: "name",
+//       disableFilters: true,
+//       filterable: true,
+//       Cell: (cellProps) => {
+//         return <Name {...cellProps} />;
+//       },
+//     },
+//     {
+//       Header: "Start Date",
+//       accessor: "startDate",
+//       disableFilters: true,
+//       filterable: true,
+//       Cell: (cellProps) => {
+//         return <Pdate {...cellProps} />;
+//       },
+//     },
+//     {
+//       Header: "Deadline",
+//       accessor: "deadline",
+//       disableFilters: true,
+//       filterable: true,
+//       Cell: (cellProps) => {
+//         return <Ddate {...cellProps} />;
+//       },
+//     },
+//     {
+//       Header: "Budget",
+//       accessor: "budget",
+//       disableFilters: true,
+//       filterable: true,
+//       Cell: (cellProps) => {
+//         return <Budget {...cellProps} />;
+//       },
+//     },
+//   ];
 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
-          {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Contacts" breadcrumbItem="Profile" />
+          {/* <Breadcrumbs title="Contacts" breadcrumbItem="Profile" /> */}
 
           <Row>
-            <Col xl="4">
+            <Col xl="6">
               <Card className="overflow-hidden">
                 <div className="bg-primary bg-soft">
                   <Row>
@@ -132,18 +141,17 @@ const ContactsProfile = props => {
                   <Row>
                     <Col sm="4">
                       <div className="avatar-md profile-user-wid mb-4">
-                        {/* <img
+                        <img
                           src={userProfile.img}
                           alt=""
                           className="img-thumbnail rounded-circle"
-                        /> */}
+                        />
                       </div>
                       <h5 className="font-size-15 text-truncate">
                         {userProfile.name}
                       </h5>
                       <p className="text-muted mb-0 text-truncate">
-                        {/* {userProfile.designation} */}
-                        ADMIIN
+                        {userProfile.designation}
                       </p>
                     </Col>
 
@@ -158,13 +166,13 @@ const ContactsProfile = props => {
                           </Col>
                           <Col xs="6">
                             <h5 className="font-size-15">
-                              ${userProfile.revenue}
+                              {userProfile.revenue}
                             </h5>
                             <p className="text-muted mb-0">Revenue</p>
                           </Col>
                         </Row>
                         <div className="mt-4">
-                          <Link to="" className="btn btn-primary  btn-sm">
+                          <Link to="" className="btn btn-primary btn-sm">
                             View Profile{" "}
                             <i className="mdi mdi-arrow-right ms-1" />
                           </Link>
@@ -174,7 +182,8 @@ const ContactsProfile = props => {
                   </Row>
                 </CardBody>
               </Card>
-
+              </Col>
+              <Col xl="6">
               <Card>
                 <CardBody>
                   <CardTitle className="mb-4">Personal Information</CardTitle>
@@ -205,18 +214,17 @@ const ContactsProfile = props => {
                   </div>
                 </CardBody>
               </Card>
-
+            </Col>
+            <Col xl="6">
               <Card>
                 <CardBody>
                   <CardTitle className="mb-5">Experience</CardTitle>
-                  <div >
+                  <div>
                     <ul className="verti-timeline list-unstyled">
-                      {map(userProfile.experiences, (experience, i) => (
+                      {userProfile.experiences.map((experience, i) => (
                         <li
                           className={
-                            experience.id === 1
-                              ? "event-list active"
-                              : "event-list"
+                            experience.id === 1 ? "event-list active" : "event-list"
                           }
                           key={"_exp_" + i}
                         >
@@ -242,10 +250,7 @@ const ContactsProfile = props => {
                             <div className="flex-grow-1">
                               <div>
                                 <h5 className="font-size-15">
-                                  <Link
-                                    to={experience.link}
-                                    className="text-dark"
-                                  >
+                                  <Link to={experience.link} className="text-dark">
                                     {experience.designation}
                                   </Link>
                                 </h5>
@@ -263,9 +268,9 @@ const ContactsProfile = props => {
               </Card>
             </Col>
 
-            <Col xl="8">
+            {/* <Col xl="8">
               <Row>
-                {map(miniCards, (card, key) => (
+                {miniCards.map((card, key) => (
                   <MiniCards
                     title={card.title}
                     text={card.text}
@@ -274,28 +279,7 @@ const ContactsProfile = props => {
                   />
                 ))}
               </Row>
-              {/* <Card>
-                <CardBody>
-                  <CardTitle className="mb-4">Revenue</CardTitle>
-                  <div id="revenue-chart">
-                    <ApexRevenue dataColors='["--bs-primary"]' />
-                  </div>
-                </CardBody>
-              </Card>
-              <Card> */}
-                {/* <CardBody>
-                  <CardTitle className="mb-4">My Projects</CardTitle>
-
-                  <TableContainer
-                    columns={columns}
-                    data={userProfile.projects || []}
-                    isGlobalFilter={false}
-                    customPageSize={5}
-                    customPageSizeOptions={true}
-                  />
-                </CardBody> */}
-              {/* </Card> */}
-            </Col>
+            </Col> */}
           </Row>
         </Container>
       </div>
@@ -304,19 +288,7 @@ const ContactsProfile = props => {
 };
 
 ContactsProfile.propTypes = {
-  userProfile: PropTypes.any,
-  onGetUserProfile: PropTypes.func,
+  userProfile: PropTypes.object,
 };
 
-const mapStateToProps = ({ contacts }) => ({
-  userProfile: contacts.userProfile,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onGetUserProfile: () => dispatch(getUserProfile()),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(ContactsProfile));
+export default ContactsProfile;

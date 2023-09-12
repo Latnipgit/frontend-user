@@ -644,9 +644,7 @@ const Navbar = props => {
                         <Link to="/form-editors" className="dropdown-item">
                           {props.t("Form Editors")}
                         </Link>
-                        <Link to="/form-uploads" className="dropdown-item">
-                          {props.t("Form File Upload")}{" "}
-                        </Link>
+                      
                         <Link to="/form-repeater" className="dropdown-item">
                           {props.t("Form Repeater")}
                         </Link>

@@ -7,6 +7,7 @@ import RegisteredCompanyList from "../pages/admin/Members/RegisteredCompany/Regi
 import DiputedBillings from "../pages/admin/DisputedBillings/DiputedBillings";
 import ApprovedTranction from "../pages/admin/ApprovedTransaction/ApprovedTranction";
 import Document from "../pages/Dashboard/users/Documents/documents";
+import ContactsProfile from "../pages/Dashboard/users/profile";
 // Pages Component
 import Chat from "../pages/Chat/Chat";
 
@@ -179,7 +180,7 @@ import Pages500 from "../pages/Utility/pages-500";
 //Contacts
 import ContactsGrid from "../pages/Contacts/contacts-grid";
 import ContactsList from "../pages/Contacts/ContactList/contacts-list";
-import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
+//import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
 import Register2 from "pages/Authentication/register2";
 import AddCompany from "pages/admin/ApprovedTransaction/add-company";
 
@@ -187,7 +188,8 @@ const authProtectedRoutes = [
   //User Panel Step 1
   { path: "/companies", component: <ApprovedTranction /> },
   { path: "/documents", component: <Document /> },
-  { path: "/profile", component: <ApprovedTranction /> },
+  { path: "/FormUpload", component: <FormUpload /> },
+  { path: "/profile", component: <ContactsProfile /> },
   { path: "/notification", component: <ApprovedTranction /> },
   //USer Panel Step 2
   { path: "/company-dashboard", component: <Dashboard /> },

@@ -73,7 +73,7 @@ const FormUpload = () => {
                             className="dz-message needsclick mt-2"
                             {...getRootProps()}
                           >
-                            <input {...getInputProps()} />
+                            <input {...getInputProps()} multiple/>
                             <div className="mb-3">
                               <i className="display-4 text-muted bx bxs-cloud-upload" />
                             </div>
@@ -117,6 +117,7 @@ const FormUpload = () => {
                         )
                       })}
                     </div>
+                    
                   </Form>
 
                   <div className="text-center mt-4">
