@@ -94,23 +94,23 @@ const Debtors = props => {
       },
 
 
-      {
-        Header: "View",
-        disableFilters: true,
-        accessor: "view",
-        Cell: cellProps => {
-          return (
-            <Button
-              type="button"
-              color="primary"
-              className="btn-sm btn-rounded"
-              onClick={toggleViewModal}
-            >
-              View Details
-            </Button>
-          );
-        },
-      },
+      // {
+      //   Header: "View",
+      //   disableFilters: true,
+      //   accessor: "view",
+      //   Cell: cellProps => {
+      //     return (
+      //       <Button
+      //         type="button"
+      //         color="primary"
+      //         className="btn-sm btn-rounded"
+      //         onClick={toggleViewModal}
+      //       >
+      //         View Details
+      //       </Button>
+      //     );
+      //   },
+      // },
 
       // {
       //   Header: "Action",
