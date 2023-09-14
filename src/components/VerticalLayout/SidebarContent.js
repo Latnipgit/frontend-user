@@ -229,6 +229,13 @@ const SidebarContent = (props) => {
                 {props.t("Notification")}
               </Link>
             </li>
+            <li>
+              <Link to="/employee" >
+                <i className="bx bxs-notification"></i>
+                
+                {props.t("Employee Registration")}
+              </Link>
+            </li>
           </>
         )}
           </ul>

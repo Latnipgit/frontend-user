@@ -8,6 +8,7 @@ import DiputedBillings from "../pages/admin/DisputedBillings/DiputedBillings";
 import ApprovedTranction from "../pages/admin/ApprovedTransaction/ApprovedTranction";
 import Document from "../pages/Dashboard/users/Documents/documents";
 import ContactsProfile from "../pages/Dashboard/users/profile";
+import Employee from "../pages/Dashboard/users/employeeRegistratiion/employee"
 // Pages Component
 import Chat from "../pages/Chat/Chat";
 
@@ -199,6 +200,7 @@ const authProtectedRoutes = [
   { path: "/creditors", component: <RegisteredCompanyList /> },
   { path: "/send-bill-transaction", component: <SendBillTransaction /> },
   { path: "/recieved-payment", component: <DiputedBillings /> },
+  { path: "/employee", component: <Employee /> },
  
 
   { path: "/login-register", component: <Register2 /> },
