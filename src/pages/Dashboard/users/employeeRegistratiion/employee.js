@@ -45,14 +45,26 @@ const Employee = () => {
     }),
     onSubmit: values => {
       debugger
-      Window.alert("Employee Registration seccussfully..")
-      console.log("values", values)
+      if (validation.isValid && isAtLeastOneCheckboxSelected(values.access)) {
+        console.log("values", values);
+        validation.resetForm();
+        
+      } else {
+        // If form is invalid or no checkbox is selected
+        toggleAlert();
+      }
+     
     },
+    
     validateOnChange: true,
     validateOnBlur: true,
     enableReinitialize: true,
     validateOnMount: true,
   })
+  const isAtLeastOneCheckboxSelected = (access) => {
+    // Check if at least one checkbox in the 'access' object is selected
+    return Object.values(access).some((value) => value);
+  };
   const handleCancel = () => {
     validation.resetForm()
   }
@@ -65,8 +77,8 @@ const Employee = () => {
     }
   }
   React.useEffect(() => {
-    setIsFormValid(validation.isValid)
-  }, [validation.isValid])
+    setIsFormValid(validation.isValid);
+  }, [validation.isValid]);
   return (
     <React.Fragment>
       <div className="page-content">
@@ -282,15 +294,17 @@ const Employee = () => {
                       </Col>
                     </Row>
 
-                    {alertVisible && !validation.isValid && (
+                     {alertVisible && (
                       <div className="alert alert-danger mt-3">
-                        Please fix the errors in the form before submitting.
+                        {validation.isValid
+                          ? "Please select at least one checkbox."
+                          : "Please fix the errors in the form before submitting."}
                       </div>
                     )}
                   </Form>
                 </CardBody>
               </Card>
-            </Col>
+            </Col>    
           </Row>
         </Container>
       </div>
