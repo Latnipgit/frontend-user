@@ -70,18 +70,19 @@ const Dashboard = props => {
   const isPopupOpen = JSON.parse(localStorage.getItem("IspopupOpen"))
   //debtors
   const sampleData = [
-    { city: "New York", amountDue: 5000, daysCount: 10 },
-    { city: "Los Angeles", amountDue: 3000, daysCount: 15 },
-    { city: "Chicago", amountDue: 7000, daysCount: 5 },
-    { city: "Houston", amountDue: 2500, daysCount: 20 },
-    { city: "Miami", amountDue: 6000, daysCount: 8 },
-    { city: "San Francisco", amountDue: 4500, daysCount: 12 },
-    { city: "Boston", amountDue: 3500, daysCount: 18 },
-    { city: "Seattle", amountDue: 8000, daysCount: 4 },
-    { city: "Dallas", amountDue: 4000, daysCount: 14 },
-    { city: "Atlanta", amountDue: 5500, daysCount: 7 },
+    { city: "New York", amountDue: 5000, daysCount: 10, name: "Name A" },
+    { city: "Los Angeles", amountDue: 3000, daysCount: 15, name: "Name B" },
+    { city: "Chicago", amountDue: 7000, daysCount: 5, name: "Name C" },
+    { city: "Houston", amountDue: 2500, daysCount: 20, name: "Name D" },
+    { city: "Miami", amountDue: 6000, daysCount: 8, name: "Name E" },
+    { city: "San Francisco", amountDue: 4500, daysCount: 12, name: "Name F" },
+    { city: "Boston", amountDue: 3500, daysCount: 18, name: "Name G" },
+    { city: "Seattle", amountDue: 8000, daysCount: 31, name: "Name H" },
+    { city: "Dallas", amountDue: 4000, daysCount: 45, name: "Name I" },
+    { city: "Atlanta", amountDue: 5500, daysCount: 36, name: "Name J" },
     // Add more data as needed
-  ]
+  ];
+  
   //Creditors
   const sampleDataCreditors = [
     { city: "New York", name: "Creditor 1", amountOwed: 8000, daysCount: 10 },
@@ -101,9 +102,9 @@ const Dashboard = props => {
     { city: "Portland", name: "Creditor 15", amountOwed: 2500, daysCount: 8 },
     { city: "San Diego", name: "Creditor 16", amountOwed: 3500, daysCount: 12 },
     { city: "Washington, D.C.", name: "Creditor 17", amountOwed: 7000, daysCount: 7 },
-    { city: "Detroit", name: "Creditor 18", amountOwed: 8000, daysCount: 18 },
-    { city: "Raleigh", name: "Creditor 19", amountOwed: 4000, daysCount: 14 },
-    { city: "Tampa", name: "Creditor 20", amountOwed: 6500, daysCount: 10 },
+    { city: "Detroit", name: "Creditor 18", amountOwed: 8000, daysCount: 45 },
+    { city: "Raleigh", name: "Creditor 19", amountOwed: 4000, daysCount: 40 },
+    { city: "Tampa", name: "Creditor 20", amountOwed: 6500, daysCount: 35 },
     // Add more data as needed to reach a total of 20 records
   ];
   
@@ -118,8 +119,10 @@ const Dashboard = props => {
   .slice(0, 10);
 
   const totalAmountDue = sampleData.reduce(
-    (total, item) => total + item.amountDue,
-    0
+    (total, item) => total + item.amountDue,0
+  )
+  const totalAmountDueCreditors = sampleDataCreditors.reduce(
+    (total, item) => total + item.amountOwed,0
   )
   const sortedDataCreditors = sampleDataCreditors
   .slice()
@@ -131,6 +134,10 @@ const Dashboard = props => {
   const [chartData, setChartData] = useState([
     { label: "Total Amount Due", value: totalAmountDue },
   ])
+  //Initial for creditors
+  const [chartDatacreditors, setChartDatacreditors] = useState([
+    { label: "Total Amount deposit", value: totalAmountDueCreditors },
+  ])
 //debtors age wise
   const chartDataAgewise = sampleData.map((item, index) => ({
     label: item.city,
@@ -141,19 +148,19 @@ const Dashboard = props => {
   const chartDataCreditorAgewise = sampleDataCreditors.map((item, index) => ({
     label: item.city,
     value: item.amountOwed,
-    backgroundColor: getRandomColor(index),
+    backgroundColor: getRandomColorCreditors(index),
   }));
 //Top 10 debtors 
 const chartDataTop10debtors = sortedData.map((item) => ({
-  label: item.city,
+  label: item.name,
   value: item.amountDue,
   backgroundColor: getRandomColor(),
 }));
 //Top 10 creditors
 const chartDataTop10Creditors = sortedDataCreditors.map((item) => ({
-  label: item.city,
+  label: item.name,
   value: item.amountOwed,
-  backgroundColor: getRandomColor(),
+  backgroundColor: getRandomColorCreditors(),
 }));
 //debtors intial 
 useEffect(() => {
@@ -368,7 +375,7 @@ useEffect(() => {
         },
         plugins: {
           datalabels: {
-            display: false, // Hide the data labels (optional)
+            display: true, // Hide the data labels (optional)
           },
           doughnutlabel: {
             labels: [
@@ -421,7 +428,7 @@ useEffect(() => {
         datasets: [
           {
             data: binAmounts,
-            backgroundColor: bins.map((bin, index) => getRandomColor(index)),
+            backgroundColor: bins.map((bin, index) => getRandomColorCreditors(index)),
           },
         ],
       },
@@ -454,16 +461,16 @@ useEffect(() => {
 
 //creditors intial 
 useEffect(() => {
-  if (chartRef1.current) {
+  if (chartRef1.current && activeChart === 'totalDebtors') {
     const ctx = chartRef1.current.getContext("2d")
 
     new Chart(ctx, {
       type: "doughnut",
       data: {
-        labels: chartData.map(item => item.label),
+        labels: chartDatacreditors.map(item => item.label),
         datasets: [
           {
-            data: chartData.map(item => item.value),
+            data: chartDatacreditors.map(item => item.value),
             backgroundColor: ["#28a745"],
           },
         ],
@@ -476,7 +483,7 @@ useEffect(() => {
       },
     })
   }
-}, [chartRef1, chartData])
+}, [chartRef1, chartDatacreditors])
 useEffect(() => {
   if (isPopupOpen) {
     setTimeout(() => {
@@ -502,6 +509,9 @@ const handleChartCreditorsChange = (chartType) => {
   function getRandomColor(index) {
     return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   }
+  function getRandomColorCreditors(index) {
+    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  }
   document.title = "Dashboard | Bafana"
 
   return (
@@ -525,17 +535,17 @@ const handleChartCreditorsChange = (chartType) => {
               </button>
               <button
                 type="button"
-                className={`btn btn-secondary ${activeChart === "ageWise" ? "active" : ""}`}
-                onClick={() => handleChartChange("ageWise")}
+                className={`btn btn-secondary ${activeChart === "citywise" ? "active" : ""}`}
+                onClick={() => handleChartChange("citywise")}
               >
-                Age Wise
+                City Wise
               </button>
               <button
                 type="button"
                 className={`btn btn-secondary ${activeChart === "top10Debtors" ? "active" : ""}`}
                 onClick={() => handleChartChange("top10Debtors")}
               >
-                Top 10 Debtors
+                Top Debtors
               </button>
               <button
                 type="button"
@@ -551,7 +561,7 @@ const handleChartCreditorsChange = (chartType) => {
                 <canvas ref={chartRef}></canvas>
               </div>
             )}
-            {activeChart === "ageWise" && (
+            {activeChart === "citywise" && (
               <div className="chart-container">
                 {/* Render your Age Wise chart */}
                 <canvas ref={chartRef2}></canvas>
@@ -582,23 +592,23 @@ const handleChartCreditorsChange = (chartType) => {
               <button
                 type="button"
                 className={`btn btn-secondary ${activeChartCreditors === "totalCreditors" ? "active" : ""}`}
-                onClick={() => handleChartCreditorsChange("totalDebtors")}
+                onClick={() => handleChartCreditorsChange("totalCreditors")}
               >
-                Total Debts
+                Total Credits
               </button>
               <button
                 type="button"
-                className={`btn btn-secondary ${activeChartCreditors === "ageWise" ? "active" : ""}`}
-                onClick={() => handleChartCreditorsChange("ageWise")}
+                className={`btn btn-secondary ${activeChartCreditors === "citywise" ? "active" : ""}`}
+                onClick={() => handleChartCreditorsChange("citywise")}
               >
-                Age Wise
+                City Wise
               </button>
               <button
                 type="button"
                 className={`btn btn-secondary ${activeChartCreditors === "top10Debtors" ? "active" : ""}`}
                 onClick={() => handleChartCreditorsChange("top10Debtors")}
               >
-                Top 10 Debtors
+                Top Creditors
               </button>
               <button
                 type="button"
@@ -614,7 +624,7 @@ const handleChartCreditorsChange = (chartType) => {
                 <canvas ref={chartRef1}></canvas>
               </div>
             )}
-            {activeChartCreditors === "ageWise" && (
+            {activeChartCreditors === "citywise" && (
               <div className="chart-container">
                 {/* Render your Age Wise chart */}
                 <canvas ref={chartRefCreditorAgeWise}></canvas>

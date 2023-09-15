@@ -74,7 +74,8 @@ const Document = (props) => {
                             <div className="mb-3">
                               <i className="display-4 text-muted bx bxs-cloud-upload" />
                             </div>
-                            <h4>Drop files here or click to upload.</h4>
+                            <h4>DROP FILES HERE OR CLICK TO UPLOAD</h4>
+                            
                           </div>
                         </div>
                       )}

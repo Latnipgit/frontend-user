@@ -57,15 +57,15 @@ const ApprovedTranction = props => {
   };
   const columns = useMemo(
     () => [
-      {
-        Header: "Sr No",
-        accessor: "SrNo",
-        filterable: false,
-        disableFilters: true,
-        Cell: cellProps => {
-          return <SrNo {...cellProps} />;
-        },
-      },
+      // {
+      //   Header: "Sr No",
+      //   accessor: "SrNo",
+      //   filterable: false,
+      //   disableFilters: true,
+      //   Cell: cellProps => {
+      //     return <SrNo {...cellProps} />;
+      //   },
+      // },
       {
         Header: "Company Name",
         accessor: "CompanyName",
@@ -84,15 +84,15 @@ const ApprovedTranction = props => {
           return <PANCARD {...cellProps} />;
         },
       },
-      {
-        Header: "Aadhaar Number",
-        accessor: "AADHAR",
-        disableFilters: true,
-        filterable: false,
-        Cell: cellProps => {
-          return <AADHAR {...cellProps} />;
-        },
-      },
+      // {
+      //   Header: "Aadhaar Number",
+      //   accessor: "AADHAR",
+      //   disableFilters: true,
+      //   filterable: false,
+      //   Cell: cellProps => {
+      //     return <AADHAR {...cellProps} />;
+      //   },
+      // },
       {
         Header: "GST Number",
         accessor: "GST",
@@ -102,27 +102,27 @@ const ApprovedTranction = props => {
           return <GST {...cellProps} />;
         },
       },
-      {
-        Header: "Action",
-        disableFilters: true,
-        accessor: "view",
-        Cell: cellProps => {
-          return (
-            <div className="d-flex">
-                  <div className="d-flex flex-column align-items-center me-3" style={{ cursor: 'pointer' }}>
-                    <i className="mdi mdi-eye font-size-16 text-primary me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View"  onClick={handleEyeIconClick}/>
-                  </div>
-                  <div className="d-flex flex-column align-items-center me-3"  style={{ cursor: 'pointer' }}>
-                    <i className="mdi mdi-pencil font-size-16 text-success me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" />
-                  </div>
+      // {
+      //   Header: "Action",
+      //   disableFilters: true,
+      //   accessor: "view",
+      //   Cell: cellProps => {
+      //     return (
+      //       <div className="d-flex">
+      //             <div className="d-flex flex-column align-items-center me-3" style={{ cursor: 'pointer' }}>
+      //               <i className="mdi mdi-eye font-size-16 text-primary me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View"  onClick={handleEyeIconClick}/>
+      //             </div>
+      //             <div className="d-flex flex-column align-items-center me-3"  style={{ cursor: 'pointer' }}>
+      //               <i className="mdi mdi-pencil font-size-16 text-success me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" />
+      //             </div>
               
-                      <div className="d-flex flex-column align-items-center" style={{ cursor: 'pointer' }}>
-                          <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="delete" />
-                      </div>
-                </div>
-          );
-        },
-      },
+      //                 <div className="d-flex flex-column align-items-center" style={{ cursor: 'pointer' }}>
+      //                     <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="delete" />
+      //                 </div>
+      //           </div>
+      //     );
+      //   },
+      // },
     ],
     []
   );
@@ -147,8 +147,8 @@ const ApprovedTranction = props => {
       <Card >
         <CardBody>
        
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div className="mb-4 h4 card-title mt-5">Company List</div>
+         `` {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
+            {/* <div className="mb-4 h4 card-title mt-5">Company List</div>
             <Link to="/add-company">
             <Button
               type="button"
@@ -158,7 +158,7 @@ const ApprovedTranction = props => {
               Add Company
             </Button>
             </Link>
-          </div>
+          </div> */}
           <TableContainer
             columns={columns}
             data={filteredData.length > 0 ? filteredData : ApprovedTranctionData}

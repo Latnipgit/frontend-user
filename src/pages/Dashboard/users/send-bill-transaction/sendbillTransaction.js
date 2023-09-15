@@ -4,6 +4,7 @@ import * as Yup from "yup"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
+import Select from 'react-select';
 import {
   Card,
   Col,
@@ -114,41 +115,62 @@ const SendBillTransaction = () => {
 
               <form onSubmit={formik.handleSubmit}>
                 <Row>
-                  <Col xs={12} md={4}>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="customerName"
-                    >
-                      Customer Name
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text mt-5">
-                        <i className="mdi mdi-credit-card" />
-                      </div>
-                      <Input
-                        type="select"
-                        className={`form-control mt-5`}
-                        id="customerName"
-                        name="customerName"
-                        value={formik.values.customerName}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      >
-                        <option value="" disabled>
-                          Select Customer
-                        </option>
-                        <option value="customer1">IT Tecch</option>
-                        <option value="customer2">Latnip IT Solution</option>
-                        {/* Add more options as needed */}
-                      </Input>
-                    </InputGroup>
-                    {formik.touched.customerName &&
-                      formik.errors.customerName && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.customerName}
-                        </div>
-                      )}
-                  </Col>
+                <Col xs={12} md={4}>
+  <label className="visually-hidden mt-4" htmlFor="customerName">
+    Customer Name
+  </label>
+  <InputGroup>
+    <div className="input-group-text mt-5">
+      <i className="mdi mdi-credit-card" />
+    </div>
+    <Input
+      type="select"
+      className={`form-control mt-5`}
+      id="customerName"
+      name="customerName"
+      value={formik.values.customerName}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+    >
+      <option value="" disabled>
+        Select Customer
+      </option>
+      <option value="customer1">IT Tecch</option>
+      <option value="customer2">Latnip IT Solution</option>
+      {/* Add more options as needed */}
+      <option value="addNewCustomer" className="add-new-customer-option"><i className="mdi mdi-plus" /> Add New Customer</option>
+    </Input>
+    {formik.values.customerName === "addNewCustomer" && (
+      <div className="input-group-append">
+        {/* Add input or button for adding a new customer */}
+        <input
+          type="text"
+          className="form-control"
+          placeholder="New Customer Name"
+          // Handle input for new customer name
+        />
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => {
+            // Implement the logic to add a new customer here
+            // You can take the input value for the new customer name
+            // and perform the necessary actions to add the customer
+            // Once the new customer is added, update the dropdown options
+          }}
+        >
+          Add
+        </button>
+      </div>
+    )}
+  </InputGroup>
+  {formik.touched.customerName && formik.errors.customerName && (
+    <div className="text-danger mt-2">
+      {formik.errors.customerName}
+    </div>
+  )}
+</Col>
+
 
                   <Col xs={12} md={4}>
                     <label className="visually-hidden" htmlFor="billDate">
