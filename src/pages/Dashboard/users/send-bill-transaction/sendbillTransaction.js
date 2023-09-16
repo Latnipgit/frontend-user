@@ -4,17 +4,27 @@ import * as Yup from "yup"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import {
-  Card,
-  Col,
   Container,
   Row,
+  Col,
+  Button,
+  Card,
   CardBody,
-  CardTitle,
-  InputGroup,
   Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  CardHeader,
+  Table,
+  InputGroup,
+  Form,
+  CardTitle
 } from "reactstrap"
+
+
 
 const validationSchema = Yup.object().shape({
   customerName: Yup.string()
@@ -104,6 +114,62 @@ const SendBillTransaction = () => {
     formik.setFieldValue("uploadPurchaseOrder", selectedFile)
     setPurchaseOrderFileName(selectedFile ? selectedFile.name : "")
   }
+//Dropdown cutomer 
+
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [options, setOptions] = useState([
+    { label: 'Alice', value: 'Alice' },
+    { label: 'Bob', value: 'Bob' },
+    { label: 'Charlie', value: 'Charlie' },
+    { label: 'David', value: 'David' },
+  ]);
+
+  const handleInputChange = (inputValue) => {
+    // Filter options based on user input
+    const filteredOptions = options.filter((option) =>
+      option.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setOptions(filteredOptions);
+  };
+
+
+
+  const [showModal, setShowModal] = useState(false);
+  const [newCustomerName, setNewCustomerName] = useState('');
+  const [customerType, setCustomerType] = useState('Business');
+
+
+
+  const handleAddCustomer = () => {
+    debugger
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSaveCustomer = () => {
+    if (newCustomerName) {
+      setOptions([...options, { label: newCustomerName, value: newCustomerName }]);
+      setSelectedOption({ label: newCustomerName, value: newCustomerName });
+      setShowModal(false);
+    }
+  };
+
+  const DropdownIndicator = (props) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        {props.selectProps.menuIsOpen ? (
+          <button className="btn btn-primary mt-2" onClick={handleAddCustomer}>
+             + Add Customer
+          </button>
+        ) : (
+          props.children
+        )}
+      </components.DropdownIndicator>
+    );
+  };
 
   return (
     <Container fluid className="mt-5">
@@ -116,61 +182,61 @@ const SendBillTransaction = () => {
               <form onSubmit={formik.handleSubmit}>
                 <Row>
                 <Col xs={12} md={4}>
-  <label className="visually-hidden mt-4" htmlFor="customerName">
-    Customer Name
-  </label>
-  <InputGroup>
-    <div className="input-group-text mt-5">
-      <i className="mdi mdi-credit-card" />
-    </div>
-    <Input
-      type="select"
-      className={`form-control mt-5`}
-      id="customerName"
-      name="customerName"
-      value={formik.values.customerName}
-      onChange={formik.handleChange}
-      onBlur={formik.handleBlur}
-    >
-      <option value="" disabled>
+ 
+                <div>
+      <label className="visually-hidden" htmlFor="customerSelect">
         Select Customer
-      </option>
-      <option value="customer1">IT Tecch</option>
-      <option value="customer2">Latnip IT Solution</option>
-      {/* Add more options as needed */}
-      <option value="addNewCustomer" className="add-new-customer-option"><i className="mdi mdi-plus" /> Add New Customer</option>
-    </Input>
-    {formik.values.customerName === "addNewCustomer" && (
-      <div className="input-group-append">
-        {/* Add input or button for adding a new customer */}
-        <input
-          type="text"
-          className="form-control"
-          placeholder="New Customer Name"
-          // Handle input for new customer name
-        />
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={() => {
-            // Implement the logic to add a new customer here
-            // You can take the input value for the new customer name
-            // and perform the necessary actions to add the customer
-            // Once the new customer is added, update the dropdown options
-          }}
-        >
-          Add
-        </button>
-      </div>
-    )}
-  </InputGroup>
-  {formik.touched.customerName && formik.errors.customerName && (
-    <div className="text-danger mt-2">
-      {formik.errors.customerName}
+      </label>
+      <Select
+        id="customerSelect"
+        options={options}
+        value={selectedOption}
+        onChange={(selected) => setSelectedOption(selected)}
+        onInputChange={handleInputChange}
+        isSearchable
+        components={{ DropdownIndicator }}
+      />
     </div>
-  )}
-</Col>
+    <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Customer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="customerName">
+              <Form.Label>Customer Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter customer name"
+                value={newCustomerName}
+                onChange={(e) => setNewCustomerName(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="customerType">
+              <Form.Label>Customer Type</Form.Label>
+              <Form.Check
+                type="radio"
+                label="Business"
+                name="customerType"
+                value="Business"
+                checked={customerType === 'Business'}
+                onChange={() => setCustomerType('Business')}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSaveCustomer}>
+            Save Customer
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
+
+</Col>
 
                   <Col xs={12} md={4}>
                     <label className="visually-hidden" htmlFor="billDate">

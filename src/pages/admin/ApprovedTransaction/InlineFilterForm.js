@@ -15,11 +15,11 @@ import {
 
 const InlineFilterForm = ({ onFilter }) => {
     const [filters, setFilters] = useState({
-        aadhar: '', 
+        company: '', 
         pan: '',    
         gst: '',  
       });
-  const [aadharError, setAadharError] = useState('');
+  const [company, setCompany] = useState('');
   const [gstError, setGSTError] = useState('');
   const [panError, setPANError] = useState('');
 
@@ -71,11 +71,12 @@ const InlineFilterForm = ({ onFilter }) => {
     }));
   };
   const handleAadharChange = (event) => {
-    const numericValue = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+    const numericValue = event.target.value;
+    //.replace(/\D/g, ''); // Remove non-numeric characters
     const truncatedValue = numericValue.slice(0, 12); // Limit to maximum 12 characters
     setFilters((prevFilters) => ({
       ...prevFilters,
-      aadhar: truncatedValue,
+      company: numericValue,
     }));
   };
 
@@ -90,25 +91,25 @@ const InlineFilterForm = ({ onFilter }) => {
 
                 <Form className="row row-cols-lg-auto g-3 align-items-center">
 
-                <Col xs={12} md={6}>
-                    <label className="visually-hidden" htmlFor="aadharFilter">Aadhar Number</label>
+                {/* <Col xs={12} md={6}>
+                    <label className="visually-hidden" htmlFor="aadharFilter">Company Name</label>
                     <InputGroup>
                     <div className="input-group-text">
                         <i className="mdi mdi-account-card-details" />
                     </div>
                     <input
                     type="number"
-                    className={`form-control ${aadharError ? 'is-invalid' : ''}`}
+                    className={`form-control`}
                     id="aadharFilter"
-                    placeholder="Aadhar Number"
-                    value={filters.aadhar}
+                    placeholder="Company Name"
+                    value={filters.company}
                     onChange={handleAadharChange}
-                    onBlur={validateAadhar}
-                    maxLength="12"
+                   // onBlur={validateAadhar}
+                    //maxLength="12"
                     />
                     </InputGroup>
                     {aadharError && <div className="text-danger">{aadharError}</div>}
-                </Col>
+                </Col> */}
 
                 <Col xs={12} md={6}>
                 <label className="visually-hidden" htmlFor="gstFilter">

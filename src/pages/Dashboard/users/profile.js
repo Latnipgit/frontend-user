@@ -217,7 +217,7 @@ const ContactsProfile = (props) => {
             </Col>
             <Col xl="6">
               <Card>
-                <CardBody>
+                {/* <CardBody>
                   <CardTitle className="mb-5">Experience</CardTitle>
                   <div>
                     <ul className="verti-timeline list-unstyled">
@@ -264,7 +264,7 @@ const ContactsProfile = (props) => {
                       ))}
                     </ul>
                   </div>
-                </CardBody>
+                </CardBody> */}
               </Card>
             </Col>
 

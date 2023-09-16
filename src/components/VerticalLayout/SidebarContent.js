@@ -188,6 +188,12 @@ const SidebarContent = (props) => {
               </Link>
             </li>
             <li>
+              <Link to="/company-search">
+                <i className="bx bx-search"></i>
+                {props.t("Invoices")}
+              </Link>
+            </li>
+            <li>
             <Link to="/send-bill-transaction">
                 <i className="bx bx-send"></i>
                 {props.t("Send Bill Transaction")}

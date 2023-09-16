@@ -72,7 +72,15 @@ const ApprovedTranction = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <CompanyName {...cellProps} />;
+          return (
+            <div
+              className="company-name-cell"
+              onClick={() => handleEyeIconClick(cellProps.row.original)}
+              style={{ cursor: 'pointer' }}
+            >
+              {cellProps.value}
+            </div>
+          );
         },
       },
       {
@@ -147,7 +155,7 @@ const ApprovedTranction = props => {
       <Card >
         <CardBody>
        
-         `` {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
+         {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
             {/* <div className="mb-4 h4 card-title mt-5">Company List</div>
             <Link to="/add-company">
             <Button
