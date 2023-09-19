@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
 import Select, { components } from "react-select"
+// import { mdiDelete, mdiPlus } from '@mdi/react';
 import "../send-bill-transaction/sendbilltransaction.scss"
 import {
   Container,
@@ -23,6 +24,8 @@ import {
   InputGroup,
   Form,
   CardTitle,
+  FormGroup,
+  Label
 } from "reactstrap"
 
 const validationSchema = Yup.object().shape({
@@ -44,25 +47,6 @@ const validationSchema = Yup.object().shape({
       "Bill Number must contain only alphanumeric characters"
     )
     .required("Bill Number is required"),
-  //     uploadPurchaseOrder: Yup.mixed().test(
-  //     "fileFormat",
-  //     "Only PDF, JPG, or PNG files are allowed",
-  //     value => {
-  //       if (!value) return true // Allow if no file is selected
-  //       const supportedFormats = ["application/pdf", "image/jpeg", "image/png"]
-  //       return supportedFormats.includes(value.type)
-  //     }
-  //   ),
-
-  //   uploadPurchaseOrder: Yup.mixed().test(
-  //     "fileFormat",
-  //     "Only PDF, JPG, or PNG files are allowed",
-  //     value => {
-  //       if (!value) return true // Allow if no file is selected
-  //       const supportedFormats = ["application/pdf", "image/jpeg", "image/png"]
-  //       return supportedFormats.includes(value.type)
-  //     }
-  //   ),
   creditLimitDays: Yup.number()
     .typeError("Credit Limit Days must be a number")
     .required("Credit Limit Days is required"),
@@ -168,43 +152,112 @@ const SendBillTransaction = () => {
       </components.DropdownIndicator>
     )
   }
+//first table
+  const [faqsRow, setFaqsRow] = useState(1)
+  const [data, setData] = useState([
+    {
+      itemDetail: "",
+      quantity: "",
+      rate: "",
+      amount: "",
+    },
+  ])
 
-  //table for adding items
-  const [items, setItems] = useState([
-    { item: '', quantity: '', rate: '', amount: '' },
-  ]);
+  const [validationMessage, setValidationMessage] = useState("")
 
-  const addItemRow = () => {
-    setItems([...items, { item: '', quantity: '', rate: '', amount: '' }]);
+  const addFaqsRow = () => {
+    // Check if any of the previous row's fields are empty
+    const lastIndex = data.length - 1
+    const lastRow = data[lastIndex]
+
+    if (
+      lastRow.itemDetail === "" ||
+      lastRow.quantity === "" ||
+      lastRow.rate === ""
+    ) {
+      setValidationMessage("Please fill all fields before adding a new row.")
+      setTimeout(() => {
+        setValidationMessage("")
+      }, 3000)
+      return // Exit without adding a new row
+    }
+
+    setValidationMessage("") // Clear any previous validation message
+
+    setFaqsRow(faqsRow + 1)
+    setData([
+      ...data,
+      {
+        itemDetail: "",
+        quantity: "0.00",
+        rate: "0.00",
+        amount: "₹0.00",
+      },
+    ])
+  }
+
+  const removeFaqsRow = index => {
+    const newData = [...data]
+    newData.splice(index, 1)
+    setData(newData)
+    setFaqsRow(faqsRow - 1)
+  }
+
+  const handleItemDetailChange = (index, value) => {
+    const newData = [...data]
+    newData[index].itemDetail = value
+    setData(newData)
+  }
+
+  const handleQuantityChange = (index, value) => {
+    const newData = [...data]
+    newData[index].quantity = value.replace(/[^0-9.]/g, "") // Allow only numeric and decimal point characters
+    setData(newData)
+  }
+
+  const formatQuantity = index => {
+    const newData = [...data]
+    newData[index].quantity = parseFloat(newData[index].quantity).toFixed(2) // Format to two decimal places
+    setData(newData)
+  }
+  const handleRateChange = (index, value) => {
+    const newData = [...data]
+    newData[index].rate = value.replace(/[^0-9.]/g, "") // Allow only numeric and decimal point characters
+
+    const quantity = parseFloat(newData[index].quantity)
+    const rate = parseFloat(newData[index].rate)
+
+    if (!isNaN(quantity) && !isNaN(rate)) {
+      newData[index].amount = "₹" + (quantity * rate).toFixed(2)
+    } else {
+      newData[index].amount = ""
+    }
+
+    setData(newData)
+  }
+
+  const formatRate = index => {
+    const newData = [...data]
+    newData[index].rate = parseFloat(newData[index].rate).toFixed(2) // Format to two decimal places
+    setData(newData)
+  }
+
+  //second Table 
+  // Define state variables for discount, TDS, TCS, and adjustments
+  const [discountValue, setDiscountValue] = useState('');
+  const [tdsOrTcs, setTdsOrTcs] = useState('');
+  const [adjustmentsValue, setAdjustmentsValue] = useState('');
+
+  // Implement a function to calculate subtotal
+  const calculateSubtotal = () => {
+    // Replace this with your calculation logic based on data
+    return 2233.00;
   };
 
-  const handleInputChangeADD = (event, index) => {
-    const { name, value } = event.target;
-    const updatedItems = [...items];
-    updatedItems[index][name] = value;
-    setItems(updatedItems);
-  };
-
-  const removeItemRow = (index) => {
-    const updatedItems = [...items];
-    updatedItems.splice(index, 1);
-    setItems(updatedItems);
-  };
-  const [faqsRow, setFaqsRow] = useState(0);
-
-  const addFaqs = () => {
-    setFaqsRow(faqsRow + 1);
-  };
-
-  const removeFaqsRow = (rowId) => {
-    // Create a copy of the current state
-    const updatedRows = [...faqsRow];
-
-    // Remove the row with the specified rowId
-    updatedRows.splice(rowId, 1);
-
-    // Update the state with the modified rows
-    setFaqsRow(updatedRows);
+  // Implement a function to calculate the final total
+  const calculateFinalTotal = () => {
+    // Replace this with your calculation logic based on data and values
+    return 2233.00;
   };
 
   return (
@@ -276,7 +329,7 @@ const SendBillTransaction = () => {
                     </Modal>
                   </Col>
                   <Col xs={12} md={2}>
-                     <div className="mb-2">Invoice Issue Date</div>
+                    <div className="mb-2">Invoice Issue Date</div>
                     <label className="visually-hidden" htmlFor="billDate">
                       Issue Date
                     </label>
@@ -300,12 +353,11 @@ const SendBillTransaction = () => {
                     )}
                   </Col>
                   <Col xs={12} md={2}>
-                  <div className="mb-2">Due From</div>
+                    <div className="mb-2">Due From</div>
                     <label className="visually-hidden" htmlFor="dueDate">
                       Due Date
                     </label>
                     <InputGroup>
-                     
                       <DatePicker
                         selected={formik.values.dueDate}
                         onChange={date => formik.setFieldValue("dueDate", date)}
@@ -317,15 +369,13 @@ const SendBillTransaction = () => {
                       />
                     </InputGroup>
                     {formik.touched.dueDate && formik.errors.dueDate && (
-                      <div className="text-danger">
-                        {formik.errors.dueDate}
-                      </div>
+                      <div className="text-danger">{formik.errors.dueDate}</div>
                     )}
                   </Col>
                 </Row>
                 <Row>
-                <Col xs={12} md={2}>
-                <div className="mb-2 mt-5">Invoice Number</div>
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-5">Invoice Number</div>
                     <label className="visually-hidden mt-4" htmlFor="amount">
                       Invoice Number
                     </label>
@@ -348,7 +398,7 @@ const SendBillTransaction = () => {
                     )}
                   </Col>
                   <Col xs={12} md={3}>
-                  <div className="mb-2 mt-5">Amount</div>
+                    <div className="mb-2 mt-5">Amount</div>
                     <label className="visually-hidden mt-4" htmlFor="amount">
                       Amount
                     </label>
@@ -377,7 +427,7 @@ const SendBillTransaction = () => {
                     )}
                   </Col>
                   <Col xs={12} md={3}>
-                  <div className="mb-2 mt-5">Invoice Descritption</div>
+                    <div className="mb-2 mt-5">Invoice Descritption</div>
                     <label
                       className="visually-hidden"
                       htmlFor="invoiceDescription"
@@ -410,7 +460,7 @@ const SendBillTransaction = () => {
                       )}
                   </Col>
                   <Col xs={12} md={2}>
-                  <div className="mb-2 mt-5">Bill Number</div>
+                    <div className="mb-2 mt-5">Bill Number</div>
                     <label className="visually-hidden" htmlFor="billNumber">
                       Bill Number
                     </label>
@@ -441,9 +491,8 @@ const SendBillTransaction = () => {
                 </Row>
 
                 <Row>
-               
                   <Col xs={12} md={2}>
-                  <div className="mb-2 mt-5">Interest Rate after 30 days</div>
+                    <div className="mb-2 mt-5">Interest Rate after 30 days</div>
                     <label
                       className="visually-hidden mt-4"
                       htmlFor="interestRate1"
@@ -464,7 +513,7 @@ const SendBillTransaction = () => {
                     </InputGroup>
                   </Col>
                   <Col xs={12} md={2}>
-                  <div className="mb-2 mt-5">Credit Limit Days</div>
+                    <div className="mb-2 mt-5">Credit Limit Days</div>
                     <label
                       className="visually-hidden"
                       htmlFor="creditLimitDays"
@@ -491,7 +540,7 @@ const SendBillTransaction = () => {
                       )}
                   </Col>
                   <Col xs={12} md={3}>
-                  <div className="mb-2 mt-5">Upload Original Bill</div>
+                    <div className="mb-2 mt-5">Upload Original Bill</div>
                     <label
                       className="visually-hidden mt-4"
                       htmlFor="uploadOriginalBill"
@@ -534,8 +583,8 @@ const SendBillTransaction = () => {
                     )}
                   </Col>
                   <Col xs={12} md={3}>
-                  <div className="mb-2 mt-5">Upload Purchase Order</div>
-                  <label
+                    <div className="mb-2 mt-5">Upload Purchase Order</div>
+                    <label
                       className="visually-hidden mt-4"
                       htmlFor="uploadOriginalBill"
                     >
@@ -573,8 +622,8 @@ const SendBillTransaction = () => {
                   </Col>
                 </Row>
                 <Row>
-                <Col xs={12} md={4}>
-                <div className="mb-2 mt-5">Remarks</div>
+                  <Col xs={12} md={4} className="mb-5">
+                    <div className="mb-2 mt-5">Remarks</div>
                     <label className="visually-hidden" htmlFor="remarks">
                       Remarks
                     </label>
@@ -592,10 +641,222 @@ const SendBillTransaction = () => {
                       />
                     </InputGroup>
                   </Col>
-           
+                </Row>
+                <Row>
+                  <div className="table-responsive">
+                    <table id="faqs" className="table table-hover custom-table">
+                      <thead>
+                        <tr>
+                          <th>Sr No.</th>
+                          <th>Item Detail</th>
+                          <th>Quantity</th>
+                          <th>Rate</th>
+                          <th>Amount</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.map((row, index) => (
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td className="hoverable-cell">
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter item detail"
+                                value={row.itemDetail}
+                                onChange={e =>
+                                  handleItemDetailChange(index, e.target.value)
+                                }
+                              />
+                            </td>
+                            <td className="hoverable-cell">
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter Quantity"
+                                value={row.quantity}
+                                onChange={e =>
+                                  handleQuantityChange(index, e.target.value)
+                                }
+                                onBlur={() => formatQuantity(index)}
+                              />
+                            </td>
+                            <td className="hoverable-cell">
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Enter Rate"
+                                value={row.rate}
+                                onChange={e =>
+                                  handleRateChange(index, e.target.value)
+                                }
+                                onBlur={() => formatRate(index)}
+                              />
+                            </td>
+                            <td className="hoverable-cell">
+                              <input
+                                type="text"
+                                className="form-control"
+                                value={row.amount}
+                                disabled
+                              />
+                            </td>
+                            <td>
+                              {index === 1 ? (
+                                <span
+                                  className="icon-container delete-icon"
+                                  onClick={() => removeFaqsRow(index)}
+                                >
+                                  <span className="mdi mdi-delete icon-red"></span>
+                                </span>
+                              ) : null}
+                              <span
+                                className="icon-container add-icon"
+                                onClick={addFaqsRow}
+                              >
+                                <span className="mdi mdi-plus icon-yellow"></span>
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </Row>
+
+                <Row>
+                  <Col md={8}></Col>
+              <Col md={4}>
+              <Card className="overflow-hidden rounded-lg bg-light">
+  <CardBody className="pt-0">
+    <Form>
+      <Row>
+        <Col sm={12}>
+          <div className="pt-4">
+            <Row>
+              {/* Subtotal */}
+              <Col xs="4">
+                <p className="text-muted mb-0">Subtotal</p>
+              </Col>
+              <Col xs="6"></Col>
+              <Col xs="2">
+                <h5 className="font-size-15">{calculateSubtotal()}</h5>
+              </Col>
+              {/* Discount */}
+            </Row>
+            <Row>
+              <Col xs="4">
+                <p className="text-muted mb-0 mt-2">Discount</p>
+              </Col>
+              <Col xs="6">
+                <FormGroup>
+                  <Input
+                    type="text"
+                    placeholder="Enter Discount"
+                    value={discountValue}
+                    onChange={(e) => setDiscountValue(e.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="2">
+                <h5 className="font-size-15 mt-2 mr-5">{calculateSubtotal()}</h5>
+              </Col>
+            </Row>
+
+            <Row>
+              {/* TDS */}
+              <Col xs="2">
+                <FormGroup>
+                  <Label className="mt-2">
+                    <Input
+                      type="radio"
+                      name="tdsOrTcs"
+                      checked={tdsOrTcs === 'tds'}
+                      onChange={() => setTdsOrTcs('tds')}
+                    />{' '}
+                    TDS
+                  </Label>
+                </FormGroup>
+              </Col>
+
+              <Col xs="2">
+                <FormGroup>
+                  <Label className="mt-2"> 
+                    <Input
+                      type="radio"
+                      name="tdsOrTcs"
+                      checked={tdsOrTcs === 'tcs'}
+                      onChange={() => setTdsOrTcs('tcs')}
+                    />{' '}
+                    TCS
+                  </Label>
+                </FormGroup>
+              </Col>
+              <Col xs="6">
+                <FormGroup>
+                  <Input
+                    type="text"
+                    placeholder="Enter Discount"
+                    value={discountValue}
+                    onChange={(e) => setDiscountValue(e.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="2">
+                <h5 className="font-size-15 mt-2 mr-5">{calculateSubtotal()}</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs="4">
+                <p className="text-muted mb-0 mt-2">Adjustments</p>
+              </Col>
+              <Col xs="6">
+                <FormGroup>
+                  <Input
+                    type="text"
+                    placeholder="Enter More Adjustments"
+                    value={adjustmentsValue}
+                    onChange={(e) => setAdjustmentsValue(e.target.value)}
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="2">
+                <h5 className="font-size-15 mt-2 mr-5">{calculateSubtotal()}</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs="12">
+              <div className="container">
+  <div className="custom-line"></div>
+</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs="4">
+                <p className="text-muted mb-0 mt-2 font-weight-bold">Total (₹)</p>
+              </Col>
+              <Col xs="6"></Col>
+              <Col xs="2">
+                <h5 className="font-size-15 mt-2 mr-5 font-weight-bold">{calculateSubtotal()}</h5>
+              </Col>
+            </Row>
+          </div>
+        </Col>
+      </Row>
+    </Form>
+  </CardBody>
+</Card>
+              </Col>
+
+  </Row>
+                <Row>
                   <Col xs={12} md={1}>
                     <div className="d-flex flex-column align-items-start mt-5 mb-5">
-                      <button type="submit" className="btn btn-primary w-md mt-5">
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-md mt-5"
+                      >
                         Submit
                       </button>
                     </div>
@@ -611,40 +872,6 @@ const SendBillTransaction = () => {
                       </button>
                     </div>
                   </Col>
-                </Row>
-                <Row>
-                <div>
-      <table id="faqs" className="table table-hover">
-        <thead>
-          <tr>
-            <th>Item Detail</th>
-            <th>Quantity</th>
-            <th>Rate</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {[...Array(faqsRow).keys()].map((index) => (
-            <tr key={index}>
-              <td><input type="text" className="form-control" placeholder="" /></td>
-              <td><input type="text" placeholder="" className="form-control" /></td>
-              <td><input type="text" placeholder="" className="form-control" /></td>
-              <td><input type="text" placeholder="" className="form-control" /></td>
-              <td className="mt-10">
-                <button className="badge badge-danger" onClick={() => removeFaqsRow(index)}>
-                  <i className="fa fa-trash"></i> Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="text-center">
-        <button onClick={addFaqs} className="badge badge-success">
-          <i className="fa fa-plus"></i> ADD NEW
-        </button>
-      </div>
-    </div>
                 </Row>
               </form>
             </CardBody>

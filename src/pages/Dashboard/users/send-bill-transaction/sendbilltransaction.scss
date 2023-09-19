@@ -149,3 +149,107 @@
      font-weight: normal;
      border: none
  }
+
+ /* Custom Delete Icon */
+.custom-icon-delete {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-icon-delete::before {
+    content: "\f1f8"; /* Unicode for a trash can icon (Font Awesome) */
+    font-family: FontAwesome; /* Use a custom icon font like FontAwesome */
+    margin-right: 5px; /* Adjust spacing as needed */
+  }
+  
+  /* Custom Add Icon */
+  .custom-icon-add {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-icon-add::before {
+    content: "\f067"; /* Unicode for a plus icon (Font Awesome) */
+    font-family: FontAwesome; /* Use a custom icon font like FontAwesome */
+    margin-right: 5px; /* Adjust spacing as needed */
+  }
+
+
+  
+/* CSS for the delete icon */
+.icon-container.delete-icon {
+    cursor: pointer;
+  }
+  
+  .icon-container.delete-icon .mdi {
+    color: red;
+    font-size: 25px; /* Adjust the size as needed */
+  }
+  
+  /* CSS for the add icon */
+  .icon-container.add-icon {
+    cursor: pointer;
+  }
+  
+  .icon-container.add-icon .mdi {
+    color: rgb(171, 185, 14);
+    font-size: 25px; /* Adjust the size as needed */
+  }
+
+ /* Custom table styles */
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd; /* Add a border to the table */
+  }
+  
+  .custom-table th, .custom-table td {
+    border: 1px solid #ddd; /* Add borders to table cells */
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Style input cells on hover */
+  .hoverable-cell {
+    position: relative;
+  }
+  
+  .hoverable-cell:hover input {
+    display: block;
+  }
+  
+  .hoverable-cell input {
+    //display: n;
+    width: 100%;
+    padding: 5px;
+    border: none; /* Remove borders from input fields */
+    outline: none;
+  }
+  
+  /* Style icons */
+  .icon-container {
+    cursor: pointer;
+    padding: 5px;
+    display: inline-block;
+  }
+  
+  .icon-container .mdi {
+    font-size: 24px;
+  }
+  
+  .icon-red {
+    color: red;
+  }
+  
+  .icon-yellow {
+    color: yellow;
+  }
+  
+  
+  .custom-line {
+    height: 2px; /* Adjust the height as needed */
+    background-color: #333; /* Line color */
+    margin: 20px 0; /* Margin for spacing */
+  }
+  
+  

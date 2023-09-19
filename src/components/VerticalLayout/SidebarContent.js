@@ -10,7 +10,6 @@ import { useMenu } from './MenuContext';
 
 const SidebarContent = (props) => {
   var { showMenuItems } = useMenu();
-  debugger
   useEffect(() => {
     const currentPath = window.location.pathname;
     console.log(currentPath);
