@@ -164,6 +164,7 @@ const chartDataTop10Creditors = sortedDataCreditors.map((item) => ({
 }));
 //debtors intial 
 useEffect(() => {
+  console.log(chartData)
   if (chartRef.current) {
     const ctx = chartRef.current.getContext("2d")
 
@@ -461,7 +462,7 @@ useEffect(() => {
 
 //creditors intial 
 useEffect(() => {
-  if (chartRef1.current && activeChart === 'totalDebtors') {
+  if (chartRef1.current) {
     const ctx = chartRef1.current.getContext("2d")
 
     new Chart(ctx, {
@@ -498,6 +499,7 @@ const handleSignUp = () => {
 }
 const handleChartChange = (chartType) => {
   setActiveChart(chartType);
+  console.log(chartType)
 };
 
 const handleChartCreditorsChange = (chartType) => {

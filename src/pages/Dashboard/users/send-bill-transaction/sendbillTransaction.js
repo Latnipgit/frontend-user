@@ -25,7 +25,7 @@ import {
   Form,
   CardTitle,
   FormGroup,
-  Label
+  Label,
 } from "reactstrap"
 
 const validationSchema = Yup.object().shape({
@@ -152,8 +152,9 @@ const SendBillTransaction = () => {
       </components.DropdownIndicator>
     )
   }
-//first table
+  //first table
   const [faqsRow, setFaqsRow] = useState(1)
+  const [subtotal, setSubtotal] = useState(0)
   const [data, setData] = useState([
     {
       itemDetail: "",
@@ -211,18 +212,18 @@ const SendBillTransaction = () => {
 
   const handleQuantityChange = (index, value) => {
     const newData = [...data]
-    newData[index].quantity = value.replace(/[^0-9.]/g, "") // Allow only numeric and decimal point characters
+    newData[index].quantity = value.replace(/[^0-9.]/g, "")
     setData(newData)
   }
 
   const formatQuantity = index => {
     const newData = [...data]
-    newData[index].quantity = parseFloat(newData[index].quantity).toFixed(2) // Format to two decimal places
+    newData[index].quantity = parseFloat(newData[index].quantity).toFixed(2)
     setData(newData)
   }
   const handleRateChange = (index, value) => {
     const newData = [...data]
-    newData[index].rate = value.replace(/[^0-9.]/g, "") // Allow only numeric and decimal point characters
+    newData[index].rate = value.replace(/[^0-9.]/g, "")
 
     const quantity = parseFloat(newData[index].quantity)
     const rate = parseFloat(newData[index].rate)
@@ -234,31 +235,72 @@ const SendBillTransaction = () => {
     }
 
     setData(newData)
+    calculateSubtotal(newData)
   }
 
   const formatRate = index => {
     const newData = [...data]
-    newData[index].rate = parseFloat(newData[index].rate).toFixed(2) // Format to two decimal places
+    newData[index].rate = parseFloat(newData[index].rate).toFixed(2)
     setData(newData)
   }
 
-  //second Table 
-  // Define state variables for discount, TDS, TCS, and adjustments
-  const [discountValue, setDiscountValue] = useState('');
-  const [tdsOrTcs, setTdsOrTcs] = useState('');
-  const [adjustmentsValue, setAdjustmentsValue] = useState('');
+  //second Table
 
-  // Implement a function to calculate subtotal
-  const calculateSubtotal = () => {
-    // Replace this with your calculation logic based on data
-    return 2233.00;
-  };
+  const [discountValue, setDiscountValue] = useState(0.0)
+  const [gst, setGST] = useState(0.0)
+  const [adjustmentsValue, setAdjustmentsValue] = useState(0.0)
+  const [total, setTotal] = useState(0.0)
 
-  // Implement a function to calculate the final total
-  const calculateFinalTotal = () => {
-    // Replace this with your calculation logic based on data and values
-    return 2233.00;
-  };
+  const calculateSubtotal = newData => {
+    // Calculate the subtotal
+    let total = 0
+    debugger
+    newData.forEach(row => {
+      if (row.amount !== "") {
+        const amountValue = parseFloat(row.amount.replace("₹", ""))
+        if (!isNaN(amountValue)) {
+          total += amountValue
+        }
+      }
+    })
+    setSubtotal(total)
+    setTotal(total)
+  }
+
+  // useEffect(() => {
+  //   // Calculate Discounted Subtotal
+  //   const discountedSubtotal = subtotal - parseFloat(discountValue);
+
+  //   // Calculate GST Amount
+  //   const gstAmount = (parseFloat(gst) / 100) * discountedSubtotal;
+
+  //   // Calculate Total Amount
+  //   const totalAmount = discountedSubtotal + gstAmount + parseFloat(adjustmentsValue);
+
+  //   // Update the state with the calculated values
+  //   setDiscountValue(discountedSubtotal.toFixed(2))
+  //   setSubtotal(discountedSubtotal.toFixed(2));
+  //   setGST(gstAmount.toFixed(2));
+
+  //   // Update the Total amount
+  //   setTotal(totalAmount.toFixed(2));
+  // }, [subtotal, discountValue, gst, adjustmentsValue]);  useEffect(() => {
+  //   // Calculate Discounted Subtotal
+  //   const discountedSubtotal = subtotal - parseFloat(discountValue);
+
+  //   // Calculate GST Amount
+  //   const gstAmount = (parseFloat(gst) / 100) * discountedSubtotal;
+
+  //   // Calculate Total Amount
+  //   const totalAmount = discountedSubtotal + gstAmount + parseFloat(adjustmentsValue);
+
+  //   // Update the state with the calculated values
+  //   setSubtotal(discountedSubtotal.toFixed(2));
+  //   setGST(gstAmount.toFixed(2));
+
+  //   // Update the Total amount
+  //   setTotal(totalAmount.toFixed(2));
+  // }, [subtotal, discountValue, gst, adjustmentsValue]);
 
   return (
     <Container fluid className="mt-5 mb-5">
@@ -540,85 +582,58 @@ const SendBillTransaction = () => {
                       )}
                   </Col>
                   <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">Upload Original Bill</div>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="uploadOriginalBill"
-                    >
-                      Upload Original Bill
-                    </label>
-                    <div className="input-group">
-                      <label
-                        className="input-group-text"
-                        htmlFor="uploadOriginalBill"
-                      >
-                        <i className="mdi mdi-file-document" />
-                      </label>
-                      <input
-                        type="file"
-                        className="form-control visually-hidden"
-                        id="uploadOriginalBill"
-                        name="uploadOriginalBill"
-                        accept=".pdf, .jpg, .png"
-                        onChange={event => {
-                          const selectedFile = event.currentTarget.files[0]
-                          setOriginalBillFile(selectedFile)
-                          setOriginalBillFileName(
-                            selectedFile ? selectedFile.name : ""
-                          )
-                        }}
-                      />
-                      <input
-                        type="text"
-                        className="form-control"
-                        readOnly
-                        value={originalBillFileName}
-                        placeholder="Upload Original Bill"
-                      />
-                    </div>
-                    {formik.errors.uploadOriginalBill && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.uploadOriginalBill}
-                      </div>
-                    )}
+                  <div className="mb-2 mt-5">Attach File(s) to Certificate</div>
+                          <label
+                            className="visually-hidden"
+                            htmlFor="fileUpload"
+                          >
+                            Choose a file to upload
+                          </label>
+                          <InputGroup>
+                            <div className="input-group-text">
+                              <i
+                                className="mdi mdi-upload"
+                                aria-label="Upload Icon"
+                              />
+                            </div>
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="fileUpload"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                            />
+                          </InputGroup>
+                          <div id="fileUploadHelp" className="form-text">
+                            Choose a file to upload (PDF, DOC, DOCX, TXT).
+                          </div>
                   </Col>
                   <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">Upload Purchase Order</div>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="uploadOriginalBill"
-                    >
-                      Upload Purchase Order
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-file-document"
-                          aria-label="Upload Purchase Order Icon"
-                        />
-                      </div>
-                      <input
-                        type="file"
-                        className="form-control-file visually-hidden"
-                        id="uploadPurchaseOrder"
-                        name="uploadPurchaseOrder"
-                        accept=".pdf, .jpg, .png"
-                        onChange={event => {
-                          setPurchaseOrderFile(event.currentTarget.files[0])
-                        }}
-                      />
-                      <label
-                        className="form-control"
-                        htmlFor="uploadPurchaseOrder"
-                      >
-                        Upload Purchase Order
-                      </label>
-                    </InputGroup>
-                    {formik.errors.uploadPurchaseOrder && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.uploadPurchaseOrder}
-                      </div>
-                    )}
+                  <div className="mb-2 mt-5">Attach File(s) to Purcchase Order</div>
+                          <label
+                            className="visually-hidden"
+                            htmlFor="fileUpload"
+                          >
+                            Choose a file to upload
+                          </label>
+                          <InputGroup>
+                            <div className="input-group-text">
+                              <i
+                                className="mdi mdi-upload"
+                                aria-label="Upload Icon"
+                              />
+                            </div>
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="fileUpload"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                            />
+                          </InputGroup>
+                          <div id="fileUploadHelp" className="form-text">
+                            Choose a file to upload (PDF, DOC, DOCX, TXT).
+                          </div>
                   </Col>
                 </Row>
                 <Row>
@@ -726,130 +741,200 @@ const SendBillTransaction = () => {
                 </Row>
 
                 <Row>
-                  <Col md={8}></Col>
-              <Col md={4}>
-              <Card className="overflow-hidden rounded-lg bg-light">
-  <CardBody className="pt-0">
-    <Form>
-      <Row>
-        <Col sm={12}>
-          <div className="pt-4">
-            <Row>
-              {/* Subtotal */}
-              <Col xs="4">
-                <p className="text-muted mb-0">Subtotal</p>
-              </Col>
-              <Col xs="6"></Col>
-              <Col xs="2">
-                <h5 className="font-size-15">{calculateSubtotal()}</h5>
-              </Col>
-              {/* Discount */}
-            </Row>
-            <Row>
-              <Col xs="4">
-                <p className="text-muted mb-0 mt-2">Discount</p>
-              </Col>
-              <Col xs="6">
-                <FormGroup>
-                  <Input
-                    type="text"
-                    placeholder="Enter Discount"
-                    value={discountValue}
-                    onChange={(e) => setDiscountValue(e.target.value)}
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="2">
-                <h5 className="font-size-15 mt-2 mr-5">{calculateSubtotal()}</h5>
-              </Col>
-            </Row>
+                  <Col md={5} className="mt-5">
+                    <div className="mb-2 mt-5">Costomer Notes </div>
+                    <label className="visually-hidden" htmlFor="remarks">
+                      Customer notes
+                    </label>
+                    <InputGroup>
+                      <div className="input-group-text">
+                        <i
+                          className="mdi mdi-comment-text-outline"
+                          aria-label="Remarks Icon"
+                        />
+                      </div>
+                      <textarea
+                        className={`form-control`}
+                        id="remarks"
+                        placeholder="Thanks for your buisness."
+                      />
+                    </InputGroup>
+                    <div className="mb-2">Will be displayed on the invoice</div>
+                  </Col>
+                  <Col md={1} className="mt-5"></Col>
 
-            <Row>
-              {/* TDS */}
-              <Col xs="2">
-                <FormGroup>
-                  <Label className="mt-2">
-                    <Input
-                      type="radio"
-                      name="tdsOrTcs"
-                      checked={tdsOrTcs === 'tds'}
-                      onChange={() => setTdsOrTcs('tds')}
-                    />{' '}
-                    TDS
-                  </Label>
-                </FormGroup>
-              </Col>
+                  <Col md={6}>
+                    <Card className="overflow-hidden rounded-lg bg-light">
+                      <CardBody className="pt-0">
+                        <Form>
+                          <Row>
+                            <Col sm={12}>
+                              <div className="pt-4">
+                                <Row>
+                                  {/* Subtotal */}
+                                  <Col xs="4">
+                                    <p className="text-muted mb-0">Subtotal</p>
+                                  </Col>
+                                  <Col xs="5"></Col>
+                                  <Col xs="3">
+                                    <h5 className="font-size-15">
+                                      ₹{subtotal.toFixed(2)}
+                                    </h5>
+                                  </Col>
+                                  {/* Discount */}
+                                </Row>
+                                <Row>
+                                  <Col xs="4">
+                                    <p className="text-muted mb-0 mt-2">
+                                      Discount
+                                    </p>
+                                  </Col>
+                                  <Col xs="5">
+                                    <FormGroup>
+                                      <Input
+                                        type="text"
+                                        placeholder="Enter Discount"
+                                        value={discountValue}
+                                        onChange={e =>
+                                          setDiscountValue(e.target.value)
+                                        }
+                                      />
+                                    </FormGroup>
+                                  </Col>
+                                  <Col xs="3">
+                                    <h5 className="font-size-15 mt-2 mr-5">
+                                      ₹{discountValue}
+                                    </h5>
+                                  </Col>
+                                </Row>
 
-              <Col xs="2">
-                <FormGroup>
-                  <Label className="mt-2"> 
-                    <Input
-                      type="radio"
-                      name="tdsOrTcs"
-                      checked={tdsOrTcs === 'tcs'}
-                      onChange={() => setTdsOrTcs('tcs')}
-                    />{' '}
-                    TCS
-                  </Label>
-                </FormGroup>
-              </Col>
-              <Col xs="6">
-                <FormGroup>
-                  <Input
-                    type="text"
-                    placeholder="Enter Discount"
-                    value={discountValue}
-                    onChange={(e) => setDiscountValue(e.target.value)}
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="2">
-                <h5 className="font-size-15 mt-2 mr-5">{calculateSubtotal()}</h5>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs="4">
-                <p className="text-muted mb-0 mt-2">Adjustments</p>
-              </Col>
-              <Col xs="6">
-                <FormGroup>
-                  <Input
-                    type="text"
-                    placeholder="Enter More Adjustments"
-                    value={adjustmentsValue}
-                    onChange={(e) => setAdjustmentsValue(e.target.value)}
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="2">
-                <h5 className="font-size-15 mt-2 mr-5">{calculateSubtotal()}</h5>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs="12">
-              <div className="container">
-  <div className="custom-line"></div>
-</div>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs="4">
-                <p className="text-muted mb-0 mt-2 font-weight-bold">Total (₹)</p>
-              </Col>
-              <Col xs="6"></Col>
-              <Col xs="2">
-                <h5 className="font-size-15 mt-2 mr-5 font-weight-bold">{calculateSubtotal()}</h5>
-              </Col>
-            </Row>
-          </div>
-        </Col>
-      </Row>
-    </Form>
-  </CardBody>
-</Card>
-              </Col>
-
-  </Row>
+                                <Row>
+                                  {/* TDS */}
+                                  <Col xs="4">
+                                    <p className="text-muted mb-0 mt-2">GST</p>
+                                  </Col>
+                                  <Col xs="5">
+                                    <FormGroup>
+                                      <Input
+                                        type="text"
+                                        placeholder="Enter GST Per"
+                                        value={gst}
+                                        onChange={e => setGST(e.target.value)}
+                                      />
+                                    </FormGroup>
+                                  </Col>
+                                  <Col xs="3">
+                                    <h5 className="font-size-15 mt-2 mr-5">
+                                      ₹{gst}
+                                    </h5>
+                                  </Col>
+                                </Row>
+                                <Row>
+                                  <Col xs="4">
+                                    <p className="text-muted mb-0 mt-2">
+                                      Adjustments
+                                    </p>
+                                  </Col>
+                                  <Col xs="5">
+                                    <FormGroup>
+                                      <Input
+                                        type="text"
+                                        placeholder="Enter More Adjustments"
+                                        value={adjustmentsValue}
+                                        onChange={e =>
+                                          setAdjustmentsValue(e.target.value)
+                                        }
+                                      />
+                                    </FormGroup>
+                                  </Col>
+                                  <Col xs="3">
+                                    <h5 className="font-size-15 mt-2 mr-5">
+                                      ₹{adjustmentsValue}
+                                    </h5>
+                                  </Col>
+                                </Row>
+                                <Row>
+                                  <Col xs="12">
+                                    <div className="container">
+                                      <div className="custom-line"></div>
+                                    </div>
+                                  </Col>
+                                </Row>
+                                <Row>
+                                  <Col xs="4">
+                                    <p className="text-muted mb-0 mt-2 font-weight-bold">
+                                      Total (₹)
+                                    </p>
+                                  </Col>
+                                  <Col xs="5"></Col>
+                                  <Col xs="3">
+                                    <h5 className="font-size-15 mt-2 mr-5 font-weight-bold">
+                                      ₹{total.toFixed(2)}
+                                    </h5>
+                                  </Col>
+                                </Row>
+                              </div>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={12}>
+                    <Card className="overflow-hidden rounded-lg bg-light">
+                      <CardBody className="pt-0">
+                        <Col md={5} className="mt-5">
+                          <div className="mb-2 mt-5">Terms & Conditions</div>
+                          <label className="visually-hidden" htmlFor="remarks">
+                            Terms & Conditions
+                          </label>
+                          <InputGroup className="h-100">
+                            <div className="input-group-text">
+                              <i
+                                className="mdi mdi-comment-text-outline"
+                                aria-label="Remarks Icon"
+                              />
+                            </div>
+                            <textarea
+                              className={`form-control`}
+                              id="remarks"
+                              placeholder="Enter the terms and conditions of your business to be displayed in your transaction"
+                            />
+                          </InputGroup>
+                        </Col>
+                        <Col md={5} className="mt-5">
+                          <div className="mb-2 mt-5">Attach File(s) to Invoice</div>
+                          <label
+                            className="visually-hidden"
+                            htmlFor="fileUpload"
+                          >
+                            Choose a file to upload
+                          </label>
+                          <InputGroup>
+                            <div className="input-group-text">
+                              <i
+                                className="mdi mdi-upload"
+                                aria-label="Upload Icon"
+                              />
+                            </div>
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="fileUpload"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                            />
+                          </InputGroup>
+                          <div id="fileUploadHelp" className="form-text">
+                            Choose a file to upload (PDF, DOC, DOCX, TXT).
+                          </div>
+                        </Col>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
                 <Row>
                   <Col xs={12} md={1}>
                     <div className="d-flex flex-column align-items-start mt-5 mb-5">
