@@ -1,10 +1,8 @@
-/* MyComponent.scss (or your custom SCSS file) */
-/* Style for the file input container */
+
 .input-group {
     position: relative;
   }
   
-  /* Style for the file input label */
   .input-group-text {
     cursor: pointer;
     background-color: #007bff;
@@ -12,7 +10,6 @@
     border-color: #007bff;
   }
   
-  /* Style for the file input itself (visually hidden) */
   .visually-hidden {
     position: absolute;
     top: 0;
@@ -247,9 +244,90 @@
   
   
   .custom-line {
-    height: 2px; /* Adjust the height as needed */
-    background-color: #333; /* Line color */
-    margin: 20px 0; /* Margin for spacing */
+    height: 1px; /* Adjust the height as needed */
+    background-color: #535151; /* Line color */
+    margin: 20px 1px 8px; /* Margin for spacing */
   }
   
+
   
+
+///Dropdown
+/// /* Add these styles to your CSS */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .form-select.custom-select {
+    border: 1px solid #ccc; /* Default border style */
+    padding: 5px;
+  }
+  
+  .form-select.custom-select:hover {
+    border: 1px solid #007bff; /* Change border color on hover */
+  }
+  
+  .form-select.custom-select option {
+    background-color: #fff; /* Background color of options */
+    color: #000; /* Text color of options */
+  }
+  
+  .form-select.custom-select option:hover {
+    background-color: #21263c; /* Background color of options on hover */
+    color: #fff; /* Text color of options on hover */
+  }
+
+
+
+.custom-row {
+    background-color: #f9f9fb;
+    display: flex;
+    align-items: center;
+    height: 100px; /* Adjust the height as needed */
+  }
+
+  .custom-content{
+    border-radius: 14px;
+  }
+  .custom-content:hover {
+    border: 1px solid rgb(130, 130, 239); /* Define your border style here */
+    border-radius: 10px;
+  }
+  //
+  .css-13cymwt-control {
+    border-radius: 10px !important;
+  }
+  .css-t3ipsp-control {
+    border-radius: 10px !important;
+  }
+  .form-control {
+    border-radius: 10px !important;
+  }
+
+  
+//hr
+hr {
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 4.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+.bdr-light {
+    border-top: none;
+    border-bottom: 1px solid #f3f3f3;
+    margin: 20px 0;
+    margin-right: 122px !important; 
+}.bdr-light {
+    border-top: none;
+    border-bottom: 1px solid #f3f3f3;
+    margin: 20px 0;
+}
+.Dragtable{
+  max-width: 93%;
+}

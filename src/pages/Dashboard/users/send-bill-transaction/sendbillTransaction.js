@@ -267,71 +267,40 @@ const SendBillTransaction = () => {
     setTotal(total)
   }
 
-  // useEffect(() => {
-  //   // Calculate Discounted Subtotal
-  //   const discountedSubtotal = subtotal - parseFloat(discountValue);
-
-  //   // Calculate GST Amount
-  //   const gstAmount = (parseFloat(gst) / 100) * discountedSubtotal;
-
-  //   // Calculate Total Amount
-  //   const totalAmount = discountedSubtotal + gstAmount + parseFloat(adjustmentsValue);
-
-  //   // Update the state with the calculated values
-  //   setDiscountValue(discountedSubtotal.toFixed(2))
-  //   setSubtotal(discountedSubtotal.toFixed(2));
-  //   setGST(gstAmount.toFixed(2));
-
-  //   // Update the Total amount
-  //   setTotal(totalAmount.toFixed(2));
-  // }, [subtotal, discountValue, gst, adjustmentsValue]);  useEffect(() => {
-  //   // Calculate Discounted Subtotal
-  //   const discountedSubtotal = subtotal - parseFloat(discountValue);
-
-  //   // Calculate GST Amount
-  //   const gstAmount = (parseFloat(gst) / 100) * discountedSubtotal;
-
-  //   // Calculate Total Amount
-  //   const totalAmount = discountedSubtotal + gstAmount + parseFloat(adjustmentsValue);
-
-  //   // Update the state with the calculated values
-  //   setSubtotal(discountedSubtotal.toFixed(2));
-  //   setGST(gstAmount.toFixed(2));
-
-  //   // Update the Total amount
-  //   setTotal(totalAmount.toFixed(2));
-  // }, [subtotal, discountValue, gst, adjustmentsValue]);
-
   return (
     <Container fluid className="mt-5 mb-5">
       <Row>
         <Col lg={12}>
           <Card className="mt-5">
             <CardBody>
-              <CardTitle className="h5 mb-4">Send Bill Transactions</CardTitle>
+              <CardTitle className="h2 mb-4">Send Bill Transactions</CardTitle>
 
               <form onSubmit={formik.handleSubmit}>
-                {/* select cutomer and create neew customer */}
-                <Row>
+                <Row className="custom-row">
+                  <Col xs={12} md={2}>
+                    <div className="mb-2">Customer Name*</div>
+                  </Col>
                   <Col xs={12} md={6}>
-                    <div className="mb-2">Customer Name</div>
-                    <div>
+                    <div className="d-inline">
                       <label
-                        className="visually-hidden"
+                        className="visually-hidden custom-content"
                         htmlFor="customerSelect"
                       >
                         Select Customer
                       </label>
                       <Select
                         id="customerSelect"
+                        className="custom-content"
                         options={options}
                         value={selectedOption}
                         onChange={selected => setSelectedOption(selected)}
                         onInputChange={handleInputChange}
-                        isSearchable
-                        components={{ DropdownIndicator }}
+                        placeholder="Select or add a customer"
+                        // isSearchable
+                        // components={{ DropdownIndicator }}
                       />
                     </div>
+
                     <Modal show={showModal} onHide={handleCloseModal}>
                       <Modal.Header closeButton>
                         <Modal.Title>Add Customer</Modal.Title>
@@ -370,61 +339,22 @@ const SendBillTransaction = () => {
                       </Modal.Footer>
                     </Modal>
                   </Col>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2">Invoice Issue Date</div>
-                    <label className="visually-hidden" htmlFor="billDate">
-                      Issue Date
-                    </label>
-                    <InputGroup>
-                      <DatePicker
-                        selected={formik.values.billDate}
-                        onChange={date =>
-                          formik.setFieldValue("billDate", date)
-                        }
-                        dateFormat="yyyy-MM-dd"
-                        id="billDate"
-                        className="form-control"
-                        placeholderText="dd-mm-yyyy"
-                        onBlur={() => formik.setFieldTouched("billDate", true)}
-                      />
-                    </InputGroup>
-                    {formik.touched.billDate && formik.errors.billDate && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.billDate}
-                      </div>
-                    )}
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2">Due From</div>
-                    <label className="visually-hidden" htmlFor="dueDate">
-                      Due Date
-                    </label>
-                    <InputGroup>
-                      <DatePicker
-                        selected={formik.values.dueDate}
-                        onChange={date => formik.setFieldValue("dueDate", date)}
-                        dateFormat="yyyy-MM-dd"
-                        id="dueDate"
-                        className="form-control"
-                        placeholderText="dd-mm-yyyy"
-                        onBlur={() => formik.setFieldTouched("dueDate", true)}
-                      />
-                    </InputGroup>
-                    {formik.touched.dueDate && formik.errors.dueDate && (
-                      <div className="text-danger">{formik.errors.dueDate}</div>
-                    )}
-                  </Col>
                 </Row>
-                <Row>
+                <Row className="mt-2">
                   <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Invoice Number</div>
-                    <label className="visually-hidden mt-4" htmlFor="amount">
+                    <div className="mb-2 mt-3">Invoice#*</div>
+                  </Col>
+                  <Col xs={12} md={4}>
+                    <label
+                      className="visually-hidden mt-4"
+                      htmlFor="Invoiocenumber"
+                    >
                       Invoice Number
                     </label>
                     <InputGroup>
                       <Input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control custom-content mt-2`}
                         id="amount"
                         name="amount"
                         placeholder="Enter invoice number"
@@ -439,241 +369,198 @@ const SendBillTransaction = () => {
                       </div>
                     )}
                   </Col>
-                  <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">Amount</div>
-                    <label className="visually-hidden mt-4" htmlFor="amount">
-                      Amount
+                </Row>
+                <Row className="mt-2">
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-3">Order Number</div>
+                  </Col>
+                  <Col xs={12} md={4}>
+                    <label
+                      className="visually-hidden mt-4"
+                      htmlFor="Invoiocenumber"
+                    >
+                      Order Number
                     </label>
                     <InputGroup>
-                      {/* <div className="input-group-text mt-5">
-                        <i
-                          className="mdi mdi-currency-inr"
-                          aria-label="Indian Rupee Icon"
-                        />
-                      </div> */}
                       <Input
                         type="text"
-                        className={`form-control`}
+                        className={`form-control custom-content mt-2`}
                         id="amount"
                         name="amount"
-                        placeholder="Enter amount"
                         value={formik.values.amount}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
                     </InputGroup>
-                    {formik.touched.amount && formik.errors.amount && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.amount}
-                      </div>
-                    )}
+                  </Col>
+                </Row>
+                <Row className="mt-2">
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-3">Invoice Date</div>
                   </Col>
                   <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">Invoice Descritption</div>
                     <label
-                      className="visually-hidden"
-                      htmlFor="invoiceDescription"
+                      className="visually-hidden mt-4"
+                      htmlFor="Invoiocenumber"
                     >
-                      Invoice Description
+                      Invoice Date
                     </label>
                     <InputGroup>
-                      {/* <div className="input-group-text mt-5">
-                        <i
-                          className="mdi mdi-file-document"
-                          aria-label="Invoice Icon"
-                        />
-                      </div> */}
-                      <Input
-                        type="text"
-                        className={`form-control`}
-                        id="invoiceDescription"
-                        name="invoiceDescription"
-                        placeholder="Enter invoice description"
-                        value={formik.values.invoiceDescription}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                      <DatePicker
+                        selected={formik.values.billDate || new Date()} // Use the selected value or default to today's date
+                        onChange={date =>
+                          formik.setFieldValue("billDate", date)
+                        }
+                        dateFormat="yyyy-MM-dd"
+                        id="billDate"
+                        className={`form-control custom-content mt-2`}
+                        placeholderText="dd-mm-yyyy"
+                        onBlur={() => formik.setFieldTouched("billDate", true)}
                       />
                     </InputGroup>
-                    {formik.touched.invoiceDescription &&
-                      formik.errors.invoiceDescription && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.invoiceDescription}
-                        </div>
-                      )}
+                    <div className="mb-0">
+                      To create transaction dated before 01/07/2017, click here
+                    </div>
+                  </Col>
+                  <Col xs={12} md={1}>
+                    <div className="mb-2 mt-3">Terms</div>
                   </Col>
                   <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Bill Number</div>
-                    <label className="visually-hidden" htmlFor="billNumber">
-                      Bill Number
+                    <div className="d-inline">
+                      <label
+                        className="visually-hidden mt-5"
+                        htmlFor="customerSelect"
+                      >
+                        Due on reciept
+                      </label>
+                      <Select
+                        id="customerSelect"
+                        className="custom-content"
+                        options={options}
+                        value={selectedOption}
+                        onChange={selected => setSelectedOption(selected)}
+                        onInputChange={handleInputChange}
+                        placeholder="Due on reciept"
+                        // isSearchable
+                        // components={{ DropdownIndicator }}
+                      />
+                    </div>
+                  </Col>
+                  <Col xs={12} md={1}>
+                    <div className="mb-2 mt-3">Due Date</div>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <label
+                      className="visually-hidden mt-4"
+                      htmlFor="Invoiocenumber"
+                    >
+                      Due Date
                     </label>
                     <InputGroup>
-                      {/* <div className="input-group-text mt-5">
-                        <i
-                          className="mdi mdi-numeric"
-                          aria-label="Bill Number Icon"
-                        />
-                      </div> */}
-                      <Input
-                        type="text"
-                        className={`form-controls`}
-                        id="billNumber"
-                        name="billNumber"
-                        placeholder="Enter bill number"
-                        value={formik.values.billNumber}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                      <DatePicker
+                        selected={formik.values.billDate || new Date()} // Use the selected value or default to today's date
+                        onChange={date =>
+                          formik.setFieldValue("billDate", date)
+                        }
+                        dateFormat="yyyy-MM-dd"
+                        id="billDate"
+                        className={`form-control custom-content mt-2`}
+                        placeholderText="dd-mm-yyyy"
+                        onBlur={() => formik.setFieldTouched("billDate", true)}
                       />
                     </InputGroup>
-                    {formik.touched.billNumber && formik.errors.billNumber && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.billNumber}
-                      </div>
-                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs="12">
+                    <hr className="bdr-light xlg"></hr>
+                  </Col>
+                </Row>
+                <Row className="mt-2">
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-2">Salesperson</div>
+                  </Col>
+                  <Col xs={12} md={4}>
+                    <div className="d-inline">
+                      <label
+                        className="visually-hidden custom-content"
+                        htmlFor="customerSelect"
+                      >
+                        Select Customer
+                      </label>
+                      <Select
+                        id="customerSelect"
+                        className="custom-content"
+                        options={options}
+                        value={selectedOption}
+                        onChange={selected => setSelectedOption(selected)}
+                        onInputChange={handleInputChange}
+                        placeholder="Select or add a salesman"
+                        // isSearchable
+                        // components={{ DropdownIndicator }}
+                      />
+                    </div>
+
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs="12">
+                    <hr className="bdr-light xlg"></hr>
+                  </Col>
+                </Row>
+                <Row className="mt-2">
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-2">Subject</div>
+                  </Col>
+                  <Col xs={12} md={4}>
+                    <div className="d-inline">
+                      <label
+                        className="visually-hidden custom-content"
+                        htmlFor="customerSelect"
+                      >
+                        Select Customer
+                      </label>
+                      <textarea
+                        className={`form-control custom-content`}
+                        id="remarks"
+                        placeholder="let your customer know what this invvoice is for "
+
+                      />
+                    </div>
+
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs="12">
+                    <hr className="bdr-light xlg"></hr>
                   </Col>
                 </Row>
 
-                <Row>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Interest Rate after 30 days</div>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="interestRate1"
-                    >
-                      Interest Rate after 30 days
-                    </label>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        className={`form-control`}
-                        id="interestRate1"
-                        name="interestRate1"
-                        placeholder="Enter interest rate after 30 days"
-                        value={formik.values.interestRate1}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Credit Limit Days</div>
-                    <label
-                      className="visually-hidden"
-                      htmlFor="creditLimitDays"
-                    >
-                      Credit Limit Days
-                    </label>
-                    <InputGroup>
-                      <input
-                        type="text"
-                        className={`form-control`}
-                        id="creditLimitDays"
-                        name="creditLimitDays"
-                        placeholder="Enter credit limit days"
-                        value={formik.values.creditLimitDays}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.creditLimitDays &&
-                      formik.errors.creditLimitDays && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.creditLimitDays}
-                        </div>
-                      )}
-                  </Col>
-                  <Col xs={12} md={3}>
-                  <div className="mb-2 mt-5">Attach File(s) to Certificate</div>
-                          <label
-                            className="visually-hidden"
-                            htmlFor="fileUpload"
-                          >
-                            Choose a file to upload
-                          </label>
-                          <InputGroup>
-                            <div className="input-group-text">
-                              <i
-                                className="mdi mdi-upload"
-                                aria-label="Upload Icon"
-                              />
-                            </div>
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="fileUpload"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                            />
-                          </InputGroup>
-                          <div id="fileUploadHelp" className="form-text">
-                            Choose a file to upload (PDF, DOC, DOCX, TXT).
-                          </div>
-                  </Col>
-                  <Col xs={12} md={3}>
-                  <div className="mb-2 mt-5">Attach File(s) to Purcchase Order</div>
-                          <label
-                            className="visually-hidden"
-                            htmlFor="fileUpload"
-                          >
-                            Choose a file to upload
-                          </label>
-                          <InputGroup>
-                            <div className="input-group-text">
-                              <i
-                                className="mdi mdi-upload"
-                                aria-label="Upload Icon"
-                              />
-                            </div>
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="fileUpload"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                            />
-                          </InputGroup>
-                          <div id="fileUploadHelp" className="form-text">
-                            Choose a file to upload (PDF, DOC, DOCX, TXT).
-                          </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={12} md={4} className="mb-5">
-                    <div className="mb-2 mt-5">Remarks</div>
-                    <label className="visually-hidden" htmlFor="remarks">
-                      Remarks
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-comment-text-outline"
-                          aria-label="Remarks Icon"
-                        />
-                      </div>
-                      <textarea
-                        className={`form-control`}
-                        id="remarks"
-                        placeholder="Remarks"
-                      />
-                    </InputGroup>
-                  </Col>
-                </Row>
-                <Row>
+
+
+
+
+
+
+
+           
+
+                
+                <Row className="Dragtable">
                   <div className="table-responsive">
                     <table id="faqs" className="table table-hover custom-table">
                       <thead>
                         <tr>
-                          <th>Sr No.</th>
                           <th>Item Detail</th>
                           <th>Quantity</th>
                           <th>Rate</th>
                           <th>Amount</th>
-                          <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         {data.map((row, index) => (
                           <tr key={index}>
-                            <td>{index + 1}</td>
+                            {/* <td>{index + 1}</td> */}
                             <td className="hoverable-cell">
                               <input
                                 type="text"
@@ -740,7 +627,7 @@ const SendBillTransaction = () => {
                   </div>
                 </Row>
 
-                <Row>
+                <Row className="Dragtable">
                   <Col md={5} className="mt-5">
                     <div className="mb-2 mt-5">Costomer Notes </div>
                     <label className="visually-hidden" htmlFor="remarks">
@@ -905,7 +792,9 @@ const SendBillTransaction = () => {
                           </InputGroup>
                         </Col>
                         <Col md={5} className="mt-5">
-                          <div className="mb-2 mt-5">Attach File(s) to Invoice</div>
+                          <div className="mb-2 mt-5">
+                            Attach File(s) to Invoice
+                          </div>
                           <label
                             className="visually-hidden"
                             htmlFor="fileUpload"
@@ -933,6 +822,365 @@ const SendBillTransaction = () => {
                         </Col>
                       </CardBody>
                     </Card>
+                  </Col>
+                </Row>
+                {/* Additonal Fields */}
+                <Row>
+                  <Col xs={12} md={2}>
+                    <div className="mb-2">Due From</div>
+                    <label className="visually-hidden" htmlFor="dueDate">
+                      Due Date
+                    </label>
+                    <InputGroup>
+                      <DatePicker
+                        selected={formik.values.dueDate}
+                        onChange={date => formik.setFieldValue("dueDate", date)}
+                        dateFormat="yyyy-MM-dd"
+                        id="dueDate"
+                        className="form-control"
+                        placeholderText="dd-mm-yyyy"
+                        onBlur={() => formik.setFieldTouched("dueDate", true)}
+                      />
+                    </InputGroup>
+                    {formik.touched.dueDate && formik.errors.dueDate && (
+                      <div className="text-danger">{formik.errors.dueDate}</div>
+                    )}
+                  </Col>
+                  <Col xs={12} md={3}>
+                    <div className="mb-2 mt-5">Amount</div>
+                    <label className="visually-hidden mt-4" htmlFor="amount">
+                      Amount
+                    </label>
+                    <InputGroup>
+                      {/* <div className="input-group-text mt-5">
+                        <i
+                          className="mdi mdi-currency-inr"
+                          aria-label="Indian Rupee Icon"
+                        />
+                      </div> */}
+                      <Input
+                        type="text"
+                        className={`form-control`}
+                        id="amount"
+                        name="amount"
+                        placeholder="Enter amount"
+                        value={formik.values.amount}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.amount && formik.errors.amount && (
+                      <div className="text-danger mt-2">
+                        {formik.errors.amount}
+                      </div>
+                    )}
+                  </Col>
+                  <Col xs={12} md={3}>
+                    <div className="mb-2 mt-5">Invoice Descritption</div>
+                    <label
+                      className="visually-hidden"
+                      htmlFor="invoiceDescription"
+                    >
+                      Invoice Description
+                    </label>
+                    <InputGroup>
+                      {/* <div className="input-group-text mt-5">
+                        <i
+                          className="mdi mdi-file-document"
+                          aria-label="Invoice Icon"
+                        />
+                      </div> */}
+                      <Input
+                        type="text"
+                        className={`form-control`}
+                        id="invoiceDescription"
+                        name="invoiceDescription"
+                        placeholder="Enter invoice description"
+                        value={formik.values.invoiceDescription}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.invoiceDescription &&
+                      formik.errors.invoiceDescription && (
+                        <div className="text-danger mt-2">
+                          {formik.errors.invoiceDescription}
+                        </div>
+                      )}
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-5">Bill Number</div>
+                    <label className="visually-hidden" htmlFor="billNumber">
+                      Bill Number
+                    </label>
+                    <InputGroup>
+                      {/* <div className="input-group-text mt-5">
+                        <i
+                          className="mdi mdi-numeric"
+                          aria-label="Bill Number Icon"
+                        />
+                      </div> */}
+                      <Input
+                        type="text"
+                        className={`form-controls`}
+                        id="billNumber"
+                        name="billNumber"
+                        placeholder="Enter bill number"
+                        value={formik.values.billNumber}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.billNumber && formik.errors.billNumber && (
+                      <div className="text-danger mt-2">
+                        {formik.errors.billNumber}
+                      </div>
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-5">Interest Rate after 30 days</div>
+                    <label
+                      className="visually-hidden mt-4"
+                      htmlFor="interestRate1"
+                    >
+                      Interest Rate after 30 days
+                    </label>
+                    <InputGroup>
+                      <Input
+                        type="text"
+                        className={`form-control`}
+                        id="interestRate1"
+                        name="interestRate1"
+                        placeholder="Enter interest rate after 30 days"
+                        value={formik.values.interestRate1}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-5">Credit Limit Days</div>
+                    <label
+                      className="visually-hidden"
+                      htmlFor="creditLimitDays"
+                    >
+                      Credit Limit Days
+                    </label>
+                    <InputGroup>
+                      <input
+                        type="text"
+                        className={`form-control`}
+                        id="creditLimitDays"
+                        name="creditLimitDays"
+                        placeholder="Enter credit limit days"
+                        value={formik.values.creditLimitDays}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.creditLimitDays &&
+                      formik.errors.creditLimitDays && (
+                        <div className="text-danger mt-2">
+                          {formik.errors.creditLimitDays}
+                        </div>
+                      )}
+                  </Col>
+                  {/* <Col xs={12} md={3}>
+                    <div className="mb-2 mt-5">
+                      Attach File(s) to Certificate
+                    </div>
+                    <label className="visually-hidden" htmlFor="fileUpload">
+                      Choose a file to upload
+                    </label>
+                    <InputGroup>
+                      <div className="input-group-text">
+                        <i
+                          className="mdi mdi-upload"
+                          aria-label="Upload Icon"
+                        />
+                      </div>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="fileUpload"
+                        accept=".pdf, .doc, .docx, .txt"
+                        aria-describedby="fileUploadHelp"
+                      />
+                    </InputGroup>
+                    <div id="fileUploadHelp" className="form-text">
+                      Choose a file to upload (PDF, DOC, DOCX, TXT).
+                    </div>
+                  </Col>
+                  <Col xs={12} md={3}>
+                    <div className="mb-2 mt-5">
+                      Attach File(s) to Purcchase Order
+                    </div>
+                    <label className="visually-hidden" htmlFor="fileUpload">
+                      Choose a file to upload
+                    </label>
+                    <InputGroup>
+                      <div className="input-group-text">
+                        <i
+                          className="mdi mdi-upload"
+                          aria-label="Upload Icon"
+                        />
+                      </div>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="fileUpload"
+                        accept=".pdf, .doc, .docx, .txt"
+                        aria-describedby="fileUploadHelp"
+                      />
+                    </InputGroup>
+                    <div id="fileUploadHelp" className="form-text">
+                      Choose a file to upload (PDF, DOC, DOCX, TXT).
+                    </div>
+                  </Col> */}
+                </Row>
+                <Row>
+                  <Col xs={12} md={4} className="mb-5">
+                    <div className="mb-2 mt-5">Remarks</div>
+                    <label className="visually-hidden" htmlFor="remarks">
+                      Remarks
+                    </label>
+                    <InputGroup>
+                      <div className="input-group-text">
+                        <i
+                          className="mdi mdi-comment-text-outline"
+                          aria-label="Remarks Icon"
+                        />
+                      </div>
+                      <textarea
+                        className={`form-control`}
+                        id="remarks"
+                        placeholder="Remarks"
+                      />
+                    </InputGroup>
+                  </Col>
+                </Row><Row>
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-5">Interest Rate after 30 days</div>
+                    <label
+                      className="visually-hidden mt-4"
+                      htmlFor="interestRate1"
+                    >
+                      Interest Rate after 30 days
+                    </label>
+                    <InputGroup>
+                      <Input
+                        type="text"
+                        className={`form-control`}
+                        id="interestRate1"
+                        name="interestRate1"
+                        placeholder="Enter interest rate after 30 days"
+                        value={formik.values.interestRate1}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-5">Credit Limit Days</div>
+                    <label
+                      className="visually-hidden"
+                      htmlFor="creditLimitDays"
+                    >
+                      Credit Limit Days
+                    </label>
+                    <InputGroup>
+                      <input
+                        type="text"
+                        className={`form-control`}
+                        id="creditLimitDays"
+                        name="creditLimitDays"
+                        placeholder="Enter credit limit days"
+                        value={formik.values.creditLimitDays}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.creditLimitDays &&
+                      formik.errors.creditLimitDays && (
+                        <div className="text-danger mt-2">
+                          {formik.errors.creditLimitDays}
+                        </div>
+                      )}
+                  </Col>
+                  {/* <Col xs={12} md={3}>
+                    <div className="mb-2 mt-5">
+                      Attach File(s) to Certificate
+                    </div>
+                    <label className="visually-hidden" htmlFor="fileUpload">
+                      Choose a file to upload
+                    </label>
+                    <InputGroup>
+                      <div className="input-group-text">
+                        <i
+                          className="mdi mdi-upload"
+                          aria-label="Upload Icon"
+                        />
+                      </div>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="fileUpload"
+                        accept=".pdf, .doc, .docx, .txt"
+                        aria-describedby="fileUploadHelp"
+                      />
+                    </InputGroup>
+                    <div id="fileUploadHelp" className="form-text">
+                      Choose a file to upload (PDF, DOC, DOCX, TXT).
+                    </div>
+                  </Col>
+                  <Col xs={12} md={3}>
+                    <div className="mb-2 mt-5">
+                      Attach File(s) to Purcchase Order
+                    </div>
+                    <label className="visually-hidden" htmlFor="fileUpload">
+                      Choose a file to upload
+                    </label>
+                    <InputGroup>
+                      <div className="input-group-text">
+                        <i
+                          className="mdi mdi-upload"
+                          aria-label="Upload Icon"
+                        />
+                      </div>
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="fileUpload"
+                        accept=".pdf, .doc, .docx, .txt"
+                        aria-describedby="fileUploadHelp"
+                      />
+                    </InputGroup>
+                    <div id="fileUploadHelp" className="form-text">
+                      Choose a file to upload (PDF, DOC, DOCX, TXT).
+                    </div>
+                  </Col> */}
+                </Row>
+                <Row>
+                  <Col xs={12} md={4} className="mb-5">
+                    <div className="mb-2 mt-5">Remarks</div>
+                    <label className="visually-hidden" htmlFor="remarks">
+                      Remarks
+                    </label>
+                    <InputGroup>
+                      <div className="input-group-text">
+                        <i
+                          className="mdi mdi-comment-text-outline"
+                          aria-label="Remarks Icon"
+                        />
+                      </div>
+                      <textarea
+                        className={`form-control`}
+                        id="remarks"
+                        placeholder="Remarks"
+                      />
+                    </InputGroup>
                   </Col>
                 </Row>
                 <Row>
