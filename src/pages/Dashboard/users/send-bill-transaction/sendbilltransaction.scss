@@ -291,13 +291,16 @@
     border-radius: 14px;
   }
   .custom-content:hover {
-    border: 1px solid rgb(130, 130, 239); /* Define your border style here */
+    border: 1px solid #408dfb; /* Define your border style here */
     border-radius: 10px;
   }
   //
   .css-13cymwt-control {
     border-radius: 10px !important;
   }
+  .mb-0.transactioin {
+    font-size: 10px;
+}
   .css-t3ipsp-control {
     border-radius: 10px !important;
   }
@@ -330,4 +333,71 @@ hr {
 }
 .Dragtable{
   max-width: 93%;
+}
+
+
+// custom css
+
+td.hoverable-cell textarea:hover, td.hoverable-cell input:hover {
+  border: 1px solid #408dfb;
+}
+
+td.hoverable-cell {padding: 0 0px 10px 0px;}
+
+td.hoverable-cell textarea, td.hoverable-cell input {
+  border: 1px solid transparent;
+  border-radius: 6px !important;
+}
+
+
+.terms.row .pt-0.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px !important;
+}
+
+.terms.row .pt-0.card-body .mt-5.col-md-5 {
+  margin-top: 0 !important;
+}
+
+.terms.row .pt-0.card-body .mb-2.mt-5 {
+  margin-top: 0 !important;
+}
+
+.h-100.input-group .input-group-text {
+  display: none;
+}
+
+.terms.row .pt-0.card-body:after {
+  content: '';
+  background: #eee;
+  position: absolute;
+  height: 80%;
+  width: 1px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.pt-0.card-body {
+  background: #f9f9fb;
+}
+
+.mb-0.transactioin {
+  font-size: 10px;
+  position: absolute;
+  bottom: -15px;
+  left: 20px;
+}
+
+input#billDate {
+  margin-top: 0 !important;
+}
+.mt-2.row {
+  align-items: center;
+}
+.Dragtable.row {
+  align-items: flex-end;
+  margin-bottom: 20px;
 }

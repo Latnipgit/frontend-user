@@ -418,7 +418,7 @@ const SendBillTransaction = () => {
                         onBlur={() => formik.setFieldTouched("billDate", true)}
                       />
                     </InputGroup>
-                    <div className="mb-0">
+                    <div className="mb-0 transactioin">
                       To create transaction dated before 01/07/2017, click here
                     </div>
                   </Col>
@@ -562,7 +562,7 @@ const SendBillTransaction = () => {
                           <tr key={index}>
                             {/* <td>{index + 1}</td> */}
                             <td className="hoverable-cell">
-                              <input
+                              <textarea
                                 type="text"
                                 className="form-control"
                                 placeholder="Enter item detail"
@@ -634,12 +634,7 @@ const SendBillTransaction = () => {
                       Customer notes
                     </label>
                     <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-comment-text-outline"
-                          aria-label="Remarks Icon"
-                        />
-                      </div>
+                     
                       <textarea
                         className={`form-control`}
                         id="remarks"
@@ -768,7 +763,7 @@ const SendBillTransaction = () => {
                     </Card>
                   </Col>
                 </Row>
-                <Row>
+                <Row className="terms"> 
                   <Col md={12}>
                     <Card className="overflow-hidden rounded-lg bg-light">
                       <CardBody className="pt-0">
@@ -778,12 +773,7 @@ const SendBillTransaction = () => {
                             Terms & Conditions
                           </label>
                           <InputGroup className="h-100">
-                            <div className="input-group-text">
-                              <i
-                                className="mdi mdi-comment-text-outline"
-                                aria-label="Remarks Icon"
-                              />
-                            </div>
+                           
                             <textarea
                               className={`form-control`}
                               id="remarks"
