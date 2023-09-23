@@ -534,18 +534,7 @@ const SendBillTransaction = () => {
                   <Col xs="12">
                     <hr className="bdr-light xlg"></hr>
                   </Col>
-                </Row>
-
-
-
-
-
-
-
-
-           
-
-                
+                </Row>                
                 <Row className="Dragtable">
                   <div className="table-responsive">
                     <table id="faqs" className="table table-hover custom-table">
@@ -815,7 +804,7 @@ const SendBillTransaction = () => {
                   </Col>
                 </Row>
                 {/* Additonal Fields */}
-                <Row>
+                {/* <Row>
                   <Col xs={12} md={2}>
                     <div className="mb-2">Due From</div>
                     <label className="visually-hidden" htmlFor="dueDate">
@@ -842,12 +831,7 @@ const SendBillTransaction = () => {
                       Amount
                     </label>
                     <InputGroup>
-                      {/* <div className="input-group-text mt-5">
-                        <i
-                          className="mdi mdi-currency-inr"
-                          aria-label="Indian Rupee Icon"
-                        />
-                      </div> */}
+              
                       <Input
                         type="text"
                         className={`form-control`}
@@ -874,12 +858,6 @@ const SendBillTransaction = () => {
                       Invoice Description
                     </label>
                     <InputGroup>
-                      {/* <div className="input-group-text mt-5">
-                        <i
-                          className="mdi mdi-file-document"
-                          aria-label="Invoice Icon"
-                        />
-                      </div> */}
                       <Input
                         type="text"
                         className={`form-control`}
@@ -904,12 +882,7 @@ const SendBillTransaction = () => {
                       Bill Number
                     </label>
                     <InputGroup>
-                      {/* <div className="input-group-text mt-5">
-                        <i
-                          className="mdi mdi-numeric"
-                          aria-label="Bill Number Icon"
-                        />
-                      </div> */}
+                    
                       <Input
                         type="text"
                         className={`form-controls`}
@@ -977,58 +950,7 @@ const SendBillTransaction = () => {
                         </div>
                       )}
                   </Col>
-                  {/* <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">
-                      Attach File(s) to Certificate
-                    </div>
-                    <label className="visually-hidden" htmlFor="fileUpload">
-                      Choose a file to upload
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-upload"
-                          aria-label="Upload Icon"
-                        />
-                      </div>
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="fileUpload"
-                        accept=".pdf, .doc, .docx, .txt"
-                        aria-describedby="fileUploadHelp"
-                      />
-                    </InputGroup>
-                    <div id="fileUploadHelp" className="form-text">
-                      Choose a file to upload (PDF, DOC, DOCX, TXT).
-                    </div>
-                  </Col>
-                  <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">
-                      Attach File(s) to Purcchase Order
-                    </div>
-                    <label className="visually-hidden" htmlFor="fileUpload">
-                      Choose a file to upload
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-upload"
-                          aria-label="Upload Icon"
-                        />
-                      </div>
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="fileUpload"
-                        accept=".pdf, .doc, .docx, .txt"
-                        aria-describedby="fileUploadHelp"
-                      />
-                    </InputGroup>
-                    <div id="fileUploadHelp" className="form-text">
-                      Choose a file to upload (PDF, DOC, DOCX, TXT).
-                    </div>
-                  </Col> */}
+                 
                 </Row>
                 <Row>
                   <Col xs={12} md={4} className="mb-5">
@@ -1099,58 +1021,7 @@ const SendBillTransaction = () => {
                         </div>
                       )}
                   </Col>
-                  {/* <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">
-                      Attach File(s) to Certificate
-                    </div>
-                    <label className="visually-hidden" htmlFor="fileUpload">
-                      Choose a file to upload
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-upload"
-                          aria-label="Upload Icon"
-                        />
-                      </div>
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="fileUpload"
-                        accept=".pdf, .doc, .docx, .txt"
-                        aria-describedby="fileUploadHelp"
-                      />
-                    </InputGroup>
-                    <div id="fileUploadHelp" className="form-text">
-                      Choose a file to upload (PDF, DOC, DOCX, TXT).
-                    </div>
-                  </Col>
-                  <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">
-                      Attach File(s) to Purcchase Order
-                    </div>
-                    <label className="visually-hidden" htmlFor="fileUpload">
-                      Choose a file to upload
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-upload"
-                          aria-label="Upload Icon"
-                        />
-                      </div>
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="fileUpload"
-                        accept=".pdf, .doc, .docx, .txt"
-                        aria-describedby="fileUploadHelp"
-                      />
-                    </InputGroup>
-                    <div id="fileUploadHelp" className="form-text">
-                      Choose a file to upload (PDF, DOC, DOCX, TXT).
-                    </div>
-                  </Col> */}
+                  
                 </Row>
                 <Row>
                   <Col xs={12} md={4} className="mb-5">
@@ -1172,7 +1043,7 @@ const SendBillTransaction = () => {
                       />
                     </InputGroup>
                   </Col>
-                </Row>
+                </Row> */}
                 <Row>
                   <Col xs={12} md={1}>
                     <div className="d-flex flex-column align-items-start mt-5 mb-5">
