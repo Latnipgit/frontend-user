@@ -25,6 +25,7 @@ const InlineFilterForm = ({ onFilter }) => {
 
 
   const handleSubmit = (event) => {
+    debugger 
     event.preventDefault();
     onFilter(filters);
   };
@@ -62,7 +63,13 @@ const InlineFilterForm = ({ onFilter }) => {
       gst: gstValue,
     }));
   };
-
+  const handleNameChange=(event)=>{
+    const nameValue = event.target.value;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      company: nameValue,
+    }));
+  }
   const handlePanChange = (event) => {
     const panValue = event.target.value;
     setFilters((prevFilters) => ({
@@ -91,34 +98,32 @@ const InlineFilterForm = ({ onFilter }) => {
 
                 <Form className="row row-cols-lg-auto g-3 align-items-center">
 
-                {/* <Col xs={12} md={6}>
-                    <label className="visually-hidden" htmlFor="aadharFilter">Company Name</label>
+                <Col xs={12} md={12}>
+                    <label className="visually-hidden" htmlFor="nameFilter">Company Name</label>
                     <InputGroup>
-                    <div className="input-group-text">
+                    {/* <div className="input-group-text">
                         <i className="mdi mdi-account-card-details" />
-                    </div>
-                    <input
-                    type="number"
-                    className={`form-control`}
-                    id="aadharFilter"
-                    placeholder="Company Name"
-                    value={filters.company}
-                    onChange={handleAadharChange}
-                   // onBlur={validateAadhar}
-                    //maxLength="12"
-                    />
+                    </div> */}
+                      <input
+                      type="text"
+                      className={`form-control`}
+                      id="nameFilter"
+                      placeholder="Company Name"
+                      value={filters.company}
+                      onChange={handleNameChange}
+                      />
                     </InputGroup>
-                    {aadharError && <div className="text-danger">{aadharError}</div>}
-                </Col> */}
+                    {/* {aadharError && <div className="text-danger">{aadharError}</div>} */}
+                </Col>
 
                 <Col xs={12} md={6}>
                 <label className="visually-hidden" htmlFor="gstFilter">
                 GST Number
                 </label>
                 <InputGroup>
-                <div className="input-group-text">
+                {/* <div className="input-group-text">
                 <i className="mdi mdi-file-document" />
-                </div>
+                </div> */}
                 <input
                 type="text"
                 className={`form-control ${gstError ? 'is-invalid' : ''}`}
@@ -137,9 +142,9 @@ const InlineFilterForm = ({ onFilter }) => {
                 PAN Card Number
                 </label>
                 <InputGroup>
-                <div className="input-group-text">
+                {/* <div className="input-group-text">
                 <i className="mdi mdi-credit-card" />
-                </div>
+                </div> */}
                 <input
                 type="text"
                 className={`form-control ${panError ? 'is-invalid' : ''}`}

@@ -401,3 +401,23 @@ input#billDate {
   align-items: flex-end;
   margin-bottom: 20px;
 }
+
+input.form-control:hover {
+  border: 1px solid #408dfb;
+}
+textarea#remarks:hover{
+  border: 1px solid #408dfb;
+}
+.advance-search-btn {
+  position: relative;
+  margin-left: -15px;
+  padding: 4px 10px;
+  border-radius: 0 10px 10px 0;
+  height: var(--zf-form-input-height);
+}
+// table > :not(caption) > * > * {
+//   padding: 0.75rem 0.75rem;
+//   background-color: #fff !important;
+//   border-bottom-width: 1px;
+//   box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+// }

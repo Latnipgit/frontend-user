@@ -44,7 +44,6 @@ const Employee = () => {
         .required("This checkbox is required"),
     }),
     onSubmit: values => {
-      debugger
       if (validation.isValid && isAtLeastOneCheckboxSelected(values.access)) {
         console.log("values", values);
         validation.resetForm();

@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
 import Select, { components } from "react-select"
 // import { mdiDelete, mdiPlus } from '@mdi/react';
+//import { Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "../send-bill-transaction/sendbilltransaction.scss"
 import {
   Container,
@@ -70,9 +71,6 @@ const initialValues = {
 }
 
 const SendBillTransaction = () => {
-  const [originalBillFileName, setOriginalBillFileName] = useState("")
-  const [purchaseOrderFileName, setPurchaseOrderFileName] = useState("")
-
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -85,73 +83,61 @@ const SendBillTransaction = () => {
     },
   })
 
-  const [startDate, setStartDate] = useState(null)
-  const handleOriginalBillChange = event => {
-    const selectedFile = event.target.files[0]
-    formik.setFieldValue("uploadOriginalBill", selectedFile)
-    setOriginalBillFileName(selectedFile ? selectedFile.name : "")
-  }
-
-  const handlePurchaseOrderChange = event => {
-    const selectedFile = event.target.files[0]
-    formik.setFieldValue("uploadPurchaseOrder", selectedFile)
-    setPurchaseOrderFileName(selectedFile ? selectedFile.name : "")
-  }
   //Dropdown cutomer
 
   const [selectedOption, setSelectedOption] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [newCustomerName, setNewCustomerName] = useState("")
+  const [customerType, setCustomerType] = useState("Business")
   const [options, setOptions] = useState([
     { label: "Alice", value: "Alice" },
     { label: "Bob", value: "Bob" },
     { label: "Charlie", value: "Charlie" },
     { label: "David", value: "David" },
+    { label: "Add Customer", value: "Add Customer", isAddCustomer: true },
   ])
 
+  // const handleInputChange = inputValue => {
+  //   // Filter options based on user input
+  //   const filteredOptions = options.filter(option =>
+  //     option.label.toLowerCase().includes(inputValue.toLowerCase())
+  //   )
+  //   setOptions(filteredOptions)
+  // }
+
   const handleInputChange = inputValue => {
-    // Filter options based on user input
-    const filteredOptions = options.filter(option =>
-      option.label.toLowerCase().includes(inputValue.toLowerCase())
-    )
-    setOptions(filteredOptions)
+    // Handle input change here
   }
 
-  const [showModal, setShowModal] = useState(false)
-  const [newCustomerName, setNewCustomerName] = useState("")
-  const [customerType, setCustomerType] = useState("Business")
+  const handleSaveCustomer = () => {
+    // Handle saving the customer here
+  }
 
-  const handleAddCustomer = () => {
-    debugger
-    setShowModal(true)
+  const handleOptionSelect = selected => {
+
+    if (selected.isAddCustomer) {
+      // Handle the "Add Customer" option click
+      setShowModal(true)
+    } else {
+      setSelectedOption(selected)
+    }
   }
 
   const handleCloseModal = () => {
     setShowModal(false)
   }
 
-  const handleSaveCustomer = () => {
-    if (newCustomerName) {
-      setOptions([
-        ...options,
-        { label: newCustomerName, value: newCustomerName },
-      ])
-      setSelectedOption({ label: newCustomerName, value: newCustomerName })
-      setShowModal(false)
-    }
-  }
+  // const handleSaveCustomer = () => {
+  //   if (newCustomerName) {
+  //     setOptions([
+  //       ...options,
+  //       { label: newCustomerName, value: newCustomerName },
+  //     ])
+  //     setSelectedOption({ label: newCustomerName, value: newCustomerName })
+  //     setShowModal(false)
+  //   }
+  // }
 
-  const DropdownIndicator = props => {
-    return (
-      <components.DropdownIndicator {...props}>
-        {props.selectProps.menuIsOpen ? (
-          <button className="btn btn-primary mt-2" onClick={handleAddCustomer}>
-            + Add Customer
-          </button>
-        ) : (
-          props.children
-        )}
-      </components.DropdownIndicator>
-    )
-  }
   //first table
   const [faqsRow, setFaqsRow] = useState(1)
   const [subtotal, setSubtotal] = useState(0)
@@ -254,7 +240,7 @@ const SendBillTransaction = () => {
   const calculateSubtotal = newData => {
     // Calculate the subtotal
     let total = 0
-    debugger
+
     newData.forEach(row => {
       if (row.amount !== "") {
         const amountValue = parseFloat(row.amount.replace("₹", ""))
@@ -266,6 +252,12 @@ const SendBillTransaction = () => {
     setSubtotal(total)
     setTotal(total)
   }
+  const handleConfirmApprove = () => {
+
+    setShowApproveModal(false);
+  };
+
+  const [showApproveModal, setShowApproveModal] = useState(false);
 
   return (
     <Container fluid className="mt-5 mb-5">
@@ -280,8 +272,8 @@ const SendBillTransaction = () => {
                   <Col xs={12} md={2}>
                     <div className="mb-2">Customer Name*</div>
                   </Col>
-                  <Col xs={12} md={6}>
-                    <div className="d-inline">
+                  <Col xs={12} md={9}>
+                    <InputGroup>
                       <label
                         className="visually-hidden custom-content"
                         htmlFor="customerSelect"
@@ -293,51 +285,37 @@ const SendBillTransaction = () => {
                         className="custom-content"
                         options={options}
                         value={selectedOption}
-                        onChange={selected => setSelectedOption(selected)}
+                        onChange={selected => handleOptionSelect(selected)}
                         onInputChange={handleInputChange}
                         placeholder="Select or add a customer"
-                        // isSearchable
-                        // components={{ DropdownIndicator }}
                       />
-                    </div>
 
-                    <Modal show={showModal} onHide={handleCloseModal}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Add Customer</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <Form>
-                          <Form.Group controlId="customerName">
-                            <Form.Label>Customer Name</Form.Label>
-                            <Form.Control
-                              type="text"
-                              placeholder="Enter customer name"
-                              value={newCustomerName}
-                              onChange={e => setNewCustomerName(e.target.value)}
+                      <Button
+                        variant="outline-primary"
+                        className="btn btn-primary border-0 advance-search-btn"
+                        onClick={() => setShowApproveModal(true)}
+                      >
+                        <span className="search-icon">
+                          <svg
+                            version="1.1"
+                            id="Layer_1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            x="0"
+                            y="0"
+                            viewBox="0 0 512 512"
+                            xmlSpace="preserve"
+                            className="icon icon-sm align-text-bottom"
+                            width="16"
+                            height="16"
+                          >
+                            <path
+                              fill="#FFF"
+                              d="M421 97C365.3 4 244.4-26.3 151.5 29.4S28.3 205.9 83.9 298.8c49.5 82.6 150.5 115.7 237.5 83l66.3 110.7c10 16.7 31.7 22.1 48.4 12.1 16.7-10 22.1-31.7 12.1-48.4L382 345.6c70-61.4 88.4-166 39-248.6zm-85.6 239.5c-76.4 45.8-175.8 20.8-221.6-55.6S93 105.1 169.4 59.3 345.2 38.5 391 114.9s20.8 175.8-55.6 221.6z"
                             />
-                          </Form.Group>
-                          <Form.Group controlId="customerType">
-                            <Form.Label>Customer Type</Form.Label>
-                            <Form.Check
-                              type="radio"
-                              label="Business"
-                              name="customerType"
-                              value="Business"
-                              checked={customerType === "Business"}
-                              onChange={() => setCustomerType("Business")}
-                            />
-                          </Form.Group>
-                        </Form>
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseModal}>
-                          Cancel
-                        </Button>
-                        <Button variant="primary" onClick={handleSaveCustomer}>
-                          Save Customer
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
+                          </svg>
+                        </span>
+                      </Button>
+                    </InputGroup>
                   </Col>
                 </Row>
                 <Row className="mt-2">
@@ -394,7 +372,7 @@ const SendBillTransaction = () => {
                     </InputGroup>
                   </Col>
                 </Row>
-                <Row className="mt-2">
+                <Row className="mt-3">
                   <Col xs={12} md={2}>
                     <div className="mb-2 mt-3">Invoice Date</div>
                   </Col>
@@ -458,7 +436,7 @@ const SendBillTransaction = () => {
                     </label>
                     <InputGroup>
                       <DatePicker
-                        selected={formik.values.billDate || new Date()} // Use the selected value or default to today's date
+                        selected={formik.values.billDate || new Date()}
                         onChange={date =>
                           formik.setFieldValue("billDate", date)
                         }
@@ -471,12 +449,12 @@ const SendBillTransaction = () => {
                     </InputGroup>
                   </Col>
                 </Row>
-                <Row>
+                <Row className="mt-3">
                   <Col xs="12">
                     <hr className="bdr-light xlg"></hr>
                   </Col>
                 </Row>
-                <Row className="mt-2">
+                <Row className="mt-3">
                   <Col xs={12} md={2}>
                     <div className="mb-2 mt-2">Salesperson</div>
                   </Col>
@@ -500,7 +478,6 @@ const SendBillTransaction = () => {
                         // components={{ DropdownIndicator }}
                       />
                     </div>
-
                   </Col>
                 </Row>
                 <Row>
@@ -524,18 +501,199 @@ const SendBillTransaction = () => {
                         className={`form-control custom-content`}
                         id="remarks"
                         placeholder="let your customer know what this invvoice is for "
-
                       />
                     </div>
-
                   </Col>
                 </Row>
                 <Row>
                   <Col xs="12">
                     <hr className="bdr-light xlg"></hr>
                   </Col>
-                </Row>                
-                <Row className="Dragtable">
+                </Row>
+                <Row>
+                  <div className="h5 mb-4">Additional fields</div>
+                </Row>
+                <Row className="mt-2">
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-3">Due From</div>
+                  </Col>
+                  <Col xs={12} md={3}>
+                    <label
+                      className="visually-hidden mt-4"
+                      htmlFor="Invoiocenumber"
+                    >
+                      Invoice Date
+                    </label>
+                    <InputGroup>
+                      <DatePicker
+                        selected={formik.values.dueDate}
+                        onChange={date => formik.setFieldValue("dueDate", date)}
+                        dateFormat="yyyy-MM-dd"
+                        id="dueDate"
+                        className="form-control"
+                        placeholderText="dd-mm-yyyy"
+                        onBlur={() => formik.setFieldTouched("dueDate", true)}
+                      />
+                    </InputGroup>
+                    {formik.touched.dueDate && formik.errors.dueDate && (
+                      <div className="text-danger">{formik.errors.dueDate}</div>
+                    )}
+                    {/* <div className="mb-0 transactioin">
+                      To create transaction dated before 01/07/2017, click here
+                    </div> */}
+                  </Col>
+                  <Col xs={12} md={1}>
+                    <div className="mb-2 mt-3">Amount</div>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <div className="d-inline">
+                      <label className="visually-hidden mt-4" htmlFor="amount">
+                        Amount
+                      </label>
+                      <InputGroup>
+                        <Input
+                          type="text"
+                          className={`form-control`}
+                          id="amount"
+                          name="amount"
+                          placeholder="Enter amount"
+                          value={formik.values.amount}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                        />
+                      </InputGroup>
+                      {formik.touched.amount && formik.errors.amount && (
+                        <div className="text-danger mt-2">
+                          {formik.errors.amount}
+                        </div>
+                      )}
+                    </div>
+                  </Col>
+                  <Col xs={12} md={1}>
+                    <div className="mb-2 mt-3">Invoice Detail</div>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <label
+                      className="visually-hidden"
+                      htmlFor="invoiceDescription"
+                    >
+                      Invoice Description
+                    </label>
+                    <InputGroup>
+                      <Input
+                        type="text"
+                        className={`form-control`}
+                        id="invoiceDescription"
+                        name="invoiceDescription"
+                        placeholder="Enter invoice description"
+                        value={formik.values.invoiceDescription}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.invoiceDescription &&
+                      formik.errors.invoiceDescription && (
+                        <div className="text-danger mt-2">
+                          {formik.errors.invoiceDescription}
+                        </div>
+                      )}
+                  </Col>
+                </Row>
+                <Row className="mt-2">
+                  <Col xs={12} md={2}>
+                    <div className="mb-2 mt-3">Interest Rate after 30 days</div>
+                  </Col>
+                  <Col xs={12} md={3}>
+                    <div className="d-inline">
+                      <label
+                        className="visually-hidden mt-4"
+                        htmlFor="interestRate1"
+                      >
+                        Interest Rate after 30 days
+                      </label>
+                      <InputGroup>
+                        <Input
+                          type="text"
+                          className={`form-control`}
+                          id="interestRate1"
+                          name="interestRate1"
+                          placeholder="Enter interest rate after 30 days"
+                          value={formik.values.interestRate1}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                        />
+                      </InputGroup>
+                      {formik.touched.interestRate1 &&
+                        formik.errors.interestRate1 && (
+                          <div className="text-danger mt-2">
+                            {formik.errors.interestRate1}
+                          </div>
+                        )}
+                    </div>
+                  </Col>
+                  <Col xs={12} md={1}>
+                    <div className="mb-2 mt-3">Bill Number</div>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <label className="visually-hidden" htmlFor="billNumber">
+                      Bill Number
+                    </label>
+                    <InputGroup>
+                      <Input
+                        type="text"
+                        className={`form-controls`}
+                        id="billNumber"
+                        name="billNumber"
+                        placeholder="Enter bill number"
+                        value={formik.values.billNumber}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.billNumber && formik.errors.billNumber && (
+                      <div className="text-danger mt-2">
+                        {formik.errors.billNumber}
+                      </div>
+                    )}
+                  </Col>
+
+                  <Col xs={12} md={1}>
+                    <div className="mb-2 mt-3">Credit Limit Days</div>
+                  </Col>
+                  <Col xs={12} md={2}>
+                    <label
+                      className="visually-hidden"
+                      htmlFor="creditLimitDays"
+                    >
+                      Credit Limit Days
+                    </label>
+                    <InputGroup>
+                      <input
+                        type="text"
+                        className={`form-control`}
+                        id="creditLimitDays"
+                        name="creditLimitDays"
+                        placeholder="Enter credit limit days"
+                        value={formik.values.creditLimitDays}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.creditLimitDays &&
+                      formik.errors.creditLimitDays && (
+                        <div className="text-danger mt-2">
+                          {formik.errors.creditLimitDays}
+                        </div>
+                      )}
+                  </Col>
+                </Row>
+
+                <Row className="mt-3">
+                  <Col xs="12">
+                    <hr className="bdr-light xlg"></hr>
+                  </Col>
+                </Row>
+                <Row className="Dragtable mt-3">
                   <div className="table-responsive">
                     <table id="faqs" className="table table-hover custom-table">
                       <thead>
@@ -594,7 +752,7 @@ const SendBillTransaction = () => {
                               />
                             </td>
                             <td>
-                              {index === 1 ? (
+                              {index > 0 ? (
                                 <span
                                   className="icon-container delete-icon"
                                   onClick={() => removeFaqsRow(index)}
@@ -623,14 +781,15 @@ const SendBillTransaction = () => {
                       Customer notes
                     </label>
                     <InputGroup>
-                     
                       <textarea
                         className={`form-control`}
                         id="remarks"
                         placeholder="Thanks for your buisness."
                       />
                     </InputGroup>
-                    <div className="mb-2">Will be displayed on the invoice</div>
+                    <div className="mb-0 transactioin">
+                      Will be displayed on the invoice
+                    </div>
                   </Col>
                   <Col md={1} className="mt-5"></Col>
 
@@ -752,7 +911,7 @@ const SendBillTransaction = () => {
                     </Card>
                   </Col>
                 </Row>
-                <Row className="terms"> 
+                <Row className="terms">
                   <Col md={12}>
                     <Card className="overflow-hidden rounded-lg bg-light">
                       <CardBody className="pt-0">
@@ -762,31 +921,19 @@ const SendBillTransaction = () => {
                             Terms & Conditions
                           </label>
                           <InputGroup className="h-100">
-                           
                             <textarea
-                              className={`form-control`}
+                              className={`form-control hoverable-cell"`}
                               id="remarks"
                               placeholder="Enter the terms and conditions of your business to be displayed in your transaction"
                             />
                           </InputGroup>
                         </Col>
-                        <Col md={5} className="mt-5">
+                        <Col md={5} className="mt-5 hoverable-cell">
                           <div className="mb-2 mt-5">
                             Attach File(s) to Invoice
                           </div>
-                          <label
-                            className="visually-hidden"
-                            htmlFor="fileUpload"
-                          >
-                            Choose a file to upload
-                          </label>
+
                           <InputGroup>
-                            <div className="input-group-text">
-                              <i
-                                className="mdi mdi-upload"
-                                aria-label="Upload Icon"
-                              />
-                            </div>
                             <input
                               type="file"
                               className="form-control"
@@ -803,247 +950,7 @@ const SendBillTransaction = () => {
                     </Card>
                   </Col>
                 </Row>
-                {/* Additonal Fields */}
-                {/* <Row>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2">Due From</div>
-                    <label className="visually-hidden" htmlFor="dueDate">
-                      Due Date
-                    </label>
-                    <InputGroup>
-                      <DatePicker
-                        selected={formik.values.dueDate}
-                        onChange={date => formik.setFieldValue("dueDate", date)}
-                        dateFormat="yyyy-MM-dd"
-                        id="dueDate"
-                        className="form-control"
-                        placeholderText="dd-mm-yyyy"
-                        onBlur={() => formik.setFieldTouched("dueDate", true)}
-                      />
-                    </InputGroup>
-                    {formik.touched.dueDate && formik.errors.dueDate && (
-                      <div className="text-danger">{formik.errors.dueDate}</div>
-                    )}
-                  </Col>
-                  <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">Amount</div>
-                    <label className="visually-hidden mt-4" htmlFor="amount">
-                      Amount
-                    </label>
-                    <InputGroup>
-              
-                      <Input
-                        type="text"
-                        className={`form-control`}
-                        id="amount"
-                        name="amount"
-                        placeholder="Enter amount"
-                        value={formik.values.amount}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.amount && formik.errors.amount && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.amount}
-                      </div>
-                    )}
-                  </Col>
-                  <Col xs={12} md={3}>
-                    <div className="mb-2 mt-5">Invoice Descritption</div>
-                    <label
-                      className="visually-hidden"
-                      htmlFor="invoiceDescription"
-                    >
-                      Invoice Description
-                    </label>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        className={`form-control`}
-                        id="invoiceDescription"
-                        name="invoiceDescription"
-                        placeholder="Enter invoice description"
-                        value={formik.values.invoiceDescription}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.invoiceDescription &&
-                      formik.errors.invoiceDescription && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.invoiceDescription}
-                        </div>
-                      )}
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Bill Number</div>
-                    <label className="visually-hidden" htmlFor="billNumber">
-                      Bill Number
-                    </label>
-                    <InputGroup>
-                    
-                      <Input
-                        type="text"
-                        className={`form-controls`}
-                        id="billNumber"
-                        name="billNumber"
-                        placeholder="Enter bill number"
-                        value={formik.values.billNumber}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.billNumber && formik.errors.billNumber && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.billNumber}
-                      </div>
-                    )}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Interest Rate after 30 days</div>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="interestRate1"
-                    >
-                      Interest Rate after 30 days
-                    </label>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        className={`form-control`}
-                        id="interestRate1"
-                        name="interestRate1"
-                        placeholder="Enter interest rate after 30 days"
-                        value={formik.values.interestRate1}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Credit Limit Days</div>
-                    <label
-                      className="visually-hidden"
-                      htmlFor="creditLimitDays"
-                    >
-                      Credit Limit Days
-                    </label>
-                    <InputGroup>
-                      <input
-                        type="text"
-                        className={`form-control`}
-                        id="creditLimitDays"
-                        name="creditLimitDays"
-                        placeholder="Enter credit limit days"
-                        value={formik.values.creditLimitDays}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.creditLimitDays &&
-                      formik.errors.creditLimitDays && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.creditLimitDays}
-                        </div>
-                      )}
-                  </Col>
-                 
-                </Row>
-                <Row>
-                  <Col xs={12} md={4} className="mb-5">
-                    <div className="mb-2 mt-5">Remarks</div>
-                    <label className="visually-hidden" htmlFor="remarks">
-                      Remarks
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-comment-text-outline"
-                          aria-label="Remarks Icon"
-                        />
-                      </div>
-                      <textarea
-                        className={`form-control`}
-                        id="remarks"
-                        placeholder="Remarks"
-                      />
-                    </InputGroup>
-                  </Col>
-                </Row><Row>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Interest Rate after 30 days</div>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="interestRate1"
-                    >
-                      Interest Rate after 30 days
-                    </label>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        className={`form-control`}
-                        id="interestRate1"
-                        name="interestRate1"
-                        placeholder="Enter interest rate after 30 days"
-                        value={formik.values.interestRate1}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-5">Credit Limit Days</div>
-                    <label
-                      className="visually-hidden"
-                      htmlFor="creditLimitDays"
-                    >
-                      Credit Limit Days
-                    </label>
-                    <InputGroup>
-                      <input
-                        type="text"
-                        className={`form-control`}
-                        id="creditLimitDays"
-                        name="creditLimitDays"
-                        placeholder="Enter credit limit days"
-                        value={formik.values.creditLimitDays}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.creditLimitDays &&
-                      formik.errors.creditLimitDays && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.creditLimitDays}
-                        </div>
-                      )}
-                  </Col>
-                  
-                </Row>
-                <Row>
-                  <Col xs={12} md={4} className="mb-5">
-                    <div className="mb-2 mt-5">Remarks</div>
-                    <label className="visually-hidden" htmlFor="remarks">
-                      Remarks
-                    </label>
-                    <InputGroup>
-                      <div className="input-group-text">
-                        <i
-                          className="mdi mdi-comment-text-outline"
-                          aria-label="Remarks Icon"
-                        />
-                      </div>
-                      <textarea
-                        className={`form-control`}
-                        id="remarks"
-                        placeholder="Remarks"
-                      />
-                    </InputGroup>
-                  </Col>
-                </Row> */}
+
                 <Row>
                   <Col xs={12} md={1}>
                     <div className="d-flex flex-column align-items-start mt-5 mb-5">
@@ -1068,6 +975,21 @@ const SendBillTransaction = () => {
                   </Col>
                 </Row>
               </form>
+              <Modal isOpen={showModal} toggle={() => setShowModal(false)}>
+        <ModalHeader toggle={() => setShowModal(false)}>Advanced Search</ModalHeader>
+        <ModalBody>
+          
+       
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button color="success" onClick={handleConfirmApprove}>
+            Approve
+          </Button>
+        </ModalFooter>
+      </Modal>
             </CardBody>
           </Card>
         </Col>

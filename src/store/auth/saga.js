@@ -17,7 +17,6 @@ const fireBaseBackend = getFirebaseBackend();
 function* loginUser({ payload: { user, history } }) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-        
       const response = yield call(postJwtLogin, {
         userName: user.email,
         password: user.password,

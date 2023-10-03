@@ -135,12 +135,12 @@ const ApprovedTranction = props => {
     []
   );
   const handleFilter = (filters) => {
-     
+     debugger
     const filteredResults = ApprovedTranctionData.filter(item => {
-      const aadharMatch =  item.AADHAR === filters.aadhar.trim();
+      const CompanyNameMatch =  item.CompanyName === filters.company.trim();
       const panMatch =  item.PANCARD === filters.pan.trim();
       const gstMatch =  item.GST === filters.gst.trim();
-      return aadharMatch || panMatch || gstMatch;
+      return CompanyNameMatch || panMatch || gstMatch;
     });
   
     setFilteredData(filteredResults);
@@ -170,7 +170,7 @@ const ApprovedTranction = props => {
           <TableContainer
             columns={columns}
             data={filteredData.length > 0 ? filteredData : ApprovedTranctionData}
-            isGlobalFilter={true}
+            isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}
           />

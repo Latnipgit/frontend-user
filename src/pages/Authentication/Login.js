@@ -48,7 +48,6 @@ const Login = props => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      debugger
       try {
         setIsLoading(true);
         dispatch(loginUser(values, props.router.navigate));

@@ -7,7 +7,6 @@ export function useMenu() {
 }
 
 export function MenuProvider({ children }) {
-  debugger
   const [showMenuItems, setShowMenuItems] = useState(false);
   useEffect(() => {
     const currentPath = window.location.pathname;
