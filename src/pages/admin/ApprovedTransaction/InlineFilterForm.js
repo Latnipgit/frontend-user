@@ -25,7 +25,6 @@ const InlineFilterForm = ({ onFilter }) => {
 
 
   const handleSubmit = (event) => {
-    debugger 
     event.preventDefault();
     onFilter(filters);
   };

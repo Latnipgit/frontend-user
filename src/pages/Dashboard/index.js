@@ -187,7 +187,7 @@ useEffect(() => {
       },
     })
   }
-}, [chartRef, chartData])
+}, [chartRef, chartData, activeChart])
 //Debtors age wise 
 useEffect(() => {
   if (chartRef2.current) {
@@ -484,7 +484,7 @@ useEffect(() => {
       },
     })
   }
-}, [chartRef1, chartDatacreditors])
+}, [chartRef1, chartDatacreditors, activeChartCreditors])
 useEffect(() => {
   if (isPopupOpen) {
     setTimeout(() => {
