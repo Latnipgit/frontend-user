@@ -78,6 +78,7 @@ const Employee = () => {
   React.useEffect(() => {
     setIsFormValid(validation.isValid);
   }, [validation.isValid]);
+  console.log("Form data", validation)
   return (
     <React.Fragment>
       <div className="page-content">
@@ -238,6 +239,15 @@ const Employee = () => {
                                 Company search
                               </Label>
                             </FormGroup>
+                         
+                          </div>
+                        </FormGroup>
+                      </Col>
+                      <Col lg={6}>
+                        <FormGroup className="mb-3">
+                          <Label></Label>
+                          <div>
+                        
                             <FormGroup check className="mb-2">
                               <Label check>
                                 <Input

@@ -122,7 +122,7 @@ const ContactsProfile = (props) => {
           {/* <Breadcrumbs title="Contacts" breadcrumbItem="Profile" /> */}
 
           <Row>
-            <Col xl="6">
+            {/* <Col xl="6">
               <Card className="overflow-hidden">
                 <div className="bg-primary bg-soft">
                   <Row>
@@ -182,8 +182,8 @@ const ContactsProfile = (props) => {
                   </Row>
                 </CardBody>
               </Card>
-              </Col>
-              <Col xl="6">
+              </Col> */}
+              <Col xl="12">
               <Card>
                 <CardBody>
                   <CardTitle className="mb-4">Personal Information</CardTitle>
@@ -205,10 +205,10 @@ const ContactsProfile = (props) => {
                           <th scope="row">E-mail :</th>
                           <td>{userProfile.email}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                           <th scope="row">Location :</th>
                           <td>{userProfile.location}</td>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </Table>
                   </div>

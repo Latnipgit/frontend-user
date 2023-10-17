@@ -158,7 +158,7 @@ const UserList = props => {
             View Details
           </Button>
           <div className="mb-4 h4 card-title"></div>
-          <div className="mb-4 h4 card-title">User List</div>
+          <div className="mb-4 h4 card-title"> Bad debtors List</div>
           <TableContainer
             columns={columns}
             data={UserData}

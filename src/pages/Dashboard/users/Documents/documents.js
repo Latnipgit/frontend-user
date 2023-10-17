@@ -12,16 +12,19 @@ import {
 } from "reactstrap";
 import Dropzone from "react-dropzone";
 import { Link } from "react-router-dom";
-
+import TableContainer from "./TableContainer";
 const Document = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const handleAcceptedFiles = (acceptedFiles) => {
+    debugger
+    console.log("handle accepeted", selectedFiles)
     setSelectedFiles([...selectedFiles, ...acceptedFiles]);
   };
 
   const removeFile = (index) => {
+    console.log("INDEX", index)
     const newFiles = [...selectedFiles];
     newFiles.splice(index, 1);
     setSelectedFiles(newFiles);
@@ -48,7 +51,45 @@ const Document = (props) => {
     }
     return null;
   };
+  
+    const columns = useMemo(
+    () => [
+  
+      
+      {
+        Header: "File Name",
+        accessor: "name",
+        filterable: false,
+        disableFilters: true,
+      
+        Cell: cellProps => {
+          return <span>{cellProps.row.original.name}</span>;
+        },
+      },
+ 
+   
+    
+      {
+        Header: "Action",
+        disableFilters: true,
+        accessor: "view",
+        Cell: cellProps => {
+          const project = cellProps.row.original;
+          return (
+            <div className="d-flex">
+       
 
+            <div className="d-flex flex-column align-items-center" onClick={() => removeFile(project)} style={{ cursor: 'pointer' }}>
+            <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" />
+            </div>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+console.log("selectedFiles", selectedFiles)
   return (
     <React.Fragment>
       <div className="page-content">
@@ -63,6 +104,7 @@ const Document = (props) => {
                       onDrop={(acceptedFiles) => {
                         handleAcceptedFiles(acceptedFiles);
                       }}
+                      
                     >
                       {({ getRootProps, getInputProps }) => (
                         <div className="dropzone">
@@ -70,6 +112,7 @@ const Document = (props) => {
                             className="dz-message needsclick mt-2"
                             {...getRootProps()}
                           >
+
                             <input {...getInputProps()} />
                             <div className="mb-3">
                               <i className="display-4 text-muted bx bxs-cloud-upload" />
@@ -84,36 +127,17 @@ const Document = (props) => {
                   {renderAlert()}
                   <div className="gallery mt-3 mr-5">
                     <div className="row">
-                      {selectedFiles.map((file, index) => (
-                        <div className="col-xl-4" key={index}>
-                          <div className="gallery-item">
-                            {file.type.startsWith("image/") ? (
-                              <img
-                                className="gallery-image"
-                                src={URL.createObjectURL(file)}
-                                alt={file.name}
-                                style={{ width: "400px", height: "300px" }}
-                              />
-                            ) : (
-                              <embed
-                                className="gallery-pdf"
-                                src={URL.createObjectURL(file)}
-                                type="application/pdf"
-                                title={file.name}
-                                width="100%"
-                                height="300px"
-                              />
-                            )}
-                            <p className="gallery-title">{file.name}</p>
-                            <button
-                              className="btn btn-danger btn-sm mb-3"
-                              onClick={() => removeFile(index)}
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        </div>
-                      ))}
+                  
+
+
+        {selectedFiles.length !=0  ?      <TableContainer
+            columns={columns}
+            data={selectedFiles}
+            isGlobalFilter={true}
+            isAddOptions={false}
+            customPageSize={20}
+          />
+          :''}
                     </div>
                   </div>
                   <div className="text-center mt-4">

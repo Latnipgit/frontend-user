@@ -6,9 +6,11 @@ import MembersList from "../pages/admin/Members/memberlist/MembersList";
 import RegisteredCompanyList from "../pages/admin/Members/RegisteredCompany/RegisteredCompanyList";
 import DiputedBillings from "../pages/admin/DisputedBillings/DiputedBillings";
 import ApprovedTranction from "../pages/admin/ApprovedTransaction/ApprovedTranction";
+import Invoice from "../pages/admin/Invoice/Invoice";
 import Document from "../pages/Dashboard/users/Documents/documents";
 import ContactsProfile from "../pages/Dashboard/users/profile";
 import Employee from "../pages/Dashboard/users/employeeRegistratiion/employee"
+import EmployeeList from "../pages/Dashboard/users/employeeRegistratiion/employeeList"
 // Pages Component
 import Chat from "../pages/Chat/Chat";
 
@@ -201,6 +203,8 @@ const authProtectedRoutes = [
   { path: "/send-bill-transaction", component: <SendBillTransaction /> },
   { path: "/recieved-payment", component: <DiputedBillings /> },
   { path: "/employee", component: <Employee /> },
+  { path: "/EmployeeList", component: <EmployeeList /> },
+  { path: "/Invoice", component: <Invoice /> },
  
 
   { path: "/login-register", component: <Register2 /> },

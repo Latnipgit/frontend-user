@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import SimpleBar from "simplebar-react";
@@ -10,6 +10,7 @@ import { useMenu } from './MenuContext';
 
 const SidebarContent = (props) => {
   var { showMenuItems } = useMenu();
+  const [isShowEmployee, setisShowEmployee]= useState()
   useEffect(() => {
     const currentPath = window.location.pathname;
     console.log(currentPath);
@@ -146,7 +147,15 @@ const SidebarContent = (props) => {
       }
     }
   }
-
+  const employeeListshow=()=>{
+    // useisShowEmployee(true)
+    if ( isShowEmployee == undefined || isShowEmployee == true){
+      setisShowEmployee(false)
+    }
+    else{
+      setisShowEmployee(true)
+    }
+  }
   return (
     <React.Fragment>
       <SimpleBar className="h-100" ref={ref}>
@@ -187,7 +196,7 @@ const SidebarContent = (props) => {
               </Link>
             </li>
             <li>
-              <Link to="/company-search">
+              <Link to="/Invoice">
                 <i className="bx bx-search"></i>
                 {props.t("Invoices")}
               </Link>
@@ -235,12 +244,37 @@ const SidebarContent = (props) => {
               </Link>
             </li>
             <li>
-              <Link to="/employee" >
+              
+            <Link onClick={()=>employeeListshow()} >
+            <i className='bx bxs-user-detail'></i>                
+                {props.t("Employee")}
+            
+{isShowEmployee != undefined && isShowEmployee != false
+?    <i className='bx bx-chevron-up'></i>   :
+<i className='bx bx-chevron-down'></i> 
+        }
+                        </Link>
+
+            </li>
+{
+
+  isShowEmployee != undefined && isShowEmployee != false
+?
+            <li>
+        
+            
+<Link to="/employee" >
                 <i className="bx bxs-notification"></i>
                 
                 {props.t("Employee Registration")}
               </Link>
+
+              <Link to="/EmployeeList" >
+              <i className='bx bx-list-ul'></i>                
+                {props.t("Employee List")}
+              </Link>
             </li>
+            :""}
           </>
         )}
           </ul>

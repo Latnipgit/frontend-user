@@ -105,6 +105,7 @@ const InlineFilterForm = ({ onFilter }) => {
                     </div> */}
                       <input
                       type="text"
+                       style={{ width:'230px'}}
                       className={`form-control`}
                       id="nameFilter"
                       placeholder="Company Name"
@@ -124,6 +125,8 @@ const InlineFilterForm = ({ onFilter }) => {
                 <i className="mdi mdi-file-document" />
                 </div> */}
                 <input
+                                       style={{ width:'230px'}}
+
                 type="text"
                 className={`form-control ${gstError ? 'is-invalid' : ''}`}
                 id="gstFilter"
@@ -145,6 +148,8 @@ const InlineFilterForm = ({ onFilter }) => {
                 <i className="mdi mdi-credit-card" />
                 </div> */}
                 <input
+                                       style={{ width:'230px'}}
+
                 type="text"
                 className={`form-control ${panError ? 'is-invalid' : ''}`}
                 id="panFilter"
@@ -156,9 +161,11 @@ const InlineFilterForm = ({ onFilter }) => {
                 </InputGroup>
                 {panError && <div className="invalid-feedback">{panError}</div>}
                 </Col>
+                <Col xs={12} className='' style={{ width:'130px'}}>
+               
+                </Col>
 
-
-                <Col xs={12}>
+                <Col xs={12} className=''>
                     <button type="submit" className="btn btn-primary w-md" onClick={handleSubmit}>
                     Filter
                     </button>

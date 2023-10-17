@@ -174,7 +174,7 @@ const MembersList = props => {
           View Details
           </Button>
           <div className="mb-4 h4 card-title"></div>
-          <div className="mb-4 h4 card-title">Member List</div>
+          <div className="mb-4 h4 card-title">Debtors List</div>
           <TableContainer
             columns={columns}
             data={MemberData}

@@ -168,7 +168,7 @@ const RegisteredCompanyList = props => {
           View Details
           </Button>
           <div className="mb-4 h4 card-title"></div>
-          <div className="mb-4 h4 card-title">Company List</div>
+          <div className="mb-4 h4 card-title">Creditors List</div>
           <TableContainer
             columns={columns}
             data={RegisteredCompanyData}
