@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useMemo } from "react"
 import {
   Container,
   Row,
@@ -21,6 +21,7 @@ import Creditors from "./users/creditors"
 import Debtors from "./users/debtors"
 //Import Breadcrumb
 import Breadcrumbs from "../../components/Common/Breadcrumb"
+import TableContainer from "../../components/Common/TableContainer";
 
 //i18n
 import { withTranslation } from "react-i18next"
@@ -108,6 +109,90 @@ const Dashboard = props => {
     // Add more data as needed to reach a total of 20 records
   ];
   
+
+// Table for Repeted ddebtors
+
+const sampleRepetedDebtors = [
+  { "Refnumber": "#BF-001", "Buyer": "Rohan", "Amount": "8000", "DueFrom": "20 january 2022" , "status":"Pending"},
+  { "Refnumber": "#BF-002", "Buyer": "harshit", "Amount": "15000", "DueFrom": "12 march 2022" , "status":"Complete"},
+  { "Refnumber": "#BF-003", "Buyer": "akshay", "Amount": "8500", "DueFrom": "21 july 2022" , "status":"Pending"},
+  { "Refnumber": "#BF-004", "Buyer": "ram", "Amount": "9400", "DueFrom": "20 january 2022" , "status":"Complete"},
+  { "Refnumber": "#BF-005", "Buyer": "shyan", "Amount": "9900", "DueFrom": "20 january 2022" , "status":"Pending"},
+
+];
+const columns = useMemo(
+  () => [
+    {
+      Header: "#",
+      filterable: false,
+      disableFilters: true,
+      Cell: cellProps => {
+        return <input type="checkbox" className="form-check-input" />;
+      },
+    },
+    {
+      Header: "Ref No",
+      accessor: "Refnumber",
+      filterable: false,
+      disableFilters: true,
+     
+    },
+    {
+      Header: "Buyer Name",
+      accessor: "Buyer",
+      disableFilters: true,
+      filterable: false,
+   
+    },
+    {
+      Header: "Amount",
+      accessor: "Amount",
+      disableFilters: true,
+      filterable: false,
+   
+    },
+    {
+      Header: "Due From",
+      accessor: "DueFrom",
+      disableFilters: true,
+      filterable: false,
+     
+    },
+    {
+      Header: "status",
+      accessor: "status",
+      disableFilters: true,
+      filterable: false,
+      Cell: cellProps => {
+        return (
+<div>
+{cellProps.row.original.status == 'Complete'? <span className="text-success">{cellProps.row.original.status}</span>:<span className="text-danger">{cellProps.row.original.status}</span>}
+</div>
+        )}
+    },
+   
+    {
+      Header: "Action",
+      accessor: "",
+      disableFilters: true,
+      filterable: false,
+      Cell: cellProps => {
+        return (
+<div>
+<Button className="btn btn-danger btn-sm" disabled>
+  Report a Defaulter
+</Button>
+</div>
+        )}
+    },
+   
+  ],
+  []
+);
+
+
+
+
   // Use the sampleDataCreditors array for your creditor-related charts and components
   
 
@@ -323,7 +408,7 @@ useEffect(() => {
     });
   }
 }, [chartRef4, sampleData]);
-
+console.log("CHART", chartRef1, chartRef2, chartRef3, chartRef4)
 // Creditor Age Wise
 useEffect(() => {
   if (chartRefCreditorAgeWise.current) {
@@ -520,6 +605,20 @@ const handleChartCreditorsChange = (chartType) => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
+<Row>
+  <Col md="12">
+  <div className="mb-4 h4 card-title">Reported Debtors</div>
+          <TableContainer
+            columns={columns}
+            data={sampleRepetedDebtors}
+            isGlobalFilter={false}
+            isAddOptions={false}
+            customPageSize={6}
+          />
+  </Col>
+  
+</Row>
+
           <Row>
           <Col md="6">
         <Card>
@@ -653,7 +752,7 @@ const handleChartCreditorsChange = (chartType) => {
               <Card>
                 {/* <div className="card-header">Debtors</div> */}
                 <CardBody>
-                  <Creditors />
+                <Debtors />
                 </CardBody>
               </Card>
             </Col>
@@ -661,7 +760,8 @@ const handleChartCreditorsChange = (chartType) => {
               <Card>
                 {/* <div className="card-header">Creditors</div> */}
                 <CardBody>
-                  <Debtors />
+                
+                  <Creditors />
                 </CardBody>
               </Card>
             </Col>

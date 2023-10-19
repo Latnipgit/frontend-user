@@ -7,6 +7,7 @@ import RegisteredCompanyList from "../pages/admin/Members/RegisteredCompany/Regi
 import DiputedBillings from "../pages/admin/DisputedBillings/DiputedBillings";
 import ApprovedTranction from "../pages/admin/ApprovedTransaction/ApprovedTranction";
 import Invoice from "../pages/admin/Invoice/Invoice";
+import ReportDebtor from "../pages/admin/Invoice/ReportaDebtor";
 import Document from "../pages/Dashboard/users/Documents/documents";
 import ContactsProfile from "../pages/Dashboard/users/profile";
 import Employee from "../pages/Dashboard/users/employeeRegistratiion/employee"
@@ -205,6 +206,7 @@ const authProtectedRoutes = [
   { path: "/employee", component: <Employee /> },
   { path: "/EmployeeList", component: <EmployeeList /> },
   { path: "/Invoice", component: <Invoice /> },
+  { path: "/Report-defaulter", component: <ReportDebtor /> },
  
 
   { path: "/login-register", component: <Register2 /> },

@@ -25,6 +25,7 @@ import crypto from "./crypto/reducer";
 //invoices
 import invoices from "./invoices/reducer";
 
+import companyList  from "./company/reducer"
 //jobs
 import JobReducer from "./jobs/reducer";
 
@@ -77,7 +78,8 @@ const rootReducer = combineReducers({
   DashboardSaas,
   DashboardCrypto,
   DashboardBlog,
-  DashboardJob
+  DashboardJob,
+  companyList
 });
 
 export default rootReducer;

@@ -23,11 +23,14 @@ import dashboardSaasSaga from "./dashboard-saas/saga";
 import dashboardCryptoSaga from "./dashboard-crypto/saga";
 import dashboardBlogSaga from "./dashboard-blog/saga";
 import dashboardJobSaga from "./dashboard-jobs/saga";
+import companyListsaga from "./company/saga";
+// import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {
   yield all([
     //public
     fork(AccountSaga),
+    fork(companyListsaga),
     fork(registerAuthSaga),
     fork(AuthSaga),
     fork(ForgetSaga),

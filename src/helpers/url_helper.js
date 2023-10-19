@@ -115,3 +115,7 @@ export const ON_LIKNE_COMMENT = "/comments-product-action";
 export const ON_ADD_REPLY = "/comments-product-add-reply";
 
 export const ON_ADD_COMMENT = "/comments-product-add-comment";
+
+// company list 
+
+export const GET_COMPANY = "/api/companies/basedOnUserId";

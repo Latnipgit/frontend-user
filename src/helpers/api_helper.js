@@ -20,6 +20,8 @@ axiosApi.interceptors.response.use(
 );
 
 export async function get(url, config = {}) {
+  debugger
+
   return await axiosApi
     .get(url, { ...config })
     .then((response) => response.data)
@@ -33,6 +35,7 @@ export async function get(url, config = {}) {
 }
 
 export async function post(url, data, config = {}) {
+  debugger
     return axiosApi
         .post(url, { ...data }, { ...config })
         .then((response) =>response)
@@ -48,6 +51,8 @@ export async function post(url, data, config = {}) {
 
 
 export async function put(url, data, config = {}) {
+  debugger
+
   return axiosApi
     .put(url, { ...data }, { ...config })
     .then((response) => response.data)

@@ -85,6 +85,10 @@ export const setfolderonmails = (selectedmails, folderId, activeTab) => post(url
 // get orders
 export const getOrders = () => get(url.GET_ORDERS);
 
+// getCompany list
+
+export const getCompanyList = data => post(url.GET_COMPANY);
+
 // add order
 export const addNewOrder = order => post(url.ADD_NEW_ORDER, order);
 
@@ -125,6 +129,8 @@ export const getCryptoProduct = () => get(url.GET_CRYPTO_PRODUCTS);
 
 // get invoices
 export const getInvoices = () => get(url.GET_INVOICES);
+
+
 
 // get invoice details
 export const getInvoiceDetail = id =>

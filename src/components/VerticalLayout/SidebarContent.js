@@ -172,6 +172,12 @@ const SidebarContent = (props) => {
               </Link>
             </li>
             <li>
+              <Link to="/Report-defaulter">
+                <i className="bx bx-search"></i>
+                {props.t("Report A Defaulter")}
+              </Link>
+            </li>
+            <li>
               <Link to="/bad-debts">
                 <i className="bx bx-rupee"></i>
                 {props.t("Bad debts")}
@@ -201,6 +207,7 @@ const SidebarContent = (props) => {
                 {props.t("Invoices")}
               </Link>
             </li>
+          
             <li>
             <Link to="/send-bill-transaction">
                 <i className="bx bx-send"></i>

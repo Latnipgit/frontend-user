@@ -12,6 +12,7 @@ const INIT_STATE = {
 }
 
 const Invoices = (state = INIT_STATE, action) => {
+  // debugger
   switch (action.type) {
     case GET_INVOICES_SUCCESS:
       return {

@@ -11,6 +11,8 @@ import {
   CardBody,
 } from "reactstrap";
 import { ApprovedTranctionData } from "../../../common/data/approvedTransactions";
+import { useSelector, useDispatch } from "react-redux";
+
 import {
     Badge,
     Col,
@@ -39,11 +41,18 @@ import {
     CompanyName,
 } from "./ApprovedTransactionCol";
 
+import { getCompanyList as ongetCompanyList} from "../../../../src/store/actions";
+
 import TableContainer from "../../../components/Common/TableContainer";
 import ApprovedTranctionModel from "./ApprovedTranModel";
 import InlineFilterForm from './InlineFilterForm';
+import { get } from "helpers/api_helper";
+
+
 
 const ApprovedTranction = props => {
+  const dispatch = useDispatch();
+
   const { toggleMenuItems } = useMenu();
   const [filteredData, setFilteredData] = useState([]);
   const [modal1, setModal1] = useState(false);
@@ -57,15 +66,15 @@ const ApprovedTranction = props => {
   };
   const columns = useMemo(
     () => [
-      // {
-      //   Header: "Sr No",
-      //   accessor: "SrNo",
-      //   filterable: false,
-      //   disableFilters: true,
-      //   Cell: cellProps => {
-      //     return <SrNo {...cellProps} />;
-      //   },
-      // },
+      {
+        Header: "Sr No",
+        accessor: "SrNo",
+        filterable: false,
+        disableFilters: true,
+        Cell: cellProps => {
+          return <SrNo {...cellProps} />;
+        },
+      },
       {
         Header: "Company Name",
         accessor: "CompanyName",
@@ -142,9 +151,17 @@ const ApprovedTranction = props => {
       const gstMatch =  item.GST === filters.gst.trim();
       return CompanyNameMatch || panMatch || gstMatch;
     });
+
   
     setFilteredData(filteredResults);
   };
+  const { getCompanyList } = useSelector(state => ({
+    getCompanyList: state.getCompanyList,
+  }));
+useEffect(()=>{
+  dispatch(ongetCompanyList());
+  console.log("HDHDHDHD", getCompanyList)
+},[getCompanyList])
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
@@ -156,17 +173,26 @@ const ApprovedTranction = props => {
         <CardBody>
        
          {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
-            {/* <div className="mb-4 h4 card-title mt-5">Company List</div>
+
+        <div>
+          <Row>
+            <Col md="10">
+            {/* <div className="mb-1 h4 card-title mt-1">Company List</div> */}
+            </Col>
+            <Col md="2" className="text-right pl-2" style={{ paddingLeft:'15px'}}>
             <Link to="/add-company">
             <Button
               type="button"
               color="primary"
-              className="btn-sm btn-rounded"
+              className="btn-sm "
             >
               Add Company
             </Button>
             </Link>
-          </div> */}
+            </Col>
+          </Row>
+        </div>
+       
           <TableContainer
             columns={columns}
             data={filteredData.length > 0 ? filteredData : ApprovedTranctionData}

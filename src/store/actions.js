@@ -52,3 +52,4 @@ export * from "./dashboard-blog/actions";
 //dashboard-jobs
 export * from "./dashboard-jobs/actions";
 
+export * from "./company/actions"
