@@ -39,18 +39,18 @@ import {
     AADHAR,
     GST,
     CompanyName,
-} from "./ApprovedTransactionCol";
+    DueSince,
+    DueAmount
+} from "./companyssearchColl";
 
 import { getCompanyList as ongetCompanyList} from "../../../../src/store/actions";
-
 import TableContainer from "../../../components/Common/TableContainer";
-import ApprovedTranctionModel from "./ApprovedTranModel";
-import InlineFilterForm from './InlineFilterForm';
+import InlineFilterForm from '../ApprovedTransaction/InlineFilterForm';
 import { get } from "helpers/api_helper";
 
 
 
-const ApprovedTranction = props => {
+const CompanySearch = props => {
   const dispatch = useDispatch();
 
   const { toggleMenuItems } = useMenu();
@@ -101,15 +101,6 @@ const ApprovedTranction = props => {
           return <PANCARD {...cellProps} />;
         },
       },
-      // {
-      //   Header: "Aadhaar Number",
-      //   accessor: "AADHAR",
-      //   disableFilters: true,
-      //   filterable: false,
-      //   Cell: cellProps => {
-      //     return <AADHAR {...cellProps} />;
-      //   },
-      // },
       {
         Header: "GST Number",
         accessor: "GST",
@@ -119,27 +110,51 @@ const ApprovedTranction = props => {
           return <GST {...cellProps} />;
         },
       },
-      // {
-      //   Header: "Action",
-      //   disableFilters: true,
-      //   accessor: "view",
-      //   Cell: cellProps => {
-      //     return (
-      //       <div className="d-flex">
-      //             <div className="d-flex flex-column align-items-center me-3" style={{ cursor: 'pointer' }}>
-      //               <i className="mdi mdi-eye font-size-16 text-primary me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="View"  onClick={handleEyeIconClick}/>
-      //             </div>
-      //             <div className="d-flex flex-column align-items-center me-3"  style={{ cursor: 'pointer' }}>
-      //               <i className="mdi mdi-pencil font-size-16 text-success me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" />
-      //             </div>
-              
-      //                 <div className="d-flex flex-column align-items-center" style={{ cursor: 'pointer' }}>
-      //                     <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="delete" />
-      //                 </div>
-      //           </div>
-      //     );
-      //   },
-      // },
+      {
+        Header: "Due Form",
+        accessor: "DueSince",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <DueSince {...cellProps} />;
+        },
+      },
+      {
+        Header: "Due Amount",
+        accessor: "amoutnDue",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <DueAmount {...cellProps} />;
+        },
+      },
+      {
+        Header: "Rating",
+        accessor: "rating",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <DueAmount {...cellProps} />;
+        },
+      },
+      {
+        Header: "Action",
+        disableFilters: true,
+        accessor: "view",
+        Cell: cellProps => {
+          return (
+            <div className="d-flex">
+            <div className="d-flex flex-column align-items-center me-3" style={{ cursor: 'pointer' }}>
+              <button
+                className="btn btn-primary"
+              >
+                VIEW DETAILS
+              </button>
+            </div>
+          </div>
+          );
+        },
+      },
     ],
     []
   );
@@ -166,7 +181,7 @@ useEffect(()=>{
   return (
     <React.Fragment>
       
-      <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/>
+      {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/> */}
    
       <InlineFilterForm onFilter={handleFilter} />
       <Card >
@@ -207,9 +222,9 @@ useEffect(()=>{
   );
 };
 
-ApprovedTranction.propTypes = {
+CompanySearch.propTypes = {
   orders: PropTypes.array,
   onGetOrders: PropTypes.func,
 };
 
-export default withRouter(ApprovedTranction);
+export default withRouter(CompanySearch);
