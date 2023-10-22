@@ -123,7 +123,7 @@ const TableContainer = ({
   };
   return (
     <Fragment>
-      <Row className="mb-8 justify-content-start">
+      <Row className="mb-8 justify-content-start mb-4">
         <Col md={2}>
           <select
             className="form-select"

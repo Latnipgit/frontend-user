@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
 import { isEmpty } from "lodash";
 import {Button,Card,CardBody,} from "reactstrap";
-import { MemberData } from "../../../../common/data/members";
+import { MemberData } from "../../../common/data/members";
 import {
     Badge,
     Col,
@@ -31,13 +31,16 @@ import {
   Status,
   PhoneNumber,
   JoinedOn,
-} from "./membersListCol.js";
+  DueAmount,
+  DueSince
+} from "./debttorslistcol";
 
 
-import TableContainer from "../../../../components/Common/TableContainer";
-import MembersViewModal from "./MembersViewModal.js";
+import TableContainer from "../../../components/Common/TableContainer";
+// import MembersViewModal from "./MembersViewModal.js";
+// import { DueAmount } from "../DisputedBillings/disputedCol";
 
-const MembersList = props => {
+const DebtorsList = props => {
 
 
   const [modal1, setModal1] = useState(false);
@@ -74,41 +77,41 @@ const MembersList = props => {
         },
       },
       {
-        Header: "Email Address",
-        accessor: "EmailID",
+        Header: "Amount Due",
+        accessor: "amoutnDue",
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <EmailID {...cellProps} />;
+          return <DueAmount {...cellProps} />;
         },
       },
       {
-        Header: "Phone Number",
-        accessor: "PhoneNumber",
+        Header: "Due From",
+        accessor: "DueSince",
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <PhoneNumber {...cellProps} />;
+          return <DueSince {...cellProps} />;
         },
       },
-      {
-        Header: "Joined On",
-        accessor: "JoinedOn",
-        disableFilters: true,
-        filterable: false,
-        Cell: cellProps => {
-          return <JoinedOn {...cellProps} />;
-        },
-      },
-      {
-        Header: "Status",
-        accessor: "Status",
-        disableFilters: true,
-        filterable: false,
-        Cell: cellProps => {
-          return <Status {...cellProps} />;
-        },
-      },
+    //   {
+    //     Header: "Joined On",
+    //     accessor: "JoinedOn",
+    //     disableFilters: true,
+    //     filterable: false,
+    //     Cell: cellProps => {
+    //       return <JoinedOn {...cellProps} />;
+    //     },
+    //   },
+    //   {
+    //     Header: "Status",
+    //     accessor: "Status",
+    //     disableFilters: true,
+    //     filterable: false,
+    //     Cell: cellProps => {
+    //       return <Status {...cellProps} />;
+    //     },
+    //   },
       
       {
         Header: "Action",
@@ -158,7 +161,6 @@ const MembersList = props => {
 
   return (
     <React.Fragment>
-      <MembersViewModal isOpen={modal1} toggle={toggleViewModal} />
       <Card>
         <CardBody>
         <Button type="button" color="primary" className="btn-sm btn-rounded float-left-button" onClick={toggleViewModal}>
@@ -180,9 +182,9 @@ const MembersList = props => {
   );
 };
 
-MembersList.propTypes = {
+DebtorsList.propTypes = {
   orders: PropTypes.array,
   onGetOrders: PropTypes.func,
 };
 
-export default withRouter(MembersList);
+export default withRouter(DebtorsList);

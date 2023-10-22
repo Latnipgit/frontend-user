@@ -33,6 +33,7 @@
     "google-maps-react": "^2.0.6",
     "i18next": "^22.4.6",
     "i18next-browser-languagedetector": "^6.1.4",
+    "immutable": "^5.0.0-beta.4",
     "leaflet": "^1.9.3",
     "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
@@ -157,6 +158,7 @@
     "autoprefixer": "10.4.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.2",
     "eslint-config-standard-react": "^9.2.0",
     "eslint-plugin-react": "^7.20.6",
     "prettier": "^2.1.1"

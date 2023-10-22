@@ -6,6 +6,9 @@ import MembersList from "../pages/admin/Members/memberlist/MembersList";
 import RegisteredCompanyList from "../pages/admin/Members/RegisteredCompany/RegisteredCompanyList";
 import DiputedBillings from "../pages/admin/DisputedBillings/DiputedBillings";
 import ApprovedTranction from "../pages/admin/ApprovedTransaction/ApprovedTranction";
+import CompanySearch from "../pages/admin/company-search/companysearch";
+import DebtorsList from "../pages/admin/DebtorsList/debtorslist";
+import CrediotorList from "../pages/admin/CreditorsList/CreditorsList";
 import Invoice from "../pages/admin/Invoice/Invoice";
 import ReportDebtor from "../pages/admin/Invoice/ReportaDebtor";
 import Document from "../pages/Dashboard/users/Documents/documents";
@@ -198,9 +201,9 @@ const authProtectedRoutes = [
   //USer Panel Step 2
   { path: "/company-dashboard", component: <Dashboard /> },
   { path: "/bad-debts", component: <UserList /> },
-  { path: "/company-search", component: <ApprovedTranction /> },
-  { path: "/debtors", component: <MembersList /> },
-  { path: "/creditors", component: <RegisteredCompanyList /> },
+  { path: "/company-search", component: <CompanySearch /> },
+  { path: "/debtors", component: <DebtorsList /> },
+  { path: "/creditors", component: <CrediotorList /> },
   { path: "/send-bill-transaction", component: <SendBillTransaction /> },
   { path: "/recieved-payment", component: <DiputedBillings /> },
   { path: "/employee", component: <Employee /> },
