@@ -89,6 +89,11 @@ export const getOrders = () => get(url.GET_ORDERS);
 
 export const getCompanyList = data => post(url.GET_COMPANY);
 
+// Get employee
+
+export const getEmployeeLIst = data => post(url.GET_EMPLOYEE);
+
+
 // add order
 export const addNewOrder = order => post(url.ADD_NEW_ORDER, order);
 

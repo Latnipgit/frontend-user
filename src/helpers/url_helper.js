@@ -119,3 +119,4 @@ export const ON_ADD_COMMENT = "/comments-product-add-comment";
 // company list 
 
 export const GET_COMPANY = "/api/companies/basedOnUserId";
+export const GET_EMPLOYEE = "/api/companies/basedOnUserId";

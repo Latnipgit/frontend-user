@@ -13,10 +13,14 @@ import {
 import Dropzone from "react-dropzone";
 import { Link } from "react-router-dom";
 import TableContainer from "./TableContainer";
+import UploadDocumentModel from './uploadDocumentsmodel'
+
+
 const Document = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadSuccess, setUploadSuccess] = useState(false);
-
+  const [modal1, setModal1] = useState(false);
+  const toggleViewModal = () => setModal1(!modal1);
   const handleAcceptedFiles = (acceptedFiles) => {
     debugger
     console.log("handle accepeted", selectedFiles)
@@ -32,13 +36,13 @@ const Document = (props) => {
 
   const handleUpload = () => {
     setTimeout(() => {
-        setSelectedFiles([]); // Clear selected files
-        setUploadSuccess(true); // Show upload success message
-        // Remove the success message after 5 seconds
-        setTimeout(() => {
-          setUploadSuccess(false);
-        }, 5000);
-      }, 2000); 
+      setSelectedFiles([]); // Clear selected files
+      setUploadSuccess(true); // Show upload success message
+      // Remove the success message after 5 seconds
+      setTimeout(() => {
+        setUploadSuccess(false);
+      }, 5000);
+    }, 2000);
   };
 
   const renderAlert = () => {
@@ -51,24 +55,24 @@ const Document = (props) => {
     }
     return null;
   };
-  
-    const columns = useMemo(
+
+  const columns = useMemo(
     () => [
-  
-      
+
+
       {
         Header: "File Name",
         accessor: "name",
         filterable: false,
         disableFilters: true,
-      
+
         Cell: cellProps => {
           return <span>{cellProps.row.original.name}</span>;
         },
       },
- 
-   
-    
+
+
+
       {
         Header: "Action",
         disableFilters: true,
@@ -77,11 +81,11 @@ const Document = (props) => {
           const project = cellProps.row.original;
           return (
             <div className="d-flex">
-       
 
-            <div className="d-flex flex-column align-items-center" onClick={() => removeFile(project)} style={{ cursor: 'pointer' }}>
-            <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" />
-            </div>
+
+              <div className="d-flex flex-column align-items-center" onClick={() => removeFile(project)} style={{ cursor: 'pointer' }}>
+                <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" />
+              </div>
             </div>
           );
         },
@@ -89,67 +93,57 @@ const Document = (props) => {
     ],
     []
   );
-console.log("selectedFiles", selectedFiles)
+  console.log("selectedFiles", selectedFiles)
   return (
     <React.Fragment>
+      <UploadDocumentModel isOpen={modal1} toggle={toggleViewModal} />
       <div className="page-content">
         <Container fluid={true}>
+          <Row>
+            <Col md="10"></Col>
+            <Col md="2">
+              <Button onClick={() => setModal1(true)} className="btn btn-sm btn-info">
+                Upload documents
+              </Button>
+            </Col>
+          </Row>
           <Row>
             <Col className="col-12">
               <Card>
                 <CardBody>
-                  <h6 className="card-title">File Gallery</h6>
-                  <Form>
-                    <Dropzone
-                      onDrop={(acceptedFiles) => {
-                        handleAcceptedFiles(acceptedFiles);
-                      }}
-                      
-                    >
-                      {({ getRootProps, getInputProps }) => (
-                        <div className="dropzone">
-                          <div
-                            className="dz-message needsclick mt-2"
-                            {...getRootProps()}
-                          >
 
-                            <input {...getInputProps()} />
-                            <div className="mb-3">
-                              <i className="display-4 text-muted bx bxs-cloud-upload" />
-                            </div>
-                            <h4>DROP FILES HERE OR CLICK TO UPLOAD</h4>
-                            
-                          </div>
-                        </div>
-                      )}
-                    </Dropzone>
-                  </Form>
-                  {renderAlert()}
                   <div className="gallery mt-3 mr-5">
                     <div className="row">
-                  
 
 
-        {selectedFiles.length !=0  ?      <TableContainer
-            columns={columns}
-            data={selectedFiles}
-            isGlobalFilter={true}
-            isAddOptions={false}
-            customPageSize={20}
-          />
-          :''}
+
+                      {selectedFiles.length != 0 ? <TableContainer
+                        columns={columns}
+                        data={selectedFiles}
+                        isGlobalFilter={true}
+                        isAddOptions={false}
+                        customPageSize={20}
+                      />
+                        :
+
+                        <Row>
+                          <Col md={4}></Col>
+                          <Col md={4}>
+                            <Card style={{ width: '290px', height: '200px' }} className="my-auto p-4">
+                              <CardBody className="p-3 text-center">
+                                <h5 className="mt-5 ">
+                                  No Document Found
+
+                                </h5>
+                              </CardBody>
+                            </Card>
+                          </Col>
+                          <Col md={4}></Col>
+                        </Row>
+                      }
                     </div>
                   </div>
-                  <div className="text-center mt-4">
-                    <Button
-                      type="button"
-                      color="primary"
-                      onClick={handleUpload}
-                      disabled={selectedFiles.length === 0}
-                    >
-                      Upload Files
-                    </Button>
-                  </div>
+
                 </CardBody>
               </Card>
             </Col>

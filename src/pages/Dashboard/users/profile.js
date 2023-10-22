@@ -34,38 +34,40 @@ const ContactsProfile = (props) => {
     { title: "Pending Projects", iconClass: "bx-hourglass", text: "12" },
     { title: "Total Revenue", iconClass: "bx-package", text: "$36,524" },
   ];
+const userData = JSON.parse(localStorage.getItem("authUser"))
+  const userProfile =userData
 
-  const userProfile = {
-    img: profile1,
-    name: "John Doe",
-    designation: "Software Developer",
-    projectCount: 10,
-    revenue: "$50,000",
-    personalDetail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    phone: "123-456-7890",
-    email: "john@example.com",
-    location: "New York, USA",
-    experiences: [
-      {
-        id: 1,
-        iconClass: "bx bx-building",
-        designation: "Software Developer",
-        timeDuration: "2020 - Present",
-        link: "/experience1",
-      },
-      {
-        id: 2,
-        iconClass: "bx bx-building",
-        designation: "Frontend Developer",
-        timeDuration: "2018 - 2020",
-        link: "/experience2",
-      },
-    ],
-    projects: [
-      { id: 1, name: "Project 1", startDate: "2022-01-01", deadline: "2022-12-31", budget: "$10,000" },
-      { id: 2, name: "Project 2", startDate: "2022-03-15", deadline: "2022-11-30", budget: "$15,000" },
-    ],
-  };
+  // const userProfile = {
+  //   img: profile1,
+  //   name: "John Doe",
+  //   designation: "Software Developer",
+  //   projectCount: 10,
+  //   revenue: "$50,000",
+  //   personalDetail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  //   phone: "123-456-7890",
+  //   email: "john@example.com",
+  //   location: "New York, USA",
+  //   experiences: [
+  //     {
+  //       id: 1,
+  //       iconClass: "bx bx-building",
+  //       designation: "Software Developer",
+  //       timeDuration: "2020 - Present",
+  //       link: "/experience1",
+  //     },
+  //     {
+  //       id: 2,
+  //       iconClass: "bx bx-building",
+  //       designation: "Frontend Developer",
+  //       timeDuration: "2018 - 2020",
+  //       link: "/experience2",
+  //     },
+  //   ],
+  //   projects: [
+  //     { id: 1, name: "Project 1", startDate: "2022-01-01", deadline: "2022-12-31", budget: "$10,000" },
+  //     { id: 2, name: "Project 2", startDate: "2022-03-15", deadline: "2022-11-30", budget: "$15,000" },
+  //   ],
+  // };
 
 //   const columns = [
 //     {
@@ -187,9 +189,9 @@ const ContactsProfile = (props) => {
               <Card>
                 <CardBody>
                   <CardTitle className="mb-4">Personal Information</CardTitle>
-                  <p className="text-muted mb-4">
+                  {/* <p className="text-muted mb-4">
                     {userProfile.personalDetail}
-                  </p>
+                  </p> */}
                   <div className="table-responsive">
                     <Table className="table-nowrap mb-0">
                       <tbody>
@@ -198,12 +200,12 @@ const ContactsProfile = (props) => {
                           <td>{userProfile.name}</td>
                         </tr>
                         <tr>
-                          <th scope="row">Mobile :</th>
-                          <td>{userProfile.phone}</td>
+                          <th scope="row">User ID :</th>
+                          <td>{userProfile.userName}</td>
                         </tr>
                         <tr>
                           <th scope="row">E-mail :</th>
-                          <td>{userProfile.email}</td>
+                          <td>{userProfile.emailId}</td>
                         </tr>
                         {/* <tr>
                           <th scope="row">Location :</th>

@@ -20,7 +20,7 @@ axiosApi.interceptors.response.use(
 );
 
 export async function get(url, config = {}) {
-  debugger
+  
 
   return await axiosApi
     .get(url, { ...config })
@@ -35,9 +35,14 @@ export async function get(url, config = {}) {
 }
 
 export async function post(url, data, config = {}) {
-  debugger
+  console.log("UJUJU", JSON.parse(localStorage.getItem("authUser")))
+  const token = JSON.parse(localStorage.getItem("authUser"))!= null ? JSON.parse(localStorage.getItem("authUser")).token :'';
+  const headers = {
+    ...config.headers,
+    'x-access-token': token != null ? token :'',
+  };  
     return axiosApi
-        .post(url, { ...data }, { ...config })
+        .post(url, { ...data }, { ...config,headers })
         .then((response) =>response)
         .catch((error) => {
           if (error.response) {
@@ -51,7 +56,7 @@ export async function post(url, data, config = {}) {
 
 
 export async function put(url, data, config = {}) {
-  debugger
+  
 
   return axiosApi
     .put(url, { ...data }, { ...config })

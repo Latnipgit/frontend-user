@@ -47,18 +47,18 @@ import TableContainer from "../../../components/Common/TableContainer";
 import ApprovedTranctionModel from "./ApprovedTranModel";
 import InlineFilterForm from './InlineFilterForm';
 import { get } from "helpers/api_helper";
-
+import AddCompanyModel from "./addCompanyModel"
 
 
 const ApprovedTranction = props => {
   const dispatch = useDispatch();
-
+  const [modal1, setModal1] = useState(false);
+  const toggleViewModal = () => setModal1(!modal1);
   const { toggleMenuItems } = useMenu();
   const [filteredData, setFilteredData] = useState([]);
-  const [modal1, setModal1] = useState(false);
   const [showMenuItems, setShowMenuItems] = useState(true);
-  console.log('showMenuItems:', showMenuItems);
-  const toggleViewModal = () => setModal1(!modal1);
+
+ 
   const handleEyeIconClick = () => {
     // toggleMenuItems();
     const newPageUrl = '/company-dashboard';
@@ -158,16 +158,17 @@ const ApprovedTranction = props => {
   const { getCompanyList } = useSelector(state => ({
     getCompanyList: state.getCompanyList,
   }));
+
 useEffect(()=>{
   dispatch(ongetCompanyList());
-  console.log("HDHDHDHD", getCompanyList)
 },[getCompanyList])
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
       
-      <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/>
-   
+      {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} /> */}
+      <AddCompanyModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/>
+
       <InlineFilterForm onFilter={handleFilter} />
       <Card >
         <CardBody>
@@ -180,15 +181,16 @@ useEffect(()=>{
             {/* <div className="mb-1 h4 card-title mt-1">Company List</div> */}
             </Col>
             <Col md="2" className="text-right pl-2" style={{ paddingLeft:'15px'}}>
-            <Link to="/add-company">
+           
             <Button
               type="button"
               color="primary"
               className="btn-sm "
+              onClick={()=>setModal1(true)}
             >
               Add Company
             </Button>
-            </Link>
+          
             </Col>
           </Row>
         </div>
