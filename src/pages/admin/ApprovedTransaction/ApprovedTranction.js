@@ -48,6 +48,7 @@ import ApprovedTranctionModel from "./ApprovedTranModel";
 import InlineFilterForm from './InlineFilterForm';
 import { get } from "helpers/api_helper";
 import AddCompanyModel from "./addCompanyModel"
+import index from "pages/Dashboard-Blog";
 
 
 const ApprovedTranction = props => {
@@ -71,13 +72,16 @@ const ApprovedTranction = props => {
         accessor: "SrNo",
         filterable: false,
         disableFilters: true,
-        Cell: cellProps => {
-          return <SrNo {...cellProps} />;
-        },
+       Cell: index=>{
+return <span>
+{index.row.index + 1} .
+
+</span>
+      }
       },
       {
         Header: "Company Name",
-        accessor: "CompanyName",
+        accessor: "companyName",
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
@@ -94,7 +98,7 @@ const ApprovedTranction = props => {
       },
       {
         Header: "Pan Card",
-        accessor: "PANCARD",
+        accessor: "companyPan",
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
@@ -112,7 +116,7 @@ const ApprovedTranction = props => {
       // },
       {
         Header: "GST Number",
-        accessor: "GST",
+        accessor: "gstin",
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
@@ -155,19 +159,21 @@ const ApprovedTranction = props => {
   
     setFilteredData(filteredResults);
   };
-  const { getCompanyList } = useSelector(state => ({
-    getCompanyList: state.getCompanyList,
-  }));
+  const { getCompanyList } = useSelector(state => 
+     ({
+    getCompanyList: state.companyList.companyList.length != 0 ? state.companyList.companyList.data.response:[],
+  })
+  );
 
 useEffect(()=>{
   dispatch(ongetCompanyList());
-},[getCompanyList])
-  const additionalValue = "Hello from additional prop!";
+  console.log("COMPNYLSIT", getCompanyList)
+},[])
   return (
     <React.Fragment>
       
       {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} /> */}
-      <AddCompanyModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/>
+      <AddCompanyModel isOpen={modal1} toggle={toggleViewModal} getCompanyList={getCompanyList}/>
 
       <InlineFilterForm onFilter={handleFilter} />
       <Card >
@@ -175,7 +181,7 @@ useEffect(()=>{
        
          {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
 
-        {/* <div>
+        <div>
           <Row>
             <Col md="10">
             
@@ -193,11 +199,11 @@ useEffect(()=>{
           
             </Col>
           </Row>
-        </div> */}
+        </div>
        
           <TableContainer
             columns={columns}
-            data={filteredData.length > 0 ? filteredData : ApprovedTranctionData}
+            data={getCompanyList.length > 0 ? getCompanyList : []}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}

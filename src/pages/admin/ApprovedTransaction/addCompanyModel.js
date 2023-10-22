@@ -153,8 +153,8 @@ const ReportedDebtorsModel = props => {
         panNumber: Yup.string().required("Please Enter Your pan Number"),
       })
     });
-  
-  const { isOpen, toggle ,additionalValue } = props
+  console.log("getCompanyListgetCompanyList", props.getCompanyList)
+  const { isOpen, toggle ,getCompanyList } = props
   return (
     <Modal
       isOpen={isOpen}
@@ -184,11 +184,9 @@ const ReportedDebtorsModel = props => {
                         e.preventDefault();
                         formik.handleSubmit();
                         const user = {
-                          name: formik.values.name,
-                          password: formik.values.password,
-                          companyName: formik.values.companyName,
-                          // gstNumber: formik.values.gstNumber,
-                          gstNumber: gstNumber,
+                          name: props.getCompanyList[0].companyName,
+                          companyName:  props.getCompanyList[0].companyName,
+                          gstNumber:  props.getCompanyList[0].gstin,
                           aadharNumber: formik.values.aadharNumber,
                           // panNumber: formik.values.panNumber,
                           panNumber: panNumber,
@@ -212,8 +210,9 @@ const ReportedDebtorsModel = props => {
                         placeholder="Enter Name"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.name || ""}
-                        invalid={formik.touched.name && formik.errors.name ? true : false}
+                        value={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyName:'' }
+                        disabled
+                        // invalid={formik.touched.name && formik.errors.name ? true : false}
                         />
                         {formik.touched.name && formik.errors.name ? (
                         <FormFeedback type="invalid">{formik.errors.name}</FormFeedback>
@@ -230,8 +229,10 @@ const ReportedDebtorsModel = props => {
                                 placeholder="Enter company name"
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.companyName || ""}
-                                invalid={formik.touched.companyName && formik.errors.companyName ? true : false}
+                                // value={formik.values.companyName || ""}
+                                value={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyName:'' }
+disabled
+                                // invalid={formik.touched.companyName && formik.errors.companyName ? true : false}
                                 // Add your company name validation logic here
                               />
                               {formik.touched.companyName && formik.errors.companyName ? (
@@ -300,7 +301,7 @@ const ReportedDebtorsModel = props => {
                         type="text"
                         onChange={handleGSTChange}
                         onBlur={handleGSTBlur}
-                        value={gstNumber}
+                        value={props.getCompanyList[0] != undefined ? props.getCompanyList[0].gstin:''}
                         invalid={gstValidation.touched && gstValidation.error !== ''}
                         />
                         {gstValidation.touched && gstValidation.error !== '' && (
@@ -320,7 +321,9 @@ const ReportedDebtorsModel = props => {
                         type="text"
                         onChange={handlePanChange}
                         onBlur={handlePanBlur}
-                        value={panNumber}
+                        // value={panNumber}
+                        value={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyPan:''}
+
                         />
                         {panValidation.touched && panValidation.error !== '' && (
                         <div className="invalid-feedback">{panValidation.error}</div>
@@ -351,7 +354,7 @@ const ReportedDebtorsModel = props => {
                         </Col>
                           
                           <Col md={6}>
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                               <Label className="form-label">Password</Label>
                               <Input
                                 name="password"
@@ -367,7 +370,7 @@ const ReportedDebtorsModel = props => {
                               {formik.touched.password && formik.errors.password ? (
                                 <FormFeedback type="invalid">{formik.errors.password}</FormFeedback>
                               ) : null}
-                            </div>
+                            </div> */}
                           </Col>
                         </Row>    
                           <div>
