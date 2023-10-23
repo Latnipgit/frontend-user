@@ -396,7 +396,7 @@ const SendBillTransaction = () => {
 
                       <Modal show={showModal} onHide={handleClose}>
                         <Modal.Header closeButton>
-                          <Modal.Title>Add Customer</Modal.Title>
+                          <Modal.Title>Add New Customer</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                           Hi Akshay Neriya
@@ -528,7 +528,7 @@ const SendBillTransaction = () => {
                   {/* <Col xs={12} md={1}>
                     <div className="mb-2 mt-3">Terms</div>
                   </Col> */}
-                  <Col xs={12} md={2}>
+                  {/* <Col xs={12} md={2}>
                     <div className="d-inline">
                       <label
                         className="visually-hidden mt-5"
@@ -548,7 +548,7 @@ const SendBillTransaction = () => {
                         // components={{ DropdownIndicator }}
                       />
                     </div>
-                  </Col>
+                  </Col> */}
                   <Col xs={12} md={1}>
                     <div className="mb-2 mt-3">Due Date</div>
                   </Col>
