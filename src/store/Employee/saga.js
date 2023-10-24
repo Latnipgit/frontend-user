@@ -16,9 +16,10 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import {getCompanyList,addEmployeeList  } from "helpers/fakebackend_helper";
+import {getEmployeeList,addEmployeeList  } from "helpers/fakebackend_helper";
 
 function* fetchEmployeeList() {
+  debugger
   try {
     const response = yield call(getEmployeeList)
     yield put(getEmployeeLIstSuccess(response))
@@ -40,7 +41,7 @@ function* fetchEmployeeList() {
 
 function* addEmployeeListsaga(data) {
   try {
-//  debugger
+//  
       const response = yield call(addEmployeeList, data.payload)
       yield put(addNewEmployeeSuccess(response ))
     
@@ -51,7 +52,7 @@ function* addEmployeeListsaga(data) {
 
 
 function* employeeListsaga() {
-  // debugger
+  // 
   yield takeEvery(GET_EMPLOYEE, fetchEmployeeList)
   yield takeLatest(ADD_NEW_EMPLOYEE, addEmployeeListsaga)
 }

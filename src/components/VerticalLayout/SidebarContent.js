@@ -9,22 +9,27 @@ import { withTranslation } from "react-i18next"
 import { useMenu } from "./MenuContext"
 
 const SidebarContent = props => {
-  var { showMenuItems } = useMenu()
+  const [ showMenuItems, setshowMenuItems ] = useState(false)
   const [isShowEmployee, setisShowEmployee] = useState()
+  const [currentPath, setCurrentpath] = useState('')
+  
+  
   useEffect(() => {
-    const currentPath = window.location.pathname
-    console.log(currentPath)
+    setCurrentpath(window.location.pathname) 
+    console.log("currentPathcurrentPath 11",currentPath)
     if (
-      currentPath === "/companies" ||
-      currentPath === "/documents" ||
-      currentPath === "/profile" ||
-      currentPath === "/notification"
+      currentPath == "/companies" ||
+      currentPath == "/documents" ||
+      currentPath == "/profile" ||
+      currentPath == "/notification"
     ) {
-      showMenuItems = false
+      setshowMenuItems(false)
     } else {
-      showMenuItems = true
+      setshowMenuItems(true)
+
     }
-  }, [])
+  }, [currentPath, showMenuItems])
+  console.log("currentPathcurrentPath", currentPath,showMenuItems )
   const ref = useRef()
   const activateParentDropdown = useCallback(item => {
     item.classList.add("active")
@@ -167,7 +172,7 @@ const SidebarContent = props => {
           <ul className="metismenu list-unstyled" id="side-menu">
             <li className="menu-title">{props.t("Menu")} </li>
 
-            {showMenuItems ? (
+            {showMenuItems == true ? (
               <>
                 <li>
                   <Link to="/company-dashboard">

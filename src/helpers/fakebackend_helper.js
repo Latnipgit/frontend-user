@@ -1,5 +1,5 @@
 import axios from "axios";
-import { del, get, post, put } from "./api_helper";
+import { del, get, post, put, addEmployeeAPImethod } from "./api_helper";
 import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
@@ -98,7 +98,7 @@ export const addEmployeeList = data => addEmployeeAPImethod(url.ADD_EMPLOYEE_LIS
 
 // Get employee
 
-export const getEmployeeLIst = data => post(url.GET_EMPLOYEE);
+export const getEmployeeList = data => addEmployeeAPImethod(url.GET_EMPLOYEE);
 
 
 // add order

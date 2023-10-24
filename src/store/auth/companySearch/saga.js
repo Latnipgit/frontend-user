@@ -13,7 +13,7 @@ import {
 import {searchCompanyAPI } from "helpers/fakebackend_helper";
 
 function* searchCompanyasync(id) {
-  debugger
+  
   console.log("IDIDIDID", id.id)
   const payload={
     "companyId":id.id
@@ -29,7 +29,7 @@ function* searchCompanyasync(id) {
 }
 
 function* searchCompanysaga() {
-  // debugger
+  // 
   yield takeEvery(SEARCH_COMPANY, searchCompanyasync)
 }
 

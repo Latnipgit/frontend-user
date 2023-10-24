@@ -28,6 +28,7 @@ import {
   DebtorsGraph,
   sampleRepetedDebtors,
 } from "components/graph-components/debtors.componet"
+import { searchCompany as onsearchCompany} from "../../../src/store/actions";
 
 //i18n
 import { withTranslation } from "react-i18next"
@@ -37,6 +38,8 @@ import { useSelector, useDispatch } from "react-redux"
 // import { Creditor } from "pages/admin/DisputedBillings/disputedCol";
 
 const Dashboard = props => {
+  const dispatch = useDispatch();
+
   const renderStarRating = rating => {
     const starCount = 5
     const fullStarCount = Math.floor(rating)
@@ -137,6 +140,12 @@ const Dashboard = props => {
     []
   )
 
+  useEffect(()=>{
+    const companyid = localStorage.getItem("COMPANY-ID")
+    console.log("COMPANY-ID", companyid)
+    dispatch(onsearchCompany(companyid));
+
+  })
   const handleSignUp = () => {
     setSubscribemodal(false)
   }

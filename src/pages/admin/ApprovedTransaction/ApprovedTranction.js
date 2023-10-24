@@ -64,9 +64,10 @@ const ApprovedTranction = props => {
   const handleEyeIconClick = (item) => {
     console.log("ITEMSS", item)
     // toggleMenuItems();
-    dispatch(onsearchCompany(item.id));
+    // dispatch(onsearchCompany(item.id));
+    localStorage.setItem("COMPANY-ID",item.id )
     const newPageUrl = '/company-dashboard';
-    // window.location.href = newPageUrl;
+    window.location.href = newPageUrl;
   };
   const columns = useMemo(
     () => [
@@ -152,7 +153,7 @@ return <span>
     []
   );
   const handleFilter = (filters) => {
-     debugger
+     
     const filteredResults = getCompanyList.filter(item => {
       const CompanyNameMatch =  item.CompanyName === filters.company.trim();
       const panMatch =  item.PANCARD === filters.pan.trim();
