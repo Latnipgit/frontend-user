@@ -5,8 +5,6 @@ import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
 import Select, { components } from "react-select"
 import { useFormik } from "formik"
-// import { mdiDelete, mdiPlus } from '@mdi/react';
-//import { Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "../send-bill-transaction/sendbilltransaction.scss"
 import {
   Container,
@@ -31,35 +29,31 @@ import {
 } from "reactstrap"
 
 const validationSchema = Yup.object().shape({
-  customerName: Yup.string()
-    // .matches(/^[A-Za-z\s]+$/, "Customer Name must contain only alphabets")
-    .required("Customer Name is required"),
-  billDate: Yup.date().required("Issue Date is required"),
-  dueDate: Yup.date().required("Due Date is required"),
-  amount: Yup.number()
-    .typeError("Amount must be a number")
-    .required("Amount is required"),
-  interestRate1: Yup.number()
-    .typeError("Interest Rate must be a number")
-    .nullable(), // Allows an empty value for Interest Rate
-  invoiceDescription: Yup.string().required("Invoice Description is required"),
-  billNumber: Yup.string()
-    .matches(
-      /^[A-Za-z0-9]+$/,
-      "Bill Number must contain only alphanumeric characters"
-    )
-    .required("Bill Number is required"),
-  creditLimitDays: Yup.number()
-    .typeError("Credit Limit Days must be a number")
-    .required("Credit Limit Days is required"),
+  customerName: Yup.string().required(
+    "Customer Name is required. Please filll the field"
+  ),
+  referenceNumber: Yup.string().required(
+    "Customer Name is required. Please filll the field"
+  ),
+  invoiceNumber: Yup.string().required(
+    "Invoice number  is required. Please filll the field"
+  ),
+  invoicebillDate: Yup.date().required(
+    "Invvoice date is requred choose from the datepicker"
+  ),
+  dueDate: Yup.date().required(
+    "Due Date is required choose from the datepicker"
+  ),
   uploadOriginalBill: Yup.mixed().required("Original Bill is required"),
   uploadPurchaseOrder: Yup.mixed().required("Purchase Order is required"),
 })
 
 const initialValues = {
   customerName: "",
-  billDate: null,
-  billDescription: "",
+  referenceNumber: "",
+  invoiceNumber: "",
+  invoicebillDate: null,
+  billDate: "",
   billNumber: "",
   billInvoiveCopy: "",
   creditAmount: "",
@@ -72,6 +66,11 @@ const initialValues = {
 }
 
 const SendBillTransaction = () => {
+  const [selectedOption, setSelectedOption] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [newCustomerName, setNewCustomerName] = useState("")
+  const [customerType, setCustomerType] = useState("Business")
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -84,12 +83,6 @@ const SendBillTransaction = () => {
     },
   })
 
-  //Dropdown cutomer
-
-  const [selectedOption, setSelectedOption] = useState(null)
-  const [showModal, setShowModal] = useState(false)
-  const [newCustomerName, setNewCustomerName] = useState("")
-  const [customerType, setCustomerType] = useState("Business")
   const [options, setOptions] = useState([
     { label: "Alice", value: "Alice" },
     { label: "Bob", value: "Bob" },
@@ -97,14 +90,6 @@ const SendBillTransaction = () => {
     { label: "David", value: "David" },
     { label: "Add Customer", value: "Add Customer", isAddCustomer: true },
   ])
-
-  // const handleInputChange = inputValue => {
-  //   // Filter options based on user input
-  //   const filteredOptions = options.filter(option =>
-  //     option.label.toLowerCase().includes(inputValue.toLowerCase())
-  //   )
-  //   setOptions(filteredOptions)
-  // }
 
   const handleInputChange = inputValue => {
     // Handle input change here
@@ -126,17 +111,6 @@ const SendBillTransaction = () => {
   const handleCloseModal = () => {
     setShowModal(false)
   }
-
-  // const handleSaveCustomer = () => {
-  //   if (newCustomerName) {
-  //     setOptions([
-  //       ...options,
-  //       { label: newCustomerName, value: newCustomerName },
-  //     ])
-  //     setSelectedOption({ label: newCustomerName, value: newCustomerName })
-  //     setShowModal(false)
-  //   }
-  // }
 
   //first table
   const [faqsRow, setFaqsRow] = useState(1)
@@ -176,9 +150,9 @@ const SendBillTransaction = () => {
       ...data,
       {
         itemDetail: "",
-        quantity: "0.00",
-        rate: "0.00",
-        amount: "₹0.00",
+        quantity: "",
+        rate: "",
+        amount: "₹",
       },
     ])
   }
@@ -232,9 +206,10 @@ const SendBillTransaction = () => {
 
   //second Table
 
-  const [discountValue, setDiscountValue] = useState(0.0)
-  const [gst, setGST] = useState(0.0)
-  const [adjustmentsValue, setAdjustmentsValue] = useState(0.0)
+  const [discountValue, setDiscountValue] = useState()
+  const [discount, setDiValue] = useState(0)
+  const [gst, setGST] = useState(0)
+  const [adjustmentsValue, setAdjustmentsValue] = useState(0)
   const [total, setTotal] = useState(0.0)
 
   const calculateSubtotal = newData => {
@@ -262,30 +237,78 @@ const SendBillTransaction = () => {
 
   const [showApproveModal, setShowApproveModal] = useState(false)
   const [cgst, setCGST] = useState("")
+  const [showcgst, setshowCGST] = useState("")
+  const [showsgst, setshowsGST] = useState("")
   const [sgst, setSGST] = useState("")
 
   const handleCGSTChange = e => {
+    debugger
     const value = e.target.value
     if (/^\d*\.?\d*$/.test(value)) {
-      // Check if the input is a valid number
       if (
         value === "" ||
         (parseFloat(value) >= 0 && parseFloat(value) <= 100)
       ) {
+        const numericValue = parseFloat(value)
+        const CGSTAmount = (subtotal * numericValue) / 100
         setCGST(value)
+        setshowCGST(CGSTAmount.toFixed(2))
+        setTotal(total + CGSTAmount)
       }
     }
   }
 
   const handleSGSTChange = e => {
+    debugger
     const value = e.target.value
     if (/^\d*\.?\d*$/.test(value)) {
-      // Check if the input is a valid number
       if (
         value === "" ||
         (parseFloat(value) >= 0 && parseFloat(value) <= 100)
       ) {
+        const numericValue = parseFloat(value)
+        const SGST = (subtotal * numericValue) / 100
         setSGST(value)
+        setshowsGST(SGST.toFixed(2))
+        const TotalUpdate = total + SGST
+        setTotal(TotalUpdate)
+      }
+    }
+  }
+
+  const handleAddittionalChange = e => {
+    const value = e.target.value
+    if (value.length === 0) {
+      setAdjustmentsValue(0)
+    } else if (/^\d+(\.\d{0,2})?$/.test(value)) {
+      if (
+        value === "" ||
+        (parseFloat(value) >= 0 && parseFloat(value) <= 100)
+      ) {
+        const numericValue = parseFloat(value)
+        if (numericValue >= 0 && numericValue <= 100) {
+          setAdjustmentsValue(value)
+          setTotal(total + value)
+        }
+      }
+    }
+  }
+
+  const handleDiscountChange = e => {
+    const value = e.target.value
+    if (value.length === 0) {
+      setDiValue(0)
+    } else if (/^\d+(\.\d{0,2})?$/.test(value)) {
+      if (
+        value === "" ||
+        (parseFloat(value) >= 0 && parseFloat(value) <= 100)
+      ) {
+        const numericValue = parseFloat(value)
+        if (numericValue >= 0 && numericValue <= 100) {
+          const discountAmount = (subtotal * numericValue) / 100
+          setDiValue(discountAmount.toFixed(2))
+          setTotal(total - discountAmount)
+        }
       }
     }
   }
@@ -302,7 +325,8 @@ const SendBillTransaction = () => {
       panCard: "",
       address1: "",
       address2: "",
-      cityState: "",
+      city:"",
+      state: "",
       zipcode: "",
     },
     validate: values => {
@@ -355,6 +379,9 @@ const SendBillTransaction = () => {
       // Handle form submission here
     },
   })
+
+  const minDate = new Date()
+  minDate.setFullYear(minDate.getFullYear() - 3)
   return (
     <Container fluid className="mt-5 mb-5">
       <Row>
@@ -368,7 +395,7 @@ const SendBillTransaction = () => {
                   <Col xs={12} md={2}>
                     <div className="mb-2">Customer Name*</div>
                   </Col>
-                  <Col xs={12} md={5}>
+                  <Col xs={12} md={4}>
                     <div className="d-inline">
                       <label
                         className="visually-hidden custom-content"
@@ -418,27 +445,21 @@ const SendBillTransaction = () => {
                     <div className="mb-2 mt-3">Reference number*</div>
                   </Col>
                   <Col xs={12} md={4}>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="Invoiocenumber"
-                    >
-                      Reference Number
-                    </label>
                     <InputGroup>
                       <Input
                         type="text"
                         className={`form-control custom-content mt-2`}
-                        id="amount"
-                        name="amount"
+                        id="referenceNumber"
+                        name="referenceNumber"
                         placeholder="Enter reference number"
-                        value={formik.values.amount}
+                        value={formik.values.referenceNumber}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
                     </InputGroup>
-                    {formik.touched.amount && formik.errors.amount && (
+                    {formik.touched.amount && formik.errors.referenceNumber && (
                       <div className="text-danger mt-2">
-                        {formik.errors.amount}
+                        {formik.errors.referenceNumber}
                       </div>
                     )}
                   </Col>
@@ -448,372 +469,75 @@ const SendBillTransaction = () => {
                     <div className="mb-2 mt-3">Invoice number*</div>
                   </Col>
                   <Col xs={12} md={4}>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="Invoiocenumber"
-                    >
-                      Invoice Number
-                    </label>
                     <InputGroup>
                       <Input
                         type="text"
                         className={`form-control custom-content mt-2`}
-                        id="amount"
-                        name="amount"
+                        id="invoiceNumber"
+                        name="invoiceNumber"
                         placeholder="Enter invoice number"
-                        value={formik.values.amount}
+                        value={formik.values.invoiceNumber}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
                     </InputGroup>
-                    {formik.touched.amount && formik.errors.amount && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.amount}
-                      </div>
-                    )}
+                    {formik.touched.invoiceNumber &&
+                      formik.errors.invoiceNumber && (
+                        <div className="text-danger mt-2">
+                          {formik.errors.invoiceNumber}
+                        </div>
+                      )}
                   </Col>
                 </Row>
-                {/* <Row className="mt-2">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-3">Order Number</div>
-                  </Col>
-                  <Col xs={12} md={4}>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="Invoiocenumber"
-                    >
-                      Order Number
-                    </label>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        className={`form-control custom-content mt-2`}
-                        id="amount"
-                        name="amount"
-                        value={formik.values.amount}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                  </Col>
-                </Row> */}
                 <Row className="mt-3">
                   <Col xs={12} md={2}>
                     <div className="mb-2 mt-3">Invoice Date</div>
                   </Col>
-                  <Col xs={12} md={3}>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="Invoiocenumber"
-                    >
-                      Invoice Date
-                    </label>
+                  <Col xs={12} md={2}>
                     <InputGroup>
                       <DatePicker
-                        selected={formik.values.billDate || new Date()} // Use the selected value or default to today's date
+                        selected={formik.values.invoicebillDate || new Date()}
                         onChange={date =>
-                          formik.setFieldValue("billDate", date)
+                          formik.setFieldValue("invoicebillDate", date)
                         }
-                        dateFormat="yyyy-MM-dd"
-                        id="billDate"
-                        className={`form-control custom-content mt-2`}
-                        placeholderText="dd-mm-yyyy"
-                        onBlur={() => formik.setFieldTouched("billDate", true)}
+                        dateFormat="dd-mm-yyyy" // Format to display year, month, and day
+                        id="invoicebillDate"
+                        className="form-control custom-content mt-2"
+                        onBlur={() =>
+                          formik.setFieldTouched("invoicebillDate", true)
+                        }
+                        minDate={minDate} // Set the minimum datev
                       />
                     </InputGroup>
-                    <div className="mb-0 transactioin">
+                    {/* <div className="mb-0 transactioin">
                       To create transaction dated before 01/07/2017, click here
-                    </div>
+                    </div> */}
                   </Col>
-                  {/* <Col xs={12} md={1}>
-                    <div className="mb-2 mt-3">Terms</div>
-                  </Col> */}
-                  {/* <Col xs={12} md={2}>
-                    <div className="d-inline">
-                      <label
-                        className="visually-hidden mt-5"
-                        htmlFor="customerSelect"
-                      >
-                        Due on reciept
-                      </label>
-                      <Select
-                        id="customerSelect"
-                        className="custom-content"
-                        options={options}
-                        value={selectedOption}
-                        onChange={selected => setSelectedOption(selected)}
-                        onInputChange={handleInputChange}
-                        placeholder="Due on reciept"
-                        // isSearchable
-                        // components={{ DropdownIndicator }}
-                      />
-                    </div>
-                  </Col> */}
                   <Col xs={12} md={1}>
                     <div className="mb-2 mt-3">Due Date</div>
                   </Col>
                   <Col xs={12} md={2}>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="Invoiocenumber"
-                    >
-                      Due Date
-                    </label>
                     <InputGroup>
                       <DatePicker
                         selected={formik.values.billDate || new Date()}
                         onChange={date =>
                           formik.setFieldValue("billDate", date)
                         }
-                        dateFormat="yyyy-MM-dd"
+                        dateFormat="dd-mm-yyyy"
                         id="billDate"
-                        className={`form-control custom-content mt-2`}
+                        className={`form-control custom-content mt-5`}
                         placeholderText="dd-mm-yyyy"
                         onBlur={() => formik.setFieldTouched("billDate", true)}
                       />
                     </InputGroup>
                   </Col>
                 </Row>
-                {/* <Row className="mt-3">
-                  <Col xs="12">
-                    <hr className="bdr-light xlg"></hr>
-                  </Col>
-                </Row> */}
-                {/* <Row className="mt-3">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-2">Salesperson</div>
-                  </Col>
-                  <Col xs={12} md={4}>
-                    <div className="d-inline">
-                      <label
-                        className="visually-hidden custom-content"
-                        htmlFor="customerSelect"
-                      >
-                        Select Customer
-                      </label>
-                      <Select
-                        id="customerSelect"
-                        className="custom-content"
-                        options={options}
-                        value={selectedOption}
-                        onChange={selected => setSelectedOption(selected)}
-                        onInputChange={handleInputChange}
-                        placeholder="Select or add a salesman"
-                      />
-                    </div>
-                  </Col>
-                </Row> */}
-                {/* <Row>
-                  <Col xs="12">
-                    <hr className="bdr-light xlg"></hr>
-                  </Col>
-                </Row>
-                <Row className="mt-2">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-2">Subject</div>
-                  </Col>
-                  <Col xs={12} md={4}>
-                    <div className="d-inline">
-                      <label
-                        className="visually-hidden custom-content"
-                        htmlFor="customerSelect"
-                      >
-                        Select Customer
-                      </label>
-                      <textarea
-                        className={`form-control custom-content`}
-                        id="remarks"
-                        placeholder="let your customer know what this invvoice is for "
-                      />
-                    </div>
-                  </Col>
-                </Row> */}
                 <Row>
                   <Col xs="12">
                     <hr className="bdr-light xlg"></hr>
                   </Col>
                 </Row>
-                {/* <Row>
-                  <div className="h5 mb-4">Additional fields</div>
-                </Row>
-                <Row className="mt-2">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-3">Due From</div>
-                  </Col>
-                  <Col xs={12} md={3}>
-                    <label
-                      className="visually-hidden mt-4"
-                      htmlFor="Invoiocenumber"
-                    >
-                      Invoice Date
-                    </label>
-                    <InputGroup>
-                      <DatePicker
-                        selected={formik.values.dueDate}
-                        onChange={date => formik.setFieldValue("dueDate", date)}
-                        dateFormat="yyyy-MM-dd"
-                        id="dueDate"
-                        className="form-control"
-                        placeholderText="dd-mm-yyyy"
-                        onBlur={() => formik.setFieldTouched("dueDate", true)}
-                      />
-                    </InputGroup>
-                    {formik.touched.dueDate && formik.errors.dueDate && (
-                      <div className="text-danger">{formik.errors.dueDate}</div>
-                    )}
-                   
-                  </Col>
-                  <Col xs={12} md={1}>
-                    <div className="mb-2 mt-3">Amount</div>
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <div className="d-inline">
-                      <label className="visually-hidden mt-4" htmlFor="amount">
-                        Amount
-                      </label>
-                      <InputGroup>
-                        <Input
-                          type="text"
-                          className={`form-control`}
-                          id="amount"
-                          name="amount"
-                          placeholder="Enter amount"
-                          value={formik.values.amount}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                      </InputGroup>
-                      {formik.touched.amount && formik.errors.amount && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.amount}
-                        </div>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={1}>
-                    <div className="mb-2 mt-3">Invoice Detail</div>
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <label
-                      className="visually-hidden"
-                      htmlFor="invoiceDescription"
-                    >
-                      Invoice Description
-                    </label>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        className={`form-control`}
-                        id="invoiceDescription"
-                        name="invoiceDescription"
-                        placeholder="Enter invoice description"
-                        value={formik.values.invoiceDescription}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.invoiceDescription &&
-                      formik.errors.invoiceDescription && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.invoiceDescription}
-                        </div>
-                      )}
-                  </Col>
-                </Row>
-                <Row className="mt-2">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-3">Interest Rate after 30 days</div>
-                  </Col>
-                  <Col xs={12} md={3}>
-                    <div className="d-inline">
-                      <label
-                        className="visually-hidden mt-4"
-                        htmlFor="interestRate1"
-                      >
-                        Interest Rate after 30 days
-                      </label>
-                      <InputGroup>
-                        <Input
-                          type="text"
-                          className={`form-control`}
-                          id="interestRate1"
-                          name="interestRate1"
-                          placeholder="Enter interest rate after 30 days"
-                          value={formik.values.interestRate1}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                      </InputGroup>
-                      {formik.touched.interestRate1 &&
-                        formik.errors.interestRate1 && (
-                          <div className="text-danger mt-2">
-                            {formik.errors.interestRate1}
-                          </div>
-                        )}
-                    </div>
-                  </Col>
-                  <Col xs={12} md={1}>
-                    <div className="mb-2 mt-3">Bill Number</div>
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <label className="visually-hidden" htmlFor="billNumber">
-                      Bill Number
-                    </label>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        className={`form-controls`}
-                        id="billNumber"
-                        name="billNumber"
-                        placeholder="Enter bill number"
-                        value={formik.values.billNumber}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.billNumber && formik.errors.billNumber && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.billNumber}
-                      </div>
-                    )}
-                  </Col>
 
-                  <Col xs={12} md={1}>
-                    <div className="mb-2 mt-3">Credit Limit Days</div>
-                  </Col>
-                  <Col xs={12} md={2}>
-                    <label
-                      className="visually-hidden"
-                      htmlFor="creditLimitDays"
-                    >
-                      Credit Limit Days
-                    </label>
-                    <InputGroup>
-                      <input
-                        type="text"
-                        className={`form-control`}
-                        id="creditLimitDays"
-                        name="creditLimitDays"
-                        placeholder="Enter credit limit days"
-                        value={formik.values.creditLimitDays}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.creditLimitDays &&
-                      formik.errors.creditLimitDays && (
-                        <div className="text-danger mt-2">
-                          {formik.errors.creditLimitDays}
-                        </div>
-                      )}
-                  </Col>
-                </Row>
-
-                <Row className="mt-3">
-                  <Col xs="12">
-                    <hr className="bdr-light xlg"></hr>
-                  </Col>
-                </Row> */}
                 <Row className="Dragtable mt-3">
                   <div className="table-responsive">
                     <table id="faqs" className="table table-hover custom-table">
@@ -896,22 +620,7 @@ const SendBillTransaction = () => {
                 </Row>
 
                 <Row className="Dragtable">
-                  <Col md={5} className="mt-5">
-                    {/* <div className="mb-2 mt-5">Costomer Notes </div>
-                    <label className="visually-hidden" htmlFor="remarks">
-                      Customer notes
-                    </label>
-                    <InputGroup>
-                      <textarea
-                        className={`form-control`}
-                        id="remarks"
-                        placeholder="Thanks for your buisness."
-                      />
-                    </InputGroup>
-                    <div className="mb-0 transactioin">
-                      Will be displayed on the invoice
-                    </div> */}
-                  </Col>
+                  <Col md={5} className="mt-5"></Col>
                   <Col md={1} className="mt-5"></Col>
 
                   <Col md={6}>
@@ -934,52 +643,12 @@ const SendBillTransaction = () => {
                                   </Col>
                                   {/* Discount */}
                                 </Row>
-                                <Row>
-                                  <Col xs="4">
-                                    <p className="text-muted mb-0 mt-2">
-                                      Discount
-                                    </p>
-                                  </Col>
-                                  <Col xs="5">
-                                    <FormGroup>
-                                      <Input
-                                        type="text"
-                                        placeholder="Enter Discount"
-                                        value={discountValue}
-                                        onChange={e => {
-                                          const value = e.target.value
-                                          if (value.length === 1) {
-                                            // Don't allow the last character to be removed
-                                            setDiscountValue(value)
-                                          } else if (
-                                            /^\d*\.?\d*$/.test(value)
-                                          ) {
-                                            const numericValue =
-                                              parseFloat(value)
-                                            if (
-                                              numericValue >= 1 &&
-                                              numericValue <= 100
-                                            ) {
-                                              setDiscountValue(value)
-                                            }
-                                          }
-                                        }}
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col xs="3">
-                                    <h5 className="font-size-15 mt-2 mr-5">
-                                      ₹{discountValue}
-                                    </h5>
-                                  </Col>
-                                </Row>
 
                                 <Row>
-                                  {/* TDS */}
-                                  <Col xs="2" style={{ width: "13%" }}>
-                                    <p className="text-muted mb-0 mt-2">CGST</p>
+                                  <Col xs="4">
+                                    <p className="text-muted mb-0 mt-2">SGST</p>
                                   </Col>
-                                  <Col xs="3">
+                                  <Col xs="5">
                                     <FormGroup>
                                       <Input
                                         type="text"
@@ -990,10 +659,17 @@ const SendBillTransaction = () => {
                                       />
                                     </FormGroup>
                                   </Col>
-                                  <Col xs="2" style={{ width: "12%" }}>
-                                    <p className="text-muted mb-0 mt-2">SGST</p>
-                                  </Col>
                                   <Col xs="3">
+                                    <h5 className="font-size-15 mt-2 mr-5">
+                                      ₹{showcgst}
+                                    </h5>
+                                  </Col>
+                                </Row>
+                                <Row>
+                                  <Col xs="4">
+                                    <p className="text-muted mb-0 mt-2">CGST</p>
+                                  </Col>
+                                  <Col xs="5">
                                     <FormGroup>
                                       <Input
                                         type="text"
@@ -1006,7 +682,30 @@ const SendBillTransaction = () => {
                                   </Col>
                                   <Col xs="3">
                                     <h5 className="font-size-15 mt-2 mr-5">
-                                      ₹{gst}
+                                      ₹{showsgst}
+                                    </h5>
+                                  </Col>
+                                </Row>
+
+                                <Row>
+                                  <Col xs="4">
+                                    <p className="text-muted mb-0 mt-2">
+                                      Discount
+                                    </p>
+                                  </Col>
+                                  <Col xs="5">
+                                    <FormGroup>
+                                      <Input
+                                        type="text"
+                                        placeholder="Enter Discount"
+                                        value={discountValue}
+                                        onChange={handleDiscountChange}
+                                      />
+                                    </FormGroup>
+                                  </Col>
+                                  <Col xs="3">
+                                    <h5 className="font-size-15 mt-2 mr-5">
+                                      ₹{discount}
                                     </h5>
                                   </Col>
                                 </Row>
@@ -1022,12 +721,7 @@ const SendBillTransaction = () => {
                                         type="text"
                                         placeholder="Enter More Adjustments"
                                         value={adjustmentsValue}
-                                        onChange={e => {
-                                          const value = e.target.value
-                                          if (/^\d*\.?\d*$/.test(value)) {
-                                            setAdjustmentsValue(value)
-                                          }
-                                        }}
+                                        onChange={handleAddittionalChange}
                                       />
                                     </FormGroup>
                                   </Col>
@@ -1136,7 +830,7 @@ const SendBillTransaction = () => {
               </form>
               <Modal isOpen={showModal} toggle={() => setShowModal(false)}>
                 <ModalHeader toggle={() => setShowModal(false)}>
-                  Add Customer{" "}
+                  Add New Customer{" "}
                 </ModalHeader>
                 <ModalBody>
                   <form onSubmit={formikModal.handleSubmit}>
@@ -1146,14 +840,56 @@ const SendBillTransaction = () => {
                       </Col>
                       <Col xs={12} md={8}>
                         <FormGroup>
-                          <Input
-                            type="text"
-                            id="customerType"
-                            name="customerType"
-                            value={formikModal.values.customerType}
-                            onChange={formikModal.handleChange}
-                            onBlur={formikModal.handleBlur}
-                          />
+                          <div className="form-check form-check-inline">
+                            <Label
+                              check
+                              inline
+                              className={
+                                formikModal.values.customerType === "Business"
+                                  ? "selected"
+                                  : ""
+                              }
+                            >
+                              <Input
+                                className="ember-view form-check-input"
+                                type="radio"
+                                id="customerTypeBusiness"
+                                name="customerType"
+                                value="Business"
+                                checked={
+                                  formikModal.values.customerType === "Business"
+                                }
+                                onChange={formikModal.handleChange}
+                                onBlur={formikModal.handleBlur}
+                              />{" "}
+                              Business
+                            </Label>
+                          </div>
+                          <div>
+                            <Label
+                              check
+                              inline
+                              className={
+                                formikModal.values.customerType === "Individual"
+                                  ? "selected"
+                                  : ""
+                              }
+                            >
+                              <Input
+                                type="radio"
+                                id="customerTypeIndividual"
+                                name="customerType"
+                                value="Individual"
+                                checked={
+                                  formikModal.values.customerType ===
+                                  "Individual"
+                                }
+                                onChange={formikModal.handleChange}
+                                onBlur={formikModal.handleBlur}
+                              />{" "}
+                              Individual
+                            </Label>
+                          </div>
                           {formikModal.touched.customerType &&
                             formikModal.errors.customerType && (
                               <div className="text-danger">
@@ -1167,7 +903,26 @@ const SendBillTransaction = () => {
                       <Col xs={12} md={4} className="mt-2">
                         <Label for="customerType">Primary Contact*</Label>
                       </Col>
-                      <Col xs={12} md={8}>
+                      <Col xs={12} md={3}>
+                    <div className="d-inline">
+                      <label
+                        className="visually-hidden custom-content"
+                        htmlFor="customerSelect"
+                      >
+                        Select Customer
+                      </label>
+                      <Select
+                        id="customerSelect"
+                        className="custom-content"
+                        options={options}
+                        value={selectedOption}
+                        onChange={selected => setSelectedOption(selected)}
+                        onInputChange={handleInputChange}
+                        placeholder="Salutation"
+                      />
+                    </div>
+                  </Col>
+                      <Col xs={12} md={3}>
                         <FormGroup>
                           <Input
                             type="text"
@@ -1176,6 +931,26 @@ const SendBillTransaction = () => {
                             value={formikModal.values.primaryContact}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="First Name"
+                          />
+                          {formikModal.touched.primaryContact &&
+                            formikModal.errors.primaryContact && (
+                              <div className="text-danger">
+                                {formikModal.errors.primaryContact}
+                              </div>
+                            )}
+                        </FormGroup>
+                      </Col>
+                      <Col xs={12} md={3}>
+                        <FormGroup>
+                          <Input
+                            type="text"
+                            id="primaryContact"
+                            name="primaryContact"
+                            value={formikModal.values.primaryContact}
+                            onChange={formikModal.handleChange}
+                            onBlur={formikModal.handleBlur}
+                            placeholder="Last Name"
                           />
                           {formikModal.touched.primaryContact &&
                             formikModal.errors.primaryContact && (
@@ -1186,11 +961,11 @@ const SendBillTransaction = () => {
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                       <Col xs="12">
                         <hr className="bdr-light xlg"></hr>
                       </Col>
-                    </Row>
+                    </Row> */}
                     <Row>
                       <Col xs={12} md={4} className="mt-2">
                         <Label for="companyName">Company Name*</Label>
@@ -1204,6 +979,7 @@ const SendBillTransaction = () => {
                             value={formikModal.values.companyName}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Enter Company Name"
                           />
                           {formikModal.touched.companyName &&
                             formikModal.errors.companyName && (
@@ -1215,7 +991,7 @@ const SendBillTransaction = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={12} md={4} className="mt-2">
+                      <Col xs={12} md={2} className="mt-2">
                         <Label for="customerEmail">Customer Email*</Label>
                       </Col>
                       <Col xs={12} md={8}>
@@ -1227,6 +1003,7 @@ const SendBillTransaction = () => {
                             value={formikModal.values.customerEmail}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Custtomer Email"
                           />
                           {formikModal.touched.customerEmail &&
                             formikModal.errors.customerEmail && (
@@ -1237,16 +1014,12 @@ const SendBillTransaction = () => {
                         </FormGroup>
                       </Col>
                     </Row>
+                 
                     <Row>
-                      <Col xs="12">
-                        <hr className="bdr-light xlg"></hr>
+                      <Col xs={12} md={2} className="mt-2">
+                        <Label for="customerPhone">Customer Phone</Label>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col xs={12} md={4} className="mt-2">
-                        <Label for="customerPhone">Mobile No.*</Label>
-                      </Col>
-                      <Col xs={12} md={8}>
+                      <Col xs={12} md={3}>
                         <FormGroup>
                           <Input
                             type="text"
@@ -1255,6 +1028,26 @@ const SendBillTransaction = () => {
                             value={formikModal.values.customerPhone}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Work Phone"
+                          />
+                          {formikModal.touched.customerPhone &&
+                            formikModal.errors.customerPhone && (
+                              <div className="text-danger">
+                                {formikModal.errors.customerPhone}
+                              </div>
+                            )}
+                        </FormGroup>
+                      </Col>
+                      <Col xs={12} md={3}>
+                        <FormGroup>
+                          <Input
+                            type="text"
+                            id="customerPhone"
+                            name="customerPhone"
+                            value={formikModal.values.customerPhone}
+                            onChange={formikModal.handleChange}
+                            onBlur={formikModal.handleBlur}
+                            placeholder="Mobile"
                           />
                           {formikModal.touched.customerPhone &&
                             formikModal.errors.customerPhone && (
@@ -1266,10 +1059,10 @@ const SendBillTransaction = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={12} md={4} className="mt-2">
-                        <Label for="panCard">PANCARD*</Label>
+                      <Col xs={12} md={2} className="mt-2">
+                        <Label for="panCard">PAN*</Label>
                       </Col>
-                      <Col xs={12} md={8}>
+                      <Col xs={12} md={5}>
                         <FormGroup>
                           <Input
                             type="text"
@@ -1278,6 +1071,7 @@ const SendBillTransaction = () => {
                             value={formikModal.values.panCard}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Enter Pan Number"
                           />
                           {formikModal.touched.panCard &&
                             formikModal.errors.panCard && (
@@ -1289,15 +1083,10 @@ const SendBillTransaction = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs="12">
-                        <hr className="bdr-light xlg"></hr>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col xs={12} md={4} className="mt-2">
+                      <Col xs={12} md={2} className="mt-1">
                         <Label for="gstNumber">GST Number</Label>
                       </Col>
-                      <Col xs={12} md={8}>
+                      <Col xs={12} md={5}>
                         <FormGroup>
                           <Input
                             type="text"
@@ -1306,6 +1095,7 @@ const SendBillTransaction = () => {
                             value={formikModal.values.gstNumber}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Enter GST Number"
                           />
                           {formikModal.touched.gstNumber &&
                             formikModal.errors.gstNumber && (
@@ -1318,22 +1108,26 @@ const SendBillTransaction = () => {
                     </Row>
                     {/* Add similar code for the rest of the fields */}
                     <Row>
-                  <Col xs="12">
-                    <hr className="bdr-light xlg"></hr>
-                  </Col>
-                </Row>
+                      <Col xs="12">
+                        <hr className="bdr-light xlg"></hr>
+                      </Col>
+                    </Row>
                     <Label for="address1">Address Details</Label>
-                    <Row className="mt-2">
-                      <Col xs={12} md={6}>
+                    <Row>
+                    <Col xs={12} md={2} className="mt-4">
+                    <Label for="address1">Address 1*</Label>
+                      </Col> 
+                      <Col xs={12} md={6} className="mt-2">
                         <FormGroup>
-                          <Label for="address1">Address 1*</Label>
+                  
                           <Input
-                            type="text"
+                            type="textarea"
                             id="address1"
                             name="address1"
                             value={formikModal.values.address1}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Type Address here....."
                           />
                           {formikModal.touched.address1 &&
                             formikModal.errors.address1 && (
@@ -1343,43 +1137,85 @@ const SendBillTransaction = () => {
                             )}
                         </FormGroup>
                       </Col>
-                      <Col xs={12} md={6}>
+                     
+                    </Row>
+                    <Row>
+                    <Col xs={12} md={2} className="mt-3"> 
+                    <Label for="address2">Address 2</Label>
+                      </Col> 
+                    <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
-                          <Label for="address2">Address 2</Label>
                           <Input
-                            type="text"
+                            type="textarea"
                             id="address2"
                             name="address2"
                             value={formikModal.values.address2}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Type Address here....."
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Row className="mt-2">
-                      <Col xs={12} md={6}>
+                    <Row>
+                    <Col xs={12} md={2} className="mt-2">
+                    <Label for="cityState">State*</Label>
+                      </Col> 
+                      <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
-                          <Label for="cityState">City/State*</Label>
+                      
                           <Input
                             type="text"
-                            id="cityState"
-                            name="cityState"
-                            value={formikModal.values.cityState}
+                            id="city"
+                            name="city"
+                            value={formikModal.values.city}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Enter City Name"
                           />
-                          {formikModal.touched.cityState &&
-                            formikModal.errors.cityState && (
+                          {formikModal.touched.city &&
+                            formikModal.errors.city && (
                               <div className="text-danger">
-                                {formikModal.errors.cityState}
+                                {formikModal.errors.city}
                               </div>
                             )}
                         </FormGroup>
                       </Col>
-                      <Col xs={12} md={6}>
+                    
+                    </Row>
+                    <Row>
+                    <Col xs={12} md={2} className="mt-2">
+                    <Label for="cityState">City</Label>
+                      </Col> 
+                      <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
-                          <Label for="zipcode">Zipcode*</Label>
+                      
+                          <Input
+                            type="text"
+                            id="state"
+                            name="state"
+                            value={formikModal.values.state}
+                            onChange={formikModal.handleChange}
+                            onBlur={formikModal.handleBlur}
+                            placeholder="Enter State Name"
+                          />
+                          {formikModal.touched.state &&
+                            formikModal.errors.state && (
+                              <div className="text-danger">
+                                {formikModal.errors.state}
+                              </div>
+                            )}
+                        </FormGroup>
+                      </Col>
+                    
+                    </Row>
+                    <Row>
+                      <Col xs={12} md={2} className="mt-2">
+                      <Label for="zipcode">Zipcode*</Label>
+                      </Col> 
+                    <Col xs={12} md={6} className="mt-1">
+                        <FormGroup>
+                      
                           <Input
                             type="text"
                             id="zipcode"
@@ -1387,6 +1223,7 @@ const SendBillTransaction = () => {
                             value={formikModal.values.zipcode}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
+                            placeholder="Enter 6 digit zipcode"
                           />
                           {formikModal.touched.zipcode &&
                             formikModal.errors.zipcode && (
@@ -1395,11 +1232,6 @@ const SendBillTransaction = () => {
                               </div>
                             )}
                         </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col xs="12">
-                        <hr className="bdr-light xlg"></hr>
                       </Col>
                     </Row>
                   </form>

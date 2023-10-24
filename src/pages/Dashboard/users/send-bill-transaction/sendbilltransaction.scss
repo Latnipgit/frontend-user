@@ -391,9 +391,7 @@ td.hoverable-cell textarea, td.hoverable-cell input {
   left: 20px;
 }
 
-input#billDate {
-  margin-top: 0 !important;
-}
+
 .mt-2.row {
   align-items: center;
 }
@@ -474,6 +472,9 @@ table#faqs th {
 .modal-content form .col-12.col-md-8 {
   width: 300px;
 }
+input#billDate {
+  margin-top: 6px !important;
+}
 // .input-group {
 //   position: relative;
 //   display: flex;
@@ -481,3 +482,39 @@ table#faqs th {
 //   align-items: stretch;
 //   width: max-content;
 // }
+.form-check-inline {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0;
+  margin-right: 0.75rem;
+}
+input[type=radio]:checked {
+  background-color: var(--zf-inputselector-bg-color);
+  border-color: var(--zf-inputselector-bg-color);
+}
+.form-check-inline .form-check-input {
+  position: relative;
+}
+input[type=radio] {
+  border-radius: 50%;
+}
+.form-check-inline .form-check-input {
+  position: static;
+  margin-top: 0;
+  margin-right: 0.3125rem;
+  margin-left: 0;
+}
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  vertical-align: top;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: 1px solid var(--zf-inputselector-border-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
