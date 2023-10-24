@@ -13,11 +13,19 @@ import {
 } from "reactstrap"
 import * as Yup from "yup"
 import { useFormik } from "formik"
+import { useSelector, useDispatch } from "react-redux";
+import { addNewEmployeelist } from "../../../../store/actions";
 
 const Employee = () => {
   // Form validation
   const [alertVisible, setAlertVisible] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false)
+  const [name, setname] = useState('')
+  const [email, setemail] = useState('')
+  const [fullAccess, setfulaccess] = useState(false)
+  const [ladger, setladger] = useState(false)
+  const [companysearch, setcompanysearch] = useState(false)
+  const [recordPayment, setrecordPayment] = useState(false)
   const validation = useFormik({
     initialValues: {
       name: "",
@@ -75,10 +83,52 @@ const Employee = () => {
       }, 3000) // Hide the alert after 3 seconds
     }
   }
-  React.useEffect(() => {
-    setIsFormValid(validation.isValid);
-  }, [validation.isValid]);
-  console.log("Form data", validation)
+  console.log("FULLACCESSs", fullAccess)
+  const dispatch = useDispatch();
+
+const handleSubmit=()=>{
+  
+  if(fullAccess == true ){
+    
+    setladger(true)
+    setcompanysearch(true)
+    setrecordPayment(true)
+ 
+  const payload = [{
+    "name":name,
+    "emailId":email,
+    "mobile":'12321231',
+    "permissions": [
+      { "apiName": "companySearch", "allowed": companysearch == true ?'true ':'false'},
+      { "apiName": "invoicingLedger", "allowed": ladger == true ? 'true': ' false'},
+      { "apiName": "recordPayment", "allowed": recordPayment == true ? 'true':'false'}
+  ]
+  
+  }]
+  console.log("PAYLOAD", payload)
+  dispatch(addNewEmployeelist(payload));
+
+}
+else{
+  const payload = [{
+    "name":name,
+    "emailId":email,
+    "mobile":'12321231',
+    "permissions": [
+      { "apiName": "companySearch", "allowed": companysearch == true ?'true ':'false'},
+      { "apiName": "invoicingLedger", "allowed": ladger == true ? 'true': ' false'},
+      { "apiName": "recordPayment", "allowed": recordPayment == true ? 'true':'false'}
+  ]
+  
+  }]
+  console.log("PAYLOAD", payload)
+  dispatch(addNewEmployeelist(payload));
+
+}
+}
+  // React.useEffect(() => {
+  //   setIsFormValid(validation.isValid);
+  // }, [validation.isValid]);
   return (
     <React.Fragment>
       <div className="page-content">
@@ -89,12 +139,12 @@ const Employee = () => {
                 <CardBody>
                   <h4 className="card-title">Employee Registration</h4>
                   <Form
-                    onSubmit={e => {
-                      e.preventDefault()
-                      toggleAlert()
-                      validation.handleSubmit()
-                      return false
-                    }}
+                    // onSubmit={e => {
+                    //   e.preventDefault()
+                    //   toggleAlert()
+                    //   validation.handleSubmit()
+                    //   return false
+                    // }}
                   >
                     <Row>
                       <Col lg={6}>
@@ -106,9 +156,9 @@ const Employee = () => {
                             type="text"
                             className="form-control"
                             id="name"
-                            onChange={validation.handleChange}
+                            onChange={(event)=>setname(event.target.value)}
                             onBlur={validation.handleBlur}
-                            value={validation.values.name || ""}
+                            // value={validation.values.name || ""}
                             invalid={
                               validation.touched.name && validation.errors.name
                                 ? true
@@ -132,9 +182,11 @@ const Employee = () => {
                             type="email"
                             className="form-control"
                             id="email"
-                            onChange={validation.handleChange}
+                            // onChange={validation.handleChange}
+                            onChange={(event)=>setemail(event.target.value)}
+
                             onBlur={validation.handleBlur}
-                            value={validation.values.email || ""}
+                            // value={validation.values.email || ""}
                             invalid={
                               validation.touched.email &&
                               validation.errors.email
@@ -152,7 +204,7 @@ const Employee = () => {
                       </Col>
                     </Row>
 
-                    <Row>
+                    {/* <Row>
                       <Col lg={6}>
                         <FormGroup className="mb-3">
                           <Label htmlFor="username">Username</Label>
@@ -208,7 +260,7 @@ const Employee = () => {
                           ) : null}
                         </FormGroup>
                       </Col>
-                    </Row>
+                    </Row> */}
 
                     <Row>
                       <Col lg={6}>
@@ -220,21 +272,25 @@ const Employee = () => {
                                 <Input
                                   type="checkbox"
                                   name="access.fullAccess"
-                                  onChange={validation.handleChange}
-                                  checked={validation.values.access.fullAccess}
-                                />{" "}
+                                  onChange={()=> fullAccess == true ?setfulaccess(false):setfulaccess(true)}
+                                  // checked={validation.values.access.fullAccess}
+                                  // checked={setfulaccess(true)}   
+                                                     />{" "}
                                 Full access
                               </Label>
                             </FormGroup>
+
                             <FormGroup check className="mb-2">
                               <Label check>
                                 <Input
                                   type="checkbox"
                                   name="access.companySearch"
-                                  onChange={validation.handleChange}
-                                  checked={
-                                    validation.values.access.companySearch
-                                  }
+                                  // onChange={validation.handleChange}
+                                  onChange={()=> companysearch == true ?setcompanysearch(false):setcompanysearch(true)}
+
+                                  // checked={
+                                  //   validation.values.access.companySearch
+                                  // }
                                 />{" "}
                                 Company search
                               </Label>
@@ -253,10 +309,12 @@ const Employee = () => {
                                 <Input
                                   type="checkbox"
                                   name="access.invoicingLedger"
-                                  onChange={validation.handleChange}
-                                  checked={
-                                    validation.values.access.invoicingLedger
-                                  }
+                                  onChange={()=> ladger == true ?setladger(false):setladger(true)}
+
+                                  // onChange={validation.handleChange}
+                                  // checked={
+                                  //   validation.values.access.invoicingLedger
+                                  // }
                                 />{" "}
                                 Invoicing + ledger
                               </Label>
@@ -266,10 +324,12 @@ const Employee = () => {
                                 <Input
                                   type="checkbox"
                                   name="access.recordPayment"
-                                  onChange={validation.handleChange}
-                                  checked={
-                                    validation.values.access.recordPayment
-                                  }
+                                  // onChange={validation.handleChange}
+                                  onChange={()=> recordPayment == true ?setrecordPayment(false):setrecordPayment(true)}
+
+                                  // checked={
+                                  //   validation.values.access.recordPayment
+                                  // }
                                 />{" "}
                                 Record payment
                               </Label>
@@ -279,14 +339,24 @@ const Employee = () => {
                       </Col>
                     </Row>
 
-                    <Row>
+                 
+
+                     {alertVisible && (
+                      <div className="alert alert-danger mt-3">
+                        {validation.isValid
+                          ? "Please select at least one checkbox."
+                          : "Please fix the errors in the form before submitting."}
+                      </div>
+                    )}
+                  </Form>
+                  <Row>
                       <Col lg={1}>
                         {/* disabled={!isFormValid}  */}
                         <Button
                           className="mr-3"
                           color="primary"
                           type="submit"
-                          onClick={toggleAlert} // Show/hide alert before submission
+                          onClick={()=>handleSubmit()} // Show/hide alert before submission
                         >
                           Submit
                         </Button>
@@ -302,15 +372,6 @@ const Employee = () => {
                         </Button>
                       </Col>
                     </Row>
-
-                     {alertVisible && (
-                      <div className="alert alert-danger mt-3">
-                        {validation.isValid
-                          ? "Please select at least one checkbox."
-                          : "Please fix the errors in the form before submitting."}
-                      </div>
-                    )}
-                  </Form>
                 </CardBody>
               </Card>
             </Col>    

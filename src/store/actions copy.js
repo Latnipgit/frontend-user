@@ -56,7 +56,3 @@ export * from "./company/actions"
 
 // Employee List
 export * from "./Employee/actions"
-
-// Company Search
-
-export * from "./auth/companySearch/actions"

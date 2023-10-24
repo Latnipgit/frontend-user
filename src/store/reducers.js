@@ -56,6 +56,9 @@ import DashboardBlog from "./dashboard-blog/reducer";
 //Dasboard job
 import DashboardJob from "./dashboard-jobs/reducer";
 
+import employeeList from "./Employee/reducer";
+import searchCompany from "././auth/companySearch/reducer";
+
 const rootReducer = combineReducers({
   // public
   Layout,
@@ -79,7 +82,9 @@ const rootReducer = combineReducers({
   DashboardCrypto,
   DashboardBlog,
   DashboardJob,
-  companyList
+  companyList,
+  employeeList,
+  searchCompany
 });
 
 export default rootReducer;

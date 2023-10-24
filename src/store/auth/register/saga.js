@@ -16,9 +16,7 @@ import {
 
 // Is user register successfull then direct plot user in redux.
 function* registerUser({ payload: { user } }) {
-  console.log("using the following url for registration: ")
   try {
-    console.log("Trying to register user (within try block)")
    if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
      
       const response = yield call(postJwtRegister, { 

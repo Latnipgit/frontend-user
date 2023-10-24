@@ -1,8 +1,10 @@
 /* INVOICES */
+// import { ADD_NEW_EMPLOYEE, ADD_NEW_EMPLOYEE_SUCCESS } from "store/Employee/actionTypes"
 import {
     GET_COMPANY,
     GET_COMPANY_LIST_SUCCESS,
     GET_COMPANY_LIST_FAIL,
+    ADD_NEW_EMPLOYEE
  
   } from "./actionTypes"
   
@@ -20,3 +22,4 @@ import {
     payload: error,
   })
   
+

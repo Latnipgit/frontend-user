@@ -16,6 +16,8 @@ const isUserAuthenticated = () => {
 
 // Register Method
 const postFakeRegister = data => post(url.POST_FAKE_REGISTER, data);
+// search company on belhf of company id 
+export const searchCompanyAPI = data => post("/api/companies/selectCompany", data);
 
 // Login Method
 const postFakeLogin = data => post(url.POST_FAKE_LOGIN, data);
@@ -88,6 +90,11 @@ export const getOrders = () => get(url.GET_ORDERS);
 // getCompany list
 
 export const getCompanyList = data => post(url.GET_COMPANY);
+
+// ADD company
+
+export const addEmployeeList = data => addEmployeeAPImethod(url.ADD_EMPLOYEE_LIST, data);
+
 
 // Get employee
 
@@ -184,6 +191,7 @@ export const deleteApplyJob = data => del(url.DELETE_APPLY_JOB, { headers: { dat
 /** PROJECT */
 // add user
 export const addNewProject = project => post(url.ADD_NEW_PROJECT, project);
+
 
 // update user
 export const updateProject = project => put(url.UPDATE_PROJECT, project);

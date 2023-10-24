@@ -41,8 +41,10 @@ const ReportedDebtorsModel = props => {
     document.title = "Register | Bafana - User & Dashboard";
     const [panNumber, setPanNumber] = useState('');
     const [gstNumber, setGSTNumber] = useState('');
+    const [aadhar, setAadhar] = useState('');
+    const [companyName, setcompanyName] = useState('');
   
-  
+  let logindata = []
     const [gstValidation, setGSTValidation] = useState({
       touched: false,
       error: ''
@@ -125,7 +127,26 @@ const ReportedDebtorsModel = props => {
     }
   
     const dispatch = useDispatch();
-  
+  useEffect(()=>{
+     logindata = JSON.parse(localStorage.getItem("authUser"))!= undefined ? JSON.parse(localStorage.getItem("authUser")):''
+    const GetDataFromuserId =  props.getCompanyList
+ setcompanyName(logindata != undefined? logindata.name:'')
+ setGSTNumber(GetDataFromuserId[0] != undefined ? GetDataFromuserId[0].gstin:'')
+
+})
+
+const formSubmit =()=>{
+  const user = {
+    name: GetDataFromuserId[0].companyName,
+    companyName:  '',
+    aadharNumber: formik.values.aadharNumber,
+    mobileNumber:'',
+    gstNumber:  props.getCompanyList[0].gstin,
+    panNumber: panNumber,
+    email: formik.values.email,
+  };
+  dispatch(registerUser_login(user));
+}
   
     const formik = useFormik({
       // enableReinitialize : use this flag when initial values needs to be changed
@@ -153,8 +174,12 @@ const ReportedDebtorsModel = props => {
         panNumber: Yup.string().required("Please Enter Your pan Number"),
       })
     });
-  console.log("getCompanyListgetCompanyList", props.getCompanyList)
   const { isOpen, toggle ,getCompanyList } = props
+
+
+
+  
+  // console.log("logindata", logindata, GetDataFromuserId)
   return (
     <Modal
       isOpen={isOpen}
@@ -180,22 +205,10 @@ const ReportedDebtorsModel = props => {
                   <div className="p-2">
                     <Form
                       className="form-horizontal"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        formik.handleSubmit();
-                        const user = {
-                          name: props.getCompanyList[0].companyName,
-                          companyName:  props.getCompanyList[0].companyName,
-                          gstNumber:  props.getCompanyList[0].gstin,
-                          aadharNumber: formik.values.aadharNumber,
-                          // panNumber: formik.values.panNumber,
-                          panNumber: panNumber,
-                          email: formik.values.email,
-                        };
-                        console.log("USERS", user, formik.values, gstNumber)
-                        dispatch(registerUser_login(user));
-                        return false;
-                      }}
+                      onSubmit={(e) => 
+                        formSubmit(e)
+                      }
+                       
                     >
                 
 
@@ -210,7 +223,7 @@ const ReportedDebtorsModel = props => {
                         placeholder="Enter Name"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyName:'' }
+                        value={logindata != undefined? logindata.name :''}
                         disabled
                         // invalid={formik.touched.name && formik.errors.name ? true : false}
                         />
@@ -251,9 +264,9 @@ disabled
                             type="text"
                             className={`form-control ${formik.touched.aadharNumber && formik.errors.aadharNumber ? 'is-invalid' : ''}`}
                             placeholder="Enter Aadhar number"
-                            onChange={formik.handleChange}
+                            onChange={(event)=>setAadhar(event.target.value)}
                             onBlur={formik.handleBlur}
-                            value={formik.values.aadharNumber || ""}
+                            // value={formik.values.aadharNumber || ""}
                             // Remove the pattern attribute since we're handling validation manually
                           />
                           {formik.touched.aadharNumber && formik.errors.aadharNumber ? (
@@ -271,15 +284,17 @@ disabled
                         <input
                         name="mobileNumber"
                         type="tel"
-                        className={`form-control ${
-                        formik.touched.mobileNumber && formik.errors.mobileNumber ? "is-invalid" : ""
-                        }`}
+                        // className={`form-control ${
+                        // // formik.touched.mobileNumber && formik.errors.mobileNumber ? "is-invalid" : ""
+                        // }`}
+                        className="form-control"
                         placeholder="Enter 10-digit mobile number"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.mobileNumber || ""}
                         pattern="[6-9]\d{9}" // Allow only 10 digits starting with 6, 7, 8, or 9
                         maxLength="10" // Restrict input to 10 characters
+                        disabled
                         />
                         {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
                         <div className="invalid-feedback">{formik.errors.mobileNumber}</div>
@@ -299,10 +314,10 @@ disabled
                         className="form-control"
                         placeholder="Enter GST Number"
                         type="text"
-                        onChange={handleGSTChange}
+                        onChange={(event)=>setGSTNumber(event.target.value)}
                         onBlur={handleGSTBlur}
                         value={props.getCompanyList[0] != undefined ? props.getCompanyList[0].gstin:''}
-                        invalid={gstValidation.touched && gstValidation.error !== ''}
+                        // invalid={gstValidation.touched && gstValidation.error !== ''}
                         />
                         {gstValidation.touched && gstValidation.error !== '' && (
                         <FormFeedback type="invalid">{gstValidation.error}</FormFeedback>
@@ -319,7 +334,7 @@ disabled
                         className={`form-control ${panValidation.touched && panValidation.error ? 'is-invalid' : ''}`}
                         placeholder="Enter PAN Number"
                         type="text"
-                        onChange={handlePanChange}
+                        onChange={(event)=>setPanNumber(event.target.value)}
                         onBlur={handlePanBlur}
                         // value={panNumber}
                         value={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyPan:''}
@@ -343,8 +358,9 @@ disabled
                         type="email"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.email || ""}
-                        invalid={formik.touched.email && formik.errors.email ? true : false}
+                        value={logindata != undefined? logindata.emailId :""}
+                        disabled
+                        // invalid={formik.touched.email && formik.errors.email ? true : false}
   
                         />
                         {formik.touched.email && formik.errors.email ? (

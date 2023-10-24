@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
 import { isEmpty } from "lodash";
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
 import SidebarContent from '../../../components/VerticalLayout/SidebarContent';
 import { useMenu } from '../../../components/VerticalLayout/MenuContext';
 import {
@@ -42,6 +42,7 @@ import {
 } from "./ApprovedTransactionCol";
 
 import { getCompanyList as ongetCompanyList} from "../../../../src/store/actions";
+import { searchCompany as onsearchCompany} from "../../../../src/store/actions";
 
 import TableContainer from "../../../components/Common/TableContainer";
 import ApprovedTranctionModel from "./ApprovedTranModel";
@@ -60,10 +61,12 @@ const ApprovedTranction = props => {
   const [showMenuItems, setShowMenuItems] = useState(true);
 
  
-  const handleEyeIconClick = () => {
+  const handleEyeIconClick = (item) => {
+    console.log("ITEMSS", item)
     // toggleMenuItems();
+    dispatch(onsearchCompany(item.id));
     const newPageUrl = '/company-dashboard';
-    window.location.href = newPageUrl;
+    // window.location.href = newPageUrl;
   };
   const columns = useMemo(
     () => [
@@ -86,13 +89,14 @@ return <span>
         filterable: false,
         Cell: cellProps => {
           return (
-            <div
+            <Link to="/company-dashboard"> <div
               className="company-name-cell"
               onClick={() => handleEyeIconClick(cellProps.row.original)}
               style={{ cursor: 'pointer' }}
             >
               {cellProps.value}
             </div>
+            </Link>
           );
         },
       },
@@ -149,7 +153,7 @@ return <span>
   );
   const handleFilter = (filters) => {
      debugger
-    const filteredResults = ApprovedTranctionData.filter(item => {
+    const filteredResults = getCompanyList.filter(item => {
       const CompanyNameMatch =  item.CompanyName === filters.company.trim();
       const panMatch =  item.PANCARD === filters.pan.trim();
       const gstMatch =  item.GST === filters.gst.trim();
@@ -161,7 +165,7 @@ return <span>
   };
   const { getCompanyList } = useSelector(state => 
      ({
-    getCompanyList: state.companyList.companyList.length != 0 ? state.companyList.companyList.data.response:[],
+    getCompanyList: state.companyList.companyList != undefined && state.companyList.companyList.length != 0 ? state.companyList.companyList.data.response:[],
   })
   );
 
@@ -186,28 +190,30 @@ useEffect(()=>{
             <Col md="10">
             
             </Col>
-            <Col md="2" className="text-right pl-2" style={{ paddingLeft:'15px'}}>
+            <Col md="2" className="text-right pl-2" >
            
             <Button
               type="button"
               color="primary"
-              className="btn-sm "
+              className="btn-md mt-3 "
               onClick={()=>setModal1(true)}
             >
-              Add Company
+             + Add Company
             </Button>
           
             </Col>
           </Row>
         </div>
-       
-          <TableContainer
+       <div style={{ marginTop:'-35px'}}>
+       <TableContainer
             columns={columns}
             data={getCompanyList.length > 0 ? getCompanyList : []}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}
           />
+       </div>
+        
         </CardBody>
       </Card>
 

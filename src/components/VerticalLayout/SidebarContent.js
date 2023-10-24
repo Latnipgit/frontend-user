@@ -194,6 +194,35 @@ const SidebarContent = props => {
                   </Link>
                 </li>
                 <li>
+                  <Link onClick={() => employeeListshow()}>
+                    <i className="bx bxs-user-detail"></i>
+                    {props.t("Employee")}
+
+                    {isShowEmployee != undefined && isShowEmployee != false ? (
+                      <i className="bx bx-chevron-up"></i>
+                    ) : (
+                      <i className="bx bx-chevron-down"></i>
+                    )}
+                  </Link>
+                </li>
+                {isShowEmployee != undefined && isShowEmployee != false ? (
+                  <li>
+                    <Link to="/employee">
+                      <i className="bx bxs-notification"></i>
+
+                      {props.t("Employee Registration")}
+                    </Link>
+
+                    <Link to="/EmployeeList">
+                      <i className="bx bx-list-ul"></i>
+                      {props.t("Employee List")}
+                    </Link>
+                  </li>
+                ) : (
+                  ""
+                )}
+
+                <li>
                   <Link to="/debtors">
                     <i className="bx bx-user"></i>
                     {props.t("Debtors(buyers)")}
@@ -254,34 +283,7 @@ const SidebarContent = props => {
                     {props.t("Notification")}
                   </Link>
                 </li>
-                <li>
-                  <Link onClick={() => employeeListshow()}>
-                    <i className="bx bxs-user-detail"></i>
-                    {props.t("Employee")}
-
-                    {isShowEmployee != undefined && isShowEmployee != false ? (
-                      <i className="bx bx-chevron-up"></i>
-                    ) : (
-                      <i className="bx bx-chevron-down"></i>
-                    )}
-                  </Link>
-                </li>
-                {isShowEmployee != undefined && isShowEmployee != false ? (
-                  <li>
-                    <Link to="/employee">
-                      <i className="bx bxs-notification"></i>
-
-                      {props.t("Employee Registration")}
-                    </Link>
-
-                    <Link to="/EmployeeList">
-                      <i className="bx bx-list-ul"></i>
-                      {props.t("Employee List")}
-                    </Link>
-                  </li>
-                ) : (
-                  ""
-                )}
+               
               </>
             )}
           </ul>

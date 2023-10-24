@@ -24,12 +24,15 @@ import dashboardCryptoSaga from "./dashboard-crypto/saga";
 import dashboardBlogSaga from "./dashboard-blog/saga";
 import dashboardJobSaga from "./dashboard-jobs/saga";
 import companyListsaga from "./company/saga";
+import employeeListsaga from "./Employee/saga"
+import searchCompanysaga from "././auth/companySearch/saga"
 // import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {
   yield all([
     //public
     fork(AccountSaga),
+    fork(employeeListsaga),
     fork(companyListsaga),
     fork(registerAuthSaga),
     fork(AuthSaga),
@@ -50,6 +53,8 @@ export default function* rootSaga() {
     fork(dashboardSaasSaga),
     fork(dashboardCryptoSaga),
     fork(dashboardBlogSaga),
-    fork(dashboardJobSaga)
+    fork(dashboardJobSaga),
+    fork(searchCompanysaga),
+
   ]);
 }

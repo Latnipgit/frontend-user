@@ -35,6 +35,7 @@ export async function get(url, config = {}) {
 }
 
 export async function post(url, data, config = {}) {
+  debugger
   console.log("UJUJU", JSON.parse(localStorage.getItem("authUser")))
   const token = JSON.parse(localStorage.getItem("authUser"))!= null ? JSON.parse(localStorage.getItem("authUser")).token :'';
   const headers = {
@@ -82,3 +83,24 @@ export async function del(url, config = {}) {
       }
     });
 }
+
+
+export async function addEmployeeAPImethod(url, data, config = {}) {
+  console.log("urururur", url, data)
+  const token = localStorage.getItem("tokenemployeeRegister")
+  const headers = {
+    ...config.headers,
+    'x-access-token': token != null ? token :'',
+  };  
+    return axiosApi
+        .post(url, { ...data }, { ...config,headers })
+        .then((response) =>response)
+        .catch((error) => {
+          if (error.response) {
+            console.log("Server responded with an error:", error.response.status);
+          } else if (error.request) {
+            console.log("No response received from the server:", error.request);
+          }
+        });
+  }
+    
