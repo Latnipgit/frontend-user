@@ -317,7 +317,10 @@ const SendBillTransaction = () => {
   const formikModal = useFormik({
     initialValues: {
       customerType: "",
-      primaryContact: "",
+      // primaryContact: "",
+      firstname:"",
+      lastname:"",
+      salutation:"",
       companyName: "",
       customerEmail: "",
       customerPhone: "",
@@ -926,17 +929,17 @@ const SendBillTransaction = () => {
                         <FormGroup>
                           <Input
                             type="text"
-                            id="primaryContact"
-                            name="primaryContact"
-                            value={formikModal.values.primaryContact}
+                            id="firstname"
+                            name="firstname"
+                            value={formikModal.values.firstname}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
                             placeholder="First Name"
                           />
-                          {formikModal.touched.primaryContact &&
-                            formikModal.errors.primaryContact && (
+                          {formikModal.touched.firstname &&
+                            formikModal.errors.firstname && (
                               <div className="text-danger">
-                                {formikModal.errors.primaryContact}
+                                {formikModal.errors.firstname}
                               </div>
                             )}
                         </FormGroup>
@@ -945,17 +948,17 @@ const SendBillTransaction = () => {
                         <FormGroup>
                           <Input
                             type="text"
-                            id="primaryContact"
-                            name="primaryContact"
-                            value={formikModal.values.primaryContact}
+                            id="lastname"
+                            name="lastname"
+                            value={formikModal.values.lastname}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
                             placeholder="Last Name"
                           />
-                          {formikModal.touched.primaryContact &&
-                            formikModal.errors.primaryContact && (
+                          {formikModal.touched.lastname &&
+                            formikModal.errors.lastname && (
                               <div className="text-danger">
-                                {formikModal.errors.primaryContact}
+                                {formikModal.errors.lastname}
                               </div>
                             )}
                         </FormGroup>
