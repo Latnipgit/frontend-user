@@ -21,7 +21,7 @@ function* fetchCompanyList() {
 }
 
 function* companyListsaga() {
-  // 
+  //  
   yield takeEvery(GET_COMPANY, fetchCompanyList)
 }
 

@@ -35,7 +35,7 @@ export async function get(url, config = {}) {
 }
 
 export async function post(url, data, config = {}) {
-  
+   
   console.log("UJUJU", JSON.parse(localStorage.getItem("authUser")))
   const token = JSON.parse(localStorage.getItem("authUser"))!= null ? JSON.parse(localStorage.getItem("authUser")).token :'';
   const headers = {

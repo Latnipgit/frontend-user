@@ -22,7 +22,7 @@ const Document = (props) => {
   const [modal1, setModal1] = useState(false);
   const toggleViewModal = () => setModal1(!modal1);
   const handleAcceptedFiles = (acceptedFiles) => {
-    
+     
     console.log("handle accepeted", selectedFiles)
     setSelectedFiles([...selectedFiles, ...acceptedFiles]);
   };

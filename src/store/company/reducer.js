@@ -8,7 +8,7 @@ import {GET_COMPANY,GET_COMPANY_LIST_SUCCESS,GET_COMPANY_LIST_FAIL } from './act
   }
   
   const companyList = (state = INIT_STATE, action) => {
-    // 
+    //  
     switch (action.type) {
       case GET_COMPANY_LIST_SUCCESS:
         return {

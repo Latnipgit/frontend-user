@@ -12,7 +12,7 @@ const INIT_STATE = {
 }
 
 const Invoices = (state = INIT_STATE, action) => {
-  // 
+  //  
   switch (action.type) {
     case GET_INVOICES_SUCCESS:
       return {

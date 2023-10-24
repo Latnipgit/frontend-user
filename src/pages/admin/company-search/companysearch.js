@@ -158,7 +158,7 @@ const CompanySearch = props => {
     []
   );
   const handleFilter = (filters) => {
-     
+      
     const filteredResults = ApprovedTranctionData.filter(item => {
       const CompanyNameMatch =  item.CompanyName === filters.company.trim();
       const panMatch =  item.PANCARD === filters.pan.trim();
