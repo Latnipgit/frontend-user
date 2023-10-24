@@ -421,3 +421,63 @@ textarea#remarks:hover{
 //   border-bottom-width: 1px;
 //   box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
 // }
+
+table#faqs, table#faqs tr, table#faqs td, table#faqs TH {background: WHITE;box-shadow: none !important;}
+
+
+table#faqs tr:hover td {
+    background: white;
+}
+
+td.hoverable-cell input {
+  background: white !important;
+}
+
+table#faqs th:first-child {
+  width: 45%;
+}
+
+table#faqs td:last-child {
+  border: none;
+}
+
+table#faqs {
+  border: none;
+}
+
+table#faqs th {
+  border-top: 1px solid #dddddd;
+}
+
+.modal-dialog {
+  min-width: 840px;
+}
+
+.modal-content form 
+.col-12.col-md-4 {
+  width: unset;
+}
+
+.col-12.col-md-8 {
+  width: 300px;
+}
+
+.modal-dialog {
+  min-width: 840px;
+}
+
+.modal-content form 
+.col-12.col-md-4 {
+  width: unset;
+}
+
+.modal-content form .col-12.col-md-8 {
+  width: 300px;
+}
+// .input-group {
+//   position: relative;
+//   display: flex;
+//   flex-wrap: wrap;
+//   align-items: stretch;
+//   width: max-content;
+// }
