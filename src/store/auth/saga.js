@@ -57,12 +57,14 @@ function* loginUser({ payload: { user, history } }) {
 
 function* logoutUser({ payload: { history } }) {
   try {
-    localStorage.removeItem("authUser");
+    
 
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(fireBaseBackend.logout);
       yield put(logoutUserSuccess(response));
+  
     }
+    localStorage.removeItem("authUser");
     history('/login');
   } catch (error) {
     yield put(apiError(error));

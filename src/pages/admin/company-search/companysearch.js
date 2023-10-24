@@ -60,7 +60,6 @@ const CompanySearch = props => {
   console.log('showMenuItems:', showMenuItems);
   const toggleViewModal = () => setModal1(!modal1);
   const handleEyeIconClick = () => {
-    // toggleMenuItems();
     const newPageUrl = '/company-dashboard';
     window.location.href = newPageUrl;
   };
