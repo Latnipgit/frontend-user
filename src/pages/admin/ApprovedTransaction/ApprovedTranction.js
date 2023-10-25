@@ -9,6 +9,8 @@ import {
   Button,
   Card,
   CardBody,
+  CardHeader,
+  label
 } from "reactstrap";
 import { ApprovedTranctionData } from "../../../common/data/approvedTransactions";
 import { useSelector, useDispatch } from "react-redux";
@@ -182,13 +184,23 @@ useEffect(()=>{
       {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} /> */}
       <AddCompanyModel isOpen={modal1} toggle={toggleViewModal} getCompanyList={getCompanyList}/>
 
-      <InlineFilterForm onFilter={handleFilter} />
-      <Card >
+      {/* <InlineFilterForm onFilter={handleFilter} /> */}
+      <br/>
+      <br/>
+      <br/>
+      <Card  style={{ marginTop:'5%'}}>
+        
+
+    
         <CardBody>
        
          {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
 
         <div>
+          <Row>
+          <h5 >My Companies</h5>
+
+          </Row>
           <Row>
             <Col md="10">
             

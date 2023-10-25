@@ -127,34 +127,29 @@ const ReportedDebtorsModel = props => {
     return checksumDigit === calculatedChecksum;
   }
 
+const handleValidation =()=>{
+  if(companyName != "" || props.getCompanyList[0].companyName != undefined ){
+
+  }
+}
+
+
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("MOBILE", props.getCompanyList[0], logindata.name)
+    console.log("MOBILE", props.getCompanyList[0], logindata)
     const GetDataFromuserId = props.getCompanyList
-    //  setcompanyName(props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyName:'')
     setName(logindata.name)
-    //  setGSTNumber(GetDataFromuserId[0] != undefined ? GetDataFromuserId[0].gstin:'')
 
   },[logindata])
-  const formSubmit = () => {
-    // const user = {
-    //   name: name,
-    //   companyName: companyName != '' ? companyName : props.getCompanyList[0].companyName,
-    //   aadharNumber: aadhar,
-    //   mobileNumber: mobile,
-    //   gstNumber: gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
-    //   panNumber: panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
-    //   email: logindata.emailId,
-    // };
 
+  const formSubmit = () => {
     const payload = {
       "companyName": companyName != '' ? companyName : props.getCompanyList[0].companyName,
       "gstin": gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
       "companyPan": panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
 }
-    console.log("USERCHECK", payload)
     dispatch(addNewCompany(payload));
-alert("Registration successfully")
+    alert("Registration successfully")
      window.location.reload()
 
   }
@@ -190,7 +185,6 @@ alert("Registration successfully")
 
 
 
-  // console.log("logindata", logindata, GetDataFromuserId)
   return (
     <Modal
       isOpen={isOpen}

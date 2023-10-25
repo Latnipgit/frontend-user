@@ -27,15 +27,11 @@ const Register = props => {
   const [gstNumber, setGSTNumber] = useState('');
 
 
-  const [gstValidation, setGSTValidation] = useState({
-    touched: false,
-    error: ''
-  });
+  const [gstValidation, setGSTValidation] = useState("");
  
-  const [panValidation, setPanValidation] = useState({
-    touched: false,
-    error: ''
-  });
+  const [panValidation, setPanValidation] = useState("");
+  const [  mobileValidation, setmobileValidation  ] = useState("");
+  const [  emailValidation, setemailValidation  ] = useState("");
 
   const handleGSTChange = (event) => {
     const gst = event.target.value;
@@ -69,15 +65,16 @@ const Register = props => {
   };
   const handlePanChange = (event) => {
     const pan = event.target.value.toUpperCase();
-    setPanNumber(pan);
-
-    if (panValidation.touched) {
-      if (isPanCardValid(pan)) {
-        setPanValidation({ touched: true, error: '' });
-      } else {
-        setPanValidation({ touched: true, error: 'Invalid PAN format' });
-      }
+    const panPattern = /^([A-Z]{5}[0-9]{4}[A-Z]{1})$/;
+    if(pan.test(panPattern)){
+      setPanNumber(pan);
     }
+    else{
+     setPanValidation('Enter valid Pan Number')
+    }
+   
+
+    
   };
   const handlePanBlur = () => {
     if (panNumber === '') {
@@ -208,7 +205,10 @@ const Register = props => {
                           panNumber: panNumber,
                           email: formik.values.email,
                         };
-                        dispatch(registerUser_login(user ,props.router.navigate));
+                        if(formik.values.name != '' && formik.values.password != '' && formik.values.email != '' && gstNumber != '' && panNumber != ""){
+                          dispatch(registerUser_login(user ,props.router.navigate));
+
+                        }
                         return false;
                       }}
                     >
@@ -244,11 +244,15 @@ const Register = props => {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.companyName || ""}
-                                invalid={formik.touched.companyName && formik.errors.companyName ? true : false}
+                                // invalid={formik.touched.companyName && formik.errors.companyName ? true : false}
                                 // Add your company name validation logic here
                               />
                               {formik.touched.companyName && formik.errors.companyName ? (
-                                <FormFeedback type="invalid">{formik.errors.companyName}</FormFeedback>
+                                <FormFeedback type="invalid">
+                                  
+                                  {formik.errors.companyName}
+                                  
+                                  </FormFeedback>
                               ) : null}
                             </div>
                           </Col>
@@ -355,7 +359,7 @@ const Register = props => {
                         onBlur={handlePanBlur}
                         // value={panNumber}
                         />
-                        {panValidation.touched && panValidation.error !== '' && (
+                        {panValidation.error && panValidation.error !='' && (
                         <div className="invalid-feedback">{panValidation.error}</div>
                         )}
                         </div>

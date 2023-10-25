@@ -165,7 +165,7 @@ const CompanySearch = props => {
       const gstMatch =  item.GST === filters.gst.trim();
       return CompanyNameMatch || panMatch || gstMatch;
     });
-
+console.log("filteredResults", filteredResults)
   
     setFilteredData(filteredResults);
   };

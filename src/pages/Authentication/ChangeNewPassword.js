@@ -98,7 +98,7 @@ const handleSubmit=()=>{
                           name="email"
                           className="form-control"
                           placeholder="Enter New Password"
-                          type="email"
+                          type="password"
                           
 
                           onChange={(e)=>setPassword(e.target.value)}
@@ -110,7 +110,7 @@ const handleSubmit=()=>{
                           name="email"
                           className="form-control"
                           placeholder="Confirm New Password"
-                          type="email"
+                          type="password"
                           onChange={(e)=>setCPassword(e.target.value)}
 
                         />

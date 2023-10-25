@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import {
-    Card,
-    Col,
-    Container,
-    Row,
-    CardBody,
-    CardTitle,
-    Label,
-    Button,
-    Form,
-    Input,
-    InputGroup,
-  } from "reactstrap";
+  Card,
+  Col,
+  Container,
+  Row,
+  CardBody,
+  CardTitle,
+  Label,
+  Button,
+  Form,
+  Input,
+  InputGroup,
+} from "reactstrap";
 
 const InlineFilterForm = ({ onFilter }) => {
-    const [filters, setFilters] = useState({
-        company: '', 
-        pan: '',    
-        gst: '',  
-      });
+  const [filters, setFilters] = useState({
+    company: '',
+    pan: '',
+    gst: '',
+  });
   const [company, setCompany] = useState('');
   const [gstError, setGSTError] = useState('');
   const [panError, setPANError] = useState('');
@@ -28,6 +28,17 @@ const InlineFilterForm = ({ onFilter }) => {
     event.preventDefault();
     onFilter(filters);
   };
+
+  const handleReset = (event)=>{
+    event.preventDefault();
+
+    const resetAray ={
+      company: '',
+      pan: '',
+      gst: '',
+    }
+    onFilter(resetAray)
+  }
   const validateAadhar = () => {
     const aadharPattern = /^\d{12}$/;
     if (!aadharPattern.test(filters.aadhar)) {
@@ -45,7 +56,7 @@ const InlineFilterForm = ({ onFilter }) => {
     }
   };
 
-  
+
   const validatePAN = () => {
     const panPattern = /^([A-Z]{5}[0-9]{4}[A-Z]{1})$/;
     if (!panPattern.test(filters.pan)) {
@@ -62,7 +73,7 @@ const InlineFilterForm = ({ onFilter }) => {
       gst: gstValue,
     }));
   };
-  const handleNameChange=(event)=>{
+  const handleNameChange = (event) => {
     const nameValue = event.target.value;
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -89,92 +100,100 @@ const InlineFilterForm = ({ onFilter }) => {
   return (
 
     <Container fluid={true} className="mt-5">
-    <Row>
+      <Row>
         <Col lg={12}>
-            <Card className="mt-5">
+          <Card className="mt-5">
             <CardBody>
-                <CardTitle className="h5 mb-4">Company Search</CardTitle>
-
-                <Form className="row row-cols-lg-auto g-3 align-items-center">
+              <CardTitle className="h5 mb-4">Company Search
+             
+              </CardTitle>
+<Row>
+<p style={{ fontWeight:'500',fontSize:'12px' }}>
+                    Search using any one below details
+                  </p>
+</Row>
+              <Form className="row row-cols-lg-auto g-3 align-items-center">
 
                 <Col xs={12} md={12}>
-                    <label className="visually-hidden" htmlFor="nameFilter">Company Name</label>
-                    <InputGroup>
+                 
+                  <label className="visually-hidden" htmlFor="nameFilter">Company Name</label>
+                  <InputGroup>
                     {/* <div className="input-group-text">
                         <i className="mdi mdi-account-card-details" />
                     </div> */}
-                      <input
+                    <input
                       type="text"
-                       style={{ width:'270px'}}
+                      style={{ width: '15rem' }}
                       className={`form-control`}
                       id="nameFilter"
                       placeholder="Company Name"
                       value={filters.company}
                       onChange={handleNameChange}
-                      />
-                    </InputGroup>
-                    {/* {aadharError && <div className="text-danger">{aadharError}</div>} */}
+                    />
+                  </InputGroup>
+                  {/* {aadharError && <div className="text-danger">{aadharError}</div>} */}
                 </Col>
 
                 <Col xs={12} md={6}>
-                <label className="visually-hidden" htmlFor="gstFilter">
-                GST Number
-                </label>
-                <InputGroup>
-                {/* <div className="input-group-text">
-                <i className="mdi mdi-file-document" />
-                </div> */}
-                <input
-                                       style={{ width:'270px'}}
+                  <label className="visually-hidden" htmlFor="gstFilter">
+                    GST Number
+                  </label>
+                  <InputGroup>
+                  
+                    <input
+                      style={{ width: '15rem' }}
 
-                type="text"
-                className={`form-control ${gstError ? 'is-invalid' : ''}`}
-                id="gstFilter"
-                placeholder="GST Number"
-                value={filters.gst}
-                onChange={handleGSTChange}
-                onBlur={validateGST}
-                />
-                </InputGroup>
-                {gstError && <div className="invalid-feedback">{gstError}</div>}
+                      type="text"
+                      className={`form-control ${gstError ? 'is-invalid' : ''}`}
+                      id="gstFilter"
+                      placeholder="GST Number"
+                      value={filters.gst}
+                      onChange={handleGSTChange}
+                    // onBlur={validateGST}
+                    />
+                  </InputGroup>
+                  {/* {gstError && <div className="invalid-feedback">{gstError}</div>} */}
                 </Col>
 
                 <Col xs={12} md={6}>
-                <label className="visually-hidden" htmlFor="panFilter">
-                PAN Card Number
-                </label>
-                <InputGroup>
-                {/* <div className="input-group-text">
-                <i className="mdi mdi-credit-card" />
-                </div> */}
-                <input
-                                       style={{ width:'270px'}}
+                  <label className="visually-hidden" htmlFor="panFilter">
+                    PAN Card Number
+                  </label>
+                  <InputGroup>
+                 
+                    <input
+                      style={{ width: '15rem' }}
 
-                type="text"
-                className={`form-control ${panError ? 'is-invalid' : ''}`}
-                id="panFilter"
-                placeholder="PAN Card Number"
-                value={filters.pan}
-                onChange={handlePanChange}
-                onBlur={validatePAN}
-                />
-                </InputGroup>
-                {panError && <div className="invalid-feedback">{panError}</div>}
+                      type="text"
+                      className={`form-control ${panError ? 'is-invalid' : ''}`}
+                      id="panFilter"
+                      placeholder="PAN Card Number"
+                      value={filters.pan}
+                      onChange={handlePanChange}
+                      // onBlur={validatePAN}
+                    />
+                  </InputGroup>
+                  {/* {panError && <div className="invalid-feedback">{panError}</div>} */}
                 </Col>
-                <Col xs={12} className='' style={{ width:'10px'}}>
                
-                </Col>
 
                 <Col xs={12} className=''>
-                    <button type="submit" className="btn btn-primary w-md" onClick={handleSubmit}>
+              
+                 
+                  <button type="submit" className="btn btn-primary w-md ml-2" onClick={handleSubmit}>
                     Search
-                    </button>
+                  </button>
+                  &nbsp;
+                  &nbsp;
+                  <button type="submit" className="btn btn-secondary w-md mr-2" onClick={handleReset}>
+                    Reset
+                  </button>
                 </Col>
-                </Form>
+              </Form>
             </CardBody>
-            </Card>
+          </Card>
         </Col>
-    </Row>
+      </Row>
     </Container>
 
   );
