@@ -141,7 +141,7 @@ const columns = useMemo(
 
   const { getEmployeelists } = useSelector(state => 
     ({
-      getEmployeelists: state.employeeList.empList.data.response != undefined && state.employeeList.empList.data.response.length != 0 ? state.employeeList.empList.data.response:[],
+      getEmployeelists: state.employeeList.empList.data != undefined && state.employeeList.empList.data.response.length != 0 ? state.employeeList.empList.data.response:[],
  })
  );
   return (

@@ -158,6 +158,8 @@ return <span>
       const CompanyNameMatch =  item.CompanyName === filters.company.trim();
       const panMatch =  item.PANCARD === filters.pan.trim();
       const gstMatch =  item.GST === filters.gst.trim();
+      console.log("FILTER",CompanyNameMatch, panMatch,gstMatch )
+
       return CompanyNameMatch || panMatch || gstMatch;
     });
 
