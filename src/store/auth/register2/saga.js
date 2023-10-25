@@ -21,10 +21,16 @@ function* registerUser_login_2({ payload: { user, history } }) {
         emailId:user.email,
         mobile: user.mobile    });
       if(response!=undefined && response!=null ){
-          localStorage.setItem("authUser", JSON.stringify(response.data.response));
-          yield put(registerSuccess_login(response.data.response));    
-          history('/companies');
+        
+          // localStorage.setItem("authUser", JSON.stringify(response.data.response));
+          // yield put(registerSuccess_login(response.data.response));    
+          // window.location.pathname('/login');
+          const newPageUrl ='/login'
+          window.location.href = newPageUrl;
+
       }else{
+        
+        console.log("response.data", response.data)
         window.alert(response.data.message);
       }
     }

@@ -73,13 +73,13 @@ const ApprovedTranction = props => {
     () => [
       {
         Header: "Sr No",
-        accessor: "SrNo",
+        // accessor: "SrNo",
         filterable: false,
         disableFilters: true,
-       Cell: index=>{
+       Cell: (index,i)=>{
 return <span>
-{index.row.index + 1} .
 
+{index.data.length - index.row.index}
 </span>
       }
       },

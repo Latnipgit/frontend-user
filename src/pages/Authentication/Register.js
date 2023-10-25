@@ -147,9 +147,11 @@ const Register = props => {
   // }));
 
   
-  // useEffect(() => {
-  //   dispatch(apiError(""));
-  // }, []);
+  useEffect(() => {
+    // dispatch(apiError(""));
+    localStorage.removeItem("tokenemployeeRegister")
+    localStorage.removeItem("COMPANY-ID")
+  }, []);
 
   return (
     <React.Fragment>
@@ -201,9 +203,9 @@ const Register = props => {
                           name: formik.values.name,
                           password: formik.values.password,
                           companyName: formik.values.companyName,
-                          gstNumber: formik.values.gstNumber,
-                          aadharNumber: formik.values.aadharNumber,
-                          panNumber: formik.values.panNumber,
+                          gstNumber:gstNumber,
+                          // aadharNumber: formik.values.aadharNumber,
+                          panNumber: panNumber,
                           email: formik.values.email,
                         };
                         dispatch(registerUser_login(user ,props.router.navigate));
@@ -254,7 +256,7 @@ const Register = props => {
                        
                         <Row>
                           <Col md={6}>
-                          <div className="mb-3">
+                          {/* <div className="mb-3">
                           <Label className="form-label">Aadhar Number</Label>
                           <Input
                             name="aadharNumber"
@@ -269,6 +271,24 @@ const Register = props => {
                           {formik.touched.aadharNumber && formik.errors.aadharNumber ? (
                             <FormFeedback type="invalid">{formik.errors.aadharNumber}</FormFeedback>
                           ) : null}
+                        </div> */}
+                          <div className="mb-3">
+                        <Label className="form-label">Email</Label>
+                        <Input
+                        id="email"
+                        name="email"
+                        className="form-control"
+                        placeholder="Enter email"
+                        type="email"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        // value={formik.values.email || ""}
+                        invalid={formik.touched.email && formik.errors.email ? true : false}
+  
+                        />
+                        {formik.touched.email && formik.errors.email ? (
+                        <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
+                        ) : null}
                         </div>
                           </Col>
                           <Col md={6}>
@@ -309,7 +329,7 @@ const Register = props => {
                         className="form-control"
                         placeholder="Enter GST Number"
                         type="text"
-                        onChange={handleGSTChange}
+                        onChange={(e)=>setGSTNumber(e.target.value)}
                         onBlur={handleGSTBlur}
                         value={gstNumber}
                         invalid={gstValidation.touched && gstValidation.error !== ''}
@@ -329,9 +349,11 @@ const Register = props => {
                         className={`form-control ${panValidation.touched && panValidation.error ? 'is-invalid' : ''}`}
                         placeholder="Enter PAN Number"
                         type="text"
-                        onChange={handlePanChange}
+                        // onChange={handlePanChange}
+                        onChange={(e)=>setPanNumber(e.target.value)}
+
                         onBlur={handlePanBlur}
-                        value={panNumber}
+                        // value={panNumber}
                         />
                         {panValidation.touched && panValidation.error !== '' && (
                         <div className="invalid-feedback">{panValidation.error}</div>
@@ -340,26 +362,7 @@ const Register = props => {
                         </Col>
                         </Row> 
                         <Row>
-                        <Col md={6}>
-                        <div className="mb-3">
-                        <Label className="form-label">Email</Label>
-                        <Input
-                        id="email"
-                        name="email"
-                        className="form-control"
-                        placeholder="Enter email"
-                        type="email"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.email || ""}
-                        invalid={formik.touched.email && formik.errors.email ? true : false}
-  
-                        />
-                        {formik.touched.email && formik.errors.email ? (
-                        <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
-                        ) : null}
-                        </div>
-                        </Col>
+                        
                           
                           <Col md={6}>
                             <div className="mb-3">
@@ -371,8 +374,8 @@ const Register = props => {
                                 placeholder="Enter password"
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.password || ""}
-                                invalid={formik.touched.password && formik.errors.password ? true : false}
+                                // value={formik.values.password || ""}
+                                // invalid={formik.touched.password && formik.errors.password ? true : false}
                                 // Add your password validation logic here
                               />
                               {formik.touched.password && formik.errors.password ? (
@@ -380,6 +383,9 @@ const Register = props => {
                               ) : null}
                             </div>
                           </Col>
+                          <Col md={6}>
+                      
+                        </Col>
                         </Row>    
                           <div>
                             <p className="mb-0">

@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 
 // action
-import { registerUser_login, apiError } from "../../../store/actions";
+import { addNewCompany, apiError } from "../../../store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 
-
+import ApprovedTranction from "./ApprovedTranction";
 import {
   Button,
   Modal,
@@ -46,7 +46,6 @@ const ReportedDebtorsModel = props => {
   const [name, setName] = useState('');
   const [companyName, setcompanyName] = useState('');
   const logindata = (localStorage.getItem("authUser")) != undefined ? JSON.parse(localStorage.getItem("authUser")) : ''
-
   const [gstValidation, setGSTValidation] = useState({
     touched: false,
     error: ''
@@ -137,19 +136,24 @@ const ReportedDebtorsModel = props => {
     //  setGSTNumber(GetDataFromuserId[0] != undefined ? GetDataFromuserId[0].gstin:'')
 
   },[logindata])
-
   const formSubmit = () => {
-    const user = {
-      name: name,
-      companyName: companyName != '' ? companyName : props.getCompanyList[0].companyName,
-      aadharNumber: aadhar,
-      mobileNumber: mobile,
-      gstNumber: gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
-      panNumber: panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
-      email: logindata.emailId,
-    };
-    console.log("USERCHECK", user)
-    dispatch(registerUser_login(user));
+    // const user = {
+    //   name: name,
+    //   companyName: companyName != '' ? companyName : props.getCompanyList[0].companyName,
+    //   aadharNumber: aadhar,
+    //   mobileNumber: mobile,
+    //   gstNumber: gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
+    //   panNumber: panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
+    //   email: logindata.emailId,
+    // };
+
+    const payload = {
+      "companyName": companyName != '' ? companyName : props.getCompanyList[0].companyName,
+      "gstin": gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
+      "companyPan": panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
+}
+    console.log("USERCHECK", payload)
+    dispatch(addNewCompany(payload));
   }
 
   const formik = useFormik({
@@ -188,6 +192,7 @@ const ReportedDebtorsModel = props => {
     <Modal
       isOpen={isOpen}
       role="dialog"
+      // show={show}
       size="lg"
       autoFocus={true}
       centered={true}
@@ -430,7 +435,8 @@ const ReportedDebtorsModel = props => {
   )
 }
 
-ReportedDebtorsModel.propTypes = {
+ReportedDebtorsModel.propTypes = 
+{
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 }

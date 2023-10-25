@@ -90,6 +90,7 @@ export const getOrders = () => get(url.GET_ORDERS);
 // getCompany list
 
 export const getCompanyList = data => post(url.GET_COMPANY);
+export const addCompanyListApi = data => post(url.ADD_NEW_COMPANY_API_STRING, data.payload);
 
 // ADD company
 
