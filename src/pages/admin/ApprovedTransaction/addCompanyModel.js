@@ -154,6 +154,9 @@ const ReportedDebtorsModel = props => {
 }
     console.log("USERCHECK", payload)
     dispatch(addNewCompany(payload));
+alert("Registration successfully")
+     window.location.reload()
+
   }
 
   const formik = useFormik({
@@ -265,8 +268,8 @@ const ReportedDebtorsModel = props => {
                           </Row>
 
                           <Row>
-                            <Col md={6}>
-                              <div className="mb-3">
+                            {/* <Col md={6}> */}
+                              {/* <div className="mb-3">
                                 <Label className="form-label">Aadhar Number</Label>
                                 <Input
                                   name="aadharNumber"
@@ -284,8 +287,8 @@ const ReportedDebtorsModel = props => {
                                 {/* {formik.touched.aadharNumber && formik.errors.aadharNumber ? (
                                   <FormFeedback type="invalid">{formik.errors.aadharNumber}</FormFeedback>
                                 ) : null} */}
-                              </div>
-                            </Col>
+                              {/* </div> */} 
+                            {/* </Col> */}
                             <Col md={6}>
                               <div className="mb-3">
                                 <Label className="form-label">Mobile Number (Indian)</Label>
@@ -311,6 +314,27 @@ const ReportedDebtorsModel = props => {
                                     <div className="invalid-feedback">{formik.errors.mobileNumber}</div>
                                   ) : null} */}
                                 </div>
+                              </div>
+                            </Col>
+                            <Col md={6}>
+                              <div className="mb-3">
+                                <Label className="form-label">Email</Label>
+                                <Input
+                                  id="email"
+                                  name="email"
+                                  className="form-control"
+                                  placeholder="Enter email"
+                                  type="email"
+                                  onChange={formik.handleChange}
+                                  // onBlur={formik.handleBlur}
+                                  value={logindata != undefined ? logindata.emailId : ""}
+                                  disabled
+                                // invalid={formik.touched.email && formik.errors.email ? true : false}
+
+                                />
+                                {/* {formik.touched.email && formik.errors.email ? (
+                                  <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
+                                ) : null} */}
                               </div>
                             </Col>
                           </Row>
@@ -359,27 +383,7 @@ const ReportedDebtorsModel = props => {
                             </Col>
                           </Row>
                           <Row>
-                            <Col md={6}>
-                              <div className="mb-3">
-                                <Label className="form-label">Email</Label>
-                                <Input
-                                  id="email"
-                                  name="email"
-                                  className="form-control"
-                                  placeholder="Enter email"
-                                  type="email"
-                                  onChange={formik.handleChange}
-                                  // onBlur={formik.handleBlur}
-                                  value={logindata != undefined ? logindata.emailId : ""}
-                                  disabled
-                                // invalid={formik.touched.email && formik.errors.email ? true : false}
-
-                                />
-                                {/* {formik.touched.email && formik.errors.email ? (
-                                  <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
-                                ) : null} */}
-                              </div>
-                            </Col>
+                           
 
                             <Col md={6}>
                               {/* <div className="mb-3">

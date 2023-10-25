@@ -102,11 +102,12 @@ const Document = (props) => {
           <Row>
             <Col md="10"></Col>
             <Col md="2">
-              <Button onClick={() => setModal1(true)} className="btn btn-sm btn-info">
+              <Button onClick={() => setModal1(true)} className="btn btn-md btn-info">
                 Upload documents
               </Button>
             </Col>
           </Row>
+          <br/>
           <Row>
             <Col className="col-12">
               <Card>
@@ -129,14 +130,12 @@ const Document = (props) => {
                         <Row>
                           <Col md={4}></Col>
                           <Col md={4}>
-                            <Card style={{ width: '290px', height: '200px' }} className="my-auto p-4">
-                              <CardBody className="p-3 text-center">
-                                <h5 className="mt-5 ">
+                          
+                                <h5 className="mt-5 mb-5 ">
                                   No Document Found
 
                                 </h5>
-                              </CardBody>
-                            </Card>
+                            
                           </Col>
                           <Col md={4}></Col>
                         </Row>

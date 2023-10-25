@@ -365,7 +365,7 @@ const Register = props => {
                         
                           
                           <Col md={6}>
-                            <div className="mb-3">
+                            {/* <div className="mb-3">
                               <Label className="form-label">Password</Label>
                               <Input
                                 name="password"
@@ -381,7 +381,7 @@ const Register = props => {
                               {formik.touched.password && formik.errors.password ? (
                                 <FormFeedback type="invalid">{formik.errors.password}</FormFeedback>
                               ) : null}
-                            </div>
+                            </div> */}
                           </Col>
                           <Col md={6}>
                       

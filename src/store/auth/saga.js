@@ -24,14 +24,30 @@ function* loginUser({ payload: { user, history } }) {
       if(response!=undefined && response!=null){
         if(response.data.success){
           localStorage.setItem("authUser", JSON.stringify(response.data.response));
-          yield put(loginSuccess(response.data.response));    
-          history('/companies');
+          yield put(loginSuccess(response.data.response)); 
+          console.log("CHECK RESPONCE", response.data.response.passwordChangeNeeded)   
+          if(response.data.response.passwordChangeNeeded == false){
+            history('/companies');
+
+          }
+          else{
+            history('/changePassword');
+
+          }
         }else{
-          window.alert(response.data.message);
+          console.log("SUCCESS CHECK",response.data )
+          if(response.data.passwordChangeNeeded == true){
+            history('/changePassword');
+            localStorage.setItem("one-time-token", response.data.passwordChangeToken)
+            alert(response.data.message);
+
+
+          }
+        
         }
         
       }else{
-        window.alert('Server responed failed');
+        window.alert('Invalid Email / Password');
       }
     }
     

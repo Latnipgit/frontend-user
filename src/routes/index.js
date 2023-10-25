@@ -190,6 +190,8 @@ import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 //import ContactsProfile from "../pages/Contacts/ContactsProfile/contacts-profile";
 import Register2 from "pages/Authentication/register2";
 import AddCompany from "pages/admin/ApprovedTransaction/add-company";
+import ChangeNewPassword from "../pages/Authentication/ChangeNewPassword"
+
 
 const authProtectedRoutes = [
   //User Panel Step 1
@@ -227,6 +229,8 @@ const publicRoutes = [
   { path: "/login", component: <Login /> },
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
+  { path: "/changePassword", component: <ChangeNewPassword /> },
+
 
   // { path: "/pages-maintenance", component: <PagesMaintenance /> },
   // { path: "/pages-comingsoon", component: <PagesComingsoon /> },

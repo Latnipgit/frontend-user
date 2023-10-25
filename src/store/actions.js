@@ -60,3 +60,5 @@ export * from "./Employee/actions"
 // Company Search
 
 export * from "./auth/companySearch/actions"
+
+export * from "./changePassword/actions"

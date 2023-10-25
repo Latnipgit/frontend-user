@@ -124,4 +124,5 @@ export const GET_EMPLOYEE = "/api/user/getAllEmployee";
 
 export const ADD_EMPLOYEE_LIST ="/api/user/addEmployee"
 export const ADD_NEW_COMPANY_API_STRING ="/api/companies/add"
+export const CHANGE_FIRST_PASSWORD ="/api/user/changePasswordUsingToken"
 

@@ -26,12 +26,14 @@ import dashboardJobSaga from "./dashboard-jobs/saga";
 import companyListsaga from "./company/saga";
 import employeeListsaga from "./Employee/saga"
 import searchCompanysaga from "././auth/companySearch/saga"
+import changePasswordSaga from "./changePassword/saga"
 // import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {
   yield all([
     //public
     fork(AccountSaga),
+    fork(changePasswordSaga),
     fork(employeeListsaga),
     fork(companyListsaga),
     fork(registerAuthSaga),
