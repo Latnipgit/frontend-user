@@ -8,7 +8,7 @@ import {SEARCH_COMPANY, SEARCH_COMPANY_SUCCESS, SEARCH_COMPANY_FAIL } from './ac
   }
   
   const searchCompany = (state = INIT_STATE, action) => {
-    
+     
     switch (action.type) {
       case SEARCH_COMPANY:
         return {

@@ -31,7 +31,7 @@ function* fetchInvoiceDetail({ invoiceId }) {
 }
 
 function* invoiceSaga() {
-  // 
+  //  
   yield takeEvery(GET_INVOICES, fetchInvoices)
   yield takeEvery(GET_INVOICE_DETAIL, fetchInvoiceDetail)
 }

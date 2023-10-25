@@ -153,7 +153,7 @@ return <span>
     []
   );
   const handleFilter = (filters) => {
-     
+      
     const filteredResults = getCompanyList.filter(item => {
       const CompanyNameMatch =  item.CompanyName === filters.company.trim();
       const panMatch =  item.PANCARD === filters.pan.trim();

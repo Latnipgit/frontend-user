@@ -41,7 +41,7 @@ function* fetchEmployeeList() {
 
 function* addEmployeeListsaga(data) {
   try {
-//  
+//   
       const response = yield call(addEmployeeList, data.payload)
       yield put(addNewEmployeeSuccess(response ))
     
@@ -52,7 +52,7 @@ function* addEmployeeListsaga(data) {
 
 
 function* employeeListsaga() {
-  // 
+  //  
   yield takeEvery(GET_EMPLOYEE, fetchEmployeeList)
   yield takeLatest(ADD_NEW_EMPLOYEE, addEmployeeListsaga)
 }

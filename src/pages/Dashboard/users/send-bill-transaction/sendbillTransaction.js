@@ -242,7 +242,7 @@ const SendBillTransaction = () => {
   const [sgst, setSGST] = useState("")
 
   const handleCGSTChange = e => {
-    debugger
+     
     const value = e.target.value
     if (/^\d*\.?\d*$/.test(value)) {
       if (
@@ -259,7 +259,7 @@ const SendBillTransaction = () => {
   }
 
   const handleSGSTChange = e => {
-    debugger
+     
     const value = e.target.value
     if (/^\d*\.?\d*$/.test(value)) {
       if (
@@ -859,13 +859,11 @@ const SendBillTransaction = () => {
                                 id="customerTypeBusiness"
                                 name="customerType"
                                 value="Business"
-                                checked={
-                                  formikModal.values.customerType === "Business"
-                                }
-                                onChange={formikModal.handleChange}
-                                onBlur={formikModal.handleBlur}
+                                
                               />{" "}
+
                               Business
+                            
                             </Label>
                           </div>
                           <div>
@@ -883,12 +881,7 @@ const SendBillTransaction = () => {
                                 id="customerTypeIndividual"
                                 name="customerType"
                                 value="Individual"
-                                checked={
-                                  formikModal.values.customerType ===
-                                  "Individual"
-                                }
-                                onChange={formikModal.handleChange}
-                                onBlur={formikModal.handleBlur}
+                                
                               />{" "}
                               Individual
                             </Label>
