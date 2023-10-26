@@ -28,9 +28,13 @@ const Document = (props) => {
   };
 
   const removeFile = (index) => {
-    console.log("INDEX", index)
+    console.log("index9898", index)
     const newFiles = [...selectedFiles];
-    newFiles.splice(index, 1);
+    newFiles.splice(index);
+    // console.log("INDEX", index, newFiles)
+    console.log("index9898 09", newFiles)
+
+
     setSelectedFiles(newFiles);
   };
 
@@ -70,6 +74,16 @@ const Document = (props) => {
           return <span>{cellProps.row.original.name}</span>;
         },
       },
+      {
+        Header: "File type",
+        accessor: "type",
+        filterable: false,
+        disableFilters: true,
+
+        Cell: cellProps => {
+          return <span>{cellProps.row.original.type}</span>;
+        },
+      },
 
 
 
@@ -78,13 +92,16 @@ const Document = (props) => {
         disableFilters: true,
         accessor: "view",
         Cell: cellProps => {
-          const project = cellProps.row.original;
+          const project = cellProps.row.index;
           return (
             <div className="d-flex">
 
 
-              <div className="d-flex flex-column align-items-center" onClick={() => removeFile(project)} style={{ cursor: 'pointer' }}>
+              <div className="d-flex  align-items-center" onClick={() => removeFile(project)} style={{ cursor: 'pointer' }}>
                 <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" />
+                <span>
+              Delete
+             </span>
               </div>
             </div>
           );
@@ -93,17 +110,22 @@ const Document = (props) => {
     ],
     []
   );
-  console.log("selectedFiles", selectedFiles)
+  const reciveDocument=(item)=>{
+    console.log("IJIJIJI", item, selectedFiles)
+    setSelectedFiles([...selectedFiles, ...item]);
+
+
+  }
   return (
     <React.Fragment>
-      <UploadDocumentModel isOpen={modal1} toggle={toggleViewModal} />
+      <UploadDocumentModel isOpen={modal1} toggle={toggleViewModal}  Document={reciveDocument}/>
       <div className="page-content">
         <Container fluid={true}>
           <Row>
             <Col md="10"></Col>
             <Col md="2">
-              <Button onClick={() => setModal1(true)} className="btn btn-md btn-info">
-                Upload documents
+              <Button onClick={() => setModal1(true)} className="btn btn-info" style={{ fontSize:'12px', display:'flex', padding:'10px'}}>
+               + Upload documents
               </Button>
             </Col>
           </Row>

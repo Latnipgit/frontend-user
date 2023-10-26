@@ -22,61 +22,42 @@ import UploadDocumentModel from './uploadDocumentsmodel'
 
 
 
-const ApprovedTranctionModel = props => {
+const uploadDocumentsModel = props => {
     const { isOpen, toggle, additionalValue } = props
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [modal1, setModal1] = useState(false);
     const [error, setError] = useState('');
     const toggleViewModal = () => setModal1(!modal1);
-    // const handleAcceptedFiles = (acceptedFiles) => {
+    
 
-    //     console.log("handle accepeted", selectedFiles)
-    //     setSelectedFiles([...selectedFiles, ...acceptedFiles]);
-    // };
+    const handleUpload = (item) => {
+        console.log("ITEM", item, selectedFiles)
+        props.Document(selectedFiles)
 
-    // const removeFile = (index) => {
-    //     console.log("INDEX", index)
-    //     const newFiles = [...selectedFiles];
-    //     newFiles.splice(index, 1);
-    //     setSelectedFiles(newFiles);
-    // };
-
-    const handleUpload = () => {
-    //     setTimeout(() => {
-    //         setSelectedFiles([]); // Clear selected files
-    //         setUploadSuccess(true); // Show upload success message
-    //         // Remove the success message after 5 seconds
-    //         setTimeout(() => {
-    //             setUploadSuccess(false);
-    //         }, 5000);
-    //     }, 2000);
     };
 
-    // const renderAlert = () => {
-    //     if (uploadSuccess) {
-    //         return (
-    //             <div className="alert alert-success mt-3">
-    //                 Files uploaded successfully!
-    //             </div>
-    //         );
-    //     }
-    //     return null;
-    // };
-  
+
         const onDrop = useCallback(acceptedFiles => {
-            console.log("DROP", acceptedFiles)
+            console.log("DROP",acceptedFiles[0].type )
+
+           
           // Do something with the files
 
-          if ( acceptedFiles[0].size > 29240){
-            setError('File size should be 200KB - 2MB ')
-          }
-          else{
-            setSelectedFiles(acceptedFiles)
-            setError('')
-            toggle
-          }
+         if(acceptedFiles[0].type == "image/png" ){
+            if ( acceptedFiles[0].size > 2000000){
+                setError('File size should be 200KB - 2MB ')
+              }
+              else{
+                setSelectedFiles(acceptedFiles)
+    
+              }
+         }
+         else{
+            setError("File should be Image type")
+         }
         }, [])
+        console.log("selectedFiles", selectedFiles)
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
     return (
         <Modal
@@ -90,41 +71,12 @@ const ApprovedTranctionModel = props => {
         >
             <div className="modal-content">
                 <ModalHeader toggle={toggle}>Company Details</ModalHeader>
-                <ModalBody>
+                <ModalBody>toggle
                     <h6 className="card-title">Upload Document</h6>
                     
-                   <p className='text-danger'>
-                    
-                   {error}
-                   </p>
+                   
                   
-                    
-                    {/* <Form>
-                        <Dropzone
-                            onDrop={(acceptedFiles) => {
-                                handleAcceptedFiles(acceptedFiles);
-                            }}
-
-                        >
-                            {({ getRootProps, getInputProps }) => (
-                                <div className="dropzone">
-                                    <div
-                                        className="dz-message needsclick mt-2"
-                                        {...getRootProps()}
-                                    >
-
-                                        <input {...getInputProps()} />
-                                        <div className="mb-3">
-                                            <i className="display-4 text-muted bx bxs-cloud-upload" />
-                                        </div>
-                                        <h4>DROP FILES HERE OR CLICK TO UPLOAD</h4>
-
-                                    </div>
-                                </div>
-                            )}
-                        </Dropzone>
-                    </Form>
-                    {renderAlert()} */}
+           
 
 <div {...getRootProps()}  className='text-center'>
       <input {...getInputProps()} 
@@ -139,7 +91,18 @@ const ApprovedTranctionModel = props => {
         isDragActive ?
         
           <p>Drop the files here ...</p> :
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p>Drag 'n' drop some files here, or click to select files
+<br/>
+<span>
+    {selectedFiles.length != 0 ? selectedFiles[0].name:''}
+
+</span>
+<br/>
+<span className='text-danger'>
+    {error}
+</span>
+
+          </p>
       }
     </div>
                 </ModalBody>
@@ -148,7 +111,13 @@ const ApprovedTranctionModel = props => {
                         <Button
                             type="button"
                             color="primary"
-                            onClick={handleUpload}
+                            onClick={()=>{
+                                handleUpload()
+                                toggle()
+                            }
+                               
+                            
+                            }
                             disabled={selectedFiles.length == 0}
                         >
                         submit
@@ -163,9 +132,9 @@ const ApprovedTranctionModel = props => {
     )
 }
 
-ApprovedTranctionModel.propTypes = {
+uploadDocumentsModel.propTypes = {
     toggle: PropTypes.func,
     isOpen: PropTypes.bool,
 }
 
-export default ApprovedTranctionModel
+export default uploadDocumentsModel
