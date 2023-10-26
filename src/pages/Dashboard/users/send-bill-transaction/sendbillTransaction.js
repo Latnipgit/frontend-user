@@ -61,8 +61,10 @@ const initialValues = {
   creditLimitDays: "",
   remarks: "",
   interestRate1: null,
-  uploadOriginalBill: null,
-  uploadPurchaseOrder: null,
+  uploadPurchaseOrder:"",
+  uploadchallanDispatchDocument:"",
+  uploadInvoice: "",
+  uploadTransportationDocumentDeliveryReceipt: "",
 }
 
 const SendBillTransaction = () => {
@@ -203,6 +205,19 @@ const SendBillTransaction = () => {
     newData[index].rate = parseFloat(newData[index].rate).toFixed(2)
     setData(newData)
   }
+  const [fileData, setFileData] = useState({
+    uploadPurchaseOrder: null,
+    uploadchallanDispatchDocument: null,
+    uploadInvoice: null,
+    uploadTransportationDocumentDeliveryReceipt: null,
+  });
+  const handleFileChange = (event, fieldName) => {
+    const files = event.target.files;
+    if (files.length > 0) {
+      setFileData({ ...fileData, [fieldName]: files[0] });
+    }
+  };
+
 
   //second Table
 
@@ -379,6 +394,7 @@ const SendBillTransaction = () => {
       return errors
     },
     onSubmit: values => {
+      debugger
       // Handle form submission here
     },
   })
@@ -768,17 +784,18 @@ const SendBillTransaction = () => {
                       <CardBody className="pt-0">
                         <Col md={4} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                            Attach File(s) to Original Invoice
+                            Attach File(s) to Purchase Order
                           </div>
 
                           <InputGroup>
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="fileUpload"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                            />
+                          <input
+                    type="file"
+                    className="form-control"
+                    id="uploadPurchaseOrder"
+                    accept=".pdf, .doc, .docx, .txt"
+                    aria-describedby="fileUploadHelp"
+                    onChange={(e) => handleFileChange(e, "uploadPurchaseOrder")}
+                  />
                           </InputGroup>
                           <div id="fileUploadHelp" className="form-text">
                             Choose a file to upload (PDF, DOC, DOCX, TXT).
@@ -786,17 +803,64 @@ const SendBillTransaction = () => {
                         </Col>
                         <Col md={5} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
+                            Attach File(s) to challan / Dispatch Document
+                          </div>
+
+                          <InputGroup>
+                          <input
+                    type="file"
+                    className="form-control"
+                    id="uploadchallanDispatchDocument"
+                    accept=".pdf, .doc, .docx, .txt"
+                    aria-describedby="fileUploadHelp"
+                    onChange={(e) => handleFileChange(e, "uploadchallanDispatchDocument")}
+                  />
+                          </InputGroup>
+                          <div id="fileUploadHelp" className="form-text">
+                            Choose a file to upload (PDF, DOC, DOCX, TXT).
+                          </div>
+                        </Col>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+                <Row className="terms">
+                  <Col md={11}>
+                    <Card className="overflow-hidden rounded-lg bg-light">
+                      <CardBody className="pt-0">
+                        <Col md={4} className="mt-2 hoverable-cell">
+                          <div className="mb-2 mt-5">
                             Attach File(s) to Invoice
                           </div>
 
                           <InputGroup>
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="fileUpload"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                            />
+                          <input
+                    type="file"
+                    className="form-control"
+                    id="uploadInvoice"
+                    accept=".pdf, .doc, .docx, .txt"
+                    aria-describedby="fileUploadHelp"
+                    onChange={(e) => handleFileChange(e, "uploadInvoice")}
+                  />
+                          </InputGroup>
+                          <div id="fileUploadHelp" className="form-text">
+                            Choose a file to upload (PDF, DOC, DOCX, TXT).
+                          </div>
+                        </Col>
+                        <Col md={5} className="mt-2 hoverable-cell">
+                          <div className="mb-2 mt-5">
+                            Attach File(s) to Transportation Document / Delivery Receipt
+                          </div>
+
+                          <InputGroup>
+                          <input
+                    type="file"
+                    className="form-control"
+                    id="uploadTransportationDocumentDeliveryReceipt"
+                    accept=".pdf, .doc, .docx, .txt"
+                    aria-describedby="fileUploadHelp"
+                    onChange={(e) => handleFileChange(e, "uploadTransportationDocumentDeliveryReceipt")}
+                  />
                           </InputGroup>
                           <div id="fileUploadHelp" className="form-text">
                             Choose a file to upload (PDF, DOC, DOCX, TXT).
