@@ -27,7 +27,7 @@ const token = localStorage.getItem("one-time-token")
 
 const handleSubmit=(e)=>{
   console.log("password", password.length)
-  if(password.length >6){
+  if(password.length > 5){
     if(password !="" && password == Cpassword){
       const payload={
       "passwordChangeToken": token,
