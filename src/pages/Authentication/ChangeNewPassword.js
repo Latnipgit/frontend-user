@@ -17,25 +17,32 @@ const changeNewPassword = props => {
 
 const [password , setPassword]=useState('')
 const [Cpassword , setCPassword]=useState('')
+const [error , setError]=useState('')
 
   //meta title
   document.title = "Forget Password | Bafana - User & Dashboard ";
 
   const dispatch = useDispatch();
 const token = localStorage.getItem("one-time-token")
-useEffect(()=>{
 
-})
-const handleSubmit=()=>{
+const handleSubmit=(e)=>{
+  console.log("password", password.length)
+  if(password.length >6){
     if(password !="" && password == Cpassword){
-        const payload={
-        "passwordChangeToken": token,
-        "password": password
-        }
-        console.log("PAYLOAD", payload)
-        dispatch(changeFirstPassword(payload) )
+      const payload={
+      "passwordChangeToken": token,
+      "password": password
+      }
+      e.preventDefault()
+      console.log("PAYLOAD", payload)
+      // dispatch(changeFirstPassword(payload))
 
-    }
+  }
+  }
+  else{
+    setError("Password length should be more than 6")
+  }
+  
     
     
 
@@ -49,6 +56,7 @@ const handleSubmit=()=>{
       </div>
       <div className="account-pages my-5 pt-sm-5">
         <Container>
+         
           <Row className="justify-content-center">
             <Col md={8} lg={6} xl={5}>
               <Card className="overflow-hidden">
@@ -79,6 +87,13 @@ const handleSubmit=()=>{
                         </span>
                       </div>
                     </Link>
+                  </div>
+                  <div>
+                  <p className="text-danger text-center">
+{
+          error
+
+}          </p>
                   </div>
                   <div className="p-2">
                   
@@ -124,7 +139,7 @@ const handleSubmit=()=>{
                           <button
                             className="btn btn-primary w-md "
                             type="submit"
-                            onClick={()=>handleSubmit()}
+                            onClick={(e)=>handleSubmit(e)}
                           >
                            submit
                           </button>

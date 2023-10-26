@@ -91,7 +91,7 @@ export const getOrders = () => get(url.GET_ORDERS);
 
 export const getCompanyList = data => post(url.GET_COMPANY);
 export const addCompanyListApi = data => post(url.ADD_NEW_COMPANY_API_STRING, data.payload);
-export const changeFirstPass = data => post(url.CHANGE_FIRST_PASSWORD, data.payload);
+export const changeFirstPass = (data) => post(url.CHANGE_FIRST_PASSWORD, data.payload);
 
 // ADD company
 

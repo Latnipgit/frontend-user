@@ -19,7 +19,7 @@ import {
 import {getEmployeeList,addEmployeeList  } from "helpers/fakebackend_helper";
 
 function* fetchEmployeeList() {
-  debugger
+  
   try {
     const response = yield call(getEmployeeList)
     yield put(getEmployeeLIstSuccess(response))

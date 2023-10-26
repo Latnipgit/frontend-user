@@ -207,7 +207,7 @@ const Register = props => {
                         };
                         console.log("CHECK", formik.values.name, formik.values.password , formik.values.email, gstNumber, panNumber )
                         if(formik.values.name != '' && formik.values.email != '' && gstNumber != '' && panNumber != ""){
-                         debugger
+                         
                           dispatch(registerUser_login(user ,props.router.navigate));
 
                         }

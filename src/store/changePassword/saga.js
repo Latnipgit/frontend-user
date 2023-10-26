@@ -1,10 +1,11 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 
 // Crypto Redux States
-import { GET_COMPANY, ADD_NEW_COMPANY, CHANGE_FIRST_PASSWORD } from "./actionTypes";
+import {  CHANGE_FIRST_PASSWORD } from "./actionTypes";
 import {
   changeFirstPassword,
-  changeFirstPasswordSucess
+  changeFirstPasswordSucess,
+  changePasswordFail
 
 } from "./actions";
 
@@ -13,28 +14,32 @@ import {changeFirstPass} from "helpers/fakebackend_helper";
 
 
 
-function* changePassword(user) {
-  try {
-    const response = yield call(changeFirstPass, user)
-    console.log("SUCCESS Responde",response )
+function* changePasswordfirsttime (user, history){
+  const pay = user.payload
+  
+  try {const  response = yield call(changeFirstPass, user)
     yield put(changeFirstPasswordSucess(response))
-
-if(response.data.success){
-  history('/companies');
-
+console.log("responseresponse", response)
+   if(response.data.success){
+  // history('/companies');
+  alert("Please Re login with your new password")
+  const newLocation = "/login"
+  window.location.href = newLocation
 }
 else{
+  
   alert(response.data.message)
 }
  
   } catch (error) {
-    yield put(changeFirstPassword(error))
+    console.log("PAYLOAD CEC ERR",error)
+    yield put(changePasswordFail(error))
   }
 }
 
 function* changePasswordSaga() {
   //  
-  yield takeEvery(CHANGE_FIRST_PASSWORD, changePassword)
+  yield takeLatest(CHANGE_FIRST_PASSWORD, changePasswordfirsttime)
 }
 
 export default changePasswordSaga;
