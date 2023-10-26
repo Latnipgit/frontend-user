@@ -35,7 +35,7 @@ const handleSubmit=(e)=>{
       }
       e.preventDefault()
       console.log("PAYLOAD", payload)
-      // dispatch(changeFirstPassword(payload))
+      dispatch(changeFirstPassword(payload))
 
   }
   }
