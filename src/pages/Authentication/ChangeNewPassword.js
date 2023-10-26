@@ -18,15 +18,22 @@ const changeNewPassword = props => {
 const [password , setPassword]=useState('')
 const [Cpassword , setCPassword]=useState('')
 const [error , setError]=useState('')
+const [passwordstr , setpasswordstr]=useState('')
+
 
   //meta title
   document.title = "Forget Password | Bafana - User & Dashboard ";
 
   const dispatch = useDispatch();
 const token = localStorage.getItem("one-time-token")
-
+const r4 = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$');
+const r2 = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$');
 const handleSubmit=(e)=>{
   console.log("password", password.length)
+ 
+ 
+
+ 
   if(password.length > 5){
     if(password !="" && password == Cpassword){
       const payload={
@@ -116,10 +123,32 @@ const handleSubmit=(e)=>{
                           type="password"
                           
 
-                          onChange={(e)=>setPassword(e.target.value)}
+                          onChange={(e)=>{
+                            setPassword(e.target.value)
+                            setError('')
+                            setpasswordstr('')
+                           setpasswordstr( r4.test(password) === true ? "Strong": r2.test(password) === true ? "medium":"week") 
+                          }}
                     
                         />
                         <br/>
+                        <Row className="text-end" style={{ marginTop:'-10px', fontWeight:"600"}}>
+                      {passwordstr == "Strong"?
+                    <span className="text-success">
+                      Strong Password
+                    </span>  
+                    :passwordstr == "medium"?
+                    <span className="" style={{ color:"#ffc266"}} >
+                    Medium Password
+                  </span> 
+                  :
+                  passwordstr == "week"?
+                    <span className="text-danger">
+                    Week Password
+                  </span> 
+                  :""
+                    }
+                    </Row>
                         <Label className="form-label">Confirm New Password</Label>
                         <Input
                           name="email"
@@ -134,6 +163,7 @@ const handleSubmit=(e)=>{
                       </div>
                      <br/>
                     </Form>
+                 
                     <Row className="mb-3 mt-2">
                         <Col className="text-center">
                           <button

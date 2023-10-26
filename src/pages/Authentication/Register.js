@@ -200,12 +200,12 @@ const Register = props => {
                           name: formik.values.name,
                           password: formik.values.password,
                           companyName: formik.values.companyName,
-                          gstNumber:gstNumber,
+                          gstNumber:gstNumber.toUpperCase(),
                           // aadharNumber: formik.values.aadharNumber,
-                          panNumber: panNumber,
+                          panNumber: panNumber.toUpperCase(),
                           email: formik.values.email,
                         };
-                        console.log("CHECK", formik.values.name, formik.values.password , formik.values.email, gstNumber, panNumber )
+                        console.log("CHECK",  user )
                         if(formik.values.name != '' && formik.values.email != '' && gstNumber != '' && panNumber != ""){
                          
                           dispatch(registerUser_login(user ,props.router.navigate));
