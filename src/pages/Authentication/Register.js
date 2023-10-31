@@ -163,14 +163,11 @@ const Register = props => {
     if(apiRespo != undefined ){
       if(apiRespo == true ){
            const newPageUrl ='/login'
-          toast.success('successful Registeration please check your Email')
+          toast.success('registration successfully please check your Email ')
           const intervals = setInterval(() => {
             window.location.href = newPageUrl;
             }, 2000);
             return () => clearInterval(intervals);
-        
-
-
       }
       else{
         debugger
