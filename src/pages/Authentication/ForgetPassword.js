@@ -36,7 +36,8 @@ const ForgetPasswordPage = props => {
       email: Yup.string().required("Please Enter Your Email"),
     }),
     onSubmit: (values) => {
-      dispatch(userForgetPassword(values, props.history));
+      console.log("VALUEE", values)
+      dispatch(userForgetPassword(values));
     }
   });
 
@@ -137,16 +138,16 @@ const ForgetPasswordPage = props => {
                   </div>
                 </CardBody>
               </Card>
-              <div className="mt-5 text-center">
+              <div className="mt-3 text-center">
                 <p>
                   Go back to{" "}
-                  <Link to="login" className="font-weight-medium text-primary">
+                  <Link to="/login" className="font-weight-medium text-primary">
                     Login
                   </Link>{" "}
                 </p>
                 <p>
-                  © {new Date().getFullYear()} Skote. Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Themesbrand
+                  © {new Date().getFullYear()} Bafana. Crafted with{" "}
+                  <i className="mdi mdi-heart text-danger" /> by  Latnip IT Solution
                 </p>
               </div>
             </Col>

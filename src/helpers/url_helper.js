@@ -4,6 +4,7 @@ export const POST_FAKE_REGISTER = "api/user/signup";
 export const POST_FAKE_JWT_LOGIN = "/api/user/login";
 
 export const POST_FAKE_PASSWORD_FORGET = "/fake-forget-pwd";
+export const PASSWORD_FORGET = "/api/user/forgetPassword";
 export const POST_FAKE_JWT_PASSWORD_FORGET = "/jwt-forget-pwd";
 export const SOCIAL_LOGIN = "/social-login";
 export const POST_FAKE_LOGIN = "/api/user/login";

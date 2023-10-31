@@ -14,7 +14,7 @@ export const userForgetPassword = (user, history) => {
 export const userForgetPasswordSuccess = message => {
   return {
     type: FORGET_PASSWORD_SUCCESS,
-    payload: message,
+    payload: message.data.message,
   }
 }
 

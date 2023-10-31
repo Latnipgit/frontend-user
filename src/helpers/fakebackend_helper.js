@@ -1,5 +1,5 @@
 import axios from "axios";
-import { del, get, post, put, addEmployeeAPImethod } from "./api_helper";
+import { del, get, post, put, addEmployeeAPImethod, forgetPasswordAPI } from "./api_helper";
 import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
@@ -21,6 +21,7 @@ export const searchCompanyAPI = data => post("/api/companies/selectCompany", dat
 
 // Login Method
 const postFakeLogin = data => post(url.POST_FAKE_LOGIN, data);
+export const forgetPassword = data => forgetPasswordAPI(url.PASSWORD_FORGET, data);
 
 // postForgetPwd
 const postFakeForgetPwd = data => post(url.POST_FAKE_PASSWORD_FORGET, data);

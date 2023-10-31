@@ -9,46 +9,25 @@ import { getFirebaseBackend } from "../../../helpers/firebase_helper"
 import {
   postFakeForgetPwd,
   postJwtForgetPwd,
+  forgetPassword
 } from "../../../helpers/fakebackend_helper"
 
 const fireBaseBackend = getFirebaseBackend()
 
 //If user is send successfully send mail link then dispatch redux action's are directly from here.
-function* forgetUser({ payload: { user, history } }) {
+
+function* forgetUser( user ) {
+  console.log("USERRR", user.payload.user)
+  const users = user.payload.user
   try {
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const response = yield call(fireBaseBackend.forgetPassword, user.email)
-      if (response) {
-        yield put(
-          userForgetPasswordSuccess(
-            "Reset link are sended to your mailbox, check there first"
-          )
-        )
-      }
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      const response = yield call(postJwtForgetPwd, "/jwt-forget-pwd", {
-        email: user.email,
-      })
-      if (response) {
-        yield put(
-          userForgetPasswordSuccess(
-            "Reset link are sended to your mailbox, check there first"
-          )
-        )
-      }
-    } else {
-      const response = yield call(postFakeForgetPwd, "/fake-forget-pwd", {
-        email: user.email,
-      })
-      if (response) {
-        yield put(
-          userForgetPasswordSuccess(
-            "Reset link are sended to your mailbox, check there first"
-          )
-        )
-      }
-    }
+   if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+     
+      const response = yield call(forgetPassword, users.email)
+      console.log("RESPONSE", response)
+      yield put(userForgetPasswordSuccess(response))
+    } 
   } catch (error) {
+    console.log("There was an error registering: ", error)
     yield put(userForgetPasswordError(error))
   }
 }

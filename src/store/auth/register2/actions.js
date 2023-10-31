@@ -1,4 +1,6 @@
-import {REGISTER2_LOGIN_USER,REGISTER2_LOGIN_SUCCESS} from "./actionTypes"
+import {REGISTER2_LOGIN_USER,REGISTER2_LOGIN_SUCCESS
+,REGISTER2_LOGIN_FAIL
+} from "./actionTypes"
   
   export const registerUser_login = (user, history) => {
     return {
@@ -15,6 +17,13 @@ import {REGISTER2_LOGIN_USER,REGISTER2_LOGIN_SUCCESS} from "./actionTypes"
     }
   }
   
+  export const registerFail_login = (user) => {
+     
+    return {
+      type: REGISTER2_LOGIN_FAIL,
+      payload: { user },
+    }
+  }
 
 
  

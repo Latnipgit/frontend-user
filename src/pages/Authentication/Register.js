@@ -6,25 +6,27 @@ import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFee
 // Formik Validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
+import Loader from "react-js-loader";
 // action
 import { registerUser_login, apiError } from "../../store/actions";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 
 // import images
 import profileImg from "../../assets/images/profile-img.png";
 import logoImg from "../../assets/images/logo.svg";
-
+// toast.configure() 
 const Register = props => {
 
   //meta title
   document.title = "Register | Bafana - User & Dashboard";
   const [panNumber, setPanNumber] = useState('');
   const [gstNumber, setGSTNumber] = useState('');
+  const [timerStart, setTimerStart] = useState(false);
 
 
   const [gstValidation, setGSTValidation] = useState("");
@@ -143,12 +145,41 @@ const Register = props => {
   //   error: state.Account.error,
   // }));
 
-  
+  const apiRespo = useSelector(state =>(state.register_login_reducer.apiResponse))
+
+  console.log("apiRespo",apiRespo)
   useEffect(() => {
     // dispatch(apiError(""));
     localStorage.removeItem("tokenemployeeRegister")
     localStorage.removeItem("COMPANY-ID")
-  }, []);
+
+    if(timerStart == true){
+      const interval = setInterval(() => {
+        setTimerStart(false)
+        }, 2000);
+        return () => clearInterval(interval);
+    }
+
+    if(apiRespo != undefined ){
+      if(apiRespo == true ){
+           const newPageUrl ='/login'
+          toast.success('successful Registeration please check your Email')
+          const intervals = setInterval(() => {
+            window.location.href = newPageUrl;
+            }, 2000);
+            return () => clearInterval(intervals);
+        
+
+
+      }
+      else{
+        debugger
+        toast.error('user already existes')
+
+      }
+
+    }
+  }, [apiRespo, timerStart]);
 
   return (
     <React.Fragment>
@@ -158,6 +189,7 @@ const Register = props => {
         </Link>
       </div>
       <div className="account-pages my-5 pt-sm-5">
+       {timerStart == false ?
         <Container>
           <Row className="justify-content-center">
             <Col xl={8}>
@@ -190,6 +222,7 @@ const Register = props => {
                       </div>
                     </Link>
                   </div>
+             
                   <div className="p-2">
                     <Form
                       className="form-horizontal"
@@ -209,6 +242,7 @@ const Register = props => {
                         if(formik.values.name != '' && formik.values.email != '' && gstNumber != '' && panNumber != ""){
                          
                           dispatch(registerUser_login(user ,props.router.navigate));
+                          setTimerStart(true)
 
                         }
                         return false;
@@ -430,7 +464,15 @@ const Register = props => {
             </Col>
           </Row>
         </Container>
+        :
+        <div className="" style={{ paddingTop:'150px'}}>
+               
+        <Loader type="hourglass"   bgColor={"gray"} color={"gray"}  title =" Please wait..."size={150} />
+      
+        </div>
+        }
       </div>
+      <ToastContainer />
     </React.Fragment>
   );
 };

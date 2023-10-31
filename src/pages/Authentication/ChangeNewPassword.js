@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 import withRouter from "components/Common/withRouter";
 import { changeFirstPassword } from "../../store/actions";
 
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import images
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
@@ -33,6 +34,8 @@ const handleSubmit=(e)=>{
  
  
 
+ if(password != '' && Cpassword != ''){
+
  
   if(password.length > 5){
     if(password !="" && password == Cpassword){
@@ -45,10 +48,19 @@ const handleSubmit=(e)=>{
       dispatch(changeFirstPassword(payload))
 
   }
+  else{
+    toast.error('Password not match')
+
+  }
   }
   else{
-    setError("Password length should be more than 6")
+    toast.error('Password length should be more than 5')
   }
+}
+else{
+  toast.error('Please enter Password')
+
+}
   
     
     
@@ -56,11 +68,11 @@ const handleSubmit=(e)=>{
 }
   return (
     <React.Fragment>
-      <div className="home-btn d-none d-sm-block">
+      {/* <div className="home-btn d-none d-sm-block">
         <Link to="/" className="text-dark">
           <i className="bx bx-home h2" />
         </Link>
-      </div>
+      </div> */}
       <div className="account-pages my-5 pt-sm-5">
         <Container>
          
@@ -188,6 +200,8 @@ const handleSubmit=(e)=>{
             </Col>
           </Row>
         </Container>
+        <ToastContainer />
+
       </div>
     </React.Fragment>
   );

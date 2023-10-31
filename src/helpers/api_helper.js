@@ -104,3 +104,22 @@ export async function addEmployeeAPImethod(url, data, config = {}) {
         });
   }
     
+
+
+  export async function forgetPasswordAPI(url, data, config = {}) {
+   console.log("APIII", url, data)
+   const payload ={
+    "emailId":data
+   }
+ 
+      return axiosApi
+          .post(url,payload)
+          .then((response) =>response)
+          .catch((error) => {
+            if (error.response) {
+              console.log("Server responded with an error:", error.response.status);
+            } else if (error.request) {
+              console.log("No response received from the server:", error.request);
+            }
+          });
+    }
