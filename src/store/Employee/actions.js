@@ -43,7 +43,8 @@ import {
   }
   
   export const addNewEmployeeFail = (user) => {
-     
+    console.log("user1111",user)
+
     return {
       type: ADD_NEW_EMPLOYEE_FAIL,
       payload: { user, history },

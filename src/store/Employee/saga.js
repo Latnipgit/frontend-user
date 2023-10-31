@@ -19,7 +19,7 @@ import {
 import {getEmployeeList,addEmployeeList  } from "helpers/fakebackend_helper";
 
 function* fetchEmployeeList() {
-  
+  debugger
   try {
     const response = yield call(getEmployeeList)
     yield put(getEmployeeLIstSuccess(response))
@@ -41,11 +41,23 @@ function* fetchEmployeeList() {
 
 function* addEmployeeListsaga(data) {
   try {
-//   
-      const response = yield call(addEmployeeList, data.payload)
-      yield put(addNewEmployeeSuccess(response ))
+      const response = yield call(addEmployeeList,data.payload)
+      console.log("CHECH", response)
+      if(response != undefined ){
+        yield put(addNewEmployeeSuccess(response))
+if(response.data.success == true){
+  window.alert("Employee added successfully")
+}else{
+  window.alert("Something went wrong")
+
+}
+      }
+      else{
+        window.alert("Email id already exists")
+      }
     
   } catch (error) {
+    console.log("CHECH Err", error)
     yield put(addNewEmployeeFail(error))
   }
 }

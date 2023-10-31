@@ -204,7 +204,7 @@ const SidebarContent = props => {
                     {props.t("Employee")}
 
                     {isShowEmployee != undefined && isShowEmployee != false ? (
-                      <i className="bx bx-chevron-up"></i>
+                     <i className="bx bx-chevron-up"></i>
                     ) : (
                       <i className="bx bx-chevron-down"></i>
                     )}
@@ -213,13 +213,13 @@ const SidebarContent = props => {
                 {isShowEmployee != undefined && isShowEmployee != false ? (
                   <li>
                     <Link to="/employee">
-                      <i className="bx bxs-notification"></i>
+                      <i className="bx bxs-notification" style={{ marginLeft:'10px'}}></i>
 
                       {props.t("Employee Registration")}
                     </Link>
 
                     <Link to="/EmployeeList">
-                      <i className="bx bx-list-ul"></i>
+                      <i className="bx bx-list-ul" style={{ marginLeft:'10px'}}></i>
                       {props.t("Employee List")}
                     </Link>
                   </li>

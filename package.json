@@ -94,6 +94,7 @@
     "simplebar-react": "^2.4.1",
     "swiper": "^8.4.5",
     "toastr": "^2.1.4",
+    "validator": "^13.11.0",
     "yup": "^0.32.11"
   },
   "scripts": {

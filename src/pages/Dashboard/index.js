@@ -156,6 +156,11 @@ const Dashboard = props => {
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
+          <Row className=" ml-auto text-end">
+          <Link to="/companies">
+                    <i className="bx bx-home" style={{ fontSize:'25px', color:"gray"}}></i>
+                  </Link>
+          </Row>
           <Row>
             <Col md="12">
               <div className="mb-4 h4 card-title">Reported Debtors</div>

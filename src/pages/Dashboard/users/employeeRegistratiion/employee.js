@@ -15,7 +15,9 @@ import * as Yup from "yup"
 import { useFormik } from "formik"
 import { useSelector, useDispatch } from "react-redux";
 import { addNewEmployeelist } from "../../../../store/actions";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import validator from 'validator'
 const Employee = () => {
   // Form validation
   const [alertVisible, setAlertVisible] = useState(false)
@@ -87,6 +89,8 @@ const Employee = () => {
   const dispatch = useDispatch();
 
 const handleSubmit=()=>{
+  if(validator.isEmail(email)){
+  
   
   if(fullAccess == true ){
     
@@ -105,8 +109,20 @@ const handleSubmit=()=>{
   ]
   
   }]
-  console.log("PAYLOAD", payload)
+  if(name != "" ){
+    if(email != "" ){
+console.log("nmmm", name , email)
+
+
   dispatch(addNewEmployeelist(payload));
+    }
+    else{
+      toast.error("Please enter email")
+
+    }
+}else{
+  toast.error("Please enter name")
+}
 
 }
 else{
@@ -122,9 +138,25 @@ else{
   
   }]
   console.log("PAYLOAD", payload)
+  if(name != "" ){
+    if(email != "" ){
+console.log("nmmm", name , email)
+
+
   dispatch(addNewEmployeelist(payload));
+    }
+    else{
+      toast.error("Please enter email")
+
+    }
+}else{
+  toast.error("Please enter name")
+}
 
 }
+  }else{
+    toast.error("Please enter valid email")
+  }
 }
   // React.useEffect(() => {
   //   setIsFormValid(validation.isValid);
@@ -157,7 +189,7 @@ else{
                             className="form-control"
                             id="name"
                             onChange={(event)=>setname(event.target.value)}
-                            onBlur={validation.handleBlur}
+                            // onBlur={validation.handleBlur}
                             // value={validation.values.name || ""}
                             invalid={
                               validation.touched.name && validation.errors.name
@@ -185,7 +217,7 @@ else{
                             // onChange={validation.handleChange}
                             onChange={(event)=>setemail(event.target.value)}
 
-                            onBlur={validation.handleBlur}
+                            // onBlur={validation.handleBlur}
                             // value={validation.values.email || ""}
                             invalid={
                               validation.touched.email &&
@@ -362,14 +394,14 @@ else{
                         </Button>
                       </Col>
                       <Col lg={1}>
-                        <Button
+                        {/* <Button
                           className="ml-3"
                           color="secondary"
                           type="button" // Use type="button" for Cancel button
                           onClick={handleCancel} // Clear form fields
                         >
                           Cancel
-                        </Button>
+                        </Button> */}
                       </Col>
                     </Row>
                 </CardBody>
@@ -377,6 +409,8 @@ else{
             </Col>    
           </Row>
         </Container>
+        <ToastContainer />
+
       </div>
     </React.Fragment>
   )
