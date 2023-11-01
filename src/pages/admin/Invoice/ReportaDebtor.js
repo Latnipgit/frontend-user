@@ -54,11 +54,11 @@ import { useDispatch ,useSelector } from "react-redux";
       dispatch(ongetInvoices());
     },[getInvoiceList])
     const sampleDataCreditors = [
-      { "Refnumber": "#BF-001", "Buyer": "Rohan", "Amount": "8000", "DueFrom": "20 january 2022" , "status":"Pending"},
-      { "Refnumber": "#BF-002", "Buyer": "harshit", "Amount": "15000", "DueFrom": "12 march 2022" , "status":"Complete"},
-      { "Refnumber": "#BF-003", "Buyer": "akshay", "Amount": "8500", "DueFrom": "21 july 2022" , "status":"Pending"},
-      { "Refnumber": "#BF-004", "Buyer": "ram", "Amount": "9400", "DueFrom": "20 january 2022" , "status":"Complete"},
-      { "Refnumber": "#BF-005", "Buyer": "shyan", "Amount": "9900", "DueFrom": "20 january 2022" , "status":"Pending"},
+      { "Refnumber": "#BF-001", "invoiveno":"BAF-9696" ,"Buyer": "Rohan", "Amount": "8000", "DueFrom": "20 january 2022" , "status":"Pending"},
+      { "Refnumber": "#BF-002", "invoiveno":"BAF-9699" ,"Buyer": "harshit", "Amount": "15000", "DueFrom": "12 march 2022" , "status":"Complete"},
+      { "Refnumber": "#BF-003", "invoiveno":"BAF-9698" ,"Buyer": "akshay", "Amount": "8500", "DueFrom": "21 july 2022" , "status":"Pending"},
+      { "Refnumber": "#BF-004", "invoiveno": "BAF-9689" ,"Buyer": "ram", "Amount": "9400", "DueFrom": "20 january 2022" , "status":"Complete"},
+      { "Refnumber": "#BF-005", "invoiveno": "BAF-9690","Buyer": "shyan", "Amount": "9900", "DueFrom": "20 january 2022" , "status":"Pending"},
   
     ];
     const columns = useMemo(
@@ -71,8 +71,9 @@ import { useDispatch ,useSelector } from "react-redux";
             return <input type="checkbox" className="form-check-input" />;
           },
         },
+
         {
-          Header: "Customer Name",
+          Header: "Refrence Number",
           accessor: "Refnumber",
           filterable: false,
           disableFilters: true,
@@ -80,28 +81,14 @@ import { useDispatch ,useSelector } from "react-redux";
         },
         {
           Header: "Invoice No.",
-          accessor: "",
+          accessor: "invoiveno",
           disableFilters: true,
           filterable: false,
        
         },
         {
-          Header: "Order No.",
-          accessor: "",
-          disableFilters: true,
-          filterable: false,
-       
-        },
-        {
-          Header: "Invoice Date",
-          accessor: "",
-          disableFilters: true,
-          filterable: false,
-       
-        },
-        {
-          Header: "Salesperson",
-          accessor: "Amount",
+          Header: "Customer Name",
+          accessor: "Buyer",
           disableFilters: true,
           filterable: false,
        
@@ -111,8 +98,16 @@ import { useDispatch ,useSelector } from "react-redux";
           accessor: "DueFrom",
           disableFilters: true,
           filterable: false,
-         
+       
         },
+        {
+          Header: "Due From",
+          accessor: "Amount",
+          disableFilters: true,
+          filterable: false,
+       
+        },
+       
         {
           Header: "status",
           accessor: "status",
@@ -123,18 +118,6 @@ import { useDispatch ,useSelector } from "react-redux";
 <div>
   {cellProps.row.original.status == 'Complete'? <span className="text-success">{cellProps.row.original.status}</span>:<span className="text-danger">{cellProps.row.original.status}</span>}
 </div>
-            )}
-        },
-        {
-          Header: "Action",
-          accessor: "",
-          disableFilters: true,
-          filterable: false,
-          Cell: cellProps => {
-            return (
-<Button className="btn btn-danger btn-sm" onClick={()=>setModal1(true)}>
-  Report a Defaulter
-</Button>
             )}
         },
        
@@ -156,7 +139,7 @@ import { useDispatch ,useSelector } from "react-redux";
           <br/>
           <br/>
           <br/>
-          <div className="mb-4 h4 card-title">Invoice List</div>
+          <div className="mb-4 h4 card-title">Report a Defaulter</div>
           <TableContainer
             columns={columns}
             data={sampleDataCreditors}

@@ -151,14 +151,17 @@ const Dashboard = props => {
   }
 
   document.title = "Dashboard | Bafana"
+  const companiesURL ="/companies"
 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
           <Row className=" ml-auto text-end">
-          <Link to="/companies">
-                    <i className="bx bx-home" style={{ fontSize:'25px', color:"gray"}}></i>
+          <Link >
+                    <i className="bx bx-home" style={{ fontSize:'25px', color:"gray"}} onClick={()=>{
+                      window.location.href =companiesURL;
+                    }}></i>
                   </Link>
           </Row>
           <Row>
