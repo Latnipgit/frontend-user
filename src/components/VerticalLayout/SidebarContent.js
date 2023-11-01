@@ -11,6 +11,7 @@ import { useMenu } from "./MenuContext"
 const SidebarContent = props => {
   const [ showMenuItems, setshowMenuItems ] = useState(false)
   const [isShowEmployee, setisShowEmployee] = useState()
+  const [isShowSales, setShowSales] = useState(false)
   const [currentPath, setCurrentpath] = useState('')
   
   
@@ -165,6 +166,13 @@ const SidebarContent = props => {
       setisShowEmployee(true)
     }
   }
+  const salesListShow =()=>{
+    if (isShowSales == undefined || isShowSales == true) {
+      setShowSales(false)
+    } else {
+      setShowSales(true)
+    }
+  }
   return (
     <React.Fragment>
       <SimpleBar className="h-100" ref={ref}>
@@ -182,44 +190,91 @@ const SidebarContent = props => {
                 </li>
                 <li>
                   <Link to="/Report-defaulter">
-                    <i className="bx bx-search"></i>
+                  <i className='bx bxs-report'></i>
                     {props.t("Report A Defaulter")}
                   </Link>
                 </li>
-                <li>
-                  <Link to="/bad-debts">
-                    <i className="bx bx-rupee"></i>
-                    {props.t("Bad debts")}
-                  </Link>
-                </li>
+               
                 <li>
                   <Link to="/company-search">
                     <i className="bx bx-search"></i>
                     {props.t("Company Search")}
                   </Link>
                 </li>
+               
+                <li>
+                  <Link onClick={() => salesListShow()}>
+                    <i className='bx bx-cart-alt'></i>
+                    {props.t("Sales")}
+
+                    {isShowSales != undefined && isShowSales != false ? (
+                     <i className="bx bx-chevron-up" style={{ paddingLeft:'5px'}}></i>
+                    ) : (
+                      <i className="bx bx-chevron-down" style={{ paddingLeft:'5px'}}></i>
+                    )}
+                  </Link>
+                </li>
+           
+                {isShowSales == true ?
+                
+              <>
+                <li>
+                  <Link to="/bad-debts">
+                    <i className="bx bx-rupee" style={{ paddingLeft:'15px'}}></i>
+                    {props.t("Bad debts")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/debtors">
+                    <i className="bx bx-user" style={{ paddingLeft:'15px'}}></i>
+                    {props.t("Debtors(buyers)")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/creditors">
+                    <i className="bx bx-user" style={{ paddingLeft:'15px'}}></i>
+                    {props.t("Creditors(Seller)")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/Invoice">
+                    <i className="bx bx-search" style={{ paddingLeft:'15px'}}></i>
+                    {props.t("Invoices")}
+                  </Link>
+                </li>
+
+                <li>
+                  <Link to="/send-bill-transaction">
+                    <i className="bx bx-send" style={{ paddingLeft:'15px'}}></i>
+                    {props.t("Send Bill Transaction")}
+                  </Link>
+                </li>
+</>
+:''
+                }
+
                 <li>
                   <Link onClick={() => employeeListshow()}>
                     <i className="bx bxs-user-detail"></i>
                     {props.t("Employee")}
 
                     {isShowEmployee != undefined && isShowEmployee != false ? (
-                     <i className="bx bx-chevron-up"></i>
+                     <i className="bx bx-chevron-up" style={{ paddingLeft:'5px'}}></i>
                     ) : (
-                      <i className="bx bx-chevron-down"></i>
+                      <i className="bx bx-chevron-down" style={{ paddingLeft:'5px'}}></i>
                     )}
                   </Link>
                 </li>
                 {isShowEmployee != undefined && isShowEmployee != false ? (
                   <li>
                     <Link to="/employee">
-                      <i className="bx bxs-notification" style={{ marginLeft:'10px'}}></i>
+                      <i className="bx bxs-notification" style={{ marginLeft:'15px'}}></i>
 
                       {props.t("Employee Registration")}
                     </Link>
 
                     <Link to="/EmployeeList">
-                      <i className="bx bx-list-ul" style={{ marginLeft:'10px'}}></i>
+                      <i className="bx bx-list-ul" style={{ marginLeft:'15px'}}></i>
                       {props.t("Employee List")}
                     </Link>
                   </li>
@@ -227,31 +282,7 @@ const SidebarContent = props => {
                   ""
                 )}
 
-                <li>
-                  <Link to="/debtors">
-                    <i className="bx bx-user"></i>
-                    {props.t("Debtors(buyers)")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/creditors">
-                    <i className="bx bx-user"></i>
-                    {props.t("Creditors(Seller)")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Invoice">
-                    <i className="bx bx-search"></i>
-                    {props.t("Invoices")}
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/send-bill-transaction">
-                    <i className="bx bx-send"></i>
-                    {props.t("Send Bill Transaction")}
-                  </Link>
-                </li>
+           
                 <li>
                   <Link to="/recieved-payment">
                     <i className="bx bx-money"></i>
