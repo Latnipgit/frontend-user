@@ -121,21 +121,21 @@ const Dashboard = props => {
         },
       },
 
-      {
-        Header: "Action",
-        accessor: "",
-        disableFilters: true,
-        filterable: false,
-        Cell: cellProps => {
-          return (
-            <div>
-              <Button className="btn btn-danger btn-sm" disabled>
-                Report a Defaulter
-              </Button>
-            </div>
-          )
-        },
-      },
+      // {
+      //   Header: "Action",
+      //   accessor: "",
+      //   disableFilters: true,
+      //   filterable: false,
+      //   Cell: cellProps => {
+      //     return (
+      //       <div>
+      //         <Button className="btn btn-danger btn-sm" disabled>
+      //           Report a Defaulter
+      //         </Button>
+      //       </div>
+      //     )
+      //   },
+      // },
     ],
     []
   )
