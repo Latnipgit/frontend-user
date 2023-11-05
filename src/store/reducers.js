@@ -59,6 +59,7 @@ import DashboardJob from "./dashboard-jobs/reducer";
 import employeeList from "./Employee/reducer";
 import searchCompany from "././auth/companySearch/reducer";
 import changePasswordReducer from "././changePassword/reducer";
+import employeeListCusstomer from "./sendbilltransacttion/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -86,7 +87,8 @@ const rootReducer = combineReducers({
   companyList,
   employeeList,
   searchCompany,
-  changePasswordReducer
+  changePasswordReducer,
+  employeeListCusstomer
 });
 
 export default rootReducer;

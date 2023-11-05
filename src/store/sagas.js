@@ -27,11 +27,13 @@ import companyListsaga from "./company/saga";
 import employeeListsaga from "./Employee/saga"
 import searchCompanysaga from "././auth/companySearch/saga"
 import changePasswordSaga from "./changePassword/saga"
+import employeeListsagaCustomer from "./sendbilltransacttion/saga"
 // import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {
   yield all([
     //public
+    fork(employeeListsagaCustomer),
     fork(AccountSaga),
     fork(changePasswordSaga),
     fork(employeeListsaga),

@@ -3,9 +3,11 @@ import * as Yup from "yup"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
-import Select, { components } from "react-select"
+import Select from "react-select"
 import { useFormik } from "formik"
 import "../send-bill-transaction/sendbilltransaction.scss"
+import { addCustomerlist } from "../../../../store/actions"
+import { useSelector, useDispatch } from "react-redux"
 import {
   Container,
   Row,
@@ -28,51 +30,52 @@ import {
   InputGroupAddon,
 } from "reactstrap"
 
-const validationSchema = Yup.object().shape({
-  customerName: Yup.string().required(
-    "Customer Name is required. Please filll the field"
-  ),
-  referenceNumber: Yup.string().required(
-    "Customer Name is required. Please filll the field"
-  ),
-  invoiceNumber: Yup.string().required(
-    "Invoice number  is required. Please filll the field"
-  ),
-  invoicebillDate: Yup.date().required(
-    "Invvoice date is requred choose from the datepicker"
-  ),
-  dueDate: Yup.date().required(
-    "Due Date is required choose from the datepicker"
-  ),
-  uploadOriginalBill: Yup.mixed().required("Original Bill is required"),
-  uploadPurchaseOrder: Yup.mixed().required("Purchase Order is required"),
-})
-
-const initialValues = {
-  customerName: "",
-  referenceNumber: "",
-  invoiceNumber: "",
-  invoicebillDate: null,
-  billDate: "",
-  billNumber: "",
-  billInvoiveCopy: "",
-  creditAmount: "",
-  precentage: "",
-  creditLimitDays: "",
-  remarks: "",
-  interestRate1: null,
-  uploadPurchaseOrder:"",
-  uploadchallanDispatchDocument:"",
-  uploadInvoice: "",
-  uploadTransportationDocumentDeliveryReceipt: "",
-}
-
 const SendBillTransaction = () => {
-  const [selectedOption, setSelectedOption] = useState(null)
+  const dispatch = useDispatch()
+  const [selectedOption, setSelectedOption] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [newCustomerName, setNewCustomerName] = useState("")
   const [customerType, setCustomerType] = useState("Business")
 
+  //////////////////////////////
+  const validationSchema = Yup.object().shape({
+    customerName: Yup.string().required(
+      "Customer Name is required. Please filll the field"
+    ),
+    referenceNumber: Yup.string().required(
+      "Customer Name is required. Please filll the field"
+    ),
+    invoiceNumber: Yup.string().required(
+      "Invoice number  is required. Please filll the field"
+    ),
+    invoicebillDate: Yup.date().required(
+      "Invvoice date is requred choose from the datepicker"
+    ),
+    dueDate: Yup.date().required(
+      "Due Date is required choose from the datepicker"
+    ),
+    uploadOriginalBill: Yup.mixed().required("Original Bill is required"),
+    uploadPurchaseOrder: Yup.mixed().required("Purchase Order is required"),
+  })
+
+  const initialValues = {
+    DebtorsID: "",
+    referenceNumber: "",
+    invoiceNumber: "",
+    invoicebillDate: null,
+    billDate: "",
+    billNumber: "",
+    billInvoiveCopy: "",
+    creditAmount: "",
+    precentage: "",
+    creditLimitDays: "",
+    remarks: "",
+    interestRate1: null,
+    uploadPurchaseOrder: "",
+    uploadchallanDispatchDocument: "",
+    uploadInvoice: "",
+    uploadTransportationDocumentDeliveryReceipt: "",
+  }
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -92,6 +95,14 @@ const SendBillTransaction = () => {
     { label: "David", value: "David" },
     { label: "Add Customer", value: "Add Customer", isAddCustomer: true },
   ])
+  const [salutations, setsalutations] = useState([
+    { label: "Mr.", value: "Mr." },
+    { label: "Mrs.", value: "Mrs." },
+    { label: "Miss", value: "Miss" },
+    { label: "Dr.", value: "Dr." },
+    { label: "Prof.", value: "Prof." },
+  ])
+
 
   const handleInputChange = inputValue => {
     // Handle input change here
@@ -210,14 +221,13 @@ const SendBillTransaction = () => {
     uploadchallanDispatchDocument: null,
     uploadInvoice: null,
     uploadTransportationDocumentDeliveryReceipt: null,
-  });
+  })
   const handleFileChange = (event, fieldName) => {
-    const files = event.target.files;
+    const files = event.target.files
     if (files.length > 0) {
-      setFileData({ ...fileData, [fieldName]: files[0] });
+      setFileData({ ...fileData, [fieldName]: files[0] })
     }
-  };
-
+  }
 
   //second Table
 
@@ -257,7 +267,6 @@ const SendBillTransaction = () => {
   const [sgst, setSGST] = useState("")
 
   const handleCGSTChange = e => {
-     
     const value = e.target.value
     if (/^\d*\.?\d*$/.test(value)) {
       if (
@@ -274,7 +283,6 @@ const SendBillTransaction = () => {
   }
 
   const handleSGSTChange = e => {
-     
     const value = e.target.value
     if (/^\d*\.?\d*$/.test(value)) {
       if (
@@ -331,11 +339,13 @@ const SendBillTransaction = () => {
   ///MODAL FUNCTION
   const formikModal = useFormik({
     initialValues: {
-      customerType: "",
-      // primaryContact: "",
-      firstname:"",
-      lastname:"",
-      salutation:"",
+      customerTypeIndividual: "",
+      customerTypeBusiness: "",
+      customerType: "Business",
+      primaryContact: "",
+      firstname: "",
+      lastname: "",
+      salutation: "",
       companyName: "",
       customerEmail: "",
       customerPhone: "",
@@ -343,7 +353,7 @@ const SendBillTransaction = () => {
       panCard: "",
       address1: "",
       address2: "",
-      city:"",
+      city: "",
       state: "",
       zipcode: "",
     },
@@ -369,11 +379,12 @@ const SendBillTransaction = () => {
       }
       if (!values.gstNumber) {
         errors.gstNumber = "GST Number is required"
-      } else if (
-        !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\w{1}\d{1}$/.test(values.gstNumber)
-      ) {
-        errors.gstNumber = "Invalid GST Number"
       }
+      //else if (
+      //   !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\w{1}\d{1}$/.test(values.gstNumber)
+      // ) {
+      //   errors.gstNumber = "Invalid GST Number"
+      // }
       if (!values.panCard) {
         errors.panCard = "PANCARD is required"
       } else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(values.panCard)) {
@@ -398,9 +409,61 @@ const SendBillTransaction = () => {
       // Handle form submission here
     },
   })
+  const handleFormSubmit = item => {
+    debugger
+    const payload = [
+      {
+        customerTypeIndividual: item.customerTypeIndividual,
+        customerTypeBusiness: item.customerTypeBusiness,
+        customerType: item.customerType,
+        primaryContact: item.primaryContact,
+        firstname: item.firstname,
+        lastname: item.lastname,
+        salutation: item.salutation,
+        companyName: item.companyName,
+        customerEmail: item.customerEmail,
+        customerPhone: item.customerPhone,
+        gstNumber: item.gstNumber,
+        panCard: item.panCard,
+        address1: item.address1,
+        address2: item.address2,
+        city: item.city,
+        state: item.state,
+        zipcode: item.zipcode,
+      },
+    ]
+    console.log("PAYLOAD", payload)
+    dispatch(addCustomerlist(payload))
+  }
 
-  const minDate = new Date()
-  minDate.setFullYear(minDate.getFullYear() - 3)
+  const handleFormSubmitSendBill = item => {
+    debugger
+    const payload = [
+      {
+        customerTypeIndividual: item.customerTypeIndividual,
+        customerTypeBusiness: item.customerTypeBusiness,
+        customerType: item.customerType,
+        primaryContact: item.primaryContact,
+        firstname: item.firstname,
+        lastname: item.lastname,
+        salutation: item.salutation,
+        companyName: item.companyName,
+        customerEmail: item.customerEmail,
+        customerPhone: item.customerPhone,
+        gstNumber: item.gstNumber,
+        panCard: item.panCard,
+        address1: item.address1,
+        address2: item.address2,
+        city: item.city,
+        state: item.state,
+        zipcode: item.zipcode,
+      },
+    ]
+    console.log("PAYLOAD", payload)
+    dispatch(addCustomerlist(payload))
+  }
+  // const minDate = new Date()
+  // minDate.setFullYear(minDate.getFullYear() - 3)
   return (
     <Container fluid className="mt-5 mb-5">
       <Row>
@@ -409,7 +472,7 @@ const SendBillTransaction = () => {
             <CardBody>
               <CardTitle className="h2 mb-4">Send Bill Transactions</CardTitle>
 
-              <form onSubmit={formik.handleSubmit}>
+              <form>
                 <Row className="custom-row">
                   <Col xs={12} md={2}>
                     <div className="mb-2">Customer Name*</div>
@@ -525,7 +588,7 @@ const SendBillTransaction = () => {
                         onBlur={() =>
                           formik.setFieldTouched("invoicebillDate", true)
                         }
-                        minDate={minDate} // Set the minimum datev
+                        //minDate={minDate} // Set the minimum datev
                       />
                     </InputGroup>
                     {/* <div className="mb-0 transactioin">
@@ -788,14 +851,16 @@ const SendBillTransaction = () => {
                           </div>
 
                           <InputGroup>
-                          <input
-                    type="file"
-                    className="form-control"
-                    id="uploadPurchaseOrder"
-                    accept=".pdf, .doc, .docx, .txt"
-                    aria-describedby="fileUploadHelp"
-                    onChange={(e) => handleFileChange(e, "uploadPurchaseOrder")}
-                  />
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="uploadPurchaseOrder"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(e, "uploadPurchaseOrder")
+                              }
+                            />
                           </InputGroup>
                           <div id="fileUploadHelp" className="form-text">
                             Choose a file to upload (PDF, DOC, DOCX, TXT).
@@ -807,14 +872,19 @@ const SendBillTransaction = () => {
                           </div>
 
                           <InputGroup>
-                          <input
-                    type="file"
-                    className="form-control"
-                    id="uploadchallanDispatchDocument"
-                    accept=".pdf, .doc, .docx, .txt"
-                    aria-describedby="fileUploadHelp"
-                    onChange={(e) => handleFileChange(e, "uploadchallanDispatchDocument")}
-                  />
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="uploadchallanDispatchDocument"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(
+                                  e,
+                                  "uploadchallanDispatchDocument"
+                                )
+                              }
+                            />
                           </InputGroup>
                           <div id="fileUploadHelp" className="form-text">
                             Choose a file to upload (PDF, DOC, DOCX, TXT).
@@ -834,14 +904,16 @@ const SendBillTransaction = () => {
                           </div>
 
                           <InputGroup>
-                          <input
-                    type="file"
-                    className="form-control"
-                    id="uploadInvoice"
-                    accept=".pdf, .doc, .docx, .txt"
-                    aria-describedby="fileUploadHelp"
-                    onChange={(e) => handleFileChange(e, "uploadInvoice")}
-                  />
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="uploadInvoice"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(e, "uploadInvoice")
+                              }
+                            />
                           </InputGroup>
                           <div id="fileUploadHelp" className="form-text">
                             Choose a file to upload (PDF, DOC, DOCX, TXT).
@@ -849,18 +921,24 @@ const SendBillTransaction = () => {
                         </Col>
                         <Col md={5} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                            Attach File(s) to Transportation Document / Delivery Receipt
+                            Attach File(s) to Transportation Document / Delivery
+                            Receipt
                           </div>
 
                           <InputGroup>
-                          <input
-                    type="file"
-                    className="form-control"
-                    id="uploadTransportationDocumentDeliveryReceipt"
-                    accept=".pdf, .doc, .docx, .txt"
-                    aria-describedby="fileUploadHelp"
-                    onChange={(e) => handleFileChange(e, "uploadTransportationDocumentDeliveryReceipt")}
-                  />
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="uploadTransportationDocumentDeliveryReceipt"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(
+                                  e,
+                                  "uploadTransportationDocumentDeliveryReceipt~`"
+                                )
+                              }
+                            />
                           </InputGroup>
                           <div id="fileUploadHelp" className="form-text">
                             Choose a file to upload (PDF, DOC, DOCX, TXT).
@@ -875,8 +953,8 @@ const SendBillTransaction = () => {
                   <Col xs={12} md={1}>
                     <div className="d-flex flex-column align-items-start mt-5 mb-5">
                       <button
-                        type="submit"
                         className="btn btn-primary w-md mt-5"
+                        onClick={() => handleFormSubmitSendBill(formik.values)}
                       >
                         Submit
                       </button>
@@ -910,7 +988,7 @@ const SendBillTransaction = () => {
                           <div className="form-check form-check-inline">
                             <Label
                               check
-                              inline
+                              // inline
                               className={
                                 formikModal.values.customerType === "Business"
                                   ? "selected"
@@ -923,11 +1001,8 @@ const SendBillTransaction = () => {
                                 id="customerTypeBusiness"
                                 name="customerType"
                                 value="Business"
-                                
                               />{" "}
-
                               Business
-                            
                             </Label>
                           </div>
                           <div>
@@ -945,7 +1020,6 @@ const SendBillTransaction = () => {
                                 id="customerTypeIndividual"
                                 name="customerType"
                                 value="Individual"
-                                
                               />{" "}
                               Individual
                             </Label>
@@ -964,24 +1038,24 @@ const SendBillTransaction = () => {
                         <Label for="customerType">Primary Contact*</Label>
                       </Col>
                       <Col xs={12} md={3}>
-                    <div className="d-inline">
-                      <label
-                        className="visually-hidden custom-content"
-                        htmlFor="customerSelect"
-                      >
-                        Select Customer
-                      </label>
-                      <Select
-                        id="customerSelect"
-                        className="custom-content"
-                        options={options}
-                        value={selectedOption}
-                        onChange={selected => setSelectedOption(selected)}
-                        onInputChange={handleInputChange}
-                        placeholder="Salutation"
-                      />
-                    </div>
-                  </Col>
+                        <div className="d-inline">
+                          <label
+                            className="visually-hidden custom-content"
+                            htmlFor="primaryContact"
+                          >
+                            Select Customer
+                          </label>
+                          <Select
+                            id="primaryContact"
+                            className="custom-content"
+                            options={salutations}
+                            value={selectedOption}
+                            onChange={selected => setSelectedOption(selected)}
+                            onInputChange={handleInputChange}
+                            placeholder="Salutation"
+                          />
+                        </div>
+                      </Col>
                       <Col xs={12} md={3}>
                         <FormGroup>
                           <Input
@@ -1074,7 +1148,7 @@ const SendBillTransaction = () => {
                         </FormGroup>
                       </Col>
                     </Row>
-                 
+
                     <Row>
                       <Col xs={12} md={2} className="mt-2">
                         <Label for="customerPhone">Customer Phone</Label>
@@ -1174,12 +1248,11 @@ const SendBillTransaction = () => {
                     </Row>
                     <Label for="address1">Address Details</Label>
                     <Row>
-                    <Col xs={12} md={2} className="mt-4">
-                    <Label for="address1">Address 1*</Label>
-                      </Col> 
+                      <Col xs={12} md={2} className="mt-4">
+                        <Label for="address1">Address 1*</Label>
+                      </Col>
                       <Col xs={12} md={6} className="mt-2">
                         <FormGroup>
-                  
                           <Input
                             type="textarea"
                             id="address1"
@@ -1197,13 +1270,12 @@ const SendBillTransaction = () => {
                             )}
                         </FormGroup>
                       </Col>
-                     
                     </Row>
                     <Row>
-                    <Col xs={12} md={2} className="mt-3"> 
-                    <Label for="address2">Address 2</Label>
-                      </Col> 
-                    <Col xs={12} md={6} className="mt-1">
+                      <Col xs={12} md={2} className="mt-3">
+                        <Label for="address2">Address 2</Label>
+                      </Col>
+                      <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
                           <Input
                             type="textarea"
@@ -1218,12 +1290,11 @@ const SendBillTransaction = () => {
                       </Col>
                     </Row>
                     <Row>
-                    <Col xs={12} md={2} className="mt-2">
-                    <Label for="cityState">State*</Label>
-                      </Col> 
+                      <Col xs={12} md={2} className="mt-2">
+                        <Label for="cityState">State*</Label>
+                      </Col>
                       <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
-                      
                           <Input
                             type="text"
                             id="city"
@@ -1241,15 +1312,13 @@ const SendBillTransaction = () => {
                             )}
                         </FormGroup>
                       </Col>
-                    
                     </Row>
                     <Row>
-                    <Col xs={12} md={2} className="mt-2">
-                    <Label for="cityState">City</Label>
-                      </Col> 
+                      <Col xs={12} md={2} className="mt-2">
+                        <Label for="cityState">City</Label>
+                      </Col>
                       <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
-                      
                           <Input
                             type="text"
                             id="state"
@@ -1267,15 +1336,13 @@ const SendBillTransaction = () => {
                             )}
                         </FormGroup>
                       </Col>
-                    
                     </Row>
                     <Row>
                       <Col xs={12} md={2} className="mt-2">
-                      <Label for="zipcode">Zipcode*</Label>
-                      </Col> 
-                    <Col xs={12} md={6} className="mt-1">
+                        <Label for="zipcode">Zipcode*</Label>
+                      </Col>
+                      <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
-                      
                           <Input
                             type="text"
                             id="zipcode"
@@ -1300,7 +1367,10 @@ const SendBillTransaction = () => {
                   <Button color="secondary" onClick={() => setShowModal(false)}>
                     Cancel
                   </Button>
-                  <Button color="success" onClick={handleConfirmApprove}>
+                  <Button
+                    color="success"
+                    onClick={() => handleFormSubmit(formikModal.values)}
+                  >
                     Submit
                   </Button>
                 </ModalFooter>

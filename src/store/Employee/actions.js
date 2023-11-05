@@ -27,6 +27,7 @@ import {
   
 
   export const addNewEmployeelist = (user) => {
+    debugger
     console.log("USER++",user)
     return {
       type: "ADD_NEW_EMPLOYEE",

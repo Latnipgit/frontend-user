@@ -48,7 +48,7 @@ export const GET_CART_DATA = "/cart";
 
 //CUSTOMERS
 export const GET_CUSTOMERS = "/customers";
-export const ADD_NEW_CUSTOMER = "/add/customer";
+// export const ADD_NEW_CUSTOMER = "/add/customer";
 export const UPDATE_CUSTOMER = "/update/customer";
 export const DELETE_CUSTOMER = "/delete/customer";
 
@@ -126,4 +126,6 @@ export const GET_EMPLOYEE = "/api/user/getAllEmployee";
 export const ADD_EMPLOYEE_LIST ="/api/user/addEmployee"
 export const ADD_NEW_COMPANY_API_STRING ="/api/companies/add"
 export const CHANGE_FIRST_PASSWORD ="/api/user/changePasswordUsingToken"
+export const ADD_CUSTOMER_LIST ="/api/debtors/add"
+
 

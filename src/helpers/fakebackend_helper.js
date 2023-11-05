@@ -97,6 +97,7 @@ export const changeFirstPass = (data) => post(url.CHANGE_FIRST_PASSWORD, data.pa
 // ADD company
 
 export const addEmployeeList = data => addEmployeeAPImethod(url.ADD_EMPLOYEE_LIST, data);
+export const addCustomerList = data => addCustomerPImethods(url.ADD_CUSTOMER_LIST, data);
 
 
 // Get employee
@@ -121,7 +122,7 @@ export const getCartData = () => get(url.GET_CART_DATA);
 export const getCustomers = () => get(url.GET_CUSTOMERS);
 
 // add CUSTOMER
-export const addNewCustomer = customer => post(url.ADD_NEW_CUSTOMER, customer);
+export const addNewCustomer = customer => post(url.ADD_CUSTOMER_LIST, customer);
 
 // update CUSTOMER
 export const updateCustomer = customer => put(url.UPDATE_CUSTOMER, customer);
