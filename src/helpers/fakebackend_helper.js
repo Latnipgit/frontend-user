@@ -106,6 +106,9 @@ export const addCustomerListAPI = data => addEmployeeAPImethod(url.ADD_CUSTOMER_
 export const getEmployeeList = data => addEmployeeAPImethod(url.GET_EMPLOYEE);
 
 
+//ADD invoice
+export const addInvoiceApi =data => addEmployeeAPImethod(url.ADD_INVOICE,data);
+
 // add order
 export const addNewOrder = order => post(url.ADD_NEW_ORDER, order);
 

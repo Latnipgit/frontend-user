@@ -23,6 +23,7 @@ export const SELECT_FOLDER = "/folders";
 export const GET_SELECTED_MAILS = "/selectedmails";
 export const SET_FOLDER_SELECTED_MAILS = "/setfolderonmail";
 export const UPDATE_MAIL = "/update/mail";
+export const ADD_INVOICE = "/api/transactions/create";
 
 //CALENDER
 export const GET_EVENTS = "/events";

@@ -3,12 +3,16 @@ import {
   GET_INVOICES_SUCCESS,
   GET_INVOICE_DETAIL_SUCCESS,
   GET_INVOICE_DETAIL_FAIL,
+  ADD_INVOICE,
+  ADD_INVOICE_FAIL,
+  ADD_INVOICE_SUCCESS
 } from "./actionTypes"
 
 const INIT_STATE = {
   invoices: [],
   invoiceDetail: {},
   error: {},
+  addInvoice:[]
 }
 
 const Invoices = (state = INIT_STATE, action) => {
@@ -37,6 +41,21 @@ const Invoices = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
+      case ADD_INVOICE:
+        return{
+          ...state,
+          addInvoice: action.payload
+        }
+        case ADD_INVOICE_SUCCESS:
+          return{
+            ...state,
+            addInvoice: action.payload
+          }
+          case ADD_INVOICE_FAIL:
+            return {
+              ...state,
+              error: action.payload,
+            }
 
     default:
       return state

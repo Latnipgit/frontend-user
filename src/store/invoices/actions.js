@@ -5,6 +5,10 @@ import {
   GET_INVOICE_DETAIL,
   GET_INVOICE_DETAIL_FAIL,
   GET_INVOICE_DETAIL_SUCCESS,
+  ADD_INVOICE,
+  ADD_INVOICE_SUCCESS,
+  ADD_INVOICE_FAIL
+
 } from "./actionTypes"
 
 export const getInvoices = () => ({
@@ -33,5 +37,22 @@ export const getInvoiceDetailSuccess = invoices => ({
 
 export const getInvoiceDetailFail = error => ({
   type: GET_INVOICE_DETAIL_FAIL,
+  payload: error,
+})
+
+
+
+export const addInvoiceBill = payload => ({
+  type: ADD_INVOICE,
+  payload: payload[0],
+})
+
+export const addInvoiceBillSuccess = invoices => ({
+  type: ADD_INVOICE_SUCCESSADD_INVOICE,
+  payload: invoices,
+})
+
+export const addInvoiceBillFail = error => ({
+  type: ADD_INVOICE_FAIL,
   payload: error,
 })

@@ -30,6 +30,7 @@ import {
   InputGroupAddon,
 } from "reactstrap"
 import { getAllDebtors as ongetAllDebtors}  from '../../../../store/actions'
+import { addInvoiceBill}  from '../../../../store/actions'
 import debtorslist from "pages/admin/DebtorsList/debtorslist"
 
 import * as moment from "moment";
@@ -41,6 +42,7 @@ const SendBillTransaction = () => {
   const [newCustomerName, setNewCustomerName] = useState("")
   const [customerType, setCustomerType] = useState("Business")
   const [DebtorsList, setDebtorsList] = useState([])
+  const [getDebtor, setgetDebtor] = useState([])
 
   const colourStyles = {
     menuList: styles => ({
@@ -53,7 +55,6 @@ const SendBillTransaction = () => {
   const { getAllDebtorsList } = useSelector(state => ({
     getAllDebtorsList: state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response:[],
    }));
-  console.log("getAllDebtorsList", getAllDebtorsList, DebtorsList)
 
   const validationSchema = Yup.object().shape({
     customerName: Yup.string().required(
@@ -98,10 +99,7 @@ const SendBillTransaction = () => {
     validationSchema,
     onSubmit: values => {
       // Handle form submission logic here
-      console.log(values)
-      console.log(values)
-      console.log("Original Bill File:", originalBillFile)
-      console.log("Purchase Order File:", purchaseOrderFile)
+    
     },
   })
 
@@ -135,7 +133,7 @@ const SendBillTransaction = () => {
   const handleCloseModal = () => {
     setShowModal(false)
   }
-
+console.log("selectedOption", selectedOption)
   //first table
   const [faqsRow, setFaqsRow] = useState(1)
   const [subtotal, setSubtotal] = useState(0)
@@ -192,7 +190,6 @@ const SendBillTransaction = () => {
     const newData = [...data]
     newData[index].itemDetail = value
     setData(newData)
-    console.log("datataaaaaaaa", data)
   }
 
   const handleQuantityChange = (index, value) => {
@@ -463,43 +460,42 @@ const SendBillTransaction = () => {
     },})
 
   const handleFormSubmitSendBill = item => {
-    console.log("ITITITITITITIITITIT", item)
     const dueDated = moment(new Date(item.dueDate)).format("DD-MM-YYYY")
     const inVoiceDated = moment(new Date(item.invoiceDate)).format("DD-MM-YYYY")
 
    
 
   const dummy=[  {
-      "debtorId": "",
-      "billDate": item.dueDate,
+      "debtorId": selectedOption.value,
+      "billDate": inVoiceDated,
       "billDescription": "bill Description Nit",
-      "billNumber": "",
+      "billNumber": "65456",
       "creditAmount": total,
-      "remainingAmount": "", 
-      "status": "",
-      "interestRate": "",
-      "creditLimitDays": "",
-      "remark": "",
+      "remainingAmount": "986", 
+      "status": "as",
+      "interestRate": "2",
+      "creditLimitDays": "20",
+      "remark": "asasas",
       "items": data,
       "subTotal": subtotal,
       "tax": cgst != ''? cgst :sgst,
-      "referenceNumber": "",
+      "referenceNumber": "654VF55",
       "invoiceNumber": item.invoiceNumber,
       "dueDate": dueDated,
-      "percentage": ""
+      "percentage": "5"
 
 }]
-    console.log("dummydummy", dummy)
-    // dispatch(addCustomerlist(payload))
+    dispatch(addInvoiceBill(dummy))
   }
 useEffect(()=>{
   dispatch(ongetAllDebtors());
-  setDebtorsList(getAllDebtorsList!= undefined ? getAllDebtorsList.map((item)=>{
+  setDebtorsList(getDebtor!= undefined && getDebtor.length != 0 ? getDebtor.map((item)=>{
     return {
-      "value": item.firstname+""+item.lastname , "label":  item.firstname+ ""+item.lastname
+      "value": item.id , "label":  item.firstname+" "+item.lastname
     }
   }):[])
-},[])
+  setgetDebtor(getAllDebtorsList!= undefined? getAllDebtorsList:[])
+},[getDebtor])
  return (
     <Container fluid className="mt-5 mb-5 text-capitalize">
       <Row>
@@ -1358,7 +1354,7 @@ useEffect(()=>{
                     </Row>
                     <Row>
                       <Col xs={12} md={2} className="mt-2">
-                        <Label for="cityState">State*</Label>
+                        <Label for="cityState">City*</Label>
                       </Col>
                       <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
@@ -1383,7 +1379,7 @@ useEffect(()=>{
                     </Row>
                     <Row>
                       <Col xs={12} md={2} className="mt-2">
-                        <Label for="cityState">City</Label>
+                        <Label for="cityState">State</Label>
                       </Col>
                       <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
