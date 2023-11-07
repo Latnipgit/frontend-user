@@ -34,10 +34,33 @@ export async function get(url, config = {}) {
     });
 }
 
+
+
+export async function getAfter(url, config = {}) {
+  const token = localStorage.getItem("tokenemployeeRegister")
+  const headers = {
+    ...config.headers,
+    'x-access-token': token != null ? token :'',
+  }; 
+
+  return await axiosApi
+    .get(url, { ...config,headers })
+    .then((response) => response.data)
+    .catch((error) => {
+      if (error.response) {
+        console.log("Server responded with an error:", error.response.status);
+      } else if (error.request) {
+        console.log("No response received from the server:", error.request);
+      }
+    });
+}
+
 export async function post(url, data, config = {}) {
    
-  console.log("UJUJU", JSON.parse(localStorage.getItem("authUser")))
+  // console.log("UJUJU", JSON.parse(localStorage.getItem("authUser")).token)
   const token = JSON.parse(localStorage.getItem("authUser"))!= null ? JSON.parse(localStorage.getItem("authUser")).token :'';
+  // console.log("HAHAHA", token)
+
   const headers = {
     ...config.headers,
     'x-access-token': token != null ? token :'',

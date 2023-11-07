@@ -15,6 +15,7 @@ export const POST_EDIT_PROFILE = "/post-fake-profile";
 //PRODUCTS
 export const GET_PRODUCTS = "/products";
 export const GET_PRODUCTS_DETAIL = "/product";
+export const GET_ALL_DEBTORS = "/api/debtors/getAllDebtorsByCompanyId";
 
 //Mails
 export const GET_MAILS_LIST = "/mailslists";

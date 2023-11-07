@@ -29,6 +29,10 @@ import {
   Label,
   InputGroupAddon,
 } from "reactstrap"
+import { getAllDebtors as ongetAllDebtors}  from '../../../../store/actions'
+import debtorslist from "pages/admin/DebtorsList/debtorslist"
+
+import * as moment from "moment";
 
 const SendBillTransaction = () => {
   const dispatch = useDispatch()
@@ -36,8 +40,21 @@ const SendBillTransaction = () => {
   const [showModal, setShowModal] = useState(false)
   const [newCustomerName, setNewCustomerName] = useState("")
   const [customerType, setCustomerType] = useState("Business")
+  const [DebtorsList, setDebtorsList] = useState([])
 
-  //////////////////////////////
+  const colourStyles = {
+    menuList: styles => ({
+        ...styles,
+        background: '#FFFFFF'
+    })
+ 
+  }
+ 
+  const { getAllDebtorsList } = useSelector(state => ({
+    getAllDebtorsList: state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response:[],
+   }));
+  console.log("getAllDebtorsList", getAllDebtorsList, DebtorsList)
+
   const validationSchema = Yup.object().shape({
     customerName: Yup.string().required(
       "Customer Name is required. Please filll the field"
@@ -88,13 +105,7 @@ const SendBillTransaction = () => {
     },
   })
 
-  const [options, setOptions] = useState([
-    { label: "Alice", value: "Alice" },
-    { label: "Bob", value: "Bob" },
-    { label: "Charlie", value: "Charlie" },
-    { label: "David", value: "David" },
-    { label: "Add Customer", value: "Add Customer", isAddCustomer: true },
-  ])
+  
   const [salutations, setsalutations] = useState([
     { label: "Mr.", value: "Mr." },
     { label: "Mrs.", value: "Mrs." },
@@ -181,6 +192,7 @@ const SendBillTransaction = () => {
     const newData = [...data]
     newData[index].itemDetail = value
     setData(newData)
+    console.log("datataaaaaaaa", data)
   }
 
   const handleQuantityChange = (index, value) => {
@@ -300,22 +312,18 @@ const SendBillTransaction = () => {
   }
 
   const handleAddittionalChange = e => {
-    const value = e.target.value
-    if (value.length === 0) {
+    const value = parseFloat(e.target.value)
+    if (value.length == 0) {
       setAdjustmentsValue(0)
-    } else if (/^\d+(\.\d{0,2})?$/.test(value)) {
-      if (
-        value === "" ||
-        (parseFloat(value) >= 0 && parseFloat(value) <= 100)
-      ) {
-        const numericValue = parseFloat(value)
-        if (numericValue >= 0 && numericValue <= 100) {
-          setAdjustmentsValue(value)
-          setTotal(total + value)
-        }
-      }
+    } else {
+      
+        setAdjustmentsValue(value)
+      
+        setTotal(total+value)
+        
     }
-  }
+    }
+  
 
   const handleDiscountChange = e => {
     const value = e.target.value
@@ -357,6 +365,8 @@ const SendBillTransaction = () => {
       state: "",
       zipcode: "",
     },
+
+   
     validate: values => {
       const errors = {}
 
@@ -410,62 +420,88 @@ const SendBillTransaction = () => {
     },
   })
   const handleFormSubmit = item => {
-    debugger
-    const payload = [
+    
+   
+    const dummy =[
       {
-        customerTypeIndividual: item.customerTypeIndividual,
-        customerTypeBusiness: item.customerTypeBusiness,
-        customerType: item.customerType,
-        primaryContact: item.primaryContact,
-        firstname: item.firstname,
-        lastname: item.lastname,
-        salutation: item.salutation,
-        companyName: item.companyName,
-        customerEmail: item.customerEmail,
-        customerPhone: item.customerPhone,
-        gstNumber: item.gstNumber,
-        panCard: item.panCard,
-        address1: item.address1,
-        address2: item.address2,
-        city: item.city,
-        state: item.state,
-        zipcode: item.zipcode,
-      },
+        "debtorType": item.customerType,
+        "salutation":selectedOption.value,
+        "firstname": item.firstname,
+        "lastname": item.lastname,
+        "customerEmail": item.customerEmail,
+        "customerMobile": item.customerPhone,
+        "address1": item.address1,
+        "address2": item.address2,
+        "city": item.city,
+        "state": item.state,
+        "zipcode": item.zipcode,
+        "gstin": item.gstNumber,
+        "companyPan": item.panCard,
+        "companyName": item.companyName
+  }
     ]
-    console.log("PAYLOAD", payload)
-    dispatch(addCustomerlist(payload))
+    dispatch(addCustomerlist(dummy))
   }
 
+  const formikSendBill = useFormik({
+    initialValues: {
+    customerName:"",
+    RefrenceNumber:"",
+    invoiceNumber:"",
+    invoiceDate:"",
+    dueDate:"",
+    itemDetail:[],
+    subtotal:"",
+    tax:"",
+    discount:"",
+    adjustment:"",
+    grandTotal:"",
+    puchaseOrderFile:"",
+    challanfile:"",
+    invoiceFile:"",
+    TransportFile:""
+    },})
+
   const handleFormSubmitSendBill = item => {
-    debugger
-    const payload = [
-      {
-        customerTypeIndividual: item.customerTypeIndividual,
-        customerTypeBusiness: item.customerTypeBusiness,
-        customerType: item.customerType,
-        primaryContact: item.primaryContact,
-        firstname: item.firstname,
-        lastname: item.lastname,
-        salutation: item.salutation,
-        companyName: item.companyName,
-        customerEmail: item.customerEmail,
-        customerPhone: item.customerPhone,
-        gstNumber: item.gstNumber,
-        panCard: item.panCard,
-        address1: item.address1,
-        address2: item.address2,
-        city: item.city,
-        state: item.state,
-        zipcode: item.zipcode,
-      },
-    ]
-    console.log("PAYLOAD", payload)
-    dispatch(addCustomerlist(payload))
+    console.log("ITITITITITITIITITIT", item)
+    const dueDated = moment(new Date(item.dueDate)).format("DD-MM-YYYY")
+    const inVoiceDated = moment(new Date(item.invoiceDate)).format("DD-MM-YYYY")
+
+   
+
+  const dummy=[  {
+      "debtorId": "",
+      "billDate": item.dueDate,
+      "billDescription": "bill Description Nit",
+      "billNumber": "",
+      "creditAmount": total,
+      "remainingAmount": "", 
+      "status": "",
+      "interestRate": "",
+      "creditLimitDays": "",
+      "remark": "",
+      "items": data,
+      "subTotal": subtotal,
+      "tax": cgst != ''? cgst :sgst,
+      "referenceNumber": "",
+      "invoiceNumber": item.invoiceNumber,
+      "dueDate": dueDated,
+      "percentage": ""
+
+}]
+    console.log("dummydummy", dummy)
+    // dispatch(addCustomerlist(payload))
   }
-  // const minDate = new Date()
-  // minDate.setFullYear(minDate.getFullYear() - 3)
-  return (
-    <Container fluid className="mt-5 mb-5">
+useEffect(()=>{
+  dispatch(ongetAllDebtors());
+  setDebtorsList(getAllDebtorsList!= undefined ? getAllDebtorsList.map((item)=>{
+    return {
+      "value": item.firstname+""+item.lastname , "label":  item.firstname+ ""+item.lastname
+    }
+  }):[])
+},[])
+ return (
+    <Container fluid className="mt-5 mb-5 text-capitalize">
       <Row>
         <Col lg={12}>
           <Card className="mt-5">
@@ -488,7 +524,7 @@ const SendBillTransaction = () => {
                       <Select
                         id="customerSelect"
                         className="custom-content"
-                        options={options}
+                        options={DebtorsList}
                         value={selectedOption}
                         onChange={selected => setSelectedOption(selected)}
                         onInputChange={handleInputChange}
@@ -532,8 +568,9 @@ const SendBillTransaction = () => {
                         type="text"
                         className={`form-control custom-content mt-2`}
                         id="referenceNumber"
+                        disabled
                         name="referenceNumber"
-                        placeholder="Enter reference number"
+                        placeholder="Enter Reference number"
                         value={formik.values.referenceNumber}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -546,6 +583,7 @@ const SendBillTransaction = () => {
                     )}
                   </Col>
                 </Row>
+
                 <Row className="mt-2">
                   <Col xs={12} md={2}>
                     <div className="mb-2 mt-3">Invoice number*</div>
@@ -553,24 +591,27 @@ const SendBillTransaction = () => {
                   <Col xs={12} md={4}>
                     <InputGroup>
                       <Input
-                        type="text"
+                        type="number"
                         className={`form-control custom-content mt-2`}
                         id="invoiceNumber"
                         name="invoiceNumber"
-                        placeholder="Enter invoice number"
-                        value={formik.values.invoiceNumber}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                        placeholder="Enter Invoice number"
+                        // value={formikSendBill.values.invoiceNumber}
+                        onChange={number =>
+                          formikSendBill.setFieldValue("invoiceNumber", number.target.value)
+                        }
+                        // onBlur={formik.handleBlur}
                       />
                     </InputGroup>
                     {formik.touched.invoiceNumber &&
                       formik.errors.invoiceNumber && (
                         <div className="text-danger mt-2">
-                          {formik.errors.invoiceNumber}
+                          {formikSendBill.errors.invoiceNumber}
                         </div>
                       )}
                   </Col>
                 </Row>
+
                 <Row className="mt-3">
                   <Col xs={12} md={2}>
                     <div className="mb-2 mt-3">Invoice Date</div>
@@ -578,15 +619,15 @@ const SendBillTransaction = () => {
                   <Col xs={12} md={2}>
                     <InputGroup>
                       <DatePicker
-                        selected={formik.values.invoicebillDate || new Date()}
+                        selected={formikSendBill.values.invoiceDate || new Date()}
                         onChange={date =>
-                          formik.setFieldValue("invoicebillDate", date)
+                          formikSendBill.setFieldValue("invoiceDate", date)
                         }
-                        dateFormat="dd-mm-yyyy" // Format to display year, month, and day
+                        dateFormat="dd-MMM-yyyy" // Format to display year, month, and day
                         id="invoicebillDate"
                         className="form-control custom-content mt-2"
                         onBlur={() =>
-                          formik.setFieldTouched("invoicebillDate", true)
+                          formikSendBill.setFieldTouched("invoiceDate", true)
                         }
                         //minDate={minDate} // Set the minimum datev
                       />
@@ -601,15 +642,15 @@ const SendBillTransaction = () => {
                   <Col xs={12} md={2}>
                     <InputGroup>
                       <DatePicker
-                        selected={formik.values.billDate || new Date()}
+                        selected={formikSendBill.values.dueDate || new Date()}
                         onChange={date =>
-                          formik.setFieldValue("billDate", date)
+                          formikSendBill.setFieldValue("dueDate", date)
                         }
-                        dateFormat="dd-mm-yyyy"
+                        dateFormat="dd-MMM-yyyy" // Format to display year, month, and day
                         id="billDate"
                         className={`form-control custom-content mt-5`}
                         placeholderText="dd-mm-yyyy"
-                        onBlur={() => formik.setFieldTouched("billDate", true)}
+                        onBlur={() => formikSendBill.setFieldTouched("dueDate", true)}
                       />
                     </InputGroup>
                   </Col>
@@ -639,7 +680,7 @@ const SendBillTransaction = () => {
                               <textarea
                                 type="text"
                                 className="form-control"
-                                placeholder="Enter item detail"
+                                placeholder="Enter Item Detail"
                                 value={row.itemDetail}
                                 onChange={e =>
                                   handleItemDetailChange(index, e.target.value)
@@ -733,7 +774,7 @@ const SendBillTransaction = () => {
                                   <Col xs="5">
                                     <FormGroup>
                                       <Input
-                                        type="text"
+                                        type="number"
                                         id="cgstInput"
                                         placeholder="Enter CGST"
                                         value={cgst}
@@ -754,7 +795,7 @@ const SendBillTransaction = () => {
                                   <Col xs="5">
                                     <FormGroup>
                                       <Input
-                                        type="text"
+                                        type="number"
                                         id="sgstInput"
                                         placeholder="Enter SGST"
                                         value={sgst}
@@ -778,7 +819,7 @@ const SendBillTransaction = () => {
                                   <Col xs="5">
                                     <FormGroup>
                                       <Input
-                                        type="text"
+                                        type="number"
                                         placeholder="Enter Discount"
                                         value={discountValue}
                                         onChange={handleDiscountChange}
@@ -800,7 +841,7 @@ const SendBillTransaction = () => {
                                   <Col xs="5">
                                     <FormGroup>
                                       <Input
-                                        type="text"
+                                        type="number "
                                         placeholder="Enter More Adjustments"
                                         value={adjustmentsValue}
                                         onChange={handleAddittionalChange}
@@ -829,7 +870,7 @@ const SendBillTransaction = () => {
                                   <Col xs="5"></Col>
                                   <Col xs="3">
                                     <h5 className="font-size-15 mt-2 mr-5 font-weight-bold">
-                                      ₹{total.toFixed(2)}
+                                      ₹{total.toFixed()}
                                     </h5>
                                   </Col>
                                 </Row>
@@ -847,10 +888,10 @@ const SendBillTransaction = () => {
                       <CardBody className="pt-0">
                         <Col md={4} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                            Attach File(s) to Purchase Order
+                        Upload File to Purchase Order
                           </div>
 
-                          <InputGroup>
+                          <InputGroup className="text-capitalize">
                             <input
                               type="file"
                               className="form-control"
@@ -868,7 +909,7 @@ const SendBillTransaction = () => {
                         </Col>
                         <Col md={5} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                            Attach File(s) to challan / Dispatch Document
+                          Upload File to challan / Dispatch Document
                           </div>
 
                           <InputGroup>
@@ -900,7 +941,7 @@ const SendBillTransaction = () => {
                       <CardBody className="pt-0">
                         <Col md={4} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                            Attach File(s) to Invoice
+                          Upload File to Invoice
                           </div>
 
                           <InputGroup>
@@ -921,7 +962,7 @@ const SendBillTransaction = () => {
                         </Col>
                         <Col md={5} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                            Attach File(s) to Transportation Document / Delivery
+                          Upload File to Transportation Document / Delivery
                             Receipt
                           </div>
 
@@ -948,13 +989,13 @@ const SendBillTransaction = () => {
                     </Card>
                   </Col>
                 </Row>
-
+                </form>
                 <Row>
                   <Col xs={12} md={1}>
                     <div className="d-flex flex-column align-items-start mt-5 mb-5">
                       <button
-                        className="btn btn-primary w-md mt-5"
-                        onClick={() => handleFormSubmitSendBill(formik.values)}
+                        className="btn btn-primary mt-5"
+                        onClick={() => handleFormSubmitSendBill(formikSendBill.values)}
                       >
                         Submit
                       </button>
@@ -972,7 +1013,7 @@ const SendBillTransaction = () => {
                     </div>
                   </Col>
                 </Row>
-              </form>
+             
               <Modal isOpen={showModal} toggle={() => setShowModal(false)}>
                 <ModalHeader toggle={() => setShowModal(false)}>
                   Add New Customer{" "}
@@ -1001,25 +1042,36 @@ const SendBillTransaction = () => {
                                 id="customerTypeBusiness"
                                 name="customerType"
                                 value="Business"
+                                onChange={()=>[
+                                  formikModal.values.customerType === "Business"
+                                  ? "selected"
+                                  : ""
+                                 ]}
                               />{" "}
                               Business
                             </Label>
                           </div>
                           <div>
                             <Label
-                              check
+                              // check
                               inline
                               className={
                                 formikModal.values.customerType === "Individual"
                                   ? "selected"
                                   : ""
                               }
+                            
                             >
                               <Input
                                 type="radio"
                                 id="customerTypeIndividual"
                                 name="customerType"
                                 value="Individual"
+                                onChange={()=>[
+                                  formikModal.values.customerType === "Individual"
+                                  ? "selected"
+                                  : ""
+                                 ]}
                               />{" "}
                               Individual
                             </Label>
@@ -1049,6 +1101,7 @@ const SendBillTransaction = () => {
                             id="primaryContact"
                             className="custom-content"
                             options={salutations}
+                            styles={colourStyles}
                             value={selectedOption}
                             onChange={selected => setSelectedOption(selected)}
                             onInputChange={handleInputChange}
@@ -1062,6 +1115,7 @@ const SendBillTransaction = () => {
                             type="text"
                             id="firstname"
                             name="firstname"
+                            className="text-capitalize"
                             value={formikModal.values.firstname}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
@@ -1083,6 +1137,8 @@ const SendBillTransaction = () => {
                             name="lastname"
                             value={formikModal.values.lastname}
                             onChange={formikModal.handleChange}
+                            className="text-capitalize"
+
                             onBlur={formikModal.handleBlur}
                             placeholder="Last Name"
                           />
@@ -1111,6 +1167,8 @@ const SendBillTransaction = () => {
                             id="companyName"
                             name="companyName"
                             value={formikModal.values.companyName}
+                            className="text-capitalize"
+
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
                             placeholder="Enter Company Name"
@@ -1135,9 +1193,10 @@ const SendBillTransaction = () => {
                             id="customerEmail"
                             name="customerEmail"
                             value={formikModal.values.customerEmail}
+                            
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
-                            placeholder="Custtomer Email"
+                            placeholder="Customer Email"
                           />
                           {formikModal.touched.customerEmail &&
                             formikModal.errors.customerEmail && (
@@ -1156,7 +1215,7 @@ const SendBillTransaction = () => {
                       <Col xs={12} md={3}>
                         <FormGroup>
                           <Input
-                            type="text"
+                            type="number"
                             id="customerPhone"
                             name="customerPhone"
                             value={formikModal.values.customerPhone}
@@ -1202,17 +1261,19 @@ const SendBillTransaction = () => {
                             type="text"
                             id="panCard"
                             name="panCard"
+                            className="text-uppercase"
+
                             value={formikModal.values.panCard}
                             onChange={formikModal.handleChange}
-                            onBlur={formikModal.handleBlur}
+                            // onBlur={formikModal.handleBlur}
                             placeholder="Enter Pan Number"
                           />
-                          {formikModal.touched.panCard &&
+                          {/* {formikModal.touched.panCard &&
                             formikModal.errors.panCard && (
                               <div className="text-danger">
                                 {formikModal.errors.panCard}
                               </div>
-                            )}
+                            )} */}
                         </FormGroup>
                       </Col>
                     </Row>
@@ -1226,6 +1287,8 @@ const SendBillTransaction = () => {
                             type="text"
                             id="gstNumber"
                             name="gstNumber"
+                            className="text-uppercase"
+
                             value={formikModal.values.gstNumber}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
@@ -1257,6 +1320,8 @@ const SendBillTransaction = () => {
                             type="textarea"
                             id="address1"
                             name="address1"
+                            className="text-capitalize"
+
                             value={formikModal.values.address1}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
@@ -1281,6 +1346,8 @@ const SendBillTransaction = () => {
                             type="textarea"
                             id="address2"
                             name="address2"
+                            className="text-capitalize"
+
                             value={formikModal.values.address2}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
@@ -1299,6 +1366,7 @@ const SendBillTransaction = () => {
                             type="text"
                             id="city"
                             name="city"
+                            className="text-capitalize"
                             value={formikModal.values.city}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
@@ -1323,6 +1391,8 @@ const SendBillTransaction = () => {
                             type="text"
                             id="state"
                             name="state"
+                            className="text-capitalize"
+
                             value={formikModal.values.state}
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
@@ -1344,7 +1414,7 @@ const SendBillTransaction = () => {
                       <Col xs={12} md={6} className="mt-1">
                         <FormGroup>
                           <Input
-                            type="text"
+                            type="number"
                             id="zipcode"
                             name="zipcode"
                             value={formikModal.values.zipcode}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { del, get, post, put, addEmployeeAPImethod, forgetPasswordAPI } from "./api_helper";
+import { del, get, post, put, addEmployeeAPImethod,getAfter, forgetPasswordAPI } from "./api_helper";
 import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
@@ -45,6 +45,7 @@ export const postSocialLogin = data => post(url.SOCIAL_LOGIN, data);
 
 // get Products
 export const getProducts = () => get(url.GET_PRODUCTS);
+export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
 
 // get Product detail
 export const getProductDetail = id =>
@@ -97,7 +98,7 @@ export const changeFirstPass = (data) => post(url.CHANGE_FIRST_PASSWORD, data.pa
 // ADD company
 
 export const addEmployeeList = data => addEmployeeAPImethod(url.ADD_EMPLOYEE_LIST, data);
-export const addCustomerList = data => addCustomerPImethods(url.ADD_CUSTOMER_LIST, data);
+export const addCustomerListAPI = data => addEmployeeAPImethod(url.ADD_CUSTOMER_LIST, data);
 
 
 // Get employee

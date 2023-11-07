@@ -289,6 +289,8 @@
 
   .custom-content{
     border-radius: 14px;
+    background-color: #023950;
+    
   }
   .custom-content:hover {
     border: 1px solid #408dfb; /* Define your border style here */
@@ -552,4 +554,14 @@ margin-top: 2px;
 
 .mt-2.row .col-12.col-md-8 .mb-3 {
   display: flex;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
