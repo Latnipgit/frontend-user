@@ -7,7 +7,10 @@ import {
   GET_INVOICE_DETAIL_SUCCESS,
   ADD_INVOICE,
   ADD_INVOICE_SUCCESS,
-  ADD_INVOICE_FAIL
+  ADD_INVOICE_FAIL,
+  ADD_FILES,
+  ADD_FILES_SUCCESS,
+  ADD_FILES_FAIL
 
 } from "./actionTypes"
 
@@ -54,5 +57,20 @@ export const addInvoiceBillSuccess = invoices => ({
 
 export const addInvoiceBillFail = error => ({
   type: ADD_INVOICE_FAIL,
+  payload: error,
+})
+
+export const addFiles = payload => ({
+  type: ADD_FILES,
+  payload: payload[0],
+})
+
+export const addFilesSuccess = invoices => ({
+  type: ADD_FILES_SUCCESS,
+  payload: invoices,
+})
+
+export const addFilesFail = error => ({
+  type: ADD_FILES_FAIL,
   payload: error,
 })

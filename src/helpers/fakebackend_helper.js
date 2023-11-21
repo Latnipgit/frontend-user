@@ -22,6 +22,7 @@ export const searchCompanyAPI = data => post("/api/companies/selectCompany", dat
 // Login Method
 const postFakeLogin = data => post(url.POST_FAKE_LOGIN, data);
 export const forgetPassword = data => forgetPasswordAPI(url.PASSWORD_FORGET, data);
+export const addFilesApiMethod = data => addEmployeeAPImethod("/api/files/upload", data);
 
 // postForgetPwd
 const postFakeForgetPwd = data => post(url.POST_FAKE_PASSWORD_FORGET, data);
@@ -47,6 +48,7 @@ export const postSocialLogin = data => post(url.SOCIAL_LOGIN, data);
 export const getProducts = () => get(url.GET_PRODUCTS);
 export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
 
+export const getAllInvoiceList =()=>getAfter("/api/transactions/getAllInvoicesRaisedByMe")
 // get Product detail
 export const getProductDetail = id =>
   get(`${url.GET_PRODUCTS_DETAIL}/${id}`, { params: { id } });

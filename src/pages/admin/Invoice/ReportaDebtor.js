@@ -10,6 +10,7 @@ import Select, { components } from "react-select"
 // import "../send-bill-transaction/sendbilltransaction.scss"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 import ReportedDebtorsModel from "./ReportedModel"
+import ReportedDefaulterModel from './ReportDefaulterModel'
 import {
   Container,
   Row,
@@ -33,6 +34,7 @@ import {
 import TableContainer from "../../../components/Common/TableContainer";
 import { getInvoices as ongetInvoices}  from '../../../store/actions'
 import { useDispatch ,useSelector } from "react-redux";
+import { success } from "toastr"
 // import { invoiceList } from "common/data"
 
   //Creditors
@@ -40,7 +42,9 @@ import { useDispatch ,useSelector } from "react-redux";
  
   const ReportDebtor = props => {
     const [modal1, setModal1] = useState(false);
+    const [modal2, setModal2] = useState(false);
     const toggleViewModal = () => setModal1(!modal1);
+    const toggleViewModal1 = () => setModal2(!modal2);
 
     const getInvoiceList  = useSelector(state => 
       console.log("getInvoiceList", state.invoices.invoiceDetail
@@ -54,11 +58,11 @@ import { useDispatch ,useSelector } from "react-redux";
       dispatch(ongetInvoices());
     },[getInvoiceList])
     const sampleDataCreditors = [
-      { "Refnumber": "#BF-001", "invoiveno":"BAF-9696" ,"Buyer": "Rohan", "Amount": "8000", "DueFrom": "20 january 2022" , "status":"Pending"},
-      { "Refnumber": "#BF-002", "invoiveno":"BAF-9699" ,"Buyer": "harshit", "Amount": "15000", "DueFrom": "12 march 2022" , "status":"Complete"},
-      { "Refnumber": "#BF-003", "invoiveno":"BAF-9698" ,"Buyer": "akshay", "Amount": "8500", "DueFrom": "21 july 2022" , "status":"Pending"},
-      { "Refnumber": "#BF-004", "invoiveno": "BAF-9689" ,"Buyer": "ram", "Amount": "9400", "DueFrom": "20 january 2022" , "status":"Complete"},
-      { "Refnumber": "#BF-005", "invoiveno": "BAF-9690","Buyer": "shyan", "Amount": "9900", "DueFrom": "20 january 2022" , "status":"Pending"},
+      { "Refnumber": "#BF-001", "invoiveno":"BAF-9696" ,"Buyer": "Rohan", "Days":"120 Days","Amount": "8000", "DueFrom": "20 january 2022" , "status":"Pending"},
+      { "Refnumber": "#BF-002", "invoiveno":"BAF-9699" ,"Buyer": "harshit","Days":"130 Days", "Amount": "15000", "DueFrom": "12 march 2022" , "status":"Complete"},
+      { "Refnumber": "#BF-003", "invoiveno":"BAF-9698" ,"Buyer": "akshay", "Days":"120 Days","Amount": "8500", "DueFrom": "21 july 2022" , "status":"Pending"},
+      { "Refnumber": "#BF-004", "invoiveno": "BAF-9689" ,"Buyer": "ram", "Days":"90 Days","Amount": "9400", "DueFrom": "20 january 2022" , "status":"Complete"},
+      { "Refnumber": "#BF-005", "invoiveno": "BAF-9690","Buyer": "shyan","Days":"170 Days", "Amount": "9900", "DueFrom": "20 january 2022" , "status":"Pending"},
   
     ];
     const columns = useMemo(
@@ -95,28 +99,41 @@ import { useDispatch ,useSelector } from "react-redux";
         },
         {
           Header: "Due Amount",
-          accessor: "DueFrom",
-          disableFilters: true,
-          filterable: false,
-       
-        },
-        {
-          Header: "Due From",
           accessor: "Amount",
           disableFilters: true,
           filterable: false,
        
         },
+        {
+          Header: 'Due From',
+          disableFilters: true,
+          filterable: false,
+          accessor: (row) => {
+            console.log("YUHYUH",row)
+          },
+          Cell: cellProps => {
+            return (
+<div className="">
+  <div className=" text-center bg-success rounded text-light">
+  <div className="text-capitalize">{cellProps.row.original.Days}</div>
+  <div className="text-capitalize" >{cellProps.row.original.DueFrom}</div>
+  </div>
+</div>
+            )}
+        },
+
        
         {
-          Header: "status",
+          Header: "Action",
           accessor: "status",
           disableFilters: true,
           filterable: false,
           Cell: cellProps => {
             return (
 <div>
-  {cellProps.row.original.status == 'Complete'? <span className="text-success">{cellProps.row.original.status}</span>:<span className="text-danger">{cellProps.row.original.status}</span>}
+  <Button className="btn btn-sm btn-info"
+  onClick={toggleViewModal1}
+  >Report a Defaulter</Button>
 </div>
             )}
         },
@@ -131,6 +148,7 @@ import { useDispatch ,useSelector } from "react-redux";
   return (
     <React.Fragment>
             <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/>
+            <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} />
 
       <Card>
         <CardBody>

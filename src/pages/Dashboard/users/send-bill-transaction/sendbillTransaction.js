@@ -31,11 +31,14 @@ import {
 } from "reactstrap"
 import { getAllDebtors as ongetAllDebtors}  from '../../../../store/actions'
 import { addInvoiceBill}  from '../../../../store/actions'
+import { addFiles}  from '../../../../store/actions'
+import axios from "axios";
+
 import debtorslist from "pages/admin/DebtorsList/debtorslist"
 
 import * as moment from "moment";
 
-const SendBillTransaction = () => {
+const SendBillTransaction = (props) => {
   const dispatch = useDispatch()
   const [selectedOption, setSelectedOption] = useState("")
   const [showModal, setShowModal] = useState(false)
@@ -43,6 +46,9 @@ const SendBillTransaction = () => {
   const [customerType, setCustomerType] = useState("Business")
   const [DebtorsList, setDebtorsList] = useState([])
   const [getDebtor, setgetDebtor] = useState([])
+  // const [isDebtorExists, setisDebtorExists] = useState("false")
+  const { isDebtorExists  } = props
+
 
   const colourStyles = {
     menuList: styles => ({
@@ -103,7 +109,7 @@ const SendBillTransaction = () => {
     },
   })
 
-  
+  console.log("propsddd", props)
   const [salutations, setsalutations] = useState([
     { label: "Mr.", value: "Mr." },
     { label: "Mrs.", value: "Mrs." },
@@ -233,9 +239,27 @@ console.log("selectedOption", selectedOption)
   })
   const handleFileChange = (event, fieldName) => {
     const files = event.target.files
+    console.log("FILEEE", event.target.files,fieldName)
     if (files.length > 0) {
       setFileData({ ...fileData, [fieldName]: files[0] })
     }
+    const formData = new FormData();
+   
+    formData.append("file", files[0], fieldName);
+    // const payload =[
+    //   {
+    //     "file": files[0],
+    //     "fieldName":fieldName
+    //   }
+    // ]
+    console.log("payloaddddddd",formData)
+    // const token = localStorage.getItem("tokenemployeeRegister")
+    // const headers = {
+    //   'x-access-token': token != null ? token :'',
+    // }; 
+    // axios.post("/api/files/upload", formData,headers);
+    // dispatch(addFiles(payload))
+
   }
 
   //second Table
@@ -486,6 +510,7 @@ console.log("selectedOption", selectedOption)
 
 }]
     dispatch(addInvoiceBill(dummy))
+
   }
 useEffect(()=>{
   dispatch(ongetAllDebtors());
@@ -495,15 +520,25 @@ useEffect(()=>{
     }
   }):[])
   setgetDebtor(getAllDebtorsList!= undefined? getAllDebtorsList:[])
-},[getDebtor])
+},[])
  return (
     <Container fluid className="mt-5 mb-5 text-capitalize">
       <Row>
         <Col lg={12}>
           <Card className="mt-5">
             <CardBody>
-              <CardTitle className="h2 mb-4">Send Bill Transactions</CardTitle>
+              <CardTitle className="h2 mb-4">
+                 <Row>
+                   <Col md={10}>
+                     <h5>Invoice</h5>
+                   </Col>
+                   <Col md={2} className="text-end">
+                   <Button className="btn btn-sm btn-info" onClick={()=>window.location.reload()}> View Invoice List</Button>
 
+                   </Col>
+        </Row> 
+
+               </CardTitle>
               <form>
                 <Row className="custom-row">
                   <Col xs={12} md={2}>
