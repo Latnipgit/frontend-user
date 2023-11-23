@@ -243,12 +243,12 @@ const SidebarContent = props => {
                   </Link>
                 </li>
 
-                <li>
+                {/* <li>
                   <Link to="/send-bill-transaction">
                     <i className="bx bx-send" style={{ paddingLeft:'15px'}}></i>
                     {props.t("Send Bill Transaction")}
                   </Link>
-                </li>
+                </li> */}
 </>
 :''
                 }

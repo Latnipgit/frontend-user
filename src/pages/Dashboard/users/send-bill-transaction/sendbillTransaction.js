@@ -33,6 +33,7 @@ import { getAllDebtors as ongetAllDebtors}  from '../../../../store/actions'
 import { addInvoiceBill}  from '../../../../store/actions'
 import { addFiles}  from '../../../../store/actions'
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 
 import debtorslist from "pages/admin/DebtorsList/debtorslist"
 
@@ -46,8 +47,7 @@ const SendBillTransaction = (props) => {
   const [customerType, setCustomerType] = useState("Business")
   const [DebtorsList, setDebtorsList] = useState([])
   const [getDebtor, setgetDebtor] = useState([])
-  // const [isDebtorExists, setisDebtorExists] = useState("false")
-  const { isDebtorExists  } = props
+
 
 
   const colourStyles = {
@@ -57,7 +57,7 @@ const SendBillTransaction = (props) => {
     })
  
   }
- 
+ console.log("getDebtor",getDebtor)
   const { getAllDebtorsList } = useSelector(state => ({
     getAllDebtorsList: state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response:[],
    }));
@@ -151,7 +151,10 @@ console.log("selectedOption", selectedOption)
       amount: "",
     },
   ])
-
+const [uploadInvoiceid,setuploadInvoiceId] = useState("")
+const [uploadpurchaseId,setuploadpurchaseId] = useState("")
+const [uploadChallanId,setuploadChallanId] = useState("")
+const [uploadTransportId,setuploadTransportId] = useState("")
   const [validationMessage, setValidationMessage] = useState("")
 
   const addFaqsRow = () => {
@@ -245,23 +248,59 @@ console.log("selectedOption", selectedOption)
     }
     const formData = new FormData();
    
-    formData.append("file", files[0], fieldName);
-    // const payload =[
-    //   {
-    //     "file": files[0],
-    //     "fieldName":fieldName
-    //   }
-    // ]
-    console.log("payloaddddddd",formData)
-    // const token = localStorage.getItem("tokenemployeeRegister")
-    // const headers = {
-    //   'x-access-token': token != null ? token :'',
-    // }; 
-    // axios.post("/api/files/upload", formData,headers);
-    // dispatch(addFiles(payload))
+    formData.append('file', files[0]);   //append the values with key, value pair
+    formData.append('fieldName', fieldName);
+   
+ 
+    uploadFile(formData)
+
 
   }
 
+  function uploadFile(formData){
+    const token = localStorage.getItem("tokenemployeeRegister")
+    const headers = {
+      'x-access-token': token != null ? token :'',
+    };
+    console.log("HEADERDS", headers)
+    // fetch('https://bafana-backend.azurewebsites.net/api/files/upload', {
+    //   method: 'POST',
+    //   body: formData,headers,
+    // })
+    // .then(response => response.json())
+    // .then(lang => response['lang'].slice(-2))
+    //   console.log("payloaddddddd",formData)
+
+    //   .then(success => {
+    //     console.log("payloaddddddd success",success)
+
+    //     // Do something with the successful response
+    //   })
+    //   .catch(error => console.log("payloaddddddd error",error)
+    // );
+    axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
+      headers: headers
+      })       
+.then((response) => {
+  console.log("Response", response)
+  if(response.data.response.fieldName == "uploadInvoice"){
+    setuploadInvoiceId(response.data.response.documentId)
+  }
+  if(response.data.response.fieldName == "uploadPurchaseOrder"){
+    setuploadpurchaseId(response.data.response.documentId)
+  }
+  if(response.data.response.fieldName == "uploadchallanDispatchDocument"){
+    setuploadChallanId(response.data.response.documentId)
+  }
+  if(response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`"){
+    setuploadTransportId(response.data.response.documentId)
+  }
+})
+.catch((error) => {
+  console.log("Response", error)
+
+})
+  }
   //second Table
 
   const [discountValue, setDiscountValue] = useState()
@@ -344,7 +383,6 @@ console.log("selectedOption", selectedOption)
         
     }
     }
-  
 
   const handleDiscountChange = e => {
     const value = e.target.value
@@ -482,44 +520,59 @@ console.log("selectedOption", selectedOption)
     invoiceFile:"",
     TransportFile:""
     },})
-
+    // console.log("selectedOption.value",selectedOption.value!= undefined ? selectedOption.value.slice(-4):"Hello")
+console.log("selectedOption",selectedOption.value != null ? selectedOption.value.slice(-6).toUpperCase():'')
   const handleFormSubmitSendBill = item => {
-    const dueDated = moment(new Date(item.dueDate)).format("DD-MM-YYYY")
-    const inVoiceDated = moment(new Date(item.invoiceDate)).format("DD-MM-YYYY")
+    const dueDated = moment(item.dueDate).format("YYYY-MM-DD")
+    const inVoiceDated = moment(item.invoiceDate).format("YYYY-MM-DD")
 
    
 
-  const dummy=[  {
+  const dummy=[{
       "debtorId": selectedOption.value,
       "billDate": inVoiceDated,
-      "billDescription": "bill Description Nit",
-      "billNumber": "65456",
+      "billDescription": "",
+      "billNumber": "",
       "creditAmount": total,
-      "remainingAmount": "986", 
-      "status": "as",
-      "interestRate": "2",
-      "creditLimitDays": "20",
-      "remark": "asasas",
+      "remainingAmount": total, 
+      "status": "",
+      "interestRate": "",
+      "creditLimitDays": "",
+      "remark": "",
       "items": data,
       "subTotal": subtotal,
       "tax": cgst != ''? cgst :sgst,
-      "referenceNumber": "654VF55",
-      "invoiceNumber": item.invoiceNumber,
+      "referenceNumber": selectedOption.value != null ? "BAF"+"-"+ selectedOption.value.slice(-6).toUpperCase():'',
+      "invoiceNumber": "BAF"+"-"+item.invoiceNumber,
       "dueDate": dueDated,
-      "percentage": "5"
+      "percentage": "",
+      "purchaseOrderDocument": uploadpurchaseId,
+      "challanDocument": uploadChallanId,
+      "invoiceDocument": uploadInvoiceid,
+      "transportationDocument": uploadTransportId
 
 }]
-    dispatch(addInvoiceBill(dummy))
+if(uploadInvoiceid == ''){
+
+  toast.error("Please Upload Invoice File")
+}
+else{
+  dispatch(addInvoiceBill(dummy))
+}
+ 
+
 
   }
 useEffect(()=>{
+  console.log("getAllDebtorsList",getAllDebtorsList)
   dispatch(ongetAllDebtors());
-  setDebtorsList(getDebtor!= undefined && getDebtor.length != 0 ? getDebtor.map((item)=>{
+  setgetDebtor(getAllDebtorsList!= undefined? getAllDebtorsList:[])
+
+  setDebtorsList( getAllDebtorsList != undefined && getAllDebtorsList.length != 0 ? getAllDebtorsList.map((item)=>{
     return {
       "value": item.id , "label":  item.firstname+" "+item.lastname
     }
   }):[])
-  setgetDebtor(getAllDebtorsList!= undefined? getAllDebtorsList:[])
 },[])
  return (
     <Container fluid className="mt-5 mb-5 text-capitalize">
@@ -602,7 +655,7 @@ useEffect(()=>{
                         disabled
                         name="referenceNumber"
                         placeholder="Enter Reference number"
-                        value={formik.values.referenceNumber}
+                        value={selectedOption.value != null ? "BAF" + "-"+selectedOption.value.slice(-6).toUpperCase():''}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
@@ -787,10 +840,10 @@ useEffect(()=>{
                                 <Row>
                                   {/* Subtotal */}
                                   <Col xs="4">
-                                    <p className="text-muted mb-0">Subtotal</p>
+                                    <p className="text-muted mb-2">Subtotal</p>
                                   </Col>
-                                  <Col xs="5"></Col>
-                                  <Col xs="3">
+                                  <Col xs="4"></Col>
+                                  <Col xs="4">
                                     <h5 className="font-size-15">
                                       ₹{subtotal.toFixed(2)}
                                     </h5>
@@ -800,7 +853,7 @@ useEffect(()=>{
 
                                 <Row>
                                   <Col xs="4">
-                                    <p className="text-muted mb-0 mt-2">SGST</p>
+                                    <p className="text-muted mb-0 mt-2">SGST*</p>
                                   </Col>
                                   <Col xs="5">
                                     <FormGroup>
@@ -821,7 +874,7 @@ useEffect(()=>{
                                 </Row>
                                 <Row>
                                   <Col xs="4">
-                                    <p className="text-muted mb-0 mt-2">CGST</p>
+                                    <p className="text-muted mb-0 mt-2">CGST*</p>
                                   </Col>
                                   <Col xs="5">
                                     <FormGroup>
@@ -972,7 +1025,7 @@ useEffect(()=>{
                       <CardBody className="pt-0">
                         <Col md={4} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                          Upload File to Invoice
+                          Upload File to Invoice*
                           </div>
 
                           <InputGroup>
@@ -1480,6 +1533,8 @@ useEffect(()=>{
           </Card>
         </Col>
       </Row>
+      <ToastContainer />
+
     </Container>
   )
 }

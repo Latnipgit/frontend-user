@@ -35,6 +35,9 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { getInvoices as ongetInvoices}  from '../../../store/actions'
 import { useDispatch ,useSelector } from "react-redux";
 import { success } from "toastr"
+import { getAllInvoice as ongetAllInvoice}  from '../../../../src/store/actions'
+import moment from 'moment'
+
 // import { invoiceList } from "common/data"
 
   //Creditors
@@ -46,17 +49,16 @@ import { success } from "toastr"
     const toggleViewModal = () => setModal1(!modal1);
     const toggleViewModal1 = () => setModal2(!modal2);
 
-    const getInvoiceList  = useSelector(state => 
-      console.log("getInvoiceList", state.invoices.invoiceDetail
-      )
-
-      )
-   
+  
     const dispatch = useDispatch();
-     
+    const {GetAllInvoice} = useSelector(state=>({
+      GetAllInvoice: state.DebtorsReducer.getInvoiceList!= undefined ? state.DebtorsReducer.getInvoiceList.response:[],
+    }))
     useEffect(()=>{
-      dispatch(ongetInvoices());
-    },[getInvoiceList])
+      // dispatch(ongetInvoices());
+      dispatch(ongetAllInvoice());
+    },[])
+    console.log("GetAllInvoice", GetAllInvoice)
     const sampleDataCreditors = [
       { "Refnumber": "#BF-001", "invoiveno":"BAF-9696" ,"Buyer": "Rohan", "Days":"120 Days","Amount": "8000", "DueFrom": "20 january 2022" , "status":"Pending"},
       { "Refnumber": "#BF-002", "invoiveno":"BAF-9699" ,"Buyer": "harshit","Days":"130 Days", "Amount": "15000", "DueFrom": "12 march 2022" , "status":"Complete"},
@@ -78,28 +80,24 @@ import { success } from "toastr"
 
         {
           Header: "Refrence Number",
-          accessor: "Refnumber",
+          accessor: "referenceNumber",
           filterable: false,
           disableFilters: true,
          
         },
         {
-          Header: "Invoice No.",
-          accessor: "invoiveno",
-          disableFilters: true,
-          filterable: false,
-       
-        },
-        {
           Header: "Customer Name",
-          accessor: "Buyer",
-          disableFilters: true,
+          accessor: "",
           filterable: false,
-       
+          disableFilters: true,
+          Cell: cellProps => {
+            return ( <div className="text-capitalize" >{cellProps.row.original.debtor.firstname +" "+ cellProps.row.original.debtor.lastname}</div>
+    
+    )}
         },
         {
           Header: "Due Amount",
-          accessor: "Amount",
+          accessor: "remainingAmount",
           disableFilters: true,
           filterable: false,
        
@@ -112,11 +110,19 @@ import { success } from "toastr"
             console.log("YUHYUH",row)
           },
           Cell: cellProps => {
+            const a = moment(cellProps.row.original.dueDate).format("MM-DD-YY"); 
+            const b = cellProps.row.original.billDate;
+            console.log("oLKOLKOLK",a,b)
             return (
+              
 <div className="">
   <div className=" text-center bg-success rounded text-light">
-  <div className="text-capitalize">{cellProps.row.original.Days}</div>
-  <div className="text-capitalize" >{cellProps.row.original.DueFrom}</div>
+  <div className="text-capitalize">
+{
+    moment(a).diff({b}, 'days')
+
+}  </div>
+  <div className="text-capitalize" >{moment(cellProps.row.original.dueDate).format("MM-DD-YY")}</div>
   </div>
 </div>
             )}
@@ -160,7 +166,7 @@ import { success } from "toastr"
           <div className="mb-4 h4 card-title">Report a Defaulter</div>
           <TableContainer
             columns={columns}
-            data={sampleDataCreditors}
+            data={GetAllInvoice!= undefined ? GetAllInvoice:[]}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={6}

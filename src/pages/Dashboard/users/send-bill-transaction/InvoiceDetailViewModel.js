@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import moment from 'moment'
 
@@ -20,6 +20,9 @@ import {
 const InvoiceDetailViewModel = props => {
  
   const { isOpen, toggle,SelectedInvoice  } = props
+  useEffect(()=>{
+
+  },[props,SelectedInvoice,isOpen])
   console.log("PROPSSSS", props)
   return (
     <Modal
@@ -61,28 +64,35 @@ const InvoiceDetailViewModel = props => {
   </Col>
 </Row>
 <Row>
-  <table className="table table-bordered">
+  <table className="table table-bordered text-center">
     <tr>
       <th>Item</th>
       <th>Quantity</th>
       <th>Rate</th>
       <th>Amount</th>
     </tr>
-   {isOpen != false ? SelectedInvoice.items != [] ? SelectedInvoice.items.map((items)=>{
+   {isOpen == true ?  SelectedInvoice.items.map((items)=>{
     <tr key={items}>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>{items.itemDetail}</td>
+      <td>{items.quantity}</td>
+      <td>{items.rate}</td>
+      <td>{items.amount}</td>
     </tr>
-   }):'':''} 
+   }):
+  <tr>
+     <td></td>
+   <td></td>
+   <td></td>
+   <td></td>
+  </tr>
+   } 
   </table>
 </Row>
 <Row>
   <Col md={8}></Col>
   <Col md={4} className="text-end">
-    <p>Sub Total - 123</p>
-    <p>Total - 123</p>
+    <p>Sub Total - {SelectedInvoice != null ?SelectedInvoice.subTotal:'00'}</p>
+    <p>Total - {SelectedInvoice != null ?SelectedInvoice.creditAmount:'00'}</p>
   </Col>
 </Row>
       </ModalBody>
