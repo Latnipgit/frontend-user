@@ -11,6 +11,8 @@ import Select, { components } from "react-select"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 import ReportedDebtorsModel from "./ReportedModel"
 import ReportedDefaulterModel from './ReportDefaulterModel'
+import 'react-table-6/react-table.css'
+import ReactTable from 'react-table-6'
 import {
   Container,
   Row,
@@ -32,145 +34,181 @@ import {
   Label,
 } from "reactstrap"
 import TableContainer from "../../../components/Common/TableContainer";
-import { getInvoices as ongetInvoices}  from '../../../store/actions'
-import { useDispatch ,useSelector } from "react-redux";
+import { getInvoices as ongetInvoices } from '../../../store/actions'
+import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
-import { getAllInvoice as ongetAllInvoice}  from '../../../../src/store/actions'
+import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
 import moment from 'moment'
 
 // import { invoiceList } from "common/data"
 
-  //Creditors
+//Creditors
 
- 
-  const ReportDebtor = props => {
-    const [modal1, setModal1] = useState(false);
-    const [modal2, setModal2] = useState(false);
-    const toggleViewModal = () => setModal1(!modal1);
-    const toggleViewModal1 = () => setModal2(!modal2);
 
-  
-    const dispatch = useDispatch();
-    const {GetAllInvoice} = useSelector(state=>({
-      GetAllInvoice: state.DebtorsReducer.getInvoiceList!= undefined ? state.DebtorsReducer.getInvoiceList.response:[],
-    }))
-    useEffect(()=>{
-      // dispatch(ongetInvoices());
-      dispatch(ongetAllInvoice());
-    },[])
-    console.log("GetAllInvoice", GetAllInvoice)
-    const sampleDataCreditors = [
-      { "Refnumber": "#BF-001", "invoiveno":"BAF-9696" ,"Buyer": "Rohan", "Days":"120 Days","Amount": "8000", "DueFrom": "20 january 2022" , "status":"Pending"},
-      { "Refnumber": "#BF-002", "invoiveno":"BAF-9699" ,"Buyer": "harshit","Days":"130 Days", "Amount": "15000", "DueFrom": "12 march 2022" , "status":"Complete"},
-      { "Refnumber": "#BF-003", "invoiveno":"BAF-9698" ,"Buyer": "akshay", "Days":"120 Days","Amount": "8500", "DueFrom": "21 july 2022" , "status":"Pending"},
-      { "Refnumber": "#BF-004", "invoiveno": "BAF-9689" ,"Buyer": "ram", "Days":"90 Days","Amount": "9400", "DueFrom": "20 january 2022" , "status":"Complete"},
-      { "Refnumber": "#BF-005", "invoiveno": "BAF-9690","Buyer": "shyan","Days":"170 Days", "Amount": "9900", "DueFrom": "20 january 2022" , "status":"Pending"},
-  
-    ];
-    const columns = useMemo(
-      () => [
-        {
-          Header: "#",
-          filterable: false,
-          disableFilters: true,
-          Cell: cellProps => {
-            return <input type="checkbox" className="form-check-input" />;
+const ReportDebtor = props => {
+  const [modal1, setModal1] = useState(false);
+  const [modal2, setModal2] = useState(false);
+  const [selected, setSelected] = useState('');
+  const toggleViewModal = () => setModal1(!modal1);
+  const toggleViewModal1 = () => setModal2(!modal2);
+
+
+  const dispatch = useDispatch();
+  const { GetAllInvoice } = useSelector(state => ({
+    GetAllInvoice: state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : [],
+  }))
+  useEffect(() => {
+    // dispatch(ongetInvoices());
+    dispatch(ongetAllInvoice());
+  }, [])
+  console.log("GetAllInvoice", GetAllInvoice)
+  const sampleDataCreditors = [
+    { "Refnumber": "#BF-001", "invoiveno": "BAF-9696", "Buyer": "Rohan", "Days": "120 Days", "Amount": "8000", "DueFrom": "20 january 2022", "status": "Pending" },
+    { "Refnumber": "#BF-002", "invoiveno": "BAF-9699", "Buyer": "harshit", "Days": "130 Days", "Amount": "15000", "DueFrom": "12 march 2022", "status": "Complete" },
+    { "Refnumber": "#BF-003", "invoiveno": "BAF-9698", "Buyer": "akshay", "Days": "120 Days", "Amount": "8500", "DueFrom": "21 july 2022", "status": "Pending" },
+    { "Refnumber": "#BF-004", "invoiveno": "BAF-9689", "Buyer": "ram", "Days": "90 Days", "Amount": "9400", "DueFrom": "20 january 2022", "status": "Complete" },
+    { "Refnumber": "#BF-005", "invoiveno": "BAF-9690", "Buyer": "shyan", "Days": "170 Days", "Amount": "9900", "DueFrom": "20 january 2022", "status": "Pending" },
+
+  ];
+  const viewModel =(value)=>{
+    setSelected(value)
+    setModal2(true)
+  }
+  const columns = useMemo(
+    () => [
+      {
+        Header: "#",
+        filterable: false,
+        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600',  },
+        style:{padding:"15px"},
+          width: 50,
+
+        disableFilters: true,
+        Cell: cellProps => {
+          return <input type="checkbox" className="form-check-input" />;
+        },
+      },
+
+      {
+        Header: "Refrence Number",
+        accessor: "referenceNumber",
+        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
+        style:{padding:"15px"},
+        filterable: false,
+        disableFilters: true,
+
+      },
+          {
+            Header: "Customer Name",
+            accessor: "",
+            headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
+            style:{padding:"15px"},
+            filterable: false,
+            disableFilters: true,
+            Cell: cellProps => {
+              return ( <div className="text-capitalize" >{cellProps.original.debtor.firstname +" "+ cellProps.original.debtor.lastname}</div>
+
+      )}
           },
-        },
+      {
+        Header: "Due Amount",
+        accessor: "remainingAmount",
+        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
+        style:{padding:"15px"},
+        disableFilters: true,
+        filterable: false,
 
-        {
-          Header: "Refrence Number",
-          accessor: "referenceNumber",
-          filterable: false,
-          disableFilters: true,
-         
-        },
-        {
-          Header: "Customer Name",
-          accessor: "",
-          filterable: false,
-          disableFilters: true,
-          Cell: cellProps => {
-            return ( <div className="text-capitalize" >{cellProps.row.original.debtor.firstname +" "+ cellProps.row.original.debtor.lastname}</div>
-    
-    )}
-        },
-        {
-          Header: "Due Amount",
-          accessor: "remainingAmount",
-          disableFilters: true,
-          filterable: false,
-       
-        },
-        {
-          Header: 'Due From',
-          disableFilters: true,
-          filterable: false,
-          accessor: (row) => {
-            console.log("YUHYUH",row)
-          },
-          Cell: cellProps => {
-            const a = moment(cellProps.row.original.dueDate).format("MM-DD-YY"); 
-            const b = cellProps.row.original.billDate;
-            console.log("oLKOLKOLK",a,b)
-            return (
-              
-<div className="">
-  <div className=" text-center bg-success rounded text-light">
-  <div className="text-capitalize">
-{
-    moment(a).diff({b}, 'days')
+      },
+      {
+        Header: 'Due From',
+        disableFilters: true,
+        filterable: false,
+        accessor: "",
 
-}  </div>
-  <div className="text-capitalize" >{moment(cellProps.row.original.dueDate).format("MM-DD-YY")}</div>
-  </div>
-</div>
-            )}
-        },
+        Cell: cellProps => {
+          const a = moment(cellProps.original.dueDate).format("MM-DD-YY");
+          const b = cellProps.original.billDate;
+          return (
 
-       
-        {
-          Header: "Action",
-          accessor: "status",
-          disableFilters: true,
-          filterable: false,
-          Cell: cellProps => {
-            return (
-<div>
-  <Button className="btn btn-sm btn-info"
-  onClick={toggleViewModal1}
-  >Report a Defaulter</Button>
-</div>
-            )}
-        },
-       
-        
-       
-      ],
-      []
-    );
-    const additionalValue = "Hello from additional prop!";
+            <div className="" style={{ padding:"5px 35px"}}>
+              <div className=" text-center bg-success rounded text-light">
+                <div className="text-capitalize">
+                  {
+                    moment(a).diff({ b }, 'days')
+
+                  }  </div>
+                <div className="text-capitalize" >{moment(cellProps.original.dueDate).format("MM-DD-YY")}</div>
+              </div>
+            </div>
+          )
+        }
+      },
+
+
+     
+      {
+        Header: "Action",
+        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
+  style:{padding:"15px"},
+        accessor: "",
+        disableFilters: true,
+        filterable: false,
+        Cell: (cellProps) => (
+          <div>
+            <Button className="btn btn-info btn-sm"
+              onClick={() => viewModel(cellProps.original)
+               
+              }
+            >
+           Report a Defaulter
+            </Button>
+  
+          </div>
+        )
+      },
+
+
+
+    ],
+    []
+  );
+  const additionalValue = "Hello from additional prop!";
 
   return (
     <React.Fragment>
-            <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/>
-            <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} />
+      <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
+      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
 
       <Card>
         <CardBody>
-     
-          <div className="mb-4 h4 card-title"></div>
+ <div className="mb-4 h4 card-title"></div>
           <br/>
           <br/>
           <br/>
           <div className="mb-4 h4 card-title">Report a Defaulter</div>
-          <TableContainer
+        
+          {/*  <TableContainer
             columns={columns}
             data={GetAllInvoice!= undefined ? GetAllInvoice:[]}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={6}
-          />
+          /> */}
+
+          <Row className="p-4  ml-5">
+          <br/>
+          
+            <ReactTable
+              data={GetAllInvoice != undefined ? GetAllInvoice : []}
+              columns={columns}
+              showPagination={true}
+              showPaginationTop={false}
+              showPaginationBottom={true}
+              showPageSizeOptions={true}
+              defaultPageSize={5}
+            />
+
+          </Row>
         </CardBody>
       </Card>
     </React.Fragment>

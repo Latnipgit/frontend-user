@@ -23,6 +23,7 @@ const InvoiceDetailViewModel = props => {
   // useEffect(() => {
   //   const { isOpen, toggle, SelectedInvoice } = props
   // }, [props, SelectedInvoice])
+  console.log("props", SelectedInvoice)
   return (
     <Modal
       isOpen={isOpen}
@@ -41,7 +42,7 @@ const InvoiceDetailViewModel = props => {
 
           <Row>
             <Col md={9}>
-              {/* <h5 className="text-start">{SelectedInvoice.debtor.firstname}</h5> */}
+              {SelectedInvoice != "" ? <h5 className="text-start">{SelectedInvoice.debtor.firstname} {SelectedInvoice.debtor.lastname}</h5>:""}
 
             </Col>
             <Col md={3} className="text-end">
