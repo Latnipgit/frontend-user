@@ -126,17 +126,20 @@ const ReportDebtor = props => {
         accessor: "",
 
         Cell: cellProps => {
-          const a = moment(cellProps.original.dueDate).format("MM-DD-YY");
-          const b = cellProps.original.billDate;
+          const a = moment(cellProps.original.dueDate);
+          const b =moment()
+          const c = moment(b).diff(a)
+          const d = moment.duration(c)
+          console.log("ABABAB",d.days())
           return (
 
             <div className="" style={{ padding:"5px 35px"}}>
               <div className=" text-center bg-success rounded text-light">
                 <div className="text-capitalize">
                   {
-                    moment(a).diff({ b }, 'days')
+                    d.days()
 
-                  }  </div>
+                  } Days </div>
                 <div className="text-capitalize" >{moment(cellProps.original.dueDate).format("MM-DD-YY")}</div>
               </div>
             </div>
