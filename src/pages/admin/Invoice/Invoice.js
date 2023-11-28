@@ -309,6 +309,15 @@ const Invoice = () => {
       }
     },
     {
+      Header: "Refrence #",
+      headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
+      style:{padding:"15px"},
+
+      accessor: "referenceNumber",
+      disableFilters: true,
+      filterable: false,
+    },
+    {
       Header: "Invoice #",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
       style:{padding:"15px"},
@@ -317,15 +326,7 @@ const Invoice = () => {
       disableFilters: true,
       filterable: false,
     },
-    {
-      Header: "Order #",
-      headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-      style:{padding:"15px"},
-
-      accessor: "billNumber",
-      disableFilters: true,
-      filterable: false,
-    },
+  
     {
       Header: "Status",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
@@ -388,7 +389,7 @@ style:{padding:"15px"},
 
   ]
   )
-
+console.log("GetAllInvoice",GetAllInvoice)
   return (
     <Container fluid className="mt-5 mb-5">
 
