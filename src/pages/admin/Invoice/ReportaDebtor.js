@@ -62,14 +62,7 @@ const ReportDebtor = props => {
     dispatch(ongetAllInvoice());
   }, [])
   console.log("GetAllInvoice", GetAllInvoice)
-  const sampleDataCreditors = [
-    { "Refnumber": "#BF-001", "invoiveno": "BAF-9696", "Buyer": "Rohan", "Days": "120 Days", "Amount": "8000", "DueFrom": "20 january 2022", "status": "Pending" },
-    { "Refnumber": "#BF-002", "invoiveno": "BAF-9699", "Buyer": "harshit", "Days": "130 Days", "Amount": "15000", "DueFrom": "12 march 2022", "status": "Complete" },
-    { "Refnumber": "#BF-003", "invoiveno": "BAF-9698", "Buyer": "akshay", "Days": "120 Days", "Amount": "8500", "DueFrom": "21 july 2022", "status": "Pending" },
-    { "Refnumber": "#BF-004", "invoiveno": "BAF-9689", "Buyer": "ram", "Days": "90 Days", "Amount": "9400", "DueFrom": "20 january 2022", "status": "Complete" },
-    { "Refnumber": "#BF-005", "invoiveno": "BAF-9690", "Buyer": "shyan", "Days": "170 Days", "Amount": "9900", "DueFrom": "20 january 2022", "status": "Pending" },
 
-  ];
   const viewModel =(value)=>{
     setSelected(value)
     setModal2(true)

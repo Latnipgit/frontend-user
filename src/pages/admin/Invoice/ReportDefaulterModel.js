@@ -17,6 +17,8 @@ import {
   Table,
   Row,Col
 } from "reactstrap"
+import { ToastContainer, toast } from 'react-toastify';
+import { useEffect } from "react";
 
 
 const ReportedDefaulterModel = props => {
@@ -38,6 +40,15 @@ const ReportedDefaulterModel = props => {
 
 
   }
+    
+  const [uploadTransportId, setuploadTransportId] = useState('')
+  const [uploadpurchaseId, setuploadpurchaseId] = useState('')
+  const [uploadInvoiceId, setuploadInvoiceId] = useState('')
+  const [uploadChallanId, setuploadChallanId] = useState('')
+
+  
+
+  console.log("selected.debtor",selected.debtorId)
   function uploadFile(formData){
     console.log("UPLOAD FILE", formData)
     const token = localStorage.getItem("tokenemployeeRegister")
@@ -49,12 +60,68 @@ const ReportedDefaulterModel = props => {
     axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
       headers: headers
       })       
+      .then((response) => {
+        toast.success("file upload successfully")
+        console.log("Response", response)
+        if(response.data.response.fieldName == "uploadInvoice"){
+          setuploadInvoiceId(response.data.response.documentId)
+        }
+        if(response.data.response.fieldName == "uploadPurchaseOrder"){
+          setuploadpurchaseId(response.data.response.documentId)
+        }
+        if(response.data.response.fieldName == "uploadchallanDispatchDocument"){
+          setuploadChallanId(response.data.response.documentId )
+        }
+        if(response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`"){
+          setuploadTransportId(response.data.response.documentId)
+        }
+      })
+.catch((error) => {
+  console.log("Response", error)
+
+})
+  }
+
+  const handleProceed =(Value)=>{
+    const payload =[{
+      "invoiceId": selected.debtorId,
+      "purchaseOrderDocument": uploadpurchaseId,
+      "challanDocument": uploadChallanId,
+      "invoiceDocument": uploadInvoiceId ,
+      "transportationDocument": uploadTransportId
+  }]
+  upload(payload)
+  }
+  
+  useEffect(()=>{
+    setisProceed(false)
+  },[])
+  console.log("uploadpurchaseId", uploadpurchaseId)
+  const upload=(value)=>{
+    console.log("UPLOAD", value)
+    const token = localStorage.getItem("tokenemployeeRegister")
+    const headers = {
+      'x-access-token': token != null ? token :'',
+    };
+    
+  
+    axios.post('https://bafana-backend.azurewebsites.net/api/transactions/updateInvoiceDocuments', value, {
+      headers: headers
+      })       
 .then((response) => {
   console.log("Response", response)
+
+  toast.success("upload file successfully")
+
+  setInterval(() => {
+window.location.reload()
+  }, 2000);
 
 })
 .catch((error) => {
   console.log("Response", error)
+  toast.error("something went wrong")
+
 
 })
   }
@@ -281,14 +348,21 @@ const ReportedDefaulterModel = props => {
 
       </ModalBody>
         <ModalFooter>
-            <Button type="button" color="primary" onClick={()=>setisProceed(true)}>
+          {isProceed != true ?   <Button type="button" color="primary" onClick={()=>setisProceed(true)}>
+                      Next
+            </Button>
+            :
+            <Button type="button" color="primary" onClick={()=>handleProceed()}>
                       Proceed
             </Button>
+            }
           <Button type="button" color="secondary" onClick={toggle}>
             Close
           </Button>
         </ModalFooter>
       </div>
+      <ToastContainer />
+
     </Modal>
   )
 }
