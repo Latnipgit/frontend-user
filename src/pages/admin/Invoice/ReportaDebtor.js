@@ -5,9 +5,6 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
 import Select, { components } from "react-select"
-// import { mdiDelete, mdiPlus } from '@mdi/react';
-//import { Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-// import "../send-bill-transaction/sendbilltransaction.scss"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 import ReportedDebtorsModel from "./ReportedModel"
 import ReportedDefaulterModel from './ReportDefaulterModel'
@@ -40,33 +37,35 @@ import { success } from "toastr"
 import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
 import moment from 'moment'
 
-// import { invoiceList } from "common/data"
 
-//Creditors
 
 
 const ReportDebtor = props => {
   const [modal1, setModal1] = useState(false);
+  const [getDaysArray, setgetDaysArray] = useState([]);
   const [modal2, setModal2] = useState(false);
   const [selected, setSelected] = useState('');
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
-
-
   const dispatch = useDispatch();
+
   const { GetAllInvoice } = useSelector(state => ({
     GetAllInvoice: state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : [],
   }))
+
   useEffect(() => {
-    // dispatch(ongetInvoices());
     dispatch(ongetAllInvoice());
+
+    getDays()
+
   }, [])
-  console.log("GetAllInvoice", GetAllInvoice)
+
 
   const viewModel =(value)=>{
     setSelected(value)
     setModal2(true)
   }
+
   const columns = useMemo(
     () => [
       {
@@ -87,8 +86,7 @@ const ReportDebtor = props => {
         accessor: "referenceNumber",
         headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
         style:{padding:"15px"},
-        filterable: false,
-        disableFilters: true,
+    
 
       },
           {
@@ -96,10 +94,20 @@ const ReportDebtor = props => {
             accessor: "",
             headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
             style:{padding:"15px"},
-            filterable: false,
-            disableFilters: true,
+           
             Cell: cellProps => {
               return ( <div className="text-capitalize" >{cellProps.original.debtor.firstname +" "+ cellProps.original.debtor.lastname}</div>
+
+      )}
+          },
+          {
+            Header: "Invoice Number",
+            accessor: "",
+            headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600', pointerEvent:"none",  },
+            style:{padding:"15px"},
+          
+            Cell: cellProps => {
+              return ( <div className="text-capitalize" >{cellProps.original.invoiceNumber}</div>
 
       )}
           },
@@ -108,13 +116,14 @@ const ReportDebtor = props => {
         accessor: "remainingAmount",
         headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
         style:{padding:"15px"},
-        disableFilters: true,
-        filterable: false,
+     
 
       },
       {
         Header: 'Due From',
         disableFilters: true,
+        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
+
         filterable: false,
         accessor: "",
 
@@ -147,8 +156,7 @@ const ReportDebtor = props => {
         headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
   style:{padding:"15px"},
         accessor: "",
-        disableFilters: true,
-        filterable: false,
+     
         Cell: (cellProps) => (
           <div>
             <Button className="btn btn-info btn-sm"
@@ -168,7 +176,22 @@ const ReportDebtor = props => {
     ],
     []
   );
+
   const additionalValue = "Hello from additional prop!";
+
+
+const getDays = ()=>{
+    GetAllInvoice != undefined ? GetAllInvoice.map((item)=>{
+   const a = moment(item.dueDate);
+    const b =moment()
+    const c = moment(b).diff(a)
+    const d = moment.duration(c)
+    // console.log("ABABAB",)
+     getDaysArray.push(d.days())
+  }):[]
+  console.log("ABABABABABAB", getDaysArray)
+}
+console.log("ABABABABABAB 2", getDaysArray)
 
   return (
     <React.Fragment>
@@ -183,26 +206,90 @@ const ReportDebtor = props => {
           <br/>
           <div className="mb-4 h4 card-title">Report a Defaulter</div>
         
-          {/*  <TableContainer
-            columns={columns}
-            data={GetAllInvoice!= undefined ? GetAllInvoice:[]}
-            isGlobalFilter={false}
-            isAddOptions={false}
-            customPageSize={6}
-          /> */}
+        
 
           <Row className="p-4  ml-5">
-          <br/>
+          {/* <br/> */}
           
-            <ReactTable
+            {/* <ReactTable
               data={GetAllInvoice != undefined ? GetAllInvoice : []}
               columns={columns}
               showPagination={true}
-              showPaginationTop={false}
-              showPaginationBottom={true}
-              showPageSizeOptions={true}
               defaultPageSize={5}
-            />
+            /> */}
+       
+       <table className="table table-bordered">
+       <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Refrence Number</th>
+      <th scope="col">Invoice Number</th>
+      <th scope="col">Status</th>
+      <th scope="col">Due Amount</th>
+      <th scope="col">Due From</th>
+      <th scope="col">Action</th>
+      {/* <th scope="col">Upload Document</th> */}
+    </tr>
+  </thead>
+  <tbody>
+   {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{
+    return  <tr key={item}>
+      {console.log("NEW TABLE ", item, index)}
+      
+    <th scope="row" className="pt-4">{index + 1}</th>
+    <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td>
+    <td className="pt-4">{item.referenceNumber}</td>
+    <td className="pt-4">{item.invoiceNumber}</td>
+    <td className="pt-4">{item.status}</td>
+    <td className="pt-4">{item.remainingAmount}</td>
+
+    <td >
+   
+    <div className="" style={{ padding:"2px 15px"}}>
+      
+  <div className=" text-center bg-success rounded text-light">
+    <div className="text-capitalize">
+      
+       {getDaysArray[index]}
+
+
+       Days </div>
+    <div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
+  </div>
+</div>
+           
+    </td>
+    <td>
+    <div className="pt-2">
+            <Button className="btn btn-info btn-sm"
+              onClick={() => viewModel(item)
+               
+              }
+            >
+           Report a Defaulter
+            </Button>
+  
+          </div>
+    </td>
+    {/* <td>
+    <div className="pt-2">
+            <Button className="btn btn-info btn-sm"
+              // onClick={() => viewModel(item)
+               
+              // }
+            >
+           Upload Document
+            </Button>
+  
+          </div>
+    </td> */}
+  </tr>
+   }):''} 
+   
+  
+  </tbody>
+       </table>
 
           </Row>
         </CardBody>
