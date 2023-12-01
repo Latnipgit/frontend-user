@@ -8,6 +8,7 @@ import Select, { components } from "react-select"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 import ReportedDebtorsModel from "./ReportedModel"
 import ReportedDefaulterModel from './ReportDefaulterModel'
+import UploadCACertificateModel from './uploadCACertificateModel'
 import 'react-table-6/react-table.css'
 import ReactTable from 'react-table-6'
 import {
@@ -44,9 +45,11 @@ const ReportDebtor = props => {
   const [modal1, setModal1] = useState(false);
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [modal2, setModal2] = useState(false);
+  const [modal3, setModal3] = useState(false);
   const [selected, setSelected] = useState('');
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
+  const toggleViewModal2 = () => setModal3(!modal3);
   const dispatch = useDispatch();
 
   const { GetAllInvoice } = useSelector(state => ({
@@ -65,6 +68,11 @@ const ReportDebtor = props => {
     setSelected(value)
     setModal2(true)
   }
+
+  const viewModels =(value)=>{
+    setModal3(true)
+  }
+
 
   const columns = useMemo(
     () => [
@@ -186,8 +194,10 @@ const getDays = ()=>{
     const b =moment()
     const c = moment(b).diff(a)
     const d = moment.duration(c)
-    // console.log("ABABAB",)
-     getDaysArray.push(d.days())
+    if(getDaysArray.length != GetAllInvoice.length ){
+      getDaysArray.push(d.days())
+
+    }
   }):[]
   console.log("ABABABABABAB", getDaysArray)
 }
@@ -197,6 +207,8 @@ console.log("ABABABABABAB 2", getDaysArray)
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
+      <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} />
+      
 
       <Card>
         <CardBody>
@@ -229,7 +241,7 @@ console.log("ABABABABABAB 2", getDaysArray)
       <th scope="col">Due Amount</th>
       <th scope="col">Due From</th>
       <th scope="col">Action</th>
-      {/* <th scope="col">Upload Document</th> */}
+      <th scope="col">Upload Document</th>
     </tr>
   </thead>
   <tbody>
@@ -251,7 +263,7 @@ console.log("ABABABABABAB 2", getDaysArray)
   <div className=" text-center bg-success rounded text-light">
     <div className="text-capitalize">
       
-       {getDaysArray[index]}
+       {getDaysArray[index]} 
 
 
        Days </div>
@@ -272,18 +284,18 @@ console.log("ABABABABABAB 2", getDaysArray)
   
           </div>
     </td>
-    {/* <td>
+    <td>
     <div className="pt-2">
             <Button className="btn btn-info btn-sm"
-              // onClick={() => viewModel(item)
+              onClick={() => viewModels()
                
-              // }
+              }
             >
            Upload Document
             </Button>
   
           </div>
-    </td> */}
+    </td>
   </tr>
    }):''} 
    
