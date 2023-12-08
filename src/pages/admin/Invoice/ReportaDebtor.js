@@ -216,9 +216,16 @@ console.log("ABABABABABAB 2", getDaysArray)
           <br/>
           <br/>
           <br/>
-          <div className="mb-4 h4 card-title">Report a Defaulter</div>
+          
         
-        
+        <Row>
+          <Col md={10} className="pl-3">
+            <h5 className="m-1">Report a Defaulter</h5>
+          </Col>
+          <Col md={2}>
+            <Button className="btn btn-md btn-info">Report a Defaulter</Button>
+          </Col>
+        </Row>
 
           <Row className="p-4  ml-5">
           {/* <br/> */}
@@ -237,23 +244,25 @@ console.log("ABABABABABAB 2", getDaysArray)
       <th scope="col">Customer Name</th>
       <th scope="col">Refrence Number</th>
       <th scope="col">Invoice Number</th>
-      <th scope="col">Status</th>
+      {/* <th scope="col">Status</th> */}
+      <th scope="col">Address</th>
       <th scope="col">Due Amount</th>
       <th scope="col">Due From</th>
       <th scope="col">Action</th>
-      <th scope="col">Upload Document</th>
+      {/* <th scope="col">Upload Document</th> */}
     </tr>
   </thead>
   <tbody>
    {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{
     return  <tr key={item}>
-      {console.log("NEW TABLE ", item, index)}
+      {console.log("NEW TABLE ", item)}
       
     <th scope="row" className="pt-4">{index + 1}</th>
     <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td>
     <td className="pt-4">{item.referenceNumber}</td>
     <td className="pt-4">{item.invoiceNumber}</td>
-    <td className="pt-4">{item.status}</td>
+    <td className="pt-4">{item.debtor.address1} {item.debtor.address2} ,{item.debtor.city}</td>
+    {/* <td className="pt-4">{item.status}</td> */}
     <td className="pt-4">{item.remainingAmount}</td>
 
     <td >
@@ -263,10 +272,10 @@ console.log("ABABABABABAB 2", getDaysArray)
   <div className=" text-center bg-success rounded text-light">
     <div className="text-capitalize">
       
-       {getDaysArray[index]} 
+       {getDaysArray[index]}  &nbsp;
 
 
-       Days </div>
+       <span className="ml-1">Days</span> </div>
     <div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
   </div>
 </div>
@@ -279,12 +288,12 @@ console.log("ABABABABABAB 2", getDaysArray)
                
               }
             >
-           Report a Defaulter
+           Record Payment
             </Button>
   
           </div>
     </td>
-    <td>
+    {/* <td>
     <div className="pt-2">
             <Button className="btn btn-info btn-sm"
               onClick={() => viewModels()
@@ -295,7 +304,7 @@ console.log("ABABABABABAB 2", getDaysArray)
             </Button>
   
           </div>
-    </td>
+    </td> */}
   </tr>
    }):''} 
    
