@@ -35,7 +35,7 @@ import {
 } from "./disputedCol";
 
 import TableContainer from "../../../components/Common/TableContainer";
-import DisputedViewModal from "../DisputedBillings/DisputedViewModal";
+import DisputedViewModal from "./NewPaymentModel";
 
 const DiputedBillings = props => {
 
@@ -46,94 +46,56 @@ const DiputedBillings = props => {
 
   const columns = useMemo(
     () => [
-      // {
-      //   Header: "#",
-      //   filterable: false,
-      //   disableFilters: true,
-      //   Cell: cellProps => {
-      //     return <input type="checkbox" className="form-check-input" />;
-      //   },
-      // },
+    
+    
       {
-        Header: "Sr No",
-        accessor: "SrNo",
-        filterable: false,
-        disableFilters: true,
-        Cell: cellProps => {
-          return <SrNo {...cellProps} />;
-        },
-      },
-      {
-        Header: "Debtor",
-        accessor: "Debtor",
+        Header: "Date",
         disableFilters: true,
         filterable: false,
-        Cell: cellProps => {
-          return <Debtor {...cellProps} />;
-        },
+      
       },
       {
-        Header: "Creditor",
-        accessor: "Creditor",
+        Header: "Payment #",
         disableFilters: true,
         filterable: false,
-        Cell: cellProps => {
-          return <Creditor {...cellProps} />;
-        },
+      
       },
       {
-        Header: "Due Amount",
-        accessor: "DueAmount",
+        Header: "Refrence Number",
+        // accessor: "DueAmount",
         disableFilters: true,
         filterable: false,
-        Cell: cellProps => {
-          return <DueAmount {...cellProps} />;
-        },
+       
       },
       {
-        Header: "InvoiceNo",
-        accessor: "InvoiceNo",
+        Header: "Customer Name",
         disableFilters: true,
         filterable: false,
-        Cell: cellProps => {
-          return (
-          <InvoiceNo {...cellProps} />
-          );
-        },
+      
       },
       {
-        Header: "Action",
+        Header: "Invoice #",
         disableFilters: true,
-        accessor: "view",
-        Cell: cellProps => {
-          return (
-            <UncontrolledDropdown>
-                              <DropdownToggle
-                                href="#"
-                                className="card-drop"
-                                tag="a"
-                              >
-                                <i className="mdi mdi-dots-horizontal font-size-18" />
-                              </DropdownToggle>
-                              <DropdownMenu className="dropdown-menu-end">
-                              <DropdownItem
-                                  href="#"
-                                  onClick={toggleViewModal}
-                                >
-                                  <i className="mdi mdi-eye font-size-16 text-primary me-1" />{" "}
-                                  Approve
-                                </DropdownItem>
-                                <DropdownItem
-                                  href="#"
-                                  onClick={() => handleProjectClick(project)}
-                                >
-                                  <i className="mdi mdi-pencil font-size-16 text-success me-1" />{" "}
-                                  Decline
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </UncontrolledDropdown>
-          );
-        },
+
+        
+      },
+      {
+        Header: "Mode",
+        disableFilters: true,
+
+        
+      },
+      {
+        Header: "Amount",
+        disableFilters: true,
+
+        
+      },
+      {
+        Header: "Unused Amount",
+        disableFilters: true,
+
+        
       },
     ],
     []
@@ -151,6 +113,9 @@ const DiputedBillings = props => {
           </Button>
           <div className="mb-4 h4 card-title"></div>
           <div className="mb-4 h4 card-title">Disputed List</div>
+          <div>
+            <Button onClick={()=>setModal1(true)}>+ New</Button>
+          </div>
           <TableContainer
             columns={columns}
             data={Disputeddata}
