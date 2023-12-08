@@ -187,7 +187,9 @@ const ReportDebtor = props => {
 
   const additionalValue = "Hello from additional prop!";
 
-
+const handleReportDefaulter = ()=>{
+  window.location.href = "/ReportDefaulter"
+}
 const getDays = ()=>{
     GetAllInvoice != undefined ? GetAllInvoice.map((item)=>{
    const a = moment(item.dueDate);
@@ -223,7 +225,7 @@ console.log("ABABABABABAB 2", getDaysArray)
             <h5 className="m-1">Report a Defaulter</h5>
           </Col>
           <Col md={2}>
-            <Button className="btn btn-md btn-info">Report a Defaulter</Button>
+            <Button className="btn btn-md btn-info" onClick={()=>handleReportDefaulter()}>Report a Defaulter</Button>
           </Col>
         </Row>
 

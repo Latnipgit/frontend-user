@@ -10,6 +10,7 @@ import CompanySearch from "../pages/admin/company-search/companysearch";
 import DebtorsList from "../pages/admin/DebtorsList/debtorslist";
 import CrediotorList from "../pages/admin/CreditorsList/CreditorsList";
 import Invoice from "../pages/admin/Invoice/Invoice";
+import ReporteDefaulter from "../pages/admin/ReportDefaulter/RepoertDefaulter"
 import ReportDebtor from "../pages/admin/Invoice/ReportaDebtor";
 import Document from "../pages/Dashboard/users/Documents/documents";
 import ContactsProfile from "../pages/Dashboard/users/profile";
@@ -209,6 +210,7 @@ const authProtectedRoutes = [
   { path: "/send-bill-transaction", component: <SendBillTransaction /> },
   { path: "/recieved-payment", component: <DiputedBillings /> },
   { path: "/employee", component: <Employee /> },
+  { path: "/ReportDefaulter", component: <ReporteDefaulter /> },
   { path: "/EmployeeList", component: <EmployeeList /> },
   { path: "/Invoice", component: <Invoice /> },
   { path: "/Report-defaulter", component: <ReportDebtor /> },
