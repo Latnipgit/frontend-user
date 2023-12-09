@@ -11,6 +11,7 @@ import ReportedDefaulterModel from './ReportDefaulterModel'
 import UploadCACertificateModel from './uploadCACertificateModel'
 import 'react-table-6/react-table.css'
 import ReactTable from 'react-table-6'
+import CurrencyFormat from 'react-currency-format';
 import {
   Container,
   Row,
@@ -243,8 +244,8 @@ console.log("ABABABABABAB 2", getDaysArray)
        <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Customer Name</th>
-      <th scope="col">Refrence Number</th>
+      <th scope="col">Company Name</th>
+      {/* <th scope="col">Refrence Number</th> */}
       <th scope="col">Invoice Number</th>
       {/* <th scope="col">Status</th> */}
       <th scope="col">Address</th>
@@ -260,12 +261,18 @@ console.log("ABABABABABAB 2", getDaysArray)
       {console.log("NEW TABLE ", item)}
       
     <th scope="row" className="pt-4">{index + 1}</th>
-    <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td>
-    <td className="pt-4">{item.referenceNumber}</td>
+    {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
+    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+    {/* <td className="pt-4">{item.referenceNumber}</td> */}
     <td className="pt-4">{item.invoiceNumber}</td>
-    <td className="pt-4">{item.debtor.address1} {item.debtor.address2} ,{item.debtor.city}</td>
+    <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+    <br/>
+    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
     {/* <td className="pt-4">{item.status}</td> */}
-    <td className="pt-4">{item.remainingAmount}</td>
+    <td className="pt-4 text-end">
+      <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+
+    </td>
 
     <td >
    
@@ -291,6 +298,15 @@ console.log("ABABABABABAB 2", getDaysArray)
               }
             >
            Record Payment
+            </Button>
+            &nbsp;
+
+            <Button className="btn btn-info btn-sm"
+              // onClick={() => viewModels()
+               
+              // }
+            >
+           Request Edit
             </Button>
   
           </div>
