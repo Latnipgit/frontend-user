@@ -71,14 +71,14 @@ useEffect(()=>{
     console.log("ABSCS0 props0", props)
 
 
-},[filteredInvoiceList,DebtorsList])
+},[filteredInvoiceList])
 useEffect(()=>{
   setDebtorsList( GetAllDebtors != undefined && GetAllDebtors.length != 0 ? GetAllDebtors.map((item)=>{
     return {
       "value": item.id , "label":  item.firstname+" "+item.lastname
     }
   }):[])
-},[])
+},[DebtorsList])
 
 // console.log("GetAllDebtors Data",DebtorsList,GetAllInvoice,GetAllDebtors)
 const TotalDebtorPayment =(item)=>{
