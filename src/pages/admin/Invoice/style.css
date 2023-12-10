@@ -1,18 +1,20 @@
 .exampleModals{
-    height: 74vh !important;
-    width: 74vw !important;
+    height: 80vh !important;
+    /* width: 74vw !important; */
 }
 .modal-contents{
-    height: 74vh !important;
-    width: 74vw !important;  
+    height: 80vh !important;
+    /* width: 74vw !important;   */
 }
 .tableRow{
-    width: 100%;
-    overflow: hidden;
+    /* width: 100%; */
     padding: 0px 2%;
+    /* width: 80% !important;   */
+    
 }
 .tableRowtable{
-    width: 100% !important;
+    
+
 }
 .selectionList{
     padding: 20px 0px;

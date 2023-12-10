@@ -36,7 +36,16 @@ const ReportedDefaulterModel = props => {
       control: (base, state) => ({
         ...base,
         background: "#FAFAFA",
-     
+        // match with the menu
+        borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+        // Overwrittes the different states of border
+        borderColor: state.isFocused ? " #80d4ff" : " #80d4ff",
+        // Removes weird border around container
+        boxShadow: state.isFocused ? null : null,
+        "&:hover": {
+          // Overwrittes the different states of border
+          borderColor: state.isFocused ? " #80d4ff" : " #80d4ff"
+        }
       }),
       menu: base => ({
         ...base,
@@ -66,19 +75,21 @@ const ReportedDefaulterModel = props => {
   const handleShow = () => setShowModal(true)
 
 useEffect(()=>{
-    const { isOpen, toggle , GetAllInvoice } = props
-    dispatch(ongetAllDebtors());
-    console.log("ABSCS0 props0", props)
-
-
-},[filteredInvoiceList])
-useEffect(()=>{
   setDebtorsList( GetAllDebtors != undefined && GetAllDebtors.length != 0 ? GetAllDebtors.map((item)=>{
     return {
       "value": item.id , "label":  item.firstname+" "+item.lastname
     }
   }):[])
+  
 },[DebtorsList])
+
+useEffect(()=>{
+  const { isOpen, toggle , GetAllInvoice } = props
+  dispatch(ongetAllDebtors());
+  console.log("ABSCS0 props0", props)
+
+
+},[filteredInvoiceList])
 
 // console.log("GetAllDebtors Data",DebtorsList,GetAllInvoice,GetAllDebtors)
 const TotalDebtorPayment =(item)=>{
