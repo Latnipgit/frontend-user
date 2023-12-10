@@ -6,3 +6,19 @@
     height: 74vh !important;
     width: 74vw !important;  
 }
+.tableRow{
+    width: 100%;
+    overflow: hidden;
+    padding: 0px 2%;
+}
+.tableRowtable{
+    width: 100% !important;
+}
+.selectionList{
+    padding: 20px 0px;
+
+}
+.selectionsBack{
+    /* background-color: rgb(99, 152, 199)!important; */
+    background-color: #023950;
+}

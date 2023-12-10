@@ -32,6 +32,25 @@ const ReportedDefaulterModel = props => {
     const { isOpen, toggle , GetAllInvoice } = props
     const [filteredInvoiceList, setfilteredInvoiceList]=useState([])
 
+    const customStyles = {
+      control: (base, state) => ({
+        ...base,
+        background: "#FAFAFA",
+     
+      }),
+      menu: base => ({
+        ...base,
+        // override border radius to match the box
+        borderRadius: 0,
+        // kill the gap
+        marginTop: 0
+      }),
+      menuList: base => ({
+        ...base,
+        // kill the white space on first and last option
+        padding: 0
+      })
+    };
 
   console.log("PROPSS", GetAllInvoice)
   const { GetAllDebtors } = useSelector(state => ({
@@ -41,10 +60,10 @@ const ReportedDefaulterModel = props => {
   const handleInputChange = inputValue => {
     // Handle input change here
   }
-  const handleShow = () => setShowModal(true)
   const [totalValue, settotalValue]=useState([])
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => setShowModal(false)
+  const handleShow = () => setShowModal(true)
 
 useEffect(()=>{
     const { isOpen, toggle , GetAllInvoice } = props
@@ -52,7 +71,7 @@ useEffect(()=>{
     console.log("ABSCS0 props0", props)
 
 
-},[filteredInvoiceList])
+},[filteredInvoiceList,DebtorsList])
 useEffect(()=>{
   setDebtorsList( GetAllDebtors != undefined && GetAllDebtors.length != 0 ? GetAllDebtors.map((item)=>{
     return {
@@ -61,7 +80,7 @@ useEffect(()=>{
   }):[])
 },[])
 
-console.log("GetAllDebtors Data",DebtorsList,GetAllInvoice,GetAllDebtors)
+// console.log("GetAllDebtors Data",DebtorsList,GetAllInvoice,GetAllDebtors)
 const TotalDebtorPayment =(item)=>{
   if(item != undefined){
     settotalValue(item.remainingAmount)
@@ -82,11 +101,12 @@ const handleSelectCustomer =(item)=>{
 
   var filteredArray =  []
   filteredArray =  GetAllDebtors.filter(value=>value.id == item.value)
-  console.log("ITEM +",filteredArray)
+  // console.log("ITEM +",filteredArray)
   setfilteredCustomerDetail(filteredArray[0])
 
   handleFilterInvoiceList(item)
 }
+console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
   return (
     <Modal
       isOpen={isOpen}
@@ -102,8 +122,8 @@ const handleSelectCustomer =(item)=>{
         <ModalHeader toggle={toggle}>Report A Defaulter</ModalHeader>
       
     
-            <ModalBody className="w-auto" >
-            <Row className="">
+            <ModalBody className="" >
+            <Row className="selectionList">
                   <Col xs={12} md={2}>
                     <div className="mb-2"><b className="mt-2">Customer Name*</b></div>
                   </Col>
@@ -117,7 +137,8 @@ const handleSelectCustomer =(item)=>{
                       </label>
                       <Select
                         id="customerSelect"
-                        className="custom-content"
+                        // className="custom-content selectionsBack"
+                        styles={customStyles} 
                         options={DebtorsList}
                         value={selectedOption}
                         onChange={selected => handleSelectCustomer(selected)}
@@ -154,7 +175,7 @@ const handleSelectCustomer =(item)=>{
                  
                 </Row>
 
-                <Row className="mt-2">
+               {filteredCustomerDetail.length != 0? <Row className="mt-4">
                   <Label>
                     Company name - {filteredCustomerDetail.companyName}
                   </Label>
@@ -170,10 +191,10 @@ const handleSelectCustomer =(item)=>{
                   <Label>
                   Address - {filteredCustomerDetail.address1} , {filteredCustomerDetail.address2} , {filteredCustomerDetail.city}, {filteredCustomerDetail.zipcode}
                   </Label>
-                </Row>
+                </Row>:""}
 
-                <Row>
-                <table className="table table-bordered">
+                <Row className="tableRow">
+                <table className="table table-bordered tableRowtable" >
        <thead>
     <tr>
       <th scope="col">#</th>

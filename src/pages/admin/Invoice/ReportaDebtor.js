@@ -53,7 +53,7 @@ const ReportDebtor = props => {
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
   const toggleViewModal2 = () => setModal2(!modal3);
-  const toggleViewModal3 = () => setModal3(!modal4);
+  const toggleViewModal3 = () => setModal4(!modal4);
   const dispatch = useDispatch();
 
   const { GetAllInvoice } = useSelector(state => ({
@@ -67,7 +67,7 @@ const ReportDebtor = props => {
 
   }, [])
 
-
+console.log("modal4modal4",modal4)
   const viewModel =(value)=>{
     setSelected(value)
     setModal2(true)
