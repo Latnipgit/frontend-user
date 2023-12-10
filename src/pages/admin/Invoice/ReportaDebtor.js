@@ -9,6 +9,7 @@ import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 import ReportedDebtorsModel from "./ReportedModel"
 import ReportedDefaulterModel from './ReportDefaulterModel'
 import UploadCACertificateModel from './uploadCACertificateModel'
+import ReportIncoiceModel from './ReportInvoiceModel'
 import 'react-table-6/react-table.css'
 import ReactTable from 'react-table-6'
 import CurrencyFormat from 'react-currency-format';
@@ -47,10 +48,12 @@ const ReportDebtor = props => {
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
+  const [modal4, setModal4] = useState(false);
   const [selected, setSelected] = useState('');
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
-  const toggleViewModal2 = () => setModal3(!modal3);
+  const toggleViewModal2 = () => setModal2(!modal3);
+  const toggleViewModal3 = () => setModal3(!modal4);
   const dispatch = useDispatch();
 
   const { GetAllInvoice } = useSelector(state => ({
@@ -189,7 +192,8 @@ const ReportDebtor = props => {
   const additionalValue = "Hello from additional prop!";
 
 const handleReportDefaulter = ()=>{
-  window.location.href = "/ReportDefaulter"
+  // window.location.href = "/ReportDefaulter"
+  setModal4(true)
 }
 const getDays = ()=>{
     GetAllInvoice != undefined ? GetAllInvoice.map((item)=>{
@@ -211,6 +215,7 @@ console.log("ABABABABABAB 2", getDaysArray)
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
       <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} />
+      <ReportIncoiceModel isOpen ={modal4} toggle={toggleViewModal3}  GetAllInvoice={GetAllInvoice} />
       
 
       <Card>

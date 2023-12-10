@@ -40,7 +40,6 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 import * as moment from "moment";
-import debtorslist from "../DebtorsList/debtorslist"
 
 const SendBillTransaction = (props) => {
   const dispatch = useDispatch()
@@ -570,17 +569,13 @@ else{
 
   }
 useEffect(()=>{
+  console.log("getAllDebtorsList",getAllDebtorsList)
   dispatch(ongetAllDebtors());
   dispatch(ongetAllInvoice());
-  
-  setDebtorsList( getAllDebtorsList != undefined && getAllDebtorsList.length != 0 ? getAllDebtorsList.map((item)=>{
-    return {
-      "value": item.id , "label":  item.firstname+" "+item.lastname
-    }
-  }):[])
+
 
  
-  
+  f();
 },[])
 
 
@@ -621,10 +616,10 @@ console.log("TotalDebtorPayment",item)
               <CardTitle className="h2 mb-4">
                  <Row>
                    <Col md={10}>
-                     <h5>Report A Debtor</h5>
+                     <h5>Invoice</h5>
                    </Col>
                    <Col md={2} className="text-end">
-                   {/* <Button className="btn btn-sm btn-info" onClick={()=>window.location.reload()}> View Invoice List</Button> */}
+                   <Button className="btn btn-sm btn-info" onClick={()=>window.location.reload()}> View Invoice List</Button>
 
                    </Col>
         </Row> 
