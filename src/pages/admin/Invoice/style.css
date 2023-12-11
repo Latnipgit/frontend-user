@@ -24,3 +24,35 @@
     /* background-color: rgb(99, 152, 199)!important; */
     background-color: #023950;
 }
+.custom-content{
+    border-radius: 14px;
+    background-color: #023950;
+    
+    
+  }
+  .custom-content1{
+    border-radius: 14px;
+    
+  }
+  .custom-content:hover {
+    border: 1px solid #408dfb; /* Define your border style here */
+    border-radius: 10px;
+  }
+  .form-select.custom-select {
+    border: 1px solid #ccc; /* Default border style */
+    padding: 5px;
+  }
+  
+  .form-select.custom-select:hover {
+    border: 1px solid #007bff; /* Change border color on hover */
+  }
+  
+  .form-select.custom-select option {
+    background-color: #fff; /* Background color of options */
+    color: #000; /* Text color of options */
+  }
+  
+  .form-select.custom-select option:hover {
+    background-color: #21263c; /* Background color of options on hover */
+    color: #fff; /* Text color of options on hover */
+  }

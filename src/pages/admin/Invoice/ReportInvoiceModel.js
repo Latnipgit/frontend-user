@@ -24,8 +24,9 @@ import { getAllDebtors as ongetAllDebtors}  from '../../../store/actions'
 import CurrencyFormat from 'react-currency-format';
 import Select from "react-select"
 import * as moment from "moment";
+// import { hover } from "@testing-library/user-event/dist/types/convenience";
 
-
+// import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
 const ReportedDefaulterModel = props => {
     const [DebtorsList, setDebtorsList] = useState(false)
     const [selectedOption, setSelectedOption] = useState("")
@@ -33,32 +34,46 @@ const ReportedDefaulterModel = props => {
     const [filteredInvoiceList, setfilteredInvoiceList]=useState([])
 
     const customStyles = {
-      control: (base, state) => ({
-        ...base,
+     
+      control: (provided, state) => ({
+        ...provided,
         background: "#FAFAFA",
+        width:"300px",
         // match with the menu
         borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
         // Overwrittes the different states of border
-        borderColor: state.isFocused ? " #80d4ff" : " #80d4ff",
-        // Removes weird border around container
+        borderColor: state.isFocused ? " #4da6ff" : " #80d4ff",
+        // Removes weird border around container  
         boxShadow: state.isFocused ? null : null,
         "&:hover": {
           // Overwrittes the different states of border
-          borderColor: state.isFocused ? " #80d4ff" : " #80d4ff"
+          borderColor: state.isFocused ? " #4da6ff" : " #80d4ff"
         }
       }),
-      menu: base => ({
-        ...base,
-        // override border radius to match the box
-        borderRadius: 0,
-        // kill the gap
-        marginTop: 0
+      option: (provided, state) => ({
+
+        // Your custom option styles here
+        backgroundColor: state.isFocused ? '#80bfff' : '#FAFAFA',
+        ':hover': {
+          backgroundColor: '#80bfff', // Change background color on hover
+        },
+      
+      
+        menu: base => ({
+          ...base,
+          // override border radius to match the box
+          borderRadius: 0,
+          // kill the gap
+          marginTop: 2
+        }),
+        menuList: base => ({
+          ...base,
+          // kill the white space on first and last option
+          padding: 2,
+          margin:2
+        })
       }),
-      menuList: base => ({
-        ...base,
-        // kill the white space on first and last option
-        padding: 0
-      })
+      // Add more styles as needed for other parts of the Select component
     };
 
   console.log("PROPSS", GetAllInvoice)
@@ -134,6 +149,7 @@ console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
       
     
             <ModalBody className="" >
+            <form>
             <Row className="selectionList">
                   <Col xs={12} md={2}>
                     <div className="mb-2"><b className="mt-2">Customer Name*</b></div>
@@ -146,16 +162,14 @@ console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
                       >
                         Select Customer
                       </label>
-                      <Select
-                        id="customerSelect"
-                        // className="custom-content selectionsBack"
-                        styles={customStyles} 
-                        options={DebtorsList}
-                        value={selectedOption}
-                        onChange={selected => handleSelectCustomer(selected)}
-                        onInputChange={handleInputChange}
-                        placeholder="Select or add a customer"
-                      />
+                   
+                       <Select
+      options={DebtorsList}
+      styles={customStyles}
+      value={selectedOption}
+      onChange={selected => handleSelectCustomer(selected)}
+    />
+                      
                     </div>
                   </Col>
                   <Col xs={12} md={3}>
@@ -185,6 +199,7 @@ console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
                   </Col>
                  
                 </Row>
+            </form>
 
                {filteredCustomerDetail.length != 0? <Row className="mt-4">
                   <Label>
@@ -229,8 +244,8 @@ console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
         <td> {item != undefined ?item.invoiceNumber:""}</td>
         <td>{ moment(item != undefined ?item.dueDate:'').format("DD-MMM-YYYY")}</td>
         <td className="text-end">
-        <CurrencyFormat value={item != undefined ?item.remainingAmount:''} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{}</div>} />
-
+          
+        <CurrencyFormat value={item != undefined ?item.remainingAmount.toFixed(2):''} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{}</div>} />
         </td>
 
       </tr>
@@ -241,13 +256,10 @@ console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
                 </Row>
                 <Row>
                 <Col  md={8}></Col>
-                  <Col md={1}>
-                    TOTAL - {totalValue}
-                  </Col>
-                  <Col md={3}>
-                  {/* <CurrencyFormat value={totalValue} displayType={'text'} thousandSeparator={true} /> */}
-
-                  </Col>
+                 {totalValue.length != 0 ? <Col md={3} className="text-end">
+                  <b>TOTAL</b> - <b> {totalValue.toFixed(2)}</b>
+                  </Col>:""}
+                  
                 </Row>
 
             </ModalBody>
