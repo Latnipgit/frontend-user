@@ -56,3 +56,6 @@
     background-color: #21263c; /* Background color of options on hover */
     color: #fff; /* Text color of options on hover */
   }
+.totalText{
+    font-size: 15px;
+}

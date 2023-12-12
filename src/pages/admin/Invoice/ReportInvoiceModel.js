@@ -20,11 +20,15 @@ import {
 } from "reactstrap"
 import { useFormik } from "formik"
 import { ToastContainer, toast } from 'react-toastify';
+import { addCustomerlist } from "../../../store/actions"
+
 import { useEffect } from "react";
 import { getAllDebtors as ongetAllDebtors}  from '../../../store/actions'
 import CurrencyFormat from 'react-currency-format';
 import Select from "react-select"
 import * as moment from "moment";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
@@ -194,6 +198,29 @@ useEffect(()=>{
 
 
 },[filteredInvoiceList])
+const handleFormSubmit = item => {
+    
+   
+  const dummy =[
+    {
+      "debtorType": item.customerType,
+      "salutation":selectedOption.value,
+      "firstname": item.firstname,
+      "lastname": item.lastname,
+      "customerEmail": item.customerEmail,
+      "customerMobile": item.customerPhone,
+      "address1": item.address1,
+      "address2": item.address2,
+      "city": item.city,
+      "state": item.state,
+      "zipcode": item.zipcode,
+      "gstin": item.gstNumber,
+      "companyPan": item.panCard,
+      "companyName": item.companyName
+}
+  ]
+  dispatch(addCustomerlist(dummy))
+}
 
 // console.log("GetAllDebtors Data",DebtorsList,GetAllInvoice,GetAllDebtors)
 const TotalDebtorPayment =(item)=>{
@@ -205,23 +232,150 @@ const TotalDebtorPayment =(item)=>{
 const handleFilterInvoiceList = (item)=>{
   var filteredArrays =  []
   filteredArrays =  GetAllInvoice.filter(value=>value.debtorId == item.value)
-  console.log("filteredInvoiceList",filteredInvoiceList,filteredArrays[0])
+  console.log("filteredInvoiceList  KKKKK",filteredInvoiceList,filteredArrays[0])
+  if(filteredArrays[0] != undefined){
   setfilteredInvoiceList([filteredArrays[0]])
-  
+
+  }
+  else{
+
+    setfilteredInvoiceList(undefined)
+
+}
 }
 const [filteredCustomerDetail, setfilteredCustomerDetail] = useState([])
-console.log("filteredCustomerDetailfilteredCustomerDetail",filteredCustomerDetail)
+
 const handleSelectCustomer =(item)=>{
   setSelectedOption(item)
 
   var filteredArray =  []
   filteredArray =  GetAllDebtors.filter(value=>value.id == item.value)
-  // console.log("ITEM +",filteredArray)
+  console.log("ITEM +",filteredArray)
   setfilteredCustomerDetail(filteredArray[0])
 
   handleFilterInvoiceList(item)
 }
+const [data, setData] = useState([
+  {
+    itemDetail: "",
+    date: "",
+    amount: "",
+  },
+])
+const [faqsRow, setFaqsRow] = useState(1)
+
+const handleItemDetailChange = (index, value) => {
+  const newData = [...data]
+  newData[index].itemDetail = value
+  setData(newData)
+}
+const handleAmountChange = (index, value) => {
+  const newData = [...data]
+  newData[index].amount = value
+  setData(newData)
+}
+
+const addFaqsRow = () => {
+  debugger
+  // Check if any of the previous row's fields are empty
+  const lastIndex = data.length - 1
+  const lastRow = data[lastIndex]
+
+  if (
+    lastRow.itemDetail === "" ||
+    lastRow.date === "" ||
+    lastRow.amount === ""
+  ) {
+    setTimeout(() => {
+    }, 3000)
+    return // Exit without adding a new row
+  }
+
+
+  setFaqsRow(faqsRow + 1)
+  setData([
+    ...data,
+    {
+      itemDetail: "",
+      date: "",
+      amount: "₹",
+    },
+  ])
+}
+
+const removeFaqsRow = index => {
+  const newData = [...data]
+  newData.splice(index, 1)
+  setData(newData)
+  setFaqsRow(faqsRow - 1)
+}
+
+console.log("datadatadata",data)
+
+const [selectedDate, setSelectedDate] = useState(null);
+const handleDateChange = (value, index) => {
+  const newData = [...data]
+  newData[index].date = value
+  setData(newData)
+  setSelectedDate(value)
+};
 console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
+
+const handleFileChange = (event, fieldName) => {
+  const files = event.target.files
+  console.log("FILEEE", event.target.files,fieldName)
+ 
+  const formData = new FormData();
+ 
+  formData.append('file', files[0]);   //append the values with key, value pair
+  formData.append('fieldName', fieldName);
+ 
+
+  uploadFile(formData)
+
+
+}
+  
+const [uploadTransportId, setuploadTransportId] = useState('')
+const [uploadpurchaseId, setuploadpurchaseId] = useState('')
+const [uploadInvoiceId, setuploadInvoiceId] = useState('')
+const [uploadChallanId, setuploadChallanId] = useState('')
+
+
+
+function uploadFile(formData){
+  console.log("UPLOAD FILE", formData)
+  const token = localStorage.getItem("tokenemployeeRegister")
+  const headers = {
+    'x-access-token': token != null ? token :'',
+  };
+  
+
+  axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
+    headers: headers
+    })       
+    .then((response) => {
+      // toast.success("file upload successfully")
+      console.log("Response", response)
+      if(response.data.response.fieldName == "uploadInvoice"){
+        setuploadInvoiceId(response.data.response.documentId)
+      }
+      if(response.data.response.fieldName == "uploadPurchaseOrder"){
+        setuploadpurchaseId(response.data.response.documentId)
+      }
+      if(response.data.response.fieldName == "uploadchallanDispatchDocument"){
+        setuploadChallanId(response.data.response.documentId )
+      }
+      if(response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`"){
+        setuploadTransportId(response.data.response.documentId)
+      }
+    })
+.catch((error) => {
+console.log("Response", error)
+
+})
+}
+
   return (
     <Modal
       isOpen={isOpen}
@@ -724,7 +878,7 @@ console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
                 </Row>:""}
 
                 <Row className="tableRow">
-                <table className="table table-bordered tableRowtable" >
+            {filteredInvoiceList != undefined ?     <table className="table table-bordered tableRowtable" >
        <thead>
     <tr>
       <th scope="col">#</th>
@@ -753,15 +907,197 @@ console.log("filteredCustomerDetail",GetAllDebtors,filteredCustomerDetail)
         </td>
 
       </tr>
-    }):''}
+    }):
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    }
     </tbody></table>
+    :
+    
+    <Row className="Dragtable mt-3 pb-5">
+    <div className="table-responsive">
+      <table id="faqs11" className="table table-hover custom-table">
+        <thead>
+          <tr>
+            <th>Invoice Number</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th> Purchase Order</th>
+            <th> Dispatch Document</th>
+            <th>File to Invoice*</th>
+            <th>Delivery Receipt</th>
+            <th>CA Certificate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((row, index) => (
+            <tr key={index}>
+          
+              <td className="hoverable-cell">
+                <Input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter  Invoice Number"
+                  value={row.amount}
+                  onChange={e =>
+                    handleItemDetailChange(index, e.target.value)
+                  }
+                />
+              </td>
+
+              <td className="hoverable-cell">
+       
+
+                      <DatePicker
+                        selected={selectedDate}
+                        // value={row.date}
+
+                        onChange={(date) =>
+                          handleDateChange(date,index)
+                        }
+                        dateFormat="dd-MMM-yyyy" // Format to display year, month, and day
+                        className="form-control custom-content"
+                       
+                      />
+  
+              </td>
+              <td className="hoverable-cell">
+                <Input
+                  type="number"
+                  className="form-control"
+                  placeholder="Enter Due Amount"
+                  value={row.amount}
+                  onChange={e =>
+                    handleAmountChange(index, e.target.value)
+                  }
+                />
+              </td>
+   
+          <td>
+          <InputGroup className="text-capitalize">
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="uploadPurchaseOrder"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(e, "uploadPurchaseOrder")
+                              }
+                            />
+                          </InputGroup>
+
+          </td>
+          <td>
+          <InputGroup>
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="uploadchallanDispatchDocument"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(
+                                  e,
+                                  "uploadchallanDispatchDocument"
+                                )
+                              }
+                            />
+                            </InputGroup>
+          </td>
+          <td>
+          <InputGroup>
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="uploadInvoice"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(e, "uploadInvoice")
+                              }
+                            />
+                          </InputGroup>
+          </td>
+          <td>
+
+          <InputGroup>
+                            <input
+                              type="file"
+                              className="form-control"
+                              id="uploadTransportationDocumentDeliveryReceipt"
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(
+                                  e,
+                                  "uploadTransportationDocumentDeliveryReceipt~`"
+                                )
+                              }
+                            />
+                          </InputGroup>
+          </td>
+         
+          <td>
+
+<InputGroup>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="uploadTransportationDocumentDeliveryReceipt"
+                    accept=".pdf, .doc, .docx, .txt"
+                    aria-describedby="fileUploadHelp"
+                    // onChange={e =>
+                    //   handleFileChange(
+                    //     e,
+                    //     "uploadTransportationDocumentDeliveryReceipt~`"
+                    //   )
+                    // }
+                  />
+                </InputGroup>
+</td>
+    
+
+         
+             
+             
+             
+              <td>
+                {index > 0 ? (
+                  <span
+                    className="icon-container delete-icon"
+                    onClick={() => removeFaqsRow(index)}
+                  >
+                    <span className="mdi mdi-delete icon-red"></span>
+                  </span>
+                ) : null}
+                <span
+                  className="icon-container add-icon"
+                  onClick={addFaqsRow}
+                >
+                  <span className="mdi mdi-plus icon-yellow"></span>
+                </span>
+              </td>
+            </tr>
+          ))}
+          
+        </tbody>
+      </table>
+    </div>
+  </Row>
+    }
     
 
                 </Row>
                 <Row>
                 <Col  md={8}></Col>
                  {totalValue.length != 0 ? <Col md={3} className="text-end">
-                  <b>TOTAL</b> - <b> {totalValue.toFixed(2)}</b>
+                  <b className="totalText">TOTAL</b> - <b className="totalText"> {totalValue.toFixed(2)}</b>
                   </Col>:""}
                   
                 </Row>

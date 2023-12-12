@@ -569,3 +569,27 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+
+table#faqs11, table#faqs11 tr, table#faqs11 td, table#faqs11 TH {background: WHITE;box-shadow: none !important;}
+
+
+table#faqs11 tr:hover td {
+    background: white;
+}
+
+td.hoverable-cell input {
+  background: white !important;
+}
+
+
+
+
+
+table#faqs11 {
+  border: none;
+}
+
+table#faqs11 th {
+  border-top: 1px solid #dddddd;
+}
