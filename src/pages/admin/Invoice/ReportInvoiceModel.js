@@ -29,6 +29,7 @@ import Select from "react-select"
 import * as moment from "moment";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import ConfirmReportModal from "./ConfirmReportDefaulterModal";
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
@@ -182,6 +183,10 @@ const ReportedDefaulterModel = props => {
   const handleClose = () => setShowModal(false)
   const handleShow = () => setShowModal(true)
 
+  const [showConfirmModal, setshowConfirmModal] = useState(false)
+  const handleConfirmClose = () => setshowConfirmModal(false)
+  const handleConfirmshow = () => setshowConfirmModal(true)
+
   useEffect(() => {
     setDebtorsList(GetAllDebtors != undefined && GetAllDebtors.length != 0 ? GetAllDebtors.map((item) => {
       return {
@@ -189,7 +194,7 @@ const ReportedDefaulterModel = props => {
       }
     }) : [])
 
-  }, [])
+  }, [DebtorsList])
 
   useEffect(() => {
     const { isOpen, toggle, GetAllInvoice } = props
@@ -406,6 +411,11 @@ const ReportedDefaulterModel = props => {
     })
     setTotal(total)
   }
+  
+
+  const handleRepoertProceed =()=>{
+    setshowConfirmModal(true)
+  }
 console.log("dataoodata",data)
   return (
     <Modal
@@ -423,6 +433,7 @@ console.log("dataoodata",data)
 
 
         <ModalBody className="" >
+          <ConfirmReportModal  isOpen={showConfirmModal} toggle={handleConfirmClose} />
           <form>
             <Row className="selectionList">
               <Col xs={12} md={2}>
@@ -1104,9 +1115,9 @@ console.log("dataoodata",data)
                             id="uploadPurchaseOrder"
                             accept=".pdf, .doc, .docx, .txt"
                             aria-describedby="fileUploadHelp"
-                            // onChange={e =>
-                            //   // handleFileChange(e, "uploadPurchaseOrder")
-                            // }
+                            onChange={e =>
+                              handleFileChange(e, "uploadCACertificate")
+                            }
                           />
                         </InputGroup>
                       </Col>
@@ -1146,6 +1157,14 @@ console.log("dataoodata",data)
                 </Col>
   
 </Row>
+
+<Row>
+<Col md={10}></Col>
+<Col md={2} className=" text-end mt-3">
+<Button className="btn w-100 btn-info" onClick={()=>handleRepoertProceed()}><span className="h5">Next</span></Button>
+
+</Col>
+  </Row>
 
               </Row>
 
