@@ -1,9 +1,9 @@
 .exampleModals{
-    height: 80vh !important;
+    height: auto !important;
     /* width: 74vw !important; */
 }
 .modal-contents{
-    height: 80vh !important;
+    height: auto !important;
     /* width: 74vw !important;   */
 }
 .tableRow{
@@ -26,9 +26,12 @@
 }
 .custom-content{
     border-radius: 14px;
-    background-color: #023950;
+    /* background-color: #023950; */
     
     
+  }
+  .AddiNVOICEcARD{
+    background: #f1f7ff;
   }
   .custom-content1{
     border-radius: 14px;
