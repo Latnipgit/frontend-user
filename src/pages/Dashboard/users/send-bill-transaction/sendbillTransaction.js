@@ -29,9 +29,9 @@ import {
   Label,
   InputGroupAddon,
 } from "reactstrap"
-import { getAllDebtors as ongetAllDebtors}  from '../../../../store/actions'
-import { addInvoiceBill}  from '../../../../store/actions'
-import { addFiles}  from '../../../../store/actions'
+import { getAllDebtors as ongetAllDebtors } from '../../../../store/actions'
+import { addInvoiceBill } from '../../../../store/actions'
+import { addFiles } from '../../../../store/actions'
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -52,15 +52,15 @@ const SendBillTransaction = (props) => {
 
   const colourStyles = {
     menuList: styles => ({
-        ...styles,
-        background: '#FFFFFF'
+      ...styles,
+      background: '#FFFFFF'
     })
- 
+
   }
- console.log("getDebtor",getDebtor)
+  console.log("getDebtor", getDebtor)
   const { getAllDebtorsList } = useSelector(state => ({
-    getAllDebtorsList: state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response:[],
-   }));
+    getAllDebtorsList: state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [],
+  }));
 
   const validationSchema = Yup.object().shape({
     customerName: Yup.string().required(
@@ -105,7 +105,7 @@ const SendBillTransaction = (props) => {
     validationSchema,
     onSubmit: values => {
       // Handle form submission logic here
-    
+
     },
   })
 
@@ -119,27 +119,25 @@ const SendBillTransaction = (props) => {
   ])
 
 
-  const handleInputChange = inputValue => {
-    // Handle input change here
-  }
 
   const handleSaveCustomer = () => {
     // Handle saving the customer here
   }
+  const [filteredArrays, setfilteredArrays] = useState([])
 
   const handleOptionSelect = selected => {
-    if (selected.isAddCustomer) {
-      // Handle the "Add Customer" option click
-      setShowModal(true)
-    } else {
-      setSelectedOption(selected)
-    }
+    setSelectedOption(selected)
+
+    setfilteredArrays(getAllDebtorsList.filter(value => value.id == selected.value))
+
   }
+
+  console.log("selectedOptionselectedOption", filteredArrays)
 
   const handleCloseModal = () => {
     setShowModal(false)
   }
-console.log("selectedOption", selectedOption)
+  console.log("selectedOption", selectedOption)
   //first table
   const [faqsRow, setFaqsRow] = useState(1)
   const [subtotal, setSubtotal] = useState(0)
@@ -151,10 +149,10 @@ console.log("selectedOption", selectedOption)
       amount: "",
     },
   ])
-const [uploadInvoiceid,setuploadInvoiceId] = useState("")
-const [uploadpurchaseId,setuploadpurchaseId] = useState("")
-const [uploadChallanId,setuploadChallanId] = useState("")
-const [uploadTransportId,setuploadTransportId] = useState("")
+  const [uploadInvoiceid, setuploadInvoiceId] = useState("")
+  const [uploadpurchaseId, setuploadpurchaseId] = useState("")
+  const [uploadChallanId, setuploadChallanId] = useState("")
+  const [uploadTransportId, setuploadTransportId] = useState("")
   const [validationMessage, setValidationMessage] = useState("")
 
   const addFaqsRow = () => {
@@ -194,8 +192,11 @@ const [uploadTransportId,setuploadTransportId] = useState("")
     setData(newData)
     setFaqsRow(faqsRow - 1)
   }
+  const [currenIndex, setCurrentIndex] = useState(0)
 
   const handleItemDetailChange = (index, value) => {
+    console.log("INDEXXXXX",index)
+    setCurrentIndex(index)
     const newData = [...data]
     newData[index].itemDetail = value
     setData(newData)
@@ -242,25 +243,25 @@ const [uploadTransportId,setuploadTransportId] = useState("")
   })
   const handleFileChange = (event, fieldName) => {
     const files = event.target.files
-    console.log("FILEEE", event.target.files,fieldName)
+    console.log("FILEEE", event.target.files, fieldName)
     if (files.length > 0) {
       setFileData({ ...fileData, [fieldName]: files[0] })
     }
     const formData = new FormData();
-   
+
     formData.append('file', files[0]);   //append the values with key, value pair
     formData.append('fieldName', fieldName);
-   
- 
+
+
     uploadFile(formData)
 
 
   }
 
-  function uploadFile(formData){
+  function uploadFile(formData) {
     const token = localStorage.getItem("tokenemployeeRegister")
     const headers = {
-      'x-access-token': token != null ? token :'',
+      'x-access-token': token != null ? token : '',
     };
     console.log("HEADERDS", headers)
     // fetch('https://bafana-backend.azurewebsites.net/api/files/upload', {
@@ -280,26 +281,26 @@ const [uploadTransportId,setuploadTransportId] = useState("")
     // );
     axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
       headers: headers
-      })       
-.then((response) => {
-  console.log("Response", response)
-  if(response.data.response.fieldName == "uploadInvoice"){
-    setuploadInvoiceId(response.data.response.documentId)
-  }
-  if(response.data.response.fieldName == "uploadPurchaseOrder"){
-    setuploadpurchaseId(response.data.response.documentId)
-  }
-  if(response.data.response.fieldName == "uploadchallanDispatchDocument"){
-    setuploadChallanId(response.data.response.documentId)
-  }
-  if(response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`"){
-    setuploadTransportId(response.data.response.documentId)
-  }
-})
-.catch((error) => {
-  console.log("Response", error)
+    })
+      .then((response) => {
+        console.log("Response", response)
+        if (response.data.response.fieldName == "uploadInvoice") {
+          setuploadInvoiceId(response.data.response.documentId)
+        }
+        if (response.data.response.fieldName == "uploadPurchaseOrder") {
+          setuploadpurchaseId(response.data.response.documentId)
+        }
+        if (response.data.response.fieldName == "uploadchallanDispatchDocument") {
+          setuploadChallanId(response.data.response.documentId)
+        }
+        if (response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`") {
+          setuploadTransportId(response.data.response.documentId)
+        }
+      })
+      .catch((error) => {
+        console.log("Response", error)
 
-})
+      })
   }
   //second Table
 
@@ -376,13 +377,13 @@ const [uploadTransportId,setuploadTransportId] = useState("")
     if (value.length == 0) {
       setAdjustmentsValue(0)
     } else {
-      
-        setAdjustmentsValue(value)
-      
-        setTotal(total+value)
-        
+
+      setAdjustmentsValue(value)
+
+      setTotal(total + value)
+
     }
-    }
+  }
 
   const handleDiscountChange = e => {
     const value = e.target.value
@@ -425,7 +426,7 @@ const [uploadTransportId,setuploadTransportId] = useState("")
       zipcode: "",
     },
 
-   
+
     validate: values => {
       const errors = {}
 
@@ -479,12 +480,12 @@ const [uploadTransportId,setuploadTransportId] = useState("")
     },
   })
   const handleFormSubmit = item => {
-    
-   
-    const dummy =[
+
+
+    const dummy = [
       {
         "debtorType": item.customerType,
-        "salutation":selectedOption.value,
+        "salutation": selectedOption.value,
         "firstname": item.firstname,
         "lastname": item.lastname,
         "customerEmail": item.customerEmail,
@@ -497,53 +498,54 @@ const [uploadTransportId,setuploadTransportId] = useState("")
         "gstin": item.gstNumber,
         "companyPan": item.panCard,
         "companyName": item.companyName
-  }
+      }
     ]
     dispatch(addCustomerlist(dummy))
   }
 
   const formikSendBill = useFormik({
     initialValues: {
-    customerName:"",
-    RefrenceNumber:"",
-    invoiceNumber:"",
-    invoiceDate:"",
-    dueDate:"",
-    itemDetail:[],
-    subtotal:"",
-    tax:"",
-    discount:"",
-    adjustment:"",
-    grandTotal:"",
-    puchaseOrderFile:"",
-    challanfile:"",
-    invoiceFile:"",
-    TransportFile:""
-    },})
-    // console.log("selectedOption.value",selectedOption.value!= undefined ? selectedOption.value.slice(-4):"Hello")
-console.log("selectedOption",selectedOption.value != null ? selectedOption.value.slice(-6).toUpperCase():'')
+      customerName: "",
+      RefrenceNumber: "",
+      invoiceNumber: "",
+      invoiceDate: "",
+      dueDate: "",
+      itemDetail: [],
+      subtotal: "",
+      tax: "",
+      discount: "",
+      adjustment: "",
+      grandTotal: "",
+      puchaseOrderFile: "",
+      challanfile: "",
+      invoiceFile: "",
+      TransportFile: ""
+    },
+  })
+  // console.log("selectedOption.value",selectedOption.value!= undefined ? selectedOption.value.slice(-4):"Hello")
+  console.log("selectedOption", selectedOption.value != null ? selectedOption.value.slice(-6).toUpperCase() : '')
   const handleFormSubmitSendBill = item => {
     const dueDated = moment(item.dueDate).format("YYYY-MM-DD")
     const inVoiceDated = moment(item.invoiceDate).format("YYYY-MM-DD")
 
-   
 
-  const dummy=[{
+
+    const dummy = [{
       "debtorId": selectedOption.value,
       "billDate": inVoiceDated,
       "billDescription": "",
       "billNumber": "",
       "creditAmount": total,
-      "remainingAmount": total, 
+      "remainingAmount": total,
       "status": "",
       "interestRate": "",
       "creditLimitDays": "",
       "remark": "",
       "items": data,
       "subTotal": subtotal,
-      "tax": cgst != ''? cgst :sgst,
-      "referenceNumber": selectedOption.value != null ? "BAF"+"-"+ selectedOption.value.slice(-6).toUpperCase():'',
-      "invoiceNumber": "BAF"+"-"+item.invoiceNumber,
+      "tax": cgst != '' ? cgst : sgst,
+      "referenceNumber": selectedOption.value != null ? "BAF" + "-" + selectedOption.value.slice(-6).toUpperCase() : '',
+      "invoiceNumber": "BAF" + "-" + item.invoiceNumber,
       "dueDate": dueDated,
       "percentage": "",
       "purchaseOrderDocument": uploadpurchaseId,
@@ -551,156 +553,111 @@ console.log("selectedOption",selectedOption.value != null ? selectedOption.value
       "invoiceDocument": uploadInvoiceid,
       "transportationDocument": uploadTransportId
 
-}]
-if(uploadInvoiceid == ''){
+    }]
+    if (uploadInvoiceid == '') {
 
-  toast.error("Please Upload Invoice File")
-}
-else{
-  dispatch(addInvoiceBill(dummy))
-}
- 
+      toast.error("Please Upload Invoice File")
+    }
+    else {
+      dispatch(addInvoiceBill(dummy))
+    }
+
 
 
   }
-useEffect(()=>{
-  console.log("getAllDebtorsList",getAllDebtorsList)
-  dispatch(ongetAllDebtors());
-  setgetDebtor(getAllDebtorsList!= undefined? getAllDebtorsList:[])
+  useEffect(() => {
+    console.log("getAllDebtorsList", getAllDebtorsList)
+    dispatch(ongetAllDebtors());
+    setgetDebtor(getAllDebtorsList != undefined ? getAllDebtorsList : [])
 
-  setDebtorsList( getAllDebtorsList != undefined && getAllDebtorsList.length != 0 ? getAllDebtorsList.map((item)=>{
-    return {
-      "value": item.id , "label":  item.firstname+" "+item.lastname
-    }
-  }):[])
-},[])
- return (
+    setDebtorsList(getAllDebtorsList != undefined && getAllDebtorsList.length != 0 ? getAllDebtorsList.map((item) => {
+      return {
+        "value": item.id, "label": item.firstname + " " + item.lastname
+      }
+    }) : [])
+  }, [])
+  return (
     <Container fluid className="mt-5 mb-5 text-capitalize">
       <Row>
         <Col lg={12}>
           <Card className="mt-5">
             <CardBody>
               <CardTitle className="h2 mb-4">
-                 <Row>
-                   <Col md={10}>
-                     <h5>Invoice</h5>
-                   </Col>
-                   <Col md={2} className="text-end">
-                   <Button className="btn btn-sm btn-info" onClick={()=>window.location.reload()}> View Invoice List</Button>
+                <Row>
+                  <Col md={10}>
+                    <h5>Invoice</h5>
+                  </Col>
+                  <Col md={2} className="text-end">
+                    <Button className="btn btn-sm btn-info" onClick={() => window.location.reload()}> View Invoice List</Button>
 
-                   </Col>
-        </Row> 
+                  </Col>
+                </Row>
 
-               </CardTitle>
+              </CardTitle>
               <form>
-                <Row className="custom-row">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2">Customer Name*</div>
-                  </Col>
-                  <Col xs={12} md={4}>
-                    <div className="d-inline">
-                      <label
-                        className="visually-hidden custom-content"
-                        htmlFor="customerSelect"
-                      >
-                        Select Customer
-                      </label>
-                      <Select
-                        id="customerSelect"
-                        className="custom-content"
-                        options={DebtorsList}
-                        value={selectedOption}
-                        onChange={selected => setSelectedOption(selected)}
-                        onInputChange={handleInputChange}
-                        placeholder="Select or add a customer"
-                      />
-                    </div>
-                  </Col>
-                  <Col xs={12} md={1}>
-                    <div className="d-inline">
-                      <Button variant="link" onClick={handleShow}>
-                        <i className="fas fa-plus-circle" />{" "}
-                        {/* Assuming you have an icon library */}
-                      </Button>
 
-                      <Modal show={showModal} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Add New Customer</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          Hi Akshay Neriya
-                          {/* Your form for adding a customer goes here */}
-                          {/* You can use Form controls or any other input elements */}
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button variant="secondary" onClick={handleClose}>
-                            Close
-                          </Button>
-                          <Button variant="primary">Save Customer</Button>
-                        </Modal.Footer>
-                      </Modal>
-                    </div>
-                  </Col>
-                </Row>
-                <Row className="mt-2">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-3">Reference number*</div>
-                  </Col>
-                  <Col xs={12} md={4}>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        className={`form-control custom-content mt-2`}
-                        id="referenceNumber"
-                        disabled
-                        name="referenceNumber"
-                        placeholder="Enter Reference number"
-                        value={selectedOption.value != null ? "BAF" + "-"+selectedOption.value.slice(-6).toUpperCase():''}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.amount && formik.errors.referenceNumber && (
-                      <div className="text-danger mt-2">
-                        {formik.errors.referenceNumber}
-                      </div>
-                    )}
-                  </Col>
-                </Row>
+                <Row>
+                  <Col md={6}>
+                    <Row>
+                      <Col md={8} >
+                        <Label>Customer</Label>
+                        <Select
+                          id="customerSelect"
+                          className="custom-content"
+                          options={DebtorsList}
+                          value={selectedOption}
+                          onChange={selected => handleOptionSelect(selected)}
+                          placeholder="Select Customer"
+                        />
+                      </Col>
+                      <Col md={4}>
+                        <Button variant="link" onClick={handleShow} className=" btn btn-info mt-4">
+                          <i className="fas fa-plus-circle" />{" "}
+                          {/* Assuming you have an icon library */} Add Customer
+                        </Button>
+                      </Col>
+                    </Row>
 
-                <Row className="mt-2">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-3">Invoice number*</div>
-                  </Col>
-                  <Col xs={12} md={4}>
-                    <InputGroup>
-                      <Input
-                        type="number"
-                        className={`form-control custom-content mt-2`}
-                        id="invoiceNumber"
-                        name="invoiceNumber"
-                        placeholder="Enter Invoice number"
-                        // value={formikSendBill.values.invoiceNumber}
-                        onChange={number =>
-                          formikSendBill.setFieldValue("invoiceNumber", number.target.value)
-                        }
-                        // onBlur={formik.handleBlur}
-                      />
-                    </InputGroup>
-                    {formik.touched.invoiceNumber &&
-                      formik.errors.invoiceNumber && (
-                        <div className="text-danger mt-2">
-                          {formikSendBill.errors.invoiceNumber}
-                        </div>
-                      )}
-                  </Col>
-                </Row>
 
-                <Row className="mt-3">
-                  <Col xs={12} md={2}>
-                    <div className="mb-2 mt-3">Invoice Date</div>
+
+                    <br />
+                    {filteredArrays.length != 0 ? <Row>
+                      <Col md={6} className="p-2">
+                        <Label ><b>Bill To</b> </Label><br />
+                        <Label>Company Name - </Label>{filteredArrays[0].companyName}
+                        <br />
+                        <Label>Mobile No. - </Label>{filteredArrays[0].customerMobile}
+                        <br />
+
+                        <Label>Address - </Label>{filteredArrays[0].address1} ,{filteredArrays[0].address2} , {filteredArrays[0].city} , {filteredArrays[0].state}
+                      </Col>
+                      <Col md={6} className="p-2">
+                        <Label ><b>Ship To</b> </Label><br />
+                        <Input
+                          type="text"
+                          className={`form-control custom-content mt-1`}
+                          placeholder="Enter Name"
+
+                        />
+                        <Input
+                          type="number"
+                          className={`form-control custom-content mt-1`}
+                          placeholder="Enter Mobile"
+
+                        />
+                        <Input
+                          type="text"
+                          className={`form-control custom-content mt-1`}
+                          placeholder="Enter Address"
+
+                        />
+
+                      </Col>
+                    </Row> : ""}
+
                   </Col>
-                  <Col xs={12} md={2}>
+                  <Col md={3}>
+                    <Label>Issue Date</Label>
                     <InputGroup>
                       <DatePicker
                         selected={formikSendBill.values.invoiceDate || new Date()}
@@ -713,17 +670,39 @@ useEffect(()=>{
                         onBlur={() =>
                           formikSendBill.setFieldTouched("invoiceDate", true)
                         }
-                        //minDate={minDate} // Set the minimum datev
+                      //minDate={minDate} // Set the minimum datev
                       />
                     </InputGroup>
-                    {/* <div className="mb-0 transactioin">
-                      To create transaction dated before 01/07/2017, click here
-                    </div> */}
+
+                    <br />
+                    <Label> Invoice Number</Label>
+                    <InputGroup>
+                      <Input
+                        type="number"
+                        className={`form-control custom-content mt-2`}
+                        id="invoiceNumber"
+                        name="invoiceNumber"
+                        placeholder="Enter Invoice number"
+                        // value={formikSendBill.values.invoiceNumber}
+                        onChange={number =>
+                          formikSendBill.setFieldValue("invoiceNumber", number.target.value)
+                        }
+                      // onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.invoiceNumber &&
+                      formik.errors.invoiceNumber && (
+                        <div className="text-danger mt-2">
+                          {formikSendBill.errors.invoiceNumber}
+                        </div>
+                      )}
+
+
+
+
                   </Col>
-                  <Col xs={12} md={1}>
-                    <div className="mb-2 mt-3">Due Date</div>
-                  </Col>
-                  <Col xs={12} md={2}>
+                  <Col md={3}>
+                    <Label>Due Date</Label>
                     <InputGroup>
                       <DatePicker
                         selected={formikSendBill.values.dueDate || new Date()}
@@ -737,13 +716,46 @@ useEffect(()=>{
                         onBlur={() => formikSendBill.setFieldTouched("dueDate", true)}
                       />
                     </InputGroup>
+
+                    <br />
+                    <Label>Refrence Number</Label>
+                    <InputGroup>
+                      <Input
+                        type="text"
+                        className={`form-control custom-content mt-2`}
+                        id="referenceNumber"
+                        disabled
+                        name="referenceNumber"
+                        placeholder="Enter Reference number"
+                        value={selectedOption.value != null ? "BAF" + "-" + selectedOption.value.slice(-6).toUpperCase() : ''}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                      />
+                    </InputGroup>
+                    {formik.touched.amount && formik.errors.referenceNumber && (
+                      <div className="text-danger mt-2">
+                        {formik.errors.referenceNumber}
+                      </div>
+                    )}
+
                   </Col>
                 </Row>
-                <Row>
-                  <Col xs="12">
-                    <hr className="bdr-light xlg"></hr>
-                  </Col>
-                </Row>
+                <br />
+                <br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 <Row className="Dragtable mt-3">
                   <div className="table-responsive">
@@ -753,6 +765,8 @@ useEffect(()=>{
                           <th>Item Detail</th>
                           <th>Quantity</th>
                           <th>Rate</th>
+                          <th>Discount</th>
+                          <th>Tax(%)</th>
                           <th>Amount</th>
                         </tr>
                       </thead>
@@ -760,7 +774,7 @@ useEffect(()=>{
                         {data.map((row, index) => (
                           <tr key={index}>
                             {/* <td>{index + 1}</td> */}
-                            <td className="hoverable-cell">
+                            <td>
                               <textarea
                                 type="text"
                                 className="form-control"
@@ -771,7 +785,7 @@ useEffect(()=>{
                                 }
                               />
                             </td>
-                            <td className="hoverable-cell">
+                            <td  className="text-end" >
                               <input
                                 type="text"
                                 className="form-control"
@@ -783,7 +797,7 @@ useEffect(()=>{
                                 onBlur={() => formatQuantity(index)}
                               />
                             </td>
-                            <td className="hoverable-cell">
+                            <td  className="text-end">
                               <input
                                 type="text"
                                 className="form-control"
@@ -795,184 +809,80 @@ useEffect(()=>{
                                 onBlur={() => formatRate(index)}
                               />
                             </td>
-                            <td className="hoverable-cell">
+                            <td  className="text-end">
                               <input
+                                className="form-control"
+                                type="number"
+                                placeholder="Enter Discount"
+                                value={discountValue}
+                                onChange={handleDiscountChange}
+                              />
+                            </td>
+
+                            <td   className="text-end">
+                              <Input
+                                type="number"
+                                id="cgstInput"
+                                placeholder="Enter CGST"
+                                value={cgst}
+                                onChange={handleCGSTChange}
+                              />
+
+                              <Input
+                                type="number"
+                                className="mt-1"
+                                id="sgstInput"
+                                placeholder="Enter SGST"
+                                value={sgst}
+                                onChange={handleSGSTChange}
+                              />
+
+                            </td>
+                            <td className="hoverable-cell text-end">
+                              {/* <input
                                 type="text"
                                 className="form-control"
                                 value={row.amount}
                                 disabled
-                              />
+                              /> */}
+                              ₹{total.toFixed()}
+
                             </td>
-                            <td>
-                              {index > 0 ? (
-                                <span
-                                  className="icon-container delete-icon"
-                                  onClick={() => removeFaqsRow(index)}
-                                >
-                                  <span className="mdi mdi-delete icon-red"></span>
-                                </span>
-                              ) : null}
-                              <span
-                                className="icon-container add-icon"
-                                onClick={addFaqsRow}
-                              >
-                                <span className="mdi mdi-plus icon-yellow"></span>
-                              </span>
-                            </td>
+                          
                           </tr>
+
+                          
                         ))}
+                        <tr className="'">
+                          <td className="borderNone"></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+                            <Button onClick={()=>{
+                              addFaqsRow(currenIndex)
+                            }}> 
+Add Item
+                            </Button>
+                          </td>
+                        </tr>
+                        
                       </tbody>
                     </table>
                   </div>
                 </Row>
 
-                <Row className="Dragtable">
-                  <Col md={5} className="mt-5"></Col>
-                  <Col md={1} className="mt-5"></Col>
 
-                  <Col md={6}>
-                    <Card className="overflow-hidden rounded-lg bg-light">
-                      <CardBody className="pt-0">
-                        <Form>
-                          <Row>
-                            <Col sm={12}>
-                              <div className="pt-4">
-                                <Row>
-                                  {/* Subtotal */}
-                                  <Col xs="4">
-                                    <p className="text-muted mb-2">Subtotal</p>
-                                  </Col>
-                                  <Col xs="4"></Col>
-                                  <Col xs="4">
-                                    <h5 className="font-size-15">
-                                      ₹{subtotal.toFixed(2)}
-                                    </h5>
-                                  </Col>
-                                  {/* Discount */}
-                                </Row>
 
-                                <Row>
-                                  <Col xs="4">
-                                    <p className="text-muted mb-0 mt-2">SGST*</p>
-                                  </Col>
-                                  <Col xs="5">
-                                    <FormGroup>
-                                      <Input
-                                        type="number"
-                                        id="cgstInput"
-                                        placeholder="Enter CGST"
-                                        value={cgst}
-                                        onChange={handleCGSTChange}
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col xs="3">
-                                    <h5 className="font-size-15 mt-2 mr-5">
-                                      ₹{showcgst}
-                                    </h5>
-                                  </Col>
-                                </Row>
-                                <Row>
-                                  <Col xs="4">
-                                    <p className="text-muted mb-0 mt-2">CGST*</p>
-                                  </Col>
-                                  <Col xs="5">
-                                    <FormGroup>
-                                      <Input
-                                        type="number"
-                                        id="sgstInput"
-                                        placeholder="Enter SGST"
-                                        value={sgst}
-                                        onChange={handleSGSTChange}
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col xs="3">
-                                    <h5 className="font-size-15 mt-2 mr-5">
-                                      ₹{showsgst}
-                                    </h5>
-                                  </Col>
-                                </Row>
 
-                                <Row>
-                                  <Col xs="4">
-                                    <p className="text-muted mb-0 mt-2">
-                                      Discount
-                                    </p>
-                                  </Col>
-                                  <Col xs="5">
-                                    <FormGroup>
-                                      <Input
-                                        type="number"
-                                        placeholder="Enter Discount"
-                                        value={discountValue}
-                                        onChange={handleDiscountChange}
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col xs="3">
-                                    <h5 className="font-size-15 mt-2 mr-5">
-                                      ₹{discount}
-                                    </h5>
-                                  </Col>
-                                </Row>
-                                <Row>
-                                  <Col xs="4">
-                                    <p className="text-muted mb-0 mt-2">
-                                      Adjustments
-                                    </p>
-                                  </Col>
-                                  <Col xs="5">
-                                    <FormGroup>
-                                      <Input
-                                        type="number "
-                                        placeholder="Enter More Adjustments"
-                                        value={adjustmentsValue}
-                                        onChange={handleAddittionalChange}
-                                      />
-                                    </FormGroup>
-                                  </Col>
-                                  <Col xs="3">
-                                    <h5 className="font-size-15 mt-2 mr-5">
-                                      ₹{adjustmentsValue}
-                                    </h5>
-                                  </Col>
-                                </Row>
-                                <Row>
-                                  <Col xs="12">
-                                    <div className="container">
-                                      <div className="custom-line"></div>
-                                    </div>
-                                  </Col>
-                                </Row>
-                                <Row>
-                                  <Col xs="4">
-                                    <p className="text-muted mb-0 mt-2 font-weight-bold">
-                                      Total (₹)
-                                    </p>
-                                  </Col>
-                                  <Col xs="5"></Col>
-                                  <Col xs="3">
-                                    <h5 className="font-size-15 mt-2 mr-5 font-weight-bold">
-                                      ₹{total.toFixed()}
-                                    </h5>
-                                  </Col>
-                                </Row>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
+
                 <Row className="terms">
                   <Col md={11}>
                     <Card className="overflow-hidden rounded-lg bg-light">
                       <CardBody className="pt-0">
                         <Col md={4} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                        Upload File to Purchase Order
+                            Upload File to Purchase Order
                           </div>
 
                           <InputGroup className="text-capitalize">
@@ -993,7 +903,7 @@ useEffect(()=>{
                         </Col>
                         <Col md={5} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                          Upload File to challan / Dispatch Document
+                            Upload File to challan / Dispatch Document
                           </div>
 
                           <InputGroup>
@@ -1025,7 +935,7 @@ useEffect(()=>{
                       <CardBody className="pt-0">
                         <Col md={4} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                          Upload File to Invoice*
+                            Upload File to Invoice*
                           </div>
 
                           <InputGroup>
@@ -1046,7 +956,7 @@ useEffect(()=>{
                         </Col>
                         <Col md={5} className="mt-2 hoverable-cell">
                           <div className="mb-2 mt-5">
-                          Upload File to Transportation Document / Delivery
+                            Upload File to Transportation Document / Delivery
                             Receipt
                           </div>
 
@@ -1073,31 +983,31 @@ useEffect(()=>{
                     </Card>
                   </Col>
                 </Row>
-                </form>
-                <Row>
-                  <Col xs={12} md={1}>
-                    <div className="d-flex flex-column align-items-start mt-5 mb-5">
-                      <button
-                        className="btn btn-primary mt-5"
-                        onClick={() => handleFormSubmitSendBill(formikSendBill.values)}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </Col>
-                  <Col xs={12} md={1}>
-                    <div className="d-flex flex-column align-items-start mt-5 mb-5">
-                      <button
-                        type="button"
-                        className="btn btn-secondary w-mdq mt-5"
-                        onClick={formik.resetForm}
-                      >
-                        Reset
-                      </button>
-                    </div>
-                  </Col>
-                </Row>
-             
+              </form>
+              <Row>
+                <Col xs={12} md={1}>
+                  <div className="d-flex flex-column align-items-start mt-5 mb-5">
+                    <button
+                      className="btn btn-primary mt-5"
+                      onClick={() => handleFormSubmitSendBill(formikSendBill.values)}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </Col>
+                <Col xs={12} md={1}>
+                  <div className="d-flex flex-column align-items-start mt-5 mb-5">
+                    <button
+                      type="button"
+                      className="btn btn-secondary w-mdq mt-5"
+                      onClick={formik.resetForm}
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </Col>
+              </Row>
+
               <Modal isOpen={showModal} toggle={() => setShowModal(false)}>
                 <ModalHeader toggle={() => setShowModal(false)}>
                   Add New Customer{" "}
@@ -1126,11 +1036,11 @@ useEffect(()=>{
                                 id="customerTypeBusiness"
                                 name="customerType"
                                 value="Business"
-                                onChange={()=>[
+                                onChange={() => [
                                   formikModal.values.customerType === "Business"
-                                  ? "selected"
-                                  : ""
-                                 ]}
+                                    ? "selected"
+                                    : ""
+                                ]}
                               />{" "}
                               Business
                             </Label>
@@ -1144,18 +1054,18 @@ useEffect(()=>{
                                   ? "selected"
                                   : ""
                               }
-                            
+
                             >
                               <Input
                                 type="radio"
                                 id="customerTypeIndividual"
                                 name="customerType"
                                 value="Individual"
-                                onChange={()=>[
+                                onChange={() => [
                                   formikModal.values.customerType === "Individual"
-                                  ? "selected"
-                                  : ""
-                                 ]}
+                                    ? "selected"
+                                    : ""
+                                ]}
                               />{" "}
                               Individual
                             </Label>
@@ -1188,7 +1098,6 @@ useEffect(()=>{
                             styles={colourStyles}
                             value={selectedOption}
                             onChange={selected => setSelectedOption(selected)}
-                            onInputChange={handleInputChange}
                             placeholder="Salutation"
                           />
                         </div>
@@ -1277,7 +1186,7 @@ useEffect(()=>{
                             id="customerEmail"
                             name="customerEmail"
                             value={formikModal.values.customerEmail}
-                            
+
                             onChange={formikModal.handleChange}
                             onBlur={formikModal.handleBlur}
                             placeholder="Customer Email"

@@ -52,7 +52,7 @@ const confirmReportModal = props => {
         <Row>
     <Col md={5}></Col>
     <Col md={2}>
-    <Button className="text-center btn btn-info">Confirm</Button>
+    <Button className="text-center btn btn-info">Submit</Button>
 
     </Col>
     <Col md={5}></Col>

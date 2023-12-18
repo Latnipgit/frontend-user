@@ -438,11 +438,13 @@ td.hoverable-cell input {
 }
 
 table#faqs th:first-child {
-  width: 45%;
+  width: 30%;
 }
 
 table#faqs td:last-child {
-  border: none;
+  // border: none; 
+  padding-right: 1%;
+  padding-top: 2%;
 }
 
 table#faqs {
