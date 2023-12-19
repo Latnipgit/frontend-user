@@ -1,9 +1,9 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 
 // Login Redux States
-import { REGISTER2_LOGIN_USER } from "./actionTypes";
-import {registerSuccess_login, registerFail_login} from "./actions";
-import {apiError} from "../login/actions"
+import { REGISTER2_LOGIN_USER } from "./Register.actionTypes";
+import {registerSuccess_login, registerFail_login} from "./Register.actions";
+import {apiError} from "../login/Login.actions"
 import {postFakeRegister} from "../../../helpers/fakebackend_helper";
 
 function* registerUser_login_2({ payload: { user, history } }) {

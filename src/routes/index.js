@@ -222,7 +222,7 @@ const authProtectedRoutes = [
   {
     path: "/",
     exact: true,
-    component: < Navigate to="/companies" />,
+    component: < Navigate to="/login" />,
   },
 ];
 

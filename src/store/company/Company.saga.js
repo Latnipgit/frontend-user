@@ -1,14 +1,14 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
 // Crypto Redux States
-import { GET_COMPANY, ADD_NEW_COMPANY } from "./actionTypes";
+import { GET_COMPANY, ADD_NEW_COMPANY } from "./Company.actionTypes";
 import {
     getCompanyListSuccess,
     getCompanyListFail,
     addNewCompany,
     addNewCompanySuccess
 
-} from "./actions";
+} from "./Company.actions";
 
 //Include Both Helper File with needed methods
 import {getCompanyList , addCompanyListApi} from "helpers/fakebackend_helper";

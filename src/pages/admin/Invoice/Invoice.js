@@ -399,7 +399,7 @@ console.log("GetAllInvoice",GetAllInvoice)
         : <Row className="mt-5">
           <Row className="mt-5">
             <Col md={8}>
-              <h5>Invoice List</h5>
+              <h5 > &nbsp; &nbsp;&nbsp;Invoice List</h5>
             </Col>
             <Col md={4} className="text-end">
               <Button className="btn btn-sm btn-info" onClick={() => setisDebtorExists(false)}> <i className='bx bx-plus'></i> Create Invoice</Button>

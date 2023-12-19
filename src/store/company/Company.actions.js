@@ -6,7 +6,7 @@ import {
     GET_COMPANY_LIST_FAIL,
 ADD_NEW_COMPANY,
 ADD_NEW_COMPANY_SUCCESS 
-  } from "./actionTypes"
+  } from "./Company.actionTypes"
   
  export const getCompanyList = () => ({
     type: GET_COMPANY,

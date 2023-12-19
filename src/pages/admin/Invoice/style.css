@@ -62,3 +62,7 @@
 .totalText{
     font-size: 15px;
 }
+.cardTextSubtotal{
+  font-weight: 600;
+  text-align: justify;
+}

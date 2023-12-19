@@ -203,9 +203,18 @@ const SendBillTransaction = (props) => {
   }
 
   const handleQuantityChange = (index, value) => {
-    const newData = [...data]
-    newData[index].quantity = value.replace(/[^0-9.]/g, "")
+    console.log("valuevalue", value)
+    if(value != ''){
+      const newData = [...data]
+      newData[index].quantity = value.replace(/[^0-9.]/g, "")
+      setData(newData)
+    }
+    else{
+      const newData = [...data]
+    newData[index].quantity = 0
     setData(newData)
+    }
+    
   }
 
   const formatQuantity = index => {
@@ -744,19 +753,6 @@ const SendBillTransaction = (props) => {
                 <br />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <Row className="Dragtable mt-3">
                   <div className="table-responsive">
                     <table id="faqs" className="table table-hover custom-table">
@@ -777,7 +773,7 @@ const SendBillTransaction = (props) => {
                             <td>
                               <textarea
                                 type="text"
-                                className="form-control"
+                                className="form-control mt-1"
                                 placeholder="Enter Item Detail"
                                 value={row.itemDetail}
                                 onChange={e =>
@@ -785,10 +781,10 @@ const SendBillTransaction = (props) => {
                                 }
                               />
                             </td>
-                            <td  className="text-end" >
+                            <td  className="text-end p-2" >
                               <input
-                                type="text"
-                                className="form-control"
+                                type="number"
+                                className="form-control mt-3"
                                 placeholder="Enter Quantity"
                                 value={row.quantity}
                                 onChange={e =>
@@ -797,10 +793,10 @@ const SendBillTransaction = (props) => {
                                 onBlur={() => formatQuantity(index)}
                               />
                             </td>
-                            <td  className="text-end">
+                            <td  className="text-end p-2">
                               <input
-                                type="text"
-                                className="form-control"
+                                type="number"
+                                className="form-control mt-3"
                                 placeholder="Enter Rate"
                                 value={row.rate}
                                 onChange={e =>
@@ -809,9 +805,9 @@ const SendBillTransaction = (props) => {
                                 onBlur={() => formatRate(index)}
                               />
                             </td>
-                            <td  className="text-end">
+                            <td  className="text-end p-2">
                               <input
-                                className="form-control"
+                                className="form-control mt-3"
                                 type="number"
                                 placeholder="Enter Discount"
                                 value={discountValue}
@@ -819,33 +815,36 @@ const SendBillTransaction = (props) => {
                               />
                             </td>
 
-                            <td   className="text-end">
+                            <td   className="text-end d-flex p-2">
                               <Input
                                 type="number"
                                 id="cgstInput"
-                                placeholder="Enter CGST"
+                                className="mt-3 mb-3 mr-1 ml-1"
+
+                                placeholder="CGST"
                                 value={cgst}
                                 onChange={handleCGSTChange}
                               />
+                              &nbsp;
 
                               <Input
                                 type="number"
-                                className="mt-1"
+                                className="mt-3 mb-3 mr-1 ml-1"
                                 id="sgstInput"
-                                placeholder="Enter SGST"
+                                placeholder="SGST"
                                 value={sgst}
                                 onChange={handleSGSTChange}
                               />
 
                             </td>
-                            <td className="hoverable-cell text-end">
+                            <td className="hoverable-cell text-end pt-4">
                               {/* <input
                                 type="text"
                                 className="form-control"
                                 value={row.amount}
                                 disabled
                               /> */}
-                              ₹{total.toFixed()}
+                             <b className="mt-1"> {row.amount}</b>
 
                             </td>
                           
@@ -853,25 +852,65 @@ const SendBillTransaction = (props) => {
 
                           
                         ))}
-                        <tr className="'">
-                          <td className="borderNone"></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            <Button onClick={()=>{
-                              addFaqsRow(currenIndex)
-                            }}> 
-Add Item
-                            </Button>
-                          </td>
-                        </tr>
+                      
                         
                       </tbody>
                     </table>
                   </div>
                 </Row>
+<Row>
+  <Col md={8}></Col>
+<Col md={3} className="text-end">
 
+
+                            {currenIndex > 0 ? (
+                                <Button
+                                  className="icon-container delete-icon m-2 btn btn-info"
+                                  onClick={() => removeFaqsRow(currenIndex)}
+                                >
+                                  <span > Remove Item</span>
+                                </Button>
+                             ) : null}
+                             
+                              <Button
+                                className="icon-container add-icon btn btn-info"
+                                onClick={()=>addFaqsRow(currenIndex)}
+                              >
+                                <span > ADD Item</span>
+                              </Button>
+</Col>
+<Col md={1} className="text-end">
+</Col>
+</Row>
+<Row className="mt-3">
+
+
+  <Card>
+    <Row className="bg-light">
+      <Col md={6}></Col>
+      <Col md={2}></Col>
+      <Col md={2} className="bg-light text-center p-4">
+
+        <p className="cardTextSubtotal">sub Total - </p>
+        <p className="cardTextSubtotal">CGST - </p>
+        <p className="cardTextSubtotal">SGST - </p>
+        <p className="cardTextSubtotal">Discount - </p>
+        <p className="cardTextSubtotal">TOTAL - </p>
+
+      </Col>
+      <Col md={2} className="bg-light text-end p-4">
+
+      <p className="cardTextSubtotal">{subtotal.toFixed(2)}</p>
+      <p className="cardTextSubtotal">{cgst}%</p>
+      <p className="cardTextSubtotal">{sgst}%</p>
+      <p className="cardTextSubtotal">{discount}</p>
+      <p className="cardTextSubtotal">{total.toFixed(2)}</p>
+
+      </Col>
+
+    </Row>
+  </Card>
+</Row>
 
 
 

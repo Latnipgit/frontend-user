@@ -1,6 +1,6 @@
 import {REGISTER2_LOGIN_USER,REGISTER2_LOGIN_SUCCESS
 ,REGISTER2_LOGIN_FAIL
-} from "./actionTypes"
+} from "./Register.actionTypes"
   
   export const registerUser_login = (user, history) => {
     return {

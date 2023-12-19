@@ -2,7 +2,7 @@ import {
     REGISTER2_LOGIN_USER,
     REGISTER2_LOGIN_SUCCESS,
     REGISTER2_LOGIN_FAIL,
-  } from "./actionTypes"
+  } from "./Register.actionTypes"
   
   const initialState = {
     error: "",

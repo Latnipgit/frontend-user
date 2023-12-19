@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Loader from "react-js-loader";
 // action
+
 import { registerUser_login, apiError } from "../../store/actions";
 
 //redux
@@ -135,15 +136,7 @@ const Register = props => {
     })
   });
 
-  // const { user, registrationError, loading } = useSelector(state => (
-  //   {
-  //   user: state.Account.user,
-  //   registrationError: state.Account.registrationError,
-  //   loading: state.Account.loading,
-  // }));
-  // const { error } = useSelector(state => ({
-  //   error: state.Account.error,
-  // }));
+ 
 
   const apiRespo = useSelector(state =>(state.register_login_reducer.apiResponse))
 
@@ -237,7 +230,7 @@ const Register = props => {
                         };
                         console.log("CHECK",  user )
                         if(formik.values.name != '' && formik.values.email != '' && gstNumber != '' && panNumber != ""){
-                         
+                        
                           dispatch(registerUser_login(user ,props.router.navigate));
                           setTimerStart(true)
 
@@ -293,22 +286,7 @@ const Register = props => {
                        
                         <Row>
                           <Col md={6}>
-                          {/* <div className="mb-3">
-                          <Label className="form-label">Aadhar Number</Label>
-                          <Input
-                            name="aadharNumber"
-                            type="text"
-                            className={`form-control ${formik.touched.aadharNumber && formik.errors.aadharNumber ? 'is-invalid' : ''}`}
-                            placeholder="Enter Aadhar number"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.aadharNumber || ""}
-                            // Remove the pattern attribute since we're handling validation manually
-                          />
-                          {formik.touched.aadharNumber && formik.errors.aadharNumber ? (
-                            <FormFeedback type="invalid">{formik.errors.aadharNumber}</FormFeedback>
-                          ) : null}
-                        </div> */}
+                        
                           <div className="mb-3">
                         <Label className="form-label">Email</Label>
                         <Input
@@ -402,23 +380,7 @@ const Register = props => {
                         
                           
                           <Col md={6}>
-                            {/* <div className="mb-3">
-                              <Label className="form-label">Password</Label>
-                              <Input
-                                name="password"
-                                type="password"
-                                className="form-control"
-                                placeholder="Enter password"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                // value={formik.values.password || ""}
-                                // invalid={formik.touched.password && formik.errors.password ? true : false}
-                                // Add your password validation logic here
-                              />
-                              {formik.touched.password && formik.errors.password ? (
-                                <FormFeedback type="invalid">{formik.errors.password}</FormFeedback>
-                              ) : null}
-                            </div> */}
+                      
                           </Col>
                           <Col md={6}>
                       

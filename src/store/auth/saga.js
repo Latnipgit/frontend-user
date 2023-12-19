@@ -1,8 +1,8 @@
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 
 // Login Redux States
-import { LOGIN_USER, LOGOUT_USER, SOCIAL_LOGIN } from "./login/actionTypes";
-import { apiError, loginSuccess, logoutUserSuccess } from "./login/actions";
+import { LOGIN_USER, LOGOUT_USER, SOCIAL_LOGIN } from "./login/Login.actionTypes";
+import { apiError, loginSuccess, logoutUserSuccess } from "./login/Login.actions";
 
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../helpers/firebase_helper";

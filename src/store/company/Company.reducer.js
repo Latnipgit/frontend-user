@@ -3,7 +3,7 @@
 import {GET_COMPANY,GET_COMPANY_LIST_SUCCESS,GET_COMPANY_LIST_FAIL,
   ADD_NEW_COMPANY, ADD_NEW_COMPANY_SUCCESS
 
-} from './actionTypes'
+} from './Company.actionTypes'
 
   const INIT_STATE = {
     companyList : [],

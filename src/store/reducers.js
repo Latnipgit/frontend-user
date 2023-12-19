@@ -4,10 +4,10 @@ import { combineReducers } from "redux";
 import Layout from "./layout/reducer";
 
 // Authentication
-import Login from "./auth/login/reducer";
-import register_login_reducer from "./auth/register2/reducer";
+import Login from "./auth/login/Login.reducer";
+import register_login_reducer from "./auth/register2/Register.reducer";
 import Account from "./auth/register/reducer";
-import ForgetPassword from "./auth/forgetpwd/reducer";
+import ForgetPassword from "./auth/forgetpwd/ForgetPassword.reducer";
 import Profile from "./auth/profile/reducer";
 
 //E-commerce
@@ -25,7 +25,7 @@ import crypto from "./crypto/reducer";
 //invoices
 import invoices from "./invoices/reducer";
 
-import companyList  from "./company/reducer"
+import companyList  from "./company/Company.reducer"
 //jobs
 import JobReducer from "./jobs/reducer";
 

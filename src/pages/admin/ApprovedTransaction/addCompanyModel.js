@@ -2,46 +2,34 @@
 
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import withRouter from "components/Common/withRouter";
 
 // Formik Validation
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
 // action
-import { addNewCompany, apiError } from "../../../store/actions";
+import { addNewCompany } from "../../../store/actions";
+import { ToastContainer, toast } from 'react-toastify';
 
 //redux
-import { useSelector, useDispatch } from "react-redux";
-
-import { Link } from "react-router-dom";
-
-
-import ApprovedTranction from "./ApprovedTranction";
+import {  useDispatch } from "react-redux";
 import {
-  Button,
   Modal,
   ModalBody,
-  ModalFooter,
   ModalHeader,
-  InputGroup,
   Input,
   Label,
-  FormFeedback,
   Form,
   CardBody,
   Card,
   Container,
-  Table,
   Row, Col
 } from "reactstrap"
-
 
 const ReportedDebtorsModel = props => {
   document.title = "Register | Bafana - User & Dashboard";
   const [panNumber, setPanNumber] = useState('');
   const [gstNumber, setGSTNumber] = useState('');
-  const [aadhar, setAadhar] = useState('');
   const [mobile, setMobile] = useState('');
   const [name, setName] = useState('');
   const [companyName, setcompanyName] = useState('');
@@ -56,88 +44,12 @@ const ReportedDebtorsModel = props => {
     error: ''
   });
 
-  const handleGSTChange = (event) => {
+ 
 
-    const gst = event.target.value;
-    setGSTNumber(gst);
-
-    if (gstValidation.touched) {
-      if (isGSTValid(gst)) {
-
-        setGSTValidation({ touched: true, error: '' });
-      } else {
-        setGSTValidation({ touched: true, error: 'Invalid GST format' });
-      }
-    }
-  };
-  function isPanCardValid(panCardNumber) {
-    const panPattern = /^([A-Z]{5}[0-9]{4}[A-Z]{1})$/;
-    return panPattern.test(panCardNumber);
-  }
-  function isGSTValid(gstNumber) {
-    const gstPattern = /^([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{1}Z[0-9A-Z]{1})$/;
-    return gstPattern.test(gstNumber);
-  }
-
-  const handleGSTBlur = () => {
-    if (gstNumber === '') {
-      setGSTValidation({ touched: true, error: 'GST number is required' });
-    } else if (!isGSTValid(gstNumber)) {
-      setGSTValidation({ touched: true, error: 'Invalid GST format' });
-    } else {
-      setGSTValidation({ touched: true, error: '' });
-    }
-  };
-  const handlePanChange = (event) => {
-    const pan = event.target.value.toUpperCase();
-    setPanNumber(pan);
-
-    if (panValidation.touched) {
-      if (isPanCardValid(pan)) {
-        setPanValidation({ touched: true, error: '' });
-      } else {
-        setPanValidation({ touched: true, error: 'Invalid PAN format' });
-      }
-    }
-  };
-  const handlePanBlur = () => {
-    if (panNumber === '') {
-      setPanValidation({ touched: true, error: 'PAN number is required' });
-    } else if (!isPanCardValid(panNumber)) {
-      setPanValidation({ touched: true, error: 'Invalid PAN format' });
-    } else {
-      setPanValidation({ touched: true, error: '' });
-    }
-  };
-  function isAadharNumberValid(aadharNumber) {
-    if (!/^\d{12}$/.test(aadharNumber)) {
-      return false;
-    }
-
-    const aadharArray = aadharNumber.split('').map(Number);
-    const checksumDigit = aadharArray[11];
-
-    let sum = 0;
-    for (let i = 0; i < 11; i++) {
-      sum += aadharArray[i];
-    }
-
-    const calculatedChecksum = (sum % 10 + 1) % 10;
-
-    return checksumDigit === calculatedChecksum;
-  }
-
-const handleValidation =()=>{
-  if(companyName != "" || props.getCompanyList[0].companyName != undefined ){
-
-  }
-}
 
 
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("MOBILE", props.getCompanyList[0], logindata)
-    const GetDataFromuserId = props.getCompanyList
     setName(logindata.name)
 
   },[logindata])
@@ -149,13 +61,12 @@ const handleValidation =()=>{
       "companyPan": panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
 }
     dispatch(addNewCompany(payload));
-    alert("Registration successfully")
+    toast.success("Registration successfully")
      window.location.reload()
 
   }
 
   const formik = useFormik({
-    // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: {
@@ -180,7 +91,7 @@ const handleValidation =()=>{
       panNumber: Yup.string().required("Please Enter Your pan Number"),
     })
   });
-  const { isOpen, toggle, getCompanyList } = props
+  const { isOpen, toggle } = props
 
 
 
@@ -211,9 +122,7 @@ const handleValidation =()=>{
                       <div className="p-2">
                         <Form
                           className="form-horizontal"
-                        // onSubmit={(e) => 
-                        // formSubmit(e)
-                        // }
+                        
 
                         >
 
@@ -228,14 +137,10 @@ const handleValidation =()=>{
                                   className="form-control"
                                   placeholder={logindata != undefined ? logindata.name : 'Enter Name'}
                                   onChange={formik.handleChange}
-                                  // onBlur={formik.handleBlur}
                                   value={logindata != undefined ? logindata.name : ''}
                                   disabled
-                                // invalid={formik.touched.name && formik.errors.name ? true : false}
                                 />
-                                {/* {formik.touched.name && formik.errors.name ? (
-                                  <FormFeedback type="invalid">{formik.errors.name}</FormFeedback>
-                                ) : null} */}
+                               
                               </div>
                             </Col>
                             <Col md={6}>
@@ -247,42 +152,15 @@ const handleValidation =()=>{
                                   className="form-control"
                                   placeholder={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyName:'Enter Company Name'}
                                   onChange={(event) => setcompanyName(event.target.value)}
-                                // onBlur={formik.handleBlur}
-                                // value={formik.values.companyName || ""}
-                                // value={companyName }
-
-                                // invalid={formik.touched.companyName && formik.errors.companyName ? true : false}
-                                // Add your company name validation logic here
+                         
                                 />
-                                {/* {formik.touched.companyName && formik.errors.companyName ? (
-                                  <FormFeedback type="invalid">{formik.errors.companyName}</FormFeedback>
-                                ) : null} */}
+                               
                               </div>
                             </Col>
                           </Row>
 
                           <Row>
-                            {/* <Col md={6}> */}
-                              {/* <div className="mb-3">
-                                <Label className="form-label">Aadhar Number</Label>
-                                <Input
-                                  name="aadharNumber"
-                                  type="number"
-                                  className={`form-control ${formik.touched.aadharNumber && formik.errors.aadharNumber ? 'is-invalid' : ''}`}
-                                  placeholder="Enter Aadhar number"
-                                  onChange={(event) => setAadhar(event.target.value)}
-                                  // onBlur={formik.handleBlur}
-                                  maxLength="12" // Restrict input to 12 characters
-                                  minLength="12" // Restrict input to 12 characters
-
-                                // value={formik.values.aadharNumber || ""}
-                                // Remove the pattern attribute since we're handling validation manually
-                                />
-                                {/* {formik.touched.aadharNumber && formik.errors.aadharNumber ? (
-                                  <FormFeedback type="invalid">{formik.errors.aadharNumber}</FormFeedback>
-                                ) : null} */}
-                              {/* </div> */} 
-                            {/* </Col> */}
+                     
                             <Col md={6}>
                               <div className="mb-3">
                                 <Label className="form-label">Mobile Number (Indian)</Label>
@@ -293,20 +171,15 @@ const handleValidation =()=>{
                                   <input
                                     name="mobileNumber"
                                     type="number"
-                                    // className={`form-control ${
-                                    // // formik.touched.mobileNumber && formik.errors.mobileNumber ? "is-invalid" : ""
-                                    // }`}
+                                  
                                     className="form-control"
                                     placeholder="Enter 10-digit mobile number"
                                     onChange={(e) => setMobile(e.target.value)}
-                                    // onBlur={formik.handleBlur}
-                                    // value={formik.values.mobileNumber || ""}
+                                 
                                     pattern="[6-9]\d{9}" // Allow only 10 digits starting with 6, 7, 8, or 9
                                     maxLength="10" // Restrict input to 10 characters
                                   />
-                                  {/* {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
-                                    <div className="invalid-feedback">{formik.errors.mobileNumber}</div>
-                                  ) : null} */}
+                                 
                                 </div>
                               </div>
                             </Col>
@@ -320,15 +193,11 @@ const handleValidation =()=>{
                                   placeholder="Enter email"
                                   type="email"
                                   onChange={formik.handleChange}
-                                  // onBlur={formik.handleBlur}
                                   value={logindata != undefined ? logindata.emailId : ""}
                                   disabled
-                                // invalid={formik.touched.email && formik.errors.email ? true : false}
 
                                 />
-                                {/* {formik.touched.email && formik.errors.email ? (
-                                  <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
-                                ) : null} */}
+                              
                               </div>
                             </Col>
                           </Row>
@@ -344,13 +213,9 @@ const handleValidation =()=>{
                                   placeholder={props.getCompanyList[0] != undefined ?props.getCompanyList[0].gstin:'Enter your GST Number'}
                                   type="text"
                                   onChange={(event) => setGSTNumber(event.target.value)}
-                                  // onBlur={handleGSTBlur}
-                                // value={props.geltCompanyList[0] != undefined ? props.getCompanyList[0].gstin:''}
-                                // invalid={gstValidation.touched && gstValidation.error !== ''}
+                             
                                 />
-                                {/* {gstValidation.touched && gstValidation.error !== '' && (
-                                  <FormFeedback type="invalid">{gstValidation.error}</FormFeedback>
-                                )} */}
+                             
                               </div>
                             </Col>
                             <Col>
@@ -364,15 +229,9 @@ const handleValidation =()=>{
                                   placeholder={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyPan:'Enter GST number'}
                                   type="text"
                                   onChange={(event) => setPanNumber(event.target.value)}
-                                  // onBlur={handlePanBlur}
-                                // value={panNumber}
-                                // value={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyPan:''}
-
+                               
                                 />
-                                {/* {panValidation.touched && panValidation.error !== '' && (
-                                  <div className="invalid-feedback">{panValidation.error}
-                                  </div>
-                                )} */}
+                            
                               </div>
                             </Col>
                           </Row>
@@ -380,23 +239,7 @@ const handleValidation =()=>{
                            
 
                             <Col md={6}>
-                              {/* <div className="mb-3">
-                              <Label className="form-label">Password</Label>
-                              <Input
-                                name="password"
-                                type="password"
-                                className="form-control"
-                                placeholder="Enter password"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.password || ""}
-                                invalid={formik.touched.password && formik.errors.password ? true : false}
-                                // Add your password validation logic here
-                              />
-                              {formik.touched.password && formik.errors.password ? (
-                                <FormFeedback type="invalid">{formik.errors.password}</FormFeedback>
-                              ) : null}
-                            </div> */}
+                           
                             </Col>
                           </Row>
                           <div>
@@ -425,6 +268,7 @@ const handleValidation =()=>{
 
                 </Col>
               </Row>
+              <ToastContainer/>
             </Container>
           </div>
         </ModalBody>

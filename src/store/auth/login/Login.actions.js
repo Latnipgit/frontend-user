@@ -5,7 +5,7 @@ import {
   LOGOUT_USER_SUCCESS,
   API_ERROR,
   SOCIAL_LOGIN,
-} from "./actionTypes"
+} from "./Login.actionTypes"
 
 export const loginUser = (user, history) => {
   return {

@@ -1,10 +1,10 @@
 export * from "./layout/actions";
 
 // Authentication module
-export * from "./auth/register2/actions";
+export * from "./auth/register2/Register.actions";
 export * from "./auth/register/actions";
-export * from "./auth/login/actions";
-export * from "./auth/forgetpwd/actions";
+export * from "./auth/login/Login.actions";
+export * from "./auth/forgetpwd/ForgetPassword.actions";
 export * from "./auth/profile/actions";
 
 //Ecommerce
@@ -52,7 +52,7 @@ export * from "./dashboard-blog/actions";
 //dashboard-jobs
 export * from "./dashboard-jobs/actions";
 
-export * from "./company/actions"
+export * from "./company/Company.actions"
 
 // Employee List
 export * from "./Employee/actions"

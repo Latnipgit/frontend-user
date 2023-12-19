@@ -2,10 +2,10 @@ import { all, fork } from "redux-saga/effects";
 
 //public
 
-import registerAuthSaga from "./auth/register2/saga";
+import registerAuthSaga from "./auth/register2/Register.saga";
 import AccountSaga from "./auth/register/saga";
 import AuthSaga from "./auth/saga";
-import ForgetSaga from "./auth/forgetpwd/saga";
+import ForgetSaga from "./auth/forgetpwd/ForgetPassword.saga";
 import ProfileSaga from "./auth/profile/saga";
 import LayoutSaga from "./layout/saga";
 import ecommerceSaga from "./e-commerce/saga";
@@ -23,7 +23,7 @@ import dashboardSaasSaga from "./dashboard-saas/saga";
 import dashboardCryptoSaga from "./dashboard-crypto/saga";
 import dashboardBlogSaga from "./dashboard-blog/saga";
 import dashboardJobSaga from "./dashboard-jobs/saga";
-import companyListsaga from "./company/saga";
+import companyListsaga from "./company/Company.saga";
 import employeeListsaga from "./Employee/saga"
 import searchCompanysaga from "././auth/companySearch/saga"
 import changePasswordSaga from "./changePassword/saga"
