@@ -31,7 +31,8 @@ import {
 import { getAllDebtors as ongetAllDebtors}  from '../../../store/actions'
 import CurrencyFormat from 'react-currency-format';
 
-import { getAllInvoice as ongetAllInvoice } from '../../../store/actions'
+/* import { getAllInvoice as ongetAllInvoice } from '../../../store/actions' */
+import { getAllInvoice } from "../../../store/debtors/debtors.actions"
 
 import { addInvoiceBill}  from '../../../store/actions'
 import { addFiles}  from '../../../store/actions'
@@ -571,7 +572,7 @@ else{
 useEffect(()=>{
   console.log("getAllDebtorsList",getAllDebtorsList)
   dispatch(ongetAllDebtors());
-  dispatch(ongetAllInvoice());
+  dispatch(getAllInvoice());
 
 
  

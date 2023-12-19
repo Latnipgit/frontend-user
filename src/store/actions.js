@@ -63,4 +63,4 @@ export * from "./auth/companySearch/actions"
 
 export * from "./changePassword/actions"
 export * from "./sendbilltransacttion/actions"
- export * from "./debtors/actions"
+ export * from "./debtors/debtors.actions"

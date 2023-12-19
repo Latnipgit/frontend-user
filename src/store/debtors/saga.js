@@ -15,7 +15,7 @@ getAllInvoice,
 getAllInvoiceFail,
 getAllInvoiceSuccess,
 
-} from "./actions";
+} from "./debtors.actions";
 
 //Include Both Helper File with needed methods
 import { getAllDebtorsAPI } from "helpers/fakebackend_helper";
