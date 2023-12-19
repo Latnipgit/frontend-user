@@ -30,11 +30,12 @@ import * as moment from "moment";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ConfirmReportModal from "./ConfirmReportDefaulterModal";
+import { selectDebtorsList } from "store/debtors/debtors.selecter";
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
 const ReportedDefaulterModel = props => {
-  const [DebtorsList, setDebtorsList] = useState(false)
+
   const [selectedOption, setSelectedOption] = useState("")
   const { isOpen, toggle, GetAllInvoice } = props
   const [filteredInvoiceList, setfilteredInvoiceList] = useState([])
@@ -171,9 +172,7 @@ const ReportedDefaulterModel = props => {
   };
 
   console.log("PROPSS", GetAllInvoice)
-  const { GetAllDebtors } = useSelector(state => ({
-    GetAllDebtors: state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [],
-  }))
+  const GetAllDebtors = useSelector(selectDebtorsList)
   const dispatch = useDispatch()
   const handleInputChange = inputValue => {
     // Handle input change here
@@ -187,22 +186,42 @@ const ReportedDefaulterModel = props => {
   const handleConfirmClose = () => setshowConfirmModal(false)
   const handleConfirmshow = () => setshowConfirmModal(true)
 
-  useEffect(() => {
+  function getDebtrosLists (responsData){
+          return (responsData && (
+            responsData.map((item)=>{
+              return (
+                {
+                  "value ": item.id, "label": item.firstname + " " + item.lastname
+                }
+                 
+              )
+        })
+      )
+    )   
+  }
+
+ const getDebtrosList =  getDebtrosLists(GetAllDebtors)
+
+/*   useEffect(() => {
+    setDebtorsList(getDebtrosList(GetAllDebtors))
+  }, []) */
+
+ /*  useEffect(() => {
     setDebtorsList(GetAllDebtors != undefined && GetAllDebtors.length != 0 ? GetAllDebtors.map((item) => {
       return {
         "value": item.id, "label": item.firstname + " " + item.lastname
       }
     }) : [])
 
-  }, [DebtorsList])
+  }, [DebtorsList]) */
 
-  useEffect(() => {
+/*   useEffect(() => {
     const { isOpen, toggle, GetAllInvoice } = props
     dispatch(ongetAllDebtors());
     console.log("ABSCS0 props0", props)
 
 
-  }, [filteredInvoiceList])
+  }, [filteredInvoiceList]) */
   const handleFormSubmit = item => {
 
 
@@ -449,7 +468,7 @@ console.log("dataoodata",data)
                   </label>
 
                   <Select
-                    options={DebtorsList}
+                    options={getDebtrosList}
                     styles={customStyles}
                     value={selectedOption}
                     onChange={selected => handleSelectCustomer(selected)}
