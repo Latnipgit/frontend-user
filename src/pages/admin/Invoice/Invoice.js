@@ -7,7 +7,8 @@ import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
 import Select, { components } from "react-select"
 import { getAllDebtors as ongetAllDebtors } from '../../../../src/store/actions'
-import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
+//import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
+import { getAllInvoice } from "../../../../src/store/debtors/debtors.actions";
 // import "../../../pages/Dashboard/users/send-bill-transaction/sendbillTransaction"
 import TableContainer from "../../../components/Common/TableContainer"
 import SendbillTransaction from "../../../pages/Dashboard/users/send-bill-transaction/sendbillTransaction";
@@ -118,7 +119,7 @@ const Invoice = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ongetAllDebtors());
-    dispatch(ongetAllInvoice());
+    dispatch(getAllInvoice());
 
     if (GetAllDebtors != []) {
       setisDebtorExists(true)

@@ -37,7 +37,8 @@ import TableContainer from "../../../components/Common/TableContainer";
 import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
-import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
+//import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
+import { getAllInvoice } from "../../../store/debtors/debtors.actions"
 import moment from 'moment'
 
 
@@ -61,7 +62,7 @@ const ReportDebtor = props => {
   }))
 
   useEffect(() => {
-    dispatch(ongetAllInvoice());
+    dispatch(getAllInvoice());
 
     getDays()
 
