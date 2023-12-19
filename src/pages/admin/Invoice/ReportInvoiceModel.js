@@ -215,13 +215,16 @@ const ReportedDefaulterModel = props => {
 
   }, [DebtorsList]) */
 
-/*   useEffect(() => {
+
+  useEffect(() => {
+
+  }, [])
+
+  useEffect(() => {
     const { isOpen, toggle, GetAllInvoice } = props
     dispatch(ongetAllDebtors());
     console.log("ABSCS0 props0", props)
-
-
-  }, [filteredInvoiceList]) */
+  }, [filteredInvoiceList])
   const handleFormSubmit = item => {
 
 
