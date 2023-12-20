@@ -6,7 +6,7 @@ GET_DEBTORS_FAIL,
 GET_DEBTORS_SUCCESS
 ,GET_INVOICE_LIST,
 GET_INVOICE_LIST_FAIL,GET_INVOICE_LIST_SUCCESS,
-} from "./actiontype";
+} from "./debtors.actiontype";
 import {
 getAllDebtors,
 getAllDebtorsFail,

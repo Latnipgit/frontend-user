@@ -23,7 +23,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { addCustomerlist } from "../../../store/actions"
 
 import { useEffect } from "react";
-import { getAllDebtors as ongetAllDebtors } from '../../../store/actions'
+import { getAllDebtors} from '../../../store/debtors/debtors.actions'
 import CurrencyFormat from 'react-currency-format';
 import Select from "react-select"
 import * as moment from "moment";
@@ -216,7 +216,7 @@ const ReportedDefaulterModel = props => {
 
   useEffect(() => {
     const { isOpen, toggle, GetAllInvoice } = props
-    dispatch(ongetAllDebtors());
+    dispatch(getAllDebtors());
     console.log("ABSCS0 props0", props)
   }, [])
   const handleFormSubmit = item => {

@@ -5,7 +5,7 @@ import {
     GET_INVOICE_LIST,
     GET_INVOICE_LIST_FAIL,
     GET_INVOICE_LIST_SUCCESS
-  } from "./actiontype"
+  } from "./debtors.actiontype"
 
   import { createAction } from "store/utils/reducer/reducer.utils";
   

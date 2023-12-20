@@ -28,7 +28,7 @@ import employeeListsaga from "./Employee/saga"
 import searchCompanysaga from "././auth/companySearch/saga"
 import changePasswordSaga from "./changePassword/saga"
 import employeeListsagaCustomer from "./sendbilltransacttion/saga"
-import debtorsSaga from "./debtors/saga";
+import debtorsSaga from "./debtors/debtors.saga";
 // import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {

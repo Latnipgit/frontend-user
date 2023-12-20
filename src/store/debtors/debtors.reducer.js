@@ -5,7 +5,7 @@ import {
     GET_INVOICE_LIST,
     GET_INVOICE_LIST_SUCCESS,
     GET_INVOICE_LIST_FAIL
-  } from "./actiontype"
+  } from "./debtors.actiontype"
   
 
   

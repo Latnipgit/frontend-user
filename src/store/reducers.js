@@ -60,7 +60,7 @@ import employeeList from "./Employee/reducer";
 import searchCompany from "././auth/companySearch/reducer";
 import changePasswordReducer from "././changePassword/reducer";
 import employeeListCusstomer from "./sendbilltransacttion/reducer"
-import {DebtorsReducer} from "./debtors/reducer";
+import {DebtorsReducer} from "./debtors/debtors.reducer";
 
 const rootReducer = combineReducers({
   // public
