@@ -9,6 +9,11 @@ import { getOrders as onGetOrders } from "store/actions"
 import EcommerceOrdersModal from "../Ecommerce/EcommerceOrders/EcommerceOrdersModal"
 import { latestTransaction } from "../../common/data/dashboard"
 import { UserData } from "../../common/data/registration"
+import { getAllDebtors} from '../../store/debtors/debtors.actions'
+import { useSelector, useDispatch } from "react-redux"
+import moment from 'moment'
+import CurrencyFormat from 'react-currency-format';
+
 import {
   Badge,
   Col,
@@ -39,6 +44,7 @@ import {
 
 import TableContainer from "../../components/Common/TableContainer"
 import UserViewModal from "./UserViewModal"
+import { selectDebtorsList } from "../../store/debtors/debtors.selecter";
 
 const UserList = props => {
   const [modal1, setModal1] = useState(false)
@@ -47,101 +53,97 @@ const UserList = props => {
 
   const columns = useMemo(
     () => [
+     
       {
-        Header: "#",
+        Header: "Company Name",
+        accessor: "companyName",
         filterable: false,
+        className:"text-uppercase",
         disableFilters: true,
-        Cell: cellProps => {
-          return <input type="checkbox" className="form-check-input" />
-        },
+       
       },
       {
-        Header: "User ID",
-        accessor: "UserId",
-        filterable: false,
-        disableFilters: true,
-        Cell: cellProps => {
-          return <UserId {...cellProps} />
-        },
-      },
-      {
-        Header: "User Name",
-        accessor: "UserName",
+        Header: "Company Email",
+        accessor: "customerEmail",
         disableFilters: true,
         filterable: false,
-        Cell: cellProps => {
-          return <UserName {...cellProps} />
-        },
+        
       },
       {
-        Header: "Created Date",
-        accessor: "Createddate",
+        Header: "Gst Number",
+        accessor: "gstin",
+        disableFilters: true,
+        filterable: false,
+     
+      },
+      {
+        Header: "User Id",
+        accessor: "",
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <Date {...cellProps} />
+          var id = cellProps.row.original.creditorCompanyId
+          return <div className="text-uppercase">
+         {"BAF - "}   
+         {id.substring(id.length - 5)}
+          </div>
         },
       },
       {
-        Header: "Email Address",
-        accessor: "EmailAddress",
+        Header: "Mobile Number",
+        accessor: "customerMobile",
         disableFilters: true,
         filterable: false,
-        Cell: cellProps => {
-          return <EmailAddress {...cellProps} />
-        },
+        
       },
+     
       {
-        Header: "Status",
-        accessor: "Status",
-        disableFilters: true,
-        filterable: false,
-        Cell: cellProps => {
-          return <Status {...cellProps} />
-        },
-      },
-      //   {
-      //     Header: "Payment Method",
-      //     accessor: "paymentMethod",
-      //     disableFilters: true,
-      //     Cell: cellProps => {
-      //       return <PaymentMethod {...cellProps} />;
-      //     },
-      //   },
-      {
-        Header: "Action",
+        Header: "Address",
         disableFilters: true,
         accessor: "view",
+        // Cell: cellProps => {
+        //   return (
+        //     <UncontrolledDropdown>
+        //       <DropdownToggle href="#" className="card-drop" tag="a">
+        //         <i className="mdi mdi-dots-horizontal font-size-18" />
+        //       </DropdownToggle>
+        //       <DropdownMenu className="dropdown-menu-end">
+        //         <DropdownItem href="#" onClick={toggleViewModal}>
+        //           <i className="mdi mdi-eye font-size-16 text-primary me-1" />{" "}
+        //           View
+        //         </DropdownItem>
+        //         <DropdownItem
+        //           href="#"
+        //           onClick={() => handleProjectClick(project)}
+        //         >
+        //           <i className="mdi mdi-pencil font-size-16 text-success me-1" />{" "}
+        //           Edit
+        //         </DropdownItem>
+        //         <DropdownItem href="#" onClick={() => onClickDelete(project)}>
+        //           <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />{" "}
+        //           Delete
+        //         </DropdownItem>
+        //       </DropdownMenu>
+        //     </UncontrolledDropdown>
+        //   )
+        // },
         Cell: cellProps => {
-          return (
-            <UncontrolledDropdown>
-              <DropdownToggle href="#" className="card-drop" tag="a">
-                <i className="mdi mdi-dots-horizontal font-size-18" />
-              </DropdownToggle>
-              <DropdownMenu className="dropdown-menu-end">
-                <DropdownItem href="#" onClick={toggleViewModal}>
-                  <i className="mdi mdi-eye font-size-16 text-primary me-1" />{" "}
-                  View
-                </DropdownItem>
-                <DropdownItem
-                  href="#"
-                  onClick={() => handleProjectClick(project)}
-                >
-                  <i className="mdi mdi-pencil font-size-16 text-success me-1" />{" "}
-                  Edit
-                </DropdownItem>
-                <DropdownItem href="#" onClick={() => onClickDelete(project)}>
-                  <i className="mdi mdi-trash-can font-size-16 text-danger me-1" />{" "}
-                  Delete
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          )
+          
+          return <div className="text-capitalize d-flex">
+      {cellProps.row.original.address1},<br/> {cellProps.row.original.address2}, {cellProps.row.original.city}
+          </div>
         },
       },
     ],
     []
   )
+
+
+  const GetAllDebtors = useSelector(selectDebtorsList)
+  const dispatch = useDispatch()
+  useEffect(() => {
+     dispatch(getAllDebtors());
+   }, [])
 
   return (
     <React.Fragment>
@@ -161,11 +163,12 @@ const UserList = props => {
           <div className="mb-4 h4 card-title"> Bad debtors List</div>
           <TableContainer
             columns={columns}
-            data={UserData}
+            data={GetAllDebtors}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={6}
           />
+
         </CardBody>
       </Card>
     </React.Fragment>
