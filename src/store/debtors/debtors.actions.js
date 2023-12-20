@@ -13,12 +13,11 @@ import {
 
   export const getAllDebtorsSuccess = (data) => createAction(GET_DEBTORS_SUCCESS , data)
   
-  
   export const getAllDebtorsFail = (error) => createAction(GET_DEBTORS_FAIL,  error)
   
   export const getAllInvoice = () => createAction(GET_INVOICE_LIST) 
   
   export const getAllInvoiceSuccess = (data) => createAction(GET_INVOICE_LIST_SUCCESS, data)
   
-  export const getAllInvoiceFail = error => createAction(GET_INVOICE_LIST_FAIL, error)
+  export const getAllInvoiceFail = (error) => createAction(GET_INVOICE_LIST_FAIL, error)
   

@@ -28,11 +28,8 @@ import {
   Label,
   InputGroupAddon,
 } from "reactstrap"
-import { getAllDebtors as ongetAllDebtors}  from '../../../store/actions'
+import { getAllDebtors, getAllInvoice }  from '../../../store/debtors/debtors.actions'
 import CurrencyFormat from 'react-currency-format';
-
-/* import { getAllInvoice as ongetAllInvoice } from '../../../store/actions' */
-import { getAllInvoice } from "../../../store/debtors/debtors.actions"
 
 import { addInvoiceBill}  from '../../../store/actions'
 import { addFiles}  from '../../../store/actions'
@@ -571,7 +568,7 @@ else{
   }
 useEffect(()=>{
   console.log("getAllDebtorsList",getAllDebtorsList)
-  dispatch(ongetAllDebtors());
+  dispatch(getAllDebtors());
   dispatch(getAllInvoice());
 
 
