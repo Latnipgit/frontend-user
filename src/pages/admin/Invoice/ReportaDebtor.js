@@ -38,7 +38,8 @@ import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
-import { getAllInvoice } from "../../../store/debtors/debtors.actions"
+import { getAllInvoice, setIsReportDefOpen } from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList } from "store/debtors/debtors.selecter"
 import moment from 'moment'
 
 
@@ -49,17 +50,18 @@ const ReportDebtor = props => {
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
-  const [modal4, setModal4] = useState(false);
   const [selected, setSelected] = useState('');
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
   const toggleViewModal2 = () => setModal2(!modal3);
-  const toggleViewModal3 = () => setModal4(!modal4);
+  //const [modal4, setModal4] = useState(false);
+ /*  const toggleViewModal3 = () => setModal4(!modal4); */
   const dispatch = useDispatch();
 
-  const { GetAllInvoice } = useSelector(state => ({
-    GetAllInvoice: state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : [],
-  }))
+  const isReportDefOpen = useSelector(selectReportDefOpen);
+  const toggleViewModal3 = () =>  dispatch(setIsReportDefOpen(!isReportDefOpen));
+
+  const GetAllInvoice = useSelector(selectInvoiceList)
 
   useEffect(() => {
     dispatch(getAllInvoice());
@@ -68,7 +70,6 @@ const ReportDebtor = props => {
 
   }, [])
 
-console.log("modal4modal4",modal4)
   const viewModel =(value)=>{
     setSelected(value)
     setModal2(true)
@@ -194,7 +195,8 @@ console.log("modal4modal4",modal4)
 
 const handleReportDefaulter = ()=>{
   // window.location.href = "/ReportDefaulter"
-  setModal4(true)
+  //setModal4(true)
+  dispatch(setIsReportDefOpen(!isReportDefOpen))
 }
 const getDays = ()=>{
     GetAllInvoice != undefined ? GetAllInvoice.map((item)=>{
@@ -216,7 +218,7 @@ console.log("ABABABABABAB 2", getDaysArray)
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
       <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} />
-      <ReportIncoiceModel isOpen ={modal4} toggle={toggleViewModal3}  GetAllInvoice={GetAllInvoice} />
+      <ReportIncoiceModel isOpen ={isReportDefOpen} toggle={toggleViewModal3}  GetAllInvoice={GetAllInvoice} />
       
 
       <Card>

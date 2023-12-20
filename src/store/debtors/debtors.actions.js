@@ -4,7 +4,8 @@ import {
     GET_DEBTORS_SUCCESS,
     GET_INVOICE_LIST,
     GET_INVOICE_LIST_FAIL,
-    GET_INVOICE_LIST_SUCCESS
+    GET_INVOICE_LIST_SUCCESS,
+    GET_REPORT_DEF_OPEN
   } from "./debtors.actiontype"
 
   import { createAction } from "store/utils/reducer/reducer.utils";
@@ -20,4 +21,6 @@ import {
   export const getAllInvoiceSuccess = (data) => createAction(GET_INVOICE_LIST_SUCCESS, data)
   
   export const getAllInvoiceFail = (error) => createAction(GET_INVOICE_LIST_FAIL, error)
+
+  export const setIsReportDefOpen = (boolean) => createAction(GET_REPORT_DEF_OPEN, boolean);
   

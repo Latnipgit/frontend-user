@@ -251,7 +251,6 @@ const ReportedDefaulterModel = props => {
     }
   }
   const handleFilterInvoiceList = (item) => {
-    debugger
     var filteredArrays = []
     filteredArrays = GetAllInvoice.filter(value => value.debtorId == item.value)
     console.log("filteredInvoiceList  KKKKK", filteredInvoiceList, filteredArrays[0])
@@ -268,7 +267,6 @@ const ReportedDefaulterModel = props => {
   const [filteredCustomerDetail, setfilteredCustomerDetail] = useState([])
 
   const handleSelectCustomer = (item) => {
-    debugger
     setSelectedOption(item)
 
     var filteredArray = []

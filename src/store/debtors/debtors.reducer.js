@@ -4,12 +4,14 @@ import {
     GET_DEBTORS_SUCCESS,
     GET_INVOICE_LIST,
     GET_INVOICE_LIST_SUCCESS,
-    GET_INVOICE_LIST_FAIL
+    GET_INVOICE_LIST_FAIL,
+    GET_REPORT_DEF_OPEN
   } from "./debtors.actiontype"
   
 
   
   const INIT_STATE = {
+    isReportDefOpen: false,
     debtors: [],
     getInvoiceList: [],
     error: {},
@@ -26,6 +28,8 @@ import {
         return { ...state, getInvoiceList: payload, }
       case GET_INVOICE_LIST_FAIL:
         return { ...state, error: payload,}
+        case GET_REPORT_DEF_OPEN:
+          return { ...state, isReportDefOpen: payload,}
       default:
         return state
     }
