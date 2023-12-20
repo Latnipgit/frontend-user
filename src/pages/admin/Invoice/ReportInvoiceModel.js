@@ -35,7 +35,6 @@ import { selectDebtorsList } from "store/debtors/debtors.selecter";
 
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
 const ReportedDefaulterModel = props => {
-
   const [selectedOption, setSelectedOption] = useState("")
   const { isOpen, toggle, GetAllInvoice } = props
   const [filteredInvoiceList, setfilteredInvoiceList] = useState([])
@@ -191,7 +190,7 @@ const ReportedDefaulterModel = props => {
             responsData.map((item)=>{
               return (
                 {
-                  "value ": item.id, "label": item.firstname + " " + item.lastname
+                  "value": item.id, "label": item.firstname + " " + item.lastname
                 }
                  
               )
@@ -215,16 +214,11 @@ const ReportedDefaulterModel = props => {
 
   }, [DebtorsList]) */
 
-
-  useEffect(() => {
-
-  }, [])
-
   useEffect(() => {
     const { isOpen, toggle, GetAllInvoice } = props
     dispatch(ongetAllDebtors());
     console.log("ABSCS0 props0", props)
-  }, [filteredInvoiceList])
+  }, [])
   const handleFormSubmit = item => {
 
 
@@ -257,6 +251,7 @@ const ReportedDefaulterModel = props => {
     }
   }
   const handleFilterInvoiceList = (item) => {
+    debugger
     var filteredArrays = []
     filteredArrays = GetAllInvoice.filter(value => value.debtorId == item.value)
     console.log("filteredInvoiceList  KKKKK", filteredInvoiceList, filteredArrays[0])
@@ -273,10 +268,11 @@ const ReportedDefaulterModel = props => {
   const [filteredCustomerDetail, setfilteredCustomerDetail] = useState([])
 
   const handleSelectCustomer = (item) => {
+    debugger
     setSelectedOption(item)
 
     var filteredArray = []
-    filteredArray = GetAllDebtors.filter(value => value.id == item.value)
+    filteredArray = GetAllDebtors.filter((value) => value.id == item.value)
     console.log("ITEM +", filteredArray)
     setfilteredCustomerDetail(filteredArray[0])
 
@@ -922,8 +918,9 @@ console.log("dataoodata",data)
 
             </Row>
           </form>
-
-          {filteredCustomerDetail.length != 0 ? <Row className="mt-4">
+            
+          {
+          filteredCustomerDetail.length != 0 ? <Row className="mt-4">
             <strong className="mb-3 h-5 h5">Company Detail -</strong>
             <Label>
                Name - {filteredCustomerDetail.companyName}
