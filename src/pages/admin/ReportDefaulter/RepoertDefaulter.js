@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import * as Yup from "yup"
-import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
 import Select from "react-select"
@@ -14,29 +13,16 @@ import {
   Button,
   Card,
   CardBody,
-  Input,
   Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  CardHeader,
-  Table,
-  InputGroup,
-  Form,
   CardTitle,
-  FormGroup,
   Label,
-  InputGroupAddon,
 } from "reactstrap"
 import { getAllDebtors, getAllInvoice }  from '../../../store/debtors/debtors.actions'
 import CurrencyFormat from 'react-currency-format';
-
 import { addInvoiceBill}  from '../../../store/actions'
-import { addFiles}  from '../../../store/actions'
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
-
-
+import { selectDebtorsList, selectInvoiceList } from "store/debtors/debtors.selecter"
 import * as moment from "moment";
 
 const SendBillTransaction = (props) => {
@@ -57,12 +43,9 @@ const SendBillTransaction = (props) => {
     })
  
   }
-  const { getAllDebtorsList } = useSelector(state => ({
-    getAllDebtorsList: state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response:[],
-   }));
-   const { getAllInvoiceList } = useSelector(state => ({
-    getAllInvoiceList: state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : [],
-   }));
+
+  const  getAllDebtorsList = useSelector(selectDebtorsList);
+  const  getAllInvoiceList = useSelector(selectInvoiceList);
 
 console.log("getAllInvoiceList 00",getAllInvoiceList)
   const validationSchema = Yup.object().shape({
