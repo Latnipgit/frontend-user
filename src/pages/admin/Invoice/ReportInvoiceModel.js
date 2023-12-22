@@ -21,6 +21,7 @@ import {
 import { useFormik } from "formik"
 import { ToastContainer, toast } from 'react-toastify';
 import { addCustomerlist } from "../../../store/actions"
+import ReportedDebtorsModel from "./ReportedModel"
 
 import { useEffect } from "react";
 import { getAllDebtors} from '../../../store/debtors/debtors.actions'
@@ -31,6 +32,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ConfirmReportModal from "./ConfirmReportDefaulterModal";
 import { selectDebtorsList } from "store/debtors/debtors.selecter";
+import { getAllInvoice, setIsReportDefOpen, setIsCustomerFeedbackModalOpen } from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList,selectFeedbackModalOpen } from "store/debtors/debtors.selecter"
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
@@ -38,6 +41,10 @@ const ReportedDefaulterModel = props => {
   const [selectedOption, setSelectedOption] = useState("")
   const { isOpen, toggle, GetAllInvoice } = props
   const [filteredInvoiceList, setfilteredInvoiceList] = useState([])
+  const isCustomerFeedbackModalOpen = useSelector(selectFeedbackModalOpen)
+
+  const toggleViewModal1 = () =>  dispatch(setIsCustomerFeedbackModalOpen(!selectFeedbackModalOpen));
+
   const formikModal = useFormik({
     initialValues: {
       customerTypeIndividual: "",
@@ -267,6 +274,7 @@ const ReportedDefaulterModel = props => {
   const [filteredCustomerDetail, setfilteredCustomerDetail] = useState([])
 
   const handleSelectCustomer = (item) => {
+    settotalValue([])
     setSelectedOption(item)
 
     var filteredArray = []
@@ -338,7 +346,10 @@ const ReportedDefaulterModel = props => {
       },
     ])
   }
-
+  const handleFeedbackModal = ()=>{
+ 
+    dispatch(setIsCustomerFeedbackModalOpen(!isCustomerFeedbackModalOpen))
+  }
   const removeFaqsRow = index => {
     const newData = [...data]
     newData.splice(index, 1)
@@ -446,6 +457,7 @@ console.log("dataoodata",data)
     >
       <div className="modal-contents">
         <ModalHeader toggle={toggle}>Report A Defaulter</ModalHeader>
+        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1}   />
 
 
         <ModalBody className="" >
@@ -1175,13 +1187,7 @@ console.log("dataoodata",data)
   
 </Row>
 
-<Row>
-<Col md={10}></Col>
-<Col md={2} className=" text-end mt-3">
-<Button className="btn w-100 btn-info" onClick={()=>handleRepoertProceed()}><span className="h5">Next</span></Button>
 
-</Col>
-  </Row>
 
               </Row>
 
@@ -1192,17 +1198,23 @@ console.log("dataoodata",data)
 
           </Row>
 
+          {totalValue.length != 0 ? <Row>
+            <Col md={8}></Col>
+         <Col md={3} className="text-end">
+              <b className="totalText">TOTAL</b> - <b className="totalText"> {totalValue.toFixed(2)}</b>
+            </Col> 
 
-
+          </Row>: ""}
 
           <Row>
-            <Col md={8}></Col>
-            {totalValue.length != 0 ? <Col md={3} className="text-end">
-              <b className="totalText">TOTAL</b> - <b className="totalText"> {totalValue.toFixed(2)}</b>
-            </Col> : ""}
+<Col md={10}></Col>
+<Col md={2} className=" text-end mt-3">
+<Button className="btn w-100 btn-info" onClick={()=>handleFeedbackModal()}><span className="h5">Next</span></Button>
 
-          </Row>
+</Col>
+  </Row>
 
+         
         </ModalBody>
 
 

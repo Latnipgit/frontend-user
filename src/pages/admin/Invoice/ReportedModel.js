@@ -13,13 +13,29 @@ import {
   Table,
   Row,Col
 } from "reactstrap"
+import { useSelector, useDispatch } from "react-redux"
 
+import ConfirmReportModal from'./ConfirmReportDefaulterModal'
+import { setConfirmReportDefaultModal} from "../../../store/debtors/debtors.actions"
+import { confirReportDefaultModel } from "store/debtors/debtors.selecter"
 
 const ReportedDebtorsModel = props => {
     const [timelystarRating, settimelyStarRating] = useState(0)
     const [responsivestarRating, setresponsivestarRating] = useState(0)
     const [Integrity, setIntegrity] = useState(0)
   const { isOpen, toggle ,additionalValue } = props
+
+  const isConfirmModalOpen = useSelector(confirReportDefaultModel)
+
+  const toggleViewModal = () =>  dispatch(setConfirmReportDefaultModal(!confirReportDefaultModel));
+
+  const handleFeedbackModal = ()=>{
+    
+ 
+    dispatch(setConfirmReportDefaultModal(!isConfirmModalOpen))
+  }
+  const dispatch = useDispatch()
+
   return (
     <Modal
       isOpen={isOpen}
@@ -33,7 +49,11 @@ const ReportedDebtorsModel = props => {
     >
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Report Debtors</ModalHeader>
+
+        <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal}   />
+
         <ModalBody>
+
             <div className="mt-3 mb-3">
               <Row>
                 <Col md={9}>  <b>Customer Feedback</b>
@@ -342,8 +362,8 @@ const ReportedDebtorsModel = props => {
         
         </ModalBody>
         <ModalFooter>
-            <Button type="button" color="primary" >
-Submit
+            <Button type="button" color="primary" onClick={()=>handleFeedbackModal()}>
+process
             </Button>
           <Button type="button" color="secondary" onClick={toggle}>
             Close

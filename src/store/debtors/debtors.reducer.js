@@ -5,13 +5,17 @@ import {
     GET_INVOICE_LIST,
     GET_INVOICE_LIST_SUCCESS,
     GET_INVOICE_LIST_FAIL,
-    GET_REPORT_DEF_OPEN
+    GET_REPORT_DEF_OPEN,
+    GET_CUSTOMER_FEEDBACK_MODAL_OPEN,
+    CONFIRM_REPORT_DEFAULT_MODAL
   } from "./debtors.actiontype"
   
 
   
   const INIT_STATE = {
     isReportDefOpen: false,
+    isConfirmReportDefaultModal: false,
+    isCustomerFeedbackModalOpen : false,
     debtors: [],
     getInvoiceList: [],
     error: {},
@@ -30,6 +34,10 @@ import {
         return { ...state, error: payload,}
         case GET_REPORT_DEF_OPEN:
           return { ...state, isReportDefOpen: payload,}
+          case GET_CUSTOMER_FEEDBACK_MODAL_OPEN:
+            return { ...state, isCustomerFeedbackModalOpen: payload,}
+            case CONFIRM_REPORT_DEFAULT_MODAL:
+              return { ...state, isConfirmReportDefaultModal: payload,}
       default:
         return state
     }
