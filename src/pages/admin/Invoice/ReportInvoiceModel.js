@@ -197,7 +197,7 @@ const ReportedDefaulterModel = props => {
             responsData.map((item)=>{
               return (
                 {
-                  "value": item.id, "label": item.firstname + " " + item.lastname
+                  "value": item.id, "label": item.firstname + " " + item.lastname +", "+item.companyName, 
                 }
                  
               )

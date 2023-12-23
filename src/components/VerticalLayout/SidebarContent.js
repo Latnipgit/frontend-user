@@ -202,7 +202,7 @@ const SidebarContent = props => {
                   </Link>
                 </li>
                
-                <li>
+                {/* <li>
                   <Link onClick={() => salesListShow()}>
                     <i className='bx bx-cart-alt'></i>
                     {props.t("Sales")}
@@ -213,7 +213,7 @@ const SidebarContent = props => {
                       <i className="bx bx-chevron-down" style={{ paddingLeft:'5px'}}></i>
                     )}
                   </Link>
-                </li>
+                </li> */}
            
                 {isShowSales == true ?
                 
@@ -253,7 +253,7 @@ const SidebarContent = props => {
 :''
                 }
 
-                <li>
+                {/* <li>
                   <Link onClick={() => employeeListshow()}>
                     <i className="bx bxs-user-detail"></i>
                     {props.t("Employee")}
@@ -264,7 +264,7 @@ const SidebarContent = props => {
                       <i className="bx bx-chevron-down" style={{ paddingLeft:'5px'}}></i>
                     )}
                   </Link>
-                </li>
+                </li> */}
                 {isShowEmployee != undefined && isShowEmployee != false ? (
                   <li>
                     <Link to="/employee">
