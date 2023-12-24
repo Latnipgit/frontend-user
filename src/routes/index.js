@@ -84,7 +84,7 @@ import TwostepVerification from "../pages/AuthenticationInner/auth-two-step-veri
 import TwostepVerification2 from "../pages/AuthenticationInner/auth-two-step-verification-2";
 
 // Dashboard
-import Dashboard from "../../src/pages/Dashboard/users/dashboard1";
+import Dashboard from "../../src/pages/Dashboard/index";
 import DashboardSaas from "../pages/Dashboard-saas/index";
 import DashboardCrypto from "../pages/Dashboard-crypto/index";
 import Blog from "../pages/Dashboard-Blog/index";
