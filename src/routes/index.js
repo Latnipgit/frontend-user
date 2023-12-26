@@ -12,6 +12,7 @@ import CrediotorList from "../pages/admin/CreditorsList/CreditorsList";
 import Invoice from "../pages/admin/Invoice/Invoice";
 import ReporteDefaulter from "../pages/admin/ReportDefaulter/RepoertDefaulter"
 import ReportDebtor from "../pages/admin/Invoice/ReportaDebtor";
+import AddCustomer from "pages/admin/AddCustomer/addCustomer";
 import Document from "../pages/Dashboard/users/Documents/documents";
 import ContactsProfile from "../pages/Dashboard/users/profile";
 import Employee from "../pages/Dashboard/users/employeeRegistratiion/employee"
@@ -214,6 +215,7 @@ const authProtectedRoutes = [
   { path: "/EmployeeList", component: <EmployeeList /> },
   { path: "/Invoice", component: <Invoice /> },
   { path: "/Report-defaulter", component: <ReportDebtor /> },
+  { path: "/Add-customer", component: <AddCustomer /> },
  
 
   { path: "/login-register", component: <Register2 /> },

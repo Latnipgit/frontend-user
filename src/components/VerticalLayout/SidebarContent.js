@@ -189,6 +189,12 @@ const SidebarContent = props => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/Add-customer">
+                    <i className="bx bxs-user"></i>
+                    {props.t("Customer")}
+                  </Link>
+                </li>
+                <li>
                   <Link to="/Report-defaulter">
                   <i className='bx bxs-report'></i>
                     {props.t("Report A Defaulter")}
