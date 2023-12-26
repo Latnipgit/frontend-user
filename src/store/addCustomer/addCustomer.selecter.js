@@ -1,0 +1,1 @@
+export const SelectAddCustomer = (state) =>state.AddCustomerReducer.isaddCustomerOpen;
