@@ -1,18 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react"
 import { useFormik } from "formik"
-import * as Yup from "yup"
-import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
-import Select, { components } from "react-select"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
-import ReportedDebtorsModel from "../Invoice/ReportedModel"
-import ReportedDefaulterModel from "../Invoice/ReportDefaulterModel"
-import UploadCACertificateModel from "../Invoice/uploadCACertificateModel"
-import ReportIncoiceModel from '../../../../src/pages/admin/Invoice/ReportInvoiceModel'
 import 'react-table-6/react-table.css'
-import ReactTable from 'react-table-6'
-import CurrencyFormat from 'react-currency-format';
 import { AddcustomerFomr } from "./addCustomerForm"
 import { addCustomerlist } from "../../../store/actions"
 import {
@@ -35,17 +26,11 @@ import {
   FormGroup,
   Label,
 } from "reactstrap"
-import TableContainer from "../../../components/Common/TableContainer";
-import { getInvoices as ongetInvoices } from '../../../store/actions'
+
 import { useDispatch, useSelector } from "react-redux";
-import { success } from "toastr"
-//import { GetAllDebtors as onGetAllDebtors } from '../../../../src/store/actions'
 import { getAllDebtors, setIsReportDefOpen } from "../../../store/debtors/debtors.actions"
 import { selectReportDefOpen, selectInvoiceList, selectDebtorsList } from "store/debtors/debtors.selecter"
 import moment from 'moment'
-
-
-
 
 const AddCustomer = props => {
   const [getDaysArray, setgetDaysArray] = useState([]);
@@ -57,15 +42,13 @@ const AddCustomer = props => {
   const toggleViewModal3 = () =>  dispatch(setIsReportDefOpen(!isReportDefOpen));
 
   const GetAllDebtors = useSelector(selectDebtorsList)
-  
-  console.log("all list ", GetAllDebtors);
+  console.log(GetAllDebtors);
 
   useEffect(() => {
     dispatch(getAllDebtors());
     getDays()
 
   }, [])
-
 
     const handleFormSubmit = item => {
 
@@ -88,7 +71,7 @@ const AddCustomer = props => {
             }
         ]
         dispatch(addCustomerlist(dummy))
-        }
+    }
     const formikModal = useFormik({
         initialValues: {
             customerTypeIndividual: "",
@@ -160,7 +143,7 @@ const AddCustomer = props => {
         },
         onSubmit: values => {
         },
-        })
+    })
   
 const handleReportDefaulter = ()=>{
   setShowModal(true)
@@ -177,18 +160,9 @@ const getDays = ()=>{
 
     }
   }):[]
-  console.log("ABABABABABAB", getDaysArray)
 }
-console.log("ABABABABABAB 2", getDaysArray)
-
   return (
     <React.Fragment>
-{/*       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
-      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
-      <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} /> */}
-      {/* <ReportIncoiceModel isOpen ={isReportDefOpen} toggle={toggleViewModal3}  GetAllDebtors={GetAllDebtors} /> */}
-      
-
       <Card>
         <CardBody>
             <div className="mb-4 h4 card-title"></div>
@@ -220,7 +194,9 @@ console.log("ABABABABABAB 2", getDaysArray)
       <th scope="col">#</th>
       <th scope="col">Customer Name</th>
       {/* <th scope="col">Refrence Number</th> */}
+      <th scope="col">companyName</th>
       <th scope="col">Address</th>
+      <th scope="col">GST Number</th>
       {/* <th scope="col">Status</th> */}
       <th scope="col">Mobile Number</th>
       <th scope="col">Email</th>
@@ -238,9 +214,9 @@ console.log("ABABABABABAB 2", getDaysArray)
     {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
     <td className="pt-4 text-capitalize">{item.firstname +''+item.lastname}</td>
     {/* <td className="pt-4">{item.referenceNumber}</td> */}
-    <td className="pt-4 d-flex text-capitalize">{item.companyName}
-    <br/>
-    {item.address1} {item.address2}, {item.city}</td>
+    <td className="pt-4 text-capitalize">{item.companyName}</td>
+    <td className="pt-4 text-capitalize">{item.address1},{item.address2},{item.city}</td>
+    <td className="pt-4 text-capitalize">{item.gstin}</td>
     <td className="pt-4 text-start">{item.customerMobile}</td>
     {/* <td className="pt-4">{item.status}</td> */}
     <td className="pt-4 text-start">
