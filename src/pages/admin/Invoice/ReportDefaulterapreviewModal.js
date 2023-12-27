@@ -51,6 +51,7 @@ const handleFeedbackModal = ()=>{
  
     dispatch(setConfirmReportDefaultModal(!isConfirmModalOpen))
   }
+  const PDF ="https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-file.pdf"
 
   return (
     <Modal
@@ -99,6 +100,9 @@ const handleFeedbackModal = ()=>{
 <Col md={3}><strong>Invoice Number - BAF-656525</strong></Col>
 <Col md={3}><strong>Due Date - 12 Aug 2012</strong></Col>
 <Col md={3}><strong>Due Amount - 6,500</strong></Col>
+<Col md={3}>
+
+</Col>
 
           </Row>
           <Row className="mt-2">
@@ -108,7 +112,10 @@ const handleFeedbackModal = ()=>{
             <strong>Invoice Document</strong>
             </Col>
             <Col md={4}>
-           <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
+            <a href={PDF}  rel='noreferrer' target='_blank'>
+            <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
+ 
+ </a>  
             </Col>
            </Row>
             
@@ -119,8 +126,10 @@ const handleFeedbackModal = ()=>{
             <strong>Dispatch Document</strong>
             </Col>
             <Col md={4}>
-           <i className='bx bxs-file mt-2 fileSizing'></i>
-            </Col>
+            <a href={PDF}  rel='noreferrer' target='_blank'>
+            <i className='bx bxs-file mt-2 fileSizing'></i>
+ 
+ </a>              </Col>
            </Row>
             
             </Col>
@@ -130,8 +139,10 @@ const handleFeedbackModal = ()=>{
             <strong>Transportation Document</strong>
             </Col>
             <Col md={4}>
-           <i className='bx bxs-file mt-2 fileSizing'></i>
-            </Col>
+            <a href={PDF}  rel='noreferrer' target='_blank'>
+            <i className='bx bxs-file mt-2 fileSizing'></i>
+ 
+ </a>              </Col>
            </Row>
             
             </Col>
@@ -141,8 +152,10 @@ const handleFeedbackModal = ()=>{
             <strong>Purchase Document</strong>
             </Col>
             <Col md={4}>
-           <i className='bx bxs-file mt-2 fileSizing'></i>
-            </Col>
+            <a href={PDF}  rel='noreferrer' target='_blank'>
+            <i className='bx bxs-file mt-2 fileSizing'></i>
+ 
+ </a>              </Col>
            </Row>
             
             </Col>
@@ -155,6 +168,9 @@ const handleFeedbackModal = ()=>{
 <Col md={3}><strong>Invoice Number - BAF-656525</strong></Col>
 <Col md={3}><strong>Due Date - 12 Aug 2012</strong></Col>
 <Col md={3}><strong>Due Amount - 6,500</strong></Col>
+<Col md={3}>
+
+</Col>
 
           </Row>
           <Row className="mt-2">
@@ -164,7 +180,10 @@ const handleFeedbackModal = ()=>{
             <strong>Invoice Document</strong>
             </Col>
             <Col md={4}>
-           <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
+            <a href={PDF}  rel='noreferrer' target='_blank'>
+            <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
+ 
+ </a>  
             </Col>
            </Row>
             
@@ -175,8 +194,10 @@ const handleFeedbackModal = ()=>{
             <strong>Dispatch Document</strong>
             </Col>
             <Col md={4}>
-           <i className='bx bxs-file mt-2 fileSizing'></i>
-            </Col>
+            <a href={PDF}  rel='noreferrer' target='_blank'>
+            <i className='bx bxs-file mt-2 fileSizing'></i>
+ 
+ </a>              </Col>
            </Row>
             
             </Col>
@@ -186,8 +207,10 @@ const handleFeedbackModal = ()=>{
             <strong>Transportation Document</strong>
             </Col>
             <Col md={4}>
-           <i className='bx bxs-file mt-2 fileSizing'></i>
-            </Col>
+            <a href={PDF}  rel='noreferrer' target='_blank'>
+            <i className='bx bxs-file mt-2 fileSizing'></i>
+ 
+ </a>              </Col>
            </Row>
             
             </Col>
@@ -197,14 +220,17 @@ const handleFeedbackModal = ()=>{
             <strong>Purchase Document</strong>
             </Col>
             <Col md={4}>
-           <i className='bx bxs-file mt-2 fileSizing'></i>
-            </Col>
+            <a href={PDF}  rel='noreferrer' target='_blank'>
+            <i className='bx bxs-file mt-2 fileSizing'></i>
+ 
+ </a>              </Col>
            </Row>
             
             </Col>
           </Row>
 
           </Row>
+
 
 
 
@@ -326,6 +352,9 @@ const handleFeedbackModal = ()=>{
       
           
           </Row>
+
+
+
           <div className="mb-3 mt-3"><b className="">Rating</b></div>
 
           <div className="mb-1">
