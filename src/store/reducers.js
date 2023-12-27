@@ -61,6 +61,7 @@ import searchCompany from "././auth/companySearch/reducer";
 import changePasswordReducer from "././changePassword/reducer";
 import employeeListCusstomer from "./sendbilltransacttion/reducer"
 import {DebtorsReducer} from "./debtors/debtors.reducer";
+import { AddCustomerReducer } from "./addCustomer/addCustomer.reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -90,7 +91,8 @@ const rootReducer = combineReducers({
   employeeList,
   searchCompany,
   changePasswordReducer,
-  employeeListCusstomer
+  employeeListCusstomer,
+  AddCustomerReducer,
 });
 
 export default rootReducer;
