@@ -20,6 +20,9 @@
     padding: 20px 0px;
 
 }
+.checkForConfirm{
+  border-color: #007bff !important;
+}
 .selectionsBack{
     /* background-color: rgb(99, 152, 199)!important; */
     background-color: #023950;
@@ -65,4 +68,7 @@
 .cardTextSubtotal{
   font-weight: 600;
   text-align: justify;
+}
+.fileSizing{
+  font-size: 50px;
 }

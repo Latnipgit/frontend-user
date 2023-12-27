@@ -28,6 +28,11 @@ export const confirReportDefaultModel = createSelector(
     (DebtorsReducer) => DebtorsReducer.isConfirmReportDefaultModal
 )
 
+export const ReportDefPreviewModal = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.isPreviewModalOpen
+)
+
 /* export const selectDebtorsList = (state) => state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [];
 export const selectInvoiceList = (state) => state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : []
 export const selectReportDefOpen = (state) => state.DebtorsReducer.isReportDefOpen; */

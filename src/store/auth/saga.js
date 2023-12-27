@@ -20,28 +20,32 @@ function* loginUser({ payload: { user, history } }) {
       const response = yield call(postJwtLogin, {
         userName: user.email,
         password: user.password,
-      });
-      if(response!=undefined && response!=null){
-        if(response.data.success){
-          localStorage.setItem("authUser", JSON.stringify(response.data.response));
-          yield put(loginSuccess(response.data.response)); 
-          console.log("CHECK RESPONCE", response.data.response.passwordChangeNeeded)   
-          if(response.data.response.passwordChangeNeeded == false){
-            history('/companies');
+        });
+        console.log("responseRespo",response.data)
+        if(response!=undefined && response!=null){
+          if(response.data.success){
+            localStorage.setItem("authUser", JSON.stringify(response.data.response));
+            yield put(loginSuccess(response.data.response)); 
+            console.log("CHECK RESPONCE", response.data.response.passwordChangeNeeded)   
+            if(response.data.response.passwordChangeNeeded == false){
+              history('/companies');
 
-          }
-          else{
-            history('/changePassword');
+            }
+            else{
+              history('/changePassword');
 
-          }
-        }else{
-          console.log("SUCCESS CHECK",response.data )
+            }
+          }else{
+            console.log("SUCCESS CHECK",response.data )
           if(response.data.passwordChangeNeeded == true){
             history('/changePassword');
             localStorage.setItem("one-time-token", response.data.passwordChangeToken)
             alert(response.data.message);
 
 
+          }
+          else{
+            alert(response.data.message);
           }
         
         }
