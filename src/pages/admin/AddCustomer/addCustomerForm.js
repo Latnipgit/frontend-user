@@ -22,7 +22,6 @@ import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
 import { addCustomerlist } from "store/actions"
 
 export const AddcustomerFomr = () =>{
-    debugger;
     const [selectedOption, setSelectedOption] = useState("")
     const [salutations, setsalutations] = useState([
         { label: "Mr.", value: "Mr." },
@@ -113,6 +112,7 @@ export const AddcustomerFomr = () =>{
       })
 
     const handleFormSubmit = (item, e) => {
+      toggleAddCustomer()
     const dummy = [
         {
         "debtorType": item.customerType,

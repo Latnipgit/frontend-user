@@ -11,7 +11,7 @@ function* addCustomerListsaga(data) {
   try {const response = yield call(addCustomerListAPI,data.payload)
     console.log("RESPONCE", response)
         yield put(addNewCustomerSuccess(response))
-        window.location.reload()
+       // window.location.reload()
   } catch (error) {
     yield put(addNewCustomerFail(error))
   }

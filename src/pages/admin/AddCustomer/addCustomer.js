@@ -32,7 +32,8 @@ import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter"
 import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
 import moment from 'moment'
 
-const AddCustomer = props => { 
+const AddCustomer = props => {
+  debugger;
   const [getDaysArray, setgetDaysArray] = useState([]);
   const dispatch = useDispatch();
 
