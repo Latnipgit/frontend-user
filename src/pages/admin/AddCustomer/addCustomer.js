@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react"
-import { useFormik } from "formik"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 import 'react-table-6/react-table.css'
 import { AddcustomerFomr } from "./addCustomerForm"
-import { addCustomerlist } from "../../../store/actions"
 import {
   Container,
   Row,
@@ -28,18 +26,19 @@ import {
 } from "reactstrap"
 
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDebtors, setIsReportDefOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, selectDebtorsList } from "store/debtors/debtors.selecter"
+import { getAllDebtors} from "../../../store/debtors/debtors.actions"
+import { selectDebtorsList } from "store/debtors/debtors.selecter"
+import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter"
+import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
 import moment from 'moment'
 
 const AddCustomer = props => {
+  debugger;
   const [getDaysArray, setgetDaysArray] = useState([]);
-  const [showModal, setShowModal] = useState(false)
-  const [selectedOption, setSelectedOption] = useState("")
   const dispatch = useDispatch();
 
-  const isReportDefOpen = useSelector(selectReportDefOpen);
-  const toggleViewModal3 = () =>  dispatch(setIsReportDefOpen(!isReportDefOpen));
+  const isAddCustomerOpen = useSelector(SelectAddCustomer);
+  const toggleAddCustomer = () =>  dispatch(setAddCustomerOpen(!isAddCustomerOpen));
 
   const GetAllDebtors = useSelector(selectDebtorsList)
   console.log(GetAllDebtors);
@@ -50,107 +49,18 @@ const AddCustomer = props => {
 
   }, [])
 
-    const handleFormSubmit = item => {
-
-        const dummy = [
-            {
-            "debtorType": item.customerType,
-            "salutation": selectedOption.value,
-            "firstname": item.firstname,
-            "lastname": item.lastname,
-            "customerEmail": item.customerEmail,
-            "customerMobile": item.customerPhone,
-            "address1": item.address1,
-            "address2": item.address2,
-            "city": item.city,
-            "state": item.state,
-            "zipcode": item.zipcode,
-            "gstin": item.gstNumber,
-            "companyPan": item.panCard,
-            "companyName": item.companyName
-            }
-        ]
-        dispatch(addCustomerlist(dummy))
-    }
-    const formikModal = useFormik({
-        initialValues: {
-            customerTypeIndividual: "",
-            customerTypeBusiness: "",
-            customerType: "Business",
-            primaryContact: "",
-            firstname: "",
-            lastname: "",
-            salutation: "",
-            companyName: "",
-            customerEmail: "",
-            customerPhone: "",
-            gstNumber: "",
-            panCard: "",
-            address1: "",
-            address2: "",
-            city: "",
-            state: "",
-            zipcode: "",
-        },
-
-
-        validate: values => {
-            const errors = {}
-
-            if (!values.customerType) {
-            errors.customerType = "Customer Type is required"
-            }
-            if (!values.primaryContact) {
-            errors.primaryContact = "Primary Contact is required"
-            }
-            if (!values.companyName) {
-            errors.companyName = "Company Name is required"
-            }
-            if (!values.customerEmail) {
-            errors.customerEmail = "Customer Email is required"
-            } else if (!/^\S+@\S+\.\S+$/.test(values.customerEmail)) {
-            errors.customerEmail = "Invalid email address"
-            }
-            if (!values.customerPhone) {
-            errors.customerPhone = "Customer Phone is required"
-            }
-            if (!values.gstNumber) {
-            errors.gstNumber = "GST Number is required"
-            }
-            //else if (
-            //   !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\w{1}\d{1}$/.test(values.gstNumber)
-            // ) {
-            //   errors.gstNumber = "Invalid GST Number"
-            // }
-            if (!values.panCard) {
-            errors.panCard = "PANCARD is required"
-            } else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(values.panCard)) {
-            errors.panCard = "Invalid PANCARD"
-            }
-            if (!values.address1) {
-            errors.address1 = "Address 1 is required"
-            }
-            if (!values.cityState) {
-            errors.cityState = "City/State is required"
-            }
-            if (!values.zipcode) {
-            errors.zipcode = "Zipcode is required"
-            } else if (!/^\d{6}$/.test(values.zipcode)) {
-            errors.zipcode = "Invalid Zipcode"
-            }
-
-            return errors
-        },
-        onSubmit: values => {
-        },
-    })
-  
-const handleReportDefaulter = ()=>{
-  setShowModal(true)
-  //dispatch(setIsReportDefOpen(!isReportDefOpen))
-}
 const getDays = ()=>{
-    GetAllDebtors != undefined ? GetAllDebtors.map((item)=>{
+  if(GetAllDebtors != undefined){
+    for (let x = 0; x < GetAllDebtors.length; x++) {
+      const a = moment(GetAllDebtors[x]);
+      const b =moment()
+      const c = moment(b).diff(a)
+      const d = moment.duration(c)
+      getDaysArray.push(d.days())
+     }
+  }
+
+/*     GetAllDebtors != undefined ? GetAllDebtors.map((item , i)=>{
    const a = moment(item.dueDate);
     const b =moment()
     const c = moment(b).diff(a)
@@ -159,7 +69,7 @@ const getDays = ()=>{
       getDaysArray.push(d.days())
 
     }
-  }):[]
+  }):[] */
 }
   return (
     <React.Fragment>
@@ -174,7 +84,7 @@ const getDays = ()=>{
             <h5 className="m-1">Add Customer</h5>
           </Col>
           <Col md={2}>
-            <Button className="btn btn-md btn-info" onClick={()=>handleReportDefaulter()}>Add new customer</Button>
+            <Button className="btn btn-md btn-info" onClick={()=>toggleAddCustomer()}>Add new customer</Button>
           </Col>
         </Row>
 
@@ -283,25 +193,7 @@ const getDays = ()=>{
           </Row>
         </CardBody>
       </Card>
-      <Modal isOpen={showModal} toggle={() => setShowModal(false)}>
-        <ModalHeader toggle={() => setShowModal(false)}>
-            Add New Customer{" "}
-        </ModalHeader>
-        <ModalBody>
-           <AddcustomerFomr/>
-        </ModalBody>
-        <ModalFooter>
-            <Button color="secondary" onClick={() => setShowModal(false)}>
-            Cancel
-            </Button>
-            <Button
-            color="success"
-            onClick={() => handleFormSubmit(formikModal.values)}
-            >
-            Submit
-            </Button>
-        </ModalFooter>
-      </Modal>
+      {isAddCustomerOpen && <AddcustomerFomr/>}
     </React.Fragment>
   );
 }
