@@ -8,7 +8,8 @@ import {
     GET_REPORT_DEF_OPEN,
     GET_CUSTOMER_FEEDBACK_MODAL_OPEN,
     CONFIRM_REPORT_DEFAULT_MODAL,
-    GET_REPORT_DEF_PREVIEW
+    GET_REPORT_DEF_PREVIEW,
+    UPLOAD_PENDING_FILES
   } from "./debtors.actiontype"
 
   import { createAction } from "store/utils/reducer/reducer.utils";
@@ -29,4 +30,5 @@ import {
   export const setConfirmReportDefaultModal = (boolean) => createAction(CONFIRM_REPORT_DEFAULT_MODAL, boolean);
   export const setPreviewModalOpen = (boolean) => createAction(GET_REPORT_DEF_PREVIEW, boolean);
   export const setIsCustomerFeedbackModalOpen = (boolean) => createAction(GET_CUSTOMER_FEEDBACK_MODAL_OPEN, boolean);
+  export const setUploadFilesOpen = (boolean) => createAction(UPLOAD_PENDING_FILES, boolean);
   
