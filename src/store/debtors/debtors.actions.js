@@ -7,7 +7,8 @@ import {
     GET_INVOICE_LIST_SUCCESS,
     GET_REPORT_DEF_OPEN,
     GET_CUSTOMER_FEEDBACK_MODAL_OPEN,
-    CONFIRM_REPORT_DEFAULT_MODAL
+    CONFIRM_REPORT_DEFAULT_MODAL,
+    GET_REPORT_DEF_PREVIEW
   } from "./debtors.actiontype"
 
   import { createAction } from "store/utils/reducer/reducer.utils";
@@ -26,5 +27,6 @@ import {
 
   export const setIsReportDefOpen = (boolean) => createAction(GET_REPORT_DEF_OPEN, boolean);
   export const setConfirmReportDefaultModal = (boolean) => createAction(CONFIRM_REPORT_DEFAULT_MODAL, boolean);
+  export const setPreviewModalOpen = (boolean) => createAction(GET_REPORT_DEF_PREVIEW, boolean);
   export const setIsCustomerFeedbackModalOpen = (boolean) => createAction(GET_CUSTOMER_FEEDBACK_MODAL_OPEN, boolean);
   

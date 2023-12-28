@@ -27,6 +27,8 @@ import logo from "assets/images/logo.svg";
 //Import config
 import { facebook, google } from "../../config";
 import Loader from "../../components/loader"
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const Login = props => {
 
@@ -62,6 +64,7 @@ const Login = props => {
   const { error } = useSelector(state => ({
     error: state.Login.error,
   }));
+
 
   const signIn = (res, type) => {
     if (type === "google" && res) {
@@ -267,6 +270,8 @@ const Login = props => {
                     </Col>
                   </Row>
                 </Container>
+                <ToastContainer/>
+
               </div></>
       )}
       </div>

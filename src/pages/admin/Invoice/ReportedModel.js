@@ -14,28 +14,101 @@ import {
   Row,Col
 } from "reactstrap"
 import { useSelector, useDispatch } from "react-redux"
-
+import Select from "react-select"
 import ConfirmReportModal from'./ConfirmReportDefaulterModal'
-import { setConfirmReportDefaultModal} from "../../../store/debtors/debtors.actions"
-import { confirReportDefaultModel } from "store/debtors/debtors.selecter"
+import { setConfirmReportDefaultModal,setPreviewModalOpen} from "../../../store/debtors/debtors.actions"
+import { confirReportDefaultModel,ReportDefPreviewModal } from "store/debtors/debtors.selecter"
+import ReportDefPreviewModals from'./ReportDefaulterapreviewModal'
+import { options } from "toastr"
 
 const ReportedDebtorsModel = props => {
     const [timelystarRating, settimelyStarRating] = useState(0)
     const [responsivestarRating, setresponsivestarRating] = useState(0)
     const [Integrity, setIntegrity] = useState(0)
-  const { isOpen, toggle ,additionalValue } = props
+  const { isOpen, toggle ,filteredCustomerDetail } = props
+
+  const colourStyles = {
+    menuList: styles => ({
+      ...styles,
+      background: '#FFFFFF'
+    })
+
+  }
+  const customStyles = {
+
+    control: (provided, state) => ({
+      ...provided,
+      background: "#FAFAFA",
+      width: "300px",
+      // match with the menu
+      borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+      // Overwrittes the different states of border
+      borderColor: state.isFocused ? " #4da6ff" : " #80d4ff",
+      // Removes weird border around container  
+      boxShadow: state.isFocused ? null : null,
+      "&:hover": {
+        // Overwrittes the different states of border
+        borderColor: state.isFocused ? " #4da6ff" : " #80d4ff"
+      }
+    }),
+    option: (provided, state) => ({
+
+      // Your custom option styles here
+      backgroundColor: state.isFocused ? '#80bfff' : '#FAFAFA',
+      ':hover': {
+        backgroundColor: '#80bfff', // Change background color on hover
+      },
+
+
+      menu: base => ({
+        ...base,
+        // override border radius to match the box
+        borderRadius: 0,
+        // kill the gap
+        marginTop: 2
+      }),
+      menuList: base => ({
+        ...base,
+        // kill the white space on first and last option
+        padding: 2,
+        margin: 2
+      })
+    }),
+    // Add more styles as needed for other parts of the Select component
+  };
 
   const isConfirmModalOpen = useSelector(confirReportDefaultModel)
+  const isPreviewModalShow = useSelector(ReportDefPreviewModal)
 
   const toggleViewModal = () =>  dispatch(setConfirmReportDefaultModal(!confirReportDefaultModel));
+  const togglePreviwModal = () =>  dispatch(setPreviewModalOpen(!isPreviewModalShow));
 
   const handleFeedbackModal = ()=>{
     
  
     dispatch(setConfirmReportDefaultModal(!isConfirmModalOpen))
   }
-  const dispatch = useDispatch()
 
+  const handlePreviewShow = ()=>{
+
+ 
+    dispatch(setPreviewModalOpen(!isPreviewModalShow))
+  }
+  const dispatch = useDispatch()
+ 
+  
+  const [options, setoptions] = useState([
+    { label: "Yes", value: "Yes" },
+    { label: "No", value: "No" },
+
+  ])
+
+  const [optionsRentedOwn, setoptionsRentedOwn] = useState([
+    { label: "Owned", value: "Owned" },
+    { label: "Rented", value: "Rented" },
+    { label: "Not Aware", value: "Not Aware" },
+
+  ])
   return (
     <Modal
       isOpen={isOpen}
@@ -50,7 +123,8 @@ const ReportedDebtorsModel = props => {
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Report Debtors</ModalHeader>
 
-        <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal}   />
+        <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal}   filteredCustomerDetail={filteredCustomerDetail}/>
+        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail}/>
 
         <ModalBody>
 
@@ -73,14 +147,18 @@ const ReportedDebtorsModel = props => {
                 </Col>
                 <Col md={3}>
               
-                <span>
- <Input
-                        type="text"
- className={`form-control custom-content`}
-                        placeholder="Yes/No"
-                   
-                      />
-</span>
+              
+                <Select
+                                id="primaryContact"
+                                className="custom-content"
+                                options={options}
+                                styles={colourStyles}
+                                placeholder="Yes/No"
+                              />
+  
+
+        
+
                 </Col>
               </Row>
           
@@ -96,14 +174,13 @@ const ReportedDebtorsModel = props => {
 2. Does the customer have intention to pay?   </span>
                 </Col>
                 <Col md={3}>
-                <span>
-                <Input
-                        type="text"
- className={`form-control custom-content`}
-                        placeholder="Yes/No"
-                   
-                      />
-</span>
+                <Select
+                                id="primaryContact"
+                                className="custom-content"
+                                options={options}
+                                styles={colourStyles}
+                                placeholder="Yes/No"
+                              />
               
                 </Col>
               </Row>
@@ -118,14 +195,13 @@ const ReportedDebtorsModel = props => {
                 </Col>
                 <Col md={3}>
               
-                <span>
-                <Input
-                        type="text"
- className={`form-control custom-content`}
-                        placeholder="Yes/No"
-                   
-                      />
-</span>
+                <Select
+                                id="primaryContact"
+                                className="custom-content"
+                                options={options}
+                                styles={colourStyles}
+                                placeholder="Yes/No"
+                              />
         
                 </Col>
               </Row>
@@ -142,15 +218,13 @@ const ReportedDebtorsModel = props => {
 4. Does the customer operate from OWn premises or rented premises?   </span>
                 </Col>
                 <Col md={3}>
-                <span>
- <Input
-                        type="text"
- className={`form-control custom-content`}
-                        placeholder="Owned/Rented/Not Aware"
-                   
-                      />
-</span>
-              
+                <Select
+                                id="primaryContact"
+                                className="custom-content"
+                                options={optionsRentedOwn}
+                                styles={colourStyles}
+                                placeholder="Yes/No"
+                              />
                 </Col>
               </Row>
 </div>
@@ -164,14 +238,13 @@ const ReportedDebtorsModel = props => {
 5. Has the customer changed his place of business since buying the goods from you?   </span>
                 </Col>
                 <Col md={3}>
-                <span>
- <Input
-                        type="text"
- className={`form-control custom-content`}
-                        placeholder="Yes/No"
-                   
-                      />
-</span>
+                <Select
+                                id="primaryContact"
+                                className="custom-content"
+                                options={options}
+                                styles={colourStyles}
+                                placeholder="Owned/Rented"
+                              />
               
                 </Col>
               </Row>
@@ -362,12 +435,13 @@ const ReportedDebtorsModel = props => {
         
         </ModalBody>
         <ModalFooter>
-            <Button type="button" color="primary" onClick={()=>handleFeedbackModal()}>
-process
-            </Button>
-          <Button type="button" color="secondary" onClick={toggle}>
-            Close
+        <Button type="button" color="secondary" onClick={toggle}>
+            Back
           </Button>
+            <Button type="button" color="primary" onClick={()=>handlePreviewShow()}>
+Process
+            </Button>
+         
         </ModalFooter>
       </div>
     </Modal>

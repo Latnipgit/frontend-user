@@ -7,7 +7,8 @@ import {
     GET_INVOICE_LIST_FAIL,
     GET_REPORT_DEF_OPEN,
     GET_CUSTOMER_FEEDBACK_MODAL_OPEN,
-    CONFIRM_REPORT_DEFAULT_MODAL
+    CONFIRM_REPORT_DEFAULT_MODAL,
+    GET_REPORT_DEF_PREVIEW
   } from "./debtors.actiontype"
   
 
@@ -16,6 +17,7 @@ import {
     isReportDefOpen: false,
     isConfirmReportDefaultModal: false,
     isCustomerFeedbackModalOpen : false,
+    isPreviewModalOpen:false,
     debtors: [],
     getInvoiceList: [],
     error: {},
@@ -38,6 +40,8 @@ import {
             return { ...state, isCustomerFeedbackModalOpen: payload,}
             case CONFIRM_REPORT_DEFAULT_MODAL:
               return { ...state, isConfirmReportDefaultModal: payload,}
+              case GET_REPORT_DEF_PREVIEW:
+                return { ...state, isPreviewModalOpen: payload,}
       default:
         return state
     }

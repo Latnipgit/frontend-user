@@ -34,6 +34,8 @@ import ConfirmReportModal from "./ConfirmReportDefaulterModal";
 import { selectDebtorsList } from "store/debtors/debtors.selecter";
 import { getAllInvoice, setIsReportDefOpen, setIsCustomerFeedbackModalOpen } from "../../../store/debtors/debtors.actions"
 import { selectReportDefOpen, selectInvoiceList,selectFeedbackModalOpen } from "store/debtors/debtors.selecter"
+import { addInvoiceBill } from '../../../store/actions'
+
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
@@ -208,18 +210,7 @@ const ReportedDefaulterModel = props => {
 
  const getDebtrosList =  getDebtrosLists(GetAllDebtors)
 
-/*   useEffect(() => {
-    setDebtorsList(getDebtrosList(GetAllDebtors))
-  }, []) */
 
- /*  useEffect(() => {
-    setDebtorsList(GetAllDebtors != undefined && GetAllDebtors.length != 0 ? GetAllDebtors.map((item) => {
-      return {
-        "value": item.id, "label": item.firstname + " " + item.lastname
-      }
-    }) : [])
-
-  }, [DebtorsList]) */
 
   useEffect(() => {
    // const { isOpen, toggle, GetAllInvoice } = props
@@ -249,6 +240,52 @@ const ReportedDefaulterModel = props => {
     ]
     dispatch(addCustomerlist(dummy))
   }
+  const [data, setData] = useState([
+    {
+      itemDetail: "",
+      date: "",
+      amount: "",
+    },
+  ])
+  const [uploadTransportId, setuploadTransportId] = useState('')
+  const [uploadpurchaseId, setuploadpurchaseId] = useState('')
+  const [uploadInvoiceId, setuploadInvoiceId] = useState('')
+  const [uploadChallanId, setuploadChallanId] = useState('')
+const submitInvoice= ()=>{
+  console.log("datadata",data,totalValue)
+  const dummy = [{
+    "debtorId": selectedOption.value,
+    "billDate": data[0].date,
+    "billDescription": "",
+    "billNumber": "",
+    "creditAmount": totalValue,
+    "remainingAmount": totalValue,
+    "status": "",
+    "interestRate": "",
+    "creditLimitDays": "",
+    "remark": "",
+    "items": data,
+    "subTotal": data[0].amount,
+    "tax": '',
+    "referenceNumber": selectedOption.value != null ? "BAF" + "-" + selectedOption.value.slice(-6).toUpperCase() : '',
+    "invoiceNumber": "BAF" + "-" + data[0].itemDetail,
+    "dueDate": '',
+    "percentage": "",
+    "purchaseOrderDocument": uploadpurchaseId,
+    "challanDocument": uploadChallanId,
+    "invoiceDocument": uploadInvoiceId,
+    "transportationDocument": uploadTransportId
+
+  }]
+  if (uploadInvoiceId == '') {
+
+    toast.error("Please Upload Invoice File")
+  }
+  else {
+    dispatch(addInvoiceBill(dummy))
+  }
+}
+
 
   // console.log("GetAllDebtors Data",DebtorsList,GetAllInvoice,GetAllDebtors)
   const TotalDebtorPayment = (item) => {
@@ -272,8 +309,11 @@ const ReportedDefaulterModel = props => {
     }
   }
   const [filteredCustomerDetail, setfilteredCustomerDetail] = useState([])
+  const [isChangedCustomername, setisChangedCustomername] = useState(false)
 
   const handleSelectCustomer = (item) => {
+    
+    setisChangedCustomername(true)
     settotalValue([])
     setSelectedOption(item)
 
@@ -284,18 +324,13 @@ const ReportedDefaulterModel = props => {
 
     handleFilterInvoiceList(item)
   }
-  const [data, setData] = useState([
-    {
-      itemDetail: "",
-      date: "",
-      amount: "",
-    },
-  ])
-
+ 
   const [faqsRow, setFaqsRow] = useState(1)
-
+  const [currenIndex, setCurrentIndex] = useState(0)
+  const [isDisabled, setisDisabled] = useState(true)
   const handleItemDetailChange = (index, value) => {
     console.log("HARSHIT hs",index,value,data)
+    setCurrentIndex(index)
     const newData = [...data]
     newData[index].itemDetail = value
     setData(newData)
@@ -304,6 +339,8 @@ const ReportedDefaulterModel = props => {
     // const newData = [...data]
     // newData[index].amount = value
     // setData(newData)
+    setisDisabled(false)
+
     const newData = [...data]
     newData[index].amount = value.replace(/[^0-9.]/g, "")
 
@@ -383,10 +420,7 @@ const ReportedDefaulterModel = props => {
 
   }
 
-  const [uploadTransportId, setuploadTransportId] = useState('')
-  const [uploadpurchaseId, setuploadpurchaseId] = useState('')
-  const [uploadInvoiceId, setuploadInvoiceId] = useState('')
-  const [uploadChallanId, setuploadChallanId] = useState('')
+
 
 
 
@@ -457,7 +491,7 @@ console.log("dataoodata",data)
     >
       <div className="modal-contents">
         <ModalHeader toggle={toggle}>Report A Defaulter</ModalHeader>
-        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1}   />
+        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1} filteredCustomerDetail={filteredCustomerDetail}  />
 
 
         <ModalBody className="" >
@@ -931,73 +965,75 @@ console.log("dataoodata",data)
             
           {
           filteredCustomerDetail.length != 0 ? <Row className="mt-4">
-            <strong className="mb-3 h-5 h5">Company Detail -</strong>
-            <Label>
+            <div className="mb-2"><b className="">Company Detail -</b></div>
+
+            <Label className="text-capitalize">
                Name - {filteredCustomerDetail.companyName}
             </Label>
-            <Label>
+            <Label className="text-capitalize">
              Email - {filteredCustomerDetail.customerEmail}
             </Label>
-            <Label>
+            <Label className="text-capitalize">
               Mobile - {filteredCustomerDetail.customerMobile}
             </Label>
-            <Label>
+            <Label className="text-capitalize">
               GST Number - {filteredCustomerDetail.gstin}
             </Label>
-            <Label>
+            <Label className="text-capitalize">
 {console.log("filteredCustomerDetail.address1",filteredCustomerDetail.address1)}
               Address - {filteredCustomerDetail.address1 != ''? filteredCustomerDetail.address1 +",":''} {filteredCustomerDetail.address2 != ''? filteredCustomerDetail.address2 +",":''} {filteredCustomerDetail.city != ''? filteredCustomerDetail.city +",":''} {filteredCustomerDetail.zipcode}
             </Label>
-            <Label>
+            <Label className="text-uppercase">
               PAN Number - {filteredCustomerDetail.companyPan}
             </Label>
           </Row> : ""}
 
           <Row className="tableRow">
-            {filteredInvoiceList != undefined ? <table className="table table-bordered tableRowtable" >
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Company Name</th>
-                  <th scope="col">Invoice number</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Amount</th>
+            {isChangedCustomername != true ? 
+            // <table className="table table-bordered tableRowtable" >
+            //   <thead>
+            //     <tr>
+            //       <th scope="col">#</th>
+            //       <th scope="col">Company Name</th>
+            //       <th scope="col">Invoice number</th>
+            //       <th scope="col">Date</th>
+            //       <th scope="col">Amount</th>
 
-                </tr>
-              </thead>
-              <tbody>
-                {filteredInvoiceList != undefined && filteredInvoiceList.length != 0 ? filteredInvoiceList.map((item) => {
-                  return <tr key={item}>
-                    <td>
-                      <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={() => TotalDebtorPayment(item)} />
-                    </td>
-                    <td>
-                      {console.log("HELLO0", item)}
-                      {item != undefined ? item.debtor.companyName : ''}
-                    </td>
-                    <td> {item != undefined ? item.invoiceNumber : ""}</td>
-                    <td>{moment(item != undefined ? item.dueDate : '').format("DD-MMM-YYYY")}</td>
-                    <td className="text-end">
+            //     </tr>
+            //   </thead>
+            //   <tbody>
+            //     {filteredInvoiceList != undefined && filteredInvoiceList.length != 0 ? filteredInvoiceList.map((item) => {
+            //       return <tr key={item}>
+            //         <td>
+            //           <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={() => TotalDebtorPayment(item)} />
+            //         </td>
+            //         <td>
+            //           {console.log("HELLO0", item)}
+            //           {item != undefined ? item.debtor.companyName : ''}
+            //         </td>
+            //         <td> {item != undefined ? item.invoiceNumber : ""}</td>
+            //         <td>{moment(item != undefined ? item.dueDate : '').format("DD-MMM-YYYY")}</td>
+            //         <td className="text-end">
 
-                      <CurrencyFormat value={item != undefined ? item.remainingAmount.toFixed(2) : ''} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{ }</div>} />
-                    </td>
+            //           <CurrencyFormat value={item != undefined ? item.remainingAmount.toFixed(2) : ''} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{ }</div>} />
+            //         </td>
 
-                  </tr>
-                }) :
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                }
-              </tbody></table>
-
+            //       </tr>
+            //     }) :
+            //       <tr>
+            //         <td></td>
+            //         <td></td>
+            //         <td></td>
+            //         <td></td>
+            //         <td></td>
+            //       </tr>
+            //     }
+            //   </tbody></table>
+''
 
               :
 
-              <Row className="Dragtable mt-3 pb-5">
+              <Row className="Dragtable mt-3">
                
 
                 
@@ -1008,9 +1044,9 @@ console.log("dataoodata",data)
                   <CardBody>
                     <Row  >
 
-                      <Col md={4} className="p-2"><b>Invoice Number</b></Col>
-                      <Col md={4} className="p-2"><b>Invoice Date</b></Col>
-                      <Col md={4} className="p-2"><b>Due Amount</b></Col>
+                      <Col md={4} className="p-2"><b>Invoice Number  <span className="text-danger">*</span></b></Col>
+                      <Col md={4} className="p-2"><b>Invoice Date  <span className="text-danger">*</span></b></Col>
+                      <Col md={4} className="p-2"><b>Due Amount  <span className="text-danger">*</span></b></Col>
                     </Row>
                     <Row className="">
 
@@ -1060,7 +1096,7 @@ console.log("dataoodata",data)
                     <Row className="">
 
                       <Col md={4} className="p-2">
-                        <Label>Invoice</Label>  
+                        <Label><strong>Invoice</strong> <span className="text-danger">*</span></Label>  
                         <InputGroup>
                             <input
                               type="file"
@@ -1078,7 +1114,7 @@ console.log("dataoodata",data)
                       </Col>
 
                       <Col md={4} className="p-2">
-                        <Label>Challan / Dispatch Document</Label> 
+                        <Label> <strong>Challan / Dispatch Document</strong></Label> 
                         <InputGroup>
                             <input
                               type="file"
@@ -1097,7 +1133,7 @@ console.log("dataoodata",data)
                       </Col>
 
                       <Col md={4} className="p-2">
-                        <Label>Delivery / Transportation Document</Label>
+                        <Label> <strong>Delivery / Transportation Document</strong></Label>
                         <InputGroup>
                             <input
                               type="file"
@@ -1120,7 +1156,7 @@ console.log("dataoodata",data)
                     </Row>
                     <Row>
                       <Col md={4} className="p-2">
-                        <Label>Purchase Order Document</Label>
+                        <Label><strong>Purchase Order Document</strong></Label>
                         <InputGroup className="text-capitalize">
                             <input
                               type="file"
@@ -1137,7 +1173,7 @@ console.log("dataoodata",data)
 
 
                       <Col md={4} className="p-2">
-                        <Label>Upload CA Certificate</Label>  <InputGroup className="text-capitalize">
+                        {/* <Label>Upload CA Certificate</Label>  <InputGroup className="text-capitalize">
                           <input
                             type="file"
                             className="form-control"
@@ -1148,37 +1184,42 @@ console.log("dataoodata",data)
                               handleFileChange(e, "uploadCACertificate")
                             }
                           />
-                        </InputGroup>
+                        </InputGroup> */}
                       </Col>
-                      <Col md={4} className="p-2"></Col>
+                      <Col md={4} className="p-2 text-end pt-4">
+                      
+                      <Button className="btn btn-info mt-2" onClick={()=>submitInvoice()}>
+                        Submit
+                        </Button></Col>
                     
                     </Row>
 
                   </CardBody>
                 </Card>
-                <Row>
+             
+                </Row>
+              ))}
+                 <Row>
                   <Col md={12} className="text-end">
                     {/* <Button>Add Another Invoice</Button> */}
-                    {index > 0 ? (
+                    {currenIndex > 0 ? (
                   <span
                     className="icon-container delete-icon"
-                    onClick={() => removeFaqsRow(index)}
+                    onClick={() => removeFaqsRow(currenIndex)}
                   >
                     <span className="mdi mdi-delete icon-red"></span>
                   </span>
                 ) : null}
-                <Button
-                  // className="icon-container add-icon"
+                 <Button
+                  className="btn btn-info"
                   onClick={addFaqsRow}
+                  disabled={ isDisabled == true}
                 >
                   Add Another Invoice
                   {/* <span className="mdi mdi-plus icon-yellow"></span> */}
                   </Button>
                   </Col>
                 </Row>
-                </Row>
-              ))}
-              
               <Row className="text-end mt-3">
                 <Col md={12}>
             <h5>  <CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} renderText={value => <div> Total Amount = {value}</div>} />
@@ -1198,17 +1239,17 @@ console.log("dataoodata",data)
 
           </Row>
 
-          {totalValue.length != 0 ? <Row>
+          {/* {totalValue.length != 0 ? <Row>
             <Col md={8}></Col>
          <Col md={3} className="text-end">
               <b className="totalText">TOTAL</b> - <b className="totalText"> {totalValue.toFixed(2)}</b>
             </Col> 
 
-          </Row>: ""}
+          </Row>: ""} */}
 
-          <Row>
-<Col md={10}></Col>
-<Col md={2} className=" text-end mt-3">
+<Row>
+<Col md={11}></Col>
+<Col md={1} className="">
 <Button className="btn w-100 btn-info" onClick={()=>handleFeedbackModal()}><span className="h5">Next</span></Button>
 
 </Col>
