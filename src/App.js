@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from "react";
+import React, { useEffect ,useState} from "react";
 import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { layoutTypes } from "./constants/layout";
@@ -64,7 +64,23 @@ const App = () => {
   }));
 
   const Layout = getLayout(layoutType);
+  const [isLoaded, setisLoaded] = useState(true)
 
+//  const onTimeLoad=()=>{
+//   if(isLoaded){
+//     if(localStorage.getItem("authUser")== undefined){
+//       window.location.href="/login"
+//         }
+//         setisLoaded(false)
+//   }
+ 
+    
+//  }
+//  useEffect(()=>{
+//   if(isLoaded){
+//   onTimeLoad()
+//   }
+//  },[])
   return (
     <React.Fragment>
       {/* <Loader/> */}

@@ -121,7 +121,7 @@ const ReportedDebtorsModel = props => {
       toggle={toggle} 
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>Report Debtors</ModalHeader>
+        <ModalHeader toggle={toggle}>Customer Feedback </ModalHeader>
 
         <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal}   filteredCustomerDetail={filteredCustomerDetail}/>
         <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail}/>

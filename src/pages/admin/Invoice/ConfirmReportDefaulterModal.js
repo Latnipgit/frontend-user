@@ -33,7 +33,13 @@ const confirmReportModal = props => {
   padding: '5px', // Optional: Add padding to the checkbox
   marginRight: '5px', // Optional: Add some spacing between the checkbox and label
 };
-  
+const [isCheck, setisCheck] = useState(false);
+const handleChecked =()=>{
+  setisCheck(true)
+}
+  useEffect(()=>{
+
+  },[isCheck])
   return (
     <Modal
       isOpen={isOpen}
@@ -54,7 +60,7 @@ const confirmReportModal = props => {
 <br/>
 <p>Confirming the report of the mentioned customer as a defaulter requires accurate information. Any inaccuracies may lead to legal action against the reporting party, impacting their credibility as a rater. </p>
  <p className="text-center">
-   <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} /> 
+   <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} onChange={()=>handleChecked()}/> 
  
  &nbsp; &nbsp;By checking the checkbox, you accept full responsibility for consequences related to the rating and grant AnandRishi Technologies Pvt Ltd permission to post this information on social media on your behalf. You absolve AnandRishi Technologies Pvt Ltd from any legal or monetary consequences arising from such actions.</p>
 
@@ -62,12 +68,17 @@ const confirmReportModal = props => {
       </ModalBody>
         <ModalFooter>
         <Row>
-    <Col md={5}></Col>
-    <Col md={2}>
-    <Button className="text-center btn btn-info" onClick={()=>handleSubmit()}>Submit</Button>
+    <Col md={7}>
+    <Button className="text-center btn btn-secondary" onClick={()=>alert("Save as Draft")}>Save as Draft</Button>
 
     </Col>
-    <Col md={5}></Col>
+    <Col md={2}>
+    <Button className="text-center btn btn-info" onClick={()=>handleSubmit()}
+    disable={isCheck}
+    >Submit</Button>
+
+    </Col>
+    <Col md={3}></Col>
 
  </Row>
         </ModalFooter>

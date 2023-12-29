@@ -13,6 +13,7 @@ import ReportIncoiceModel from './ReportInvoiceModel'
 import 'react-table-6/react-table.css'
 import ReactTable from 'react-table-6'
 import CurrencyFormat from 'react-currency-format';
+// import ReactTooltip from "react-tooltip";
 import {
   Container,
   Row,
@@ -38,10 +39,12 @@ import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
-import { getAllInvoice, setIsReportDefOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList } from "store/debtors/debtors.selecter"
+import { getAllInvoice, setIsReportDefOpen ,setUploadFilesOpen} from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList ,uploadFilesModalOpen} from "store/debtors/debtors.selecter"
+import UploadPendingFiles from "./uploadFilesModal"
 import moment from 'moment'
 
+import './style.css'
 
 
 
@@ -59,7 +62,10 @@ const ReportDebtor = props => {
   const dispatch = useDispatch();
 
   const isReportDefOpen = useSelector(selectReportDefOpen);
+  const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
+
   const toggleViewModal3 = () =>  dispatch(setIsReportDefOpen(!isReportDefOpen));
+  const toggleUploiadFiles = () =>  dispatch(setUploadFilesOpen(!uploadFilesModalShow));
 
   const GetAllInvoice = useSelector(selectInvoiceList)
 
@@ -78,7 +84,48 @@ const ReportDebtor = props => {
   const viewModels =(value)=>{
     setModal3(true)
   }
+ const dummyData =[{
+  "companyName":"Latnip",
+  "InvoiceNUmber":"BAF-65650",
+  "Address":"Jodhpur",
+  "amount":"90000",
+  "DueFrom":"12-05-2003",
+ "debtor":
+  {
+    "firstname":"Harshit",
+    "lastname":"sharma"
+  }
+ 
 
+ },
+ {
+  "companyName":"TATA",
+  "InvoiceNUmber":"BAF-69850",
+  "Address":"Jaiour",
+  "amount":"98000",
+  "DueFrom":"13-05-2012",
+  "debtor":
+  {
+    "firstname":"Harshit",
+    "lastname":"sharma"
+  }
+ 
+
+ },
+ {
+  "companyName":"Jio",
+  "InvoiceNUmber":"BAF-65980",
+  "Address":"Pali",
+  "amount":"65000",
+  "DueFrom":"24-09-2020",
+  "debtor":
+  {
+    "firstname":"Harshit",
+    "lastname":"sharma"
+  }
+ 
+
+ }]
 
   const columns = useMemo(
     () => [
@@ -198,6 +245,9 @@ const handleReportDefaulter = ()=>{
   //setModal4(true)
   dispatch(setIsReportDefOpen(!isReportDefOpen))
 }
+const handleUploadFiles =()=>{
+  dispatch(setUploadFilesOpen(!uploadFilesModalShow))
+}
 const getDays = ()=>{
     GetAllInvoice != undefined ? GetAllInvoice.map((item)=>{
    const a = moment(item.dueDate);
@@ -219,7 +269,7 @@ console.log("ABABABABABAB 2", getDaysArray)
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
       <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} />
       <ReportIncoiceModel isOpen ={isReportDefOpen} toggle={toggleViewModal3}  GetAllInvoice={GetAllInvoice} />
-      
+      <UploadPendingFiles isOpen ={uploadFilesModalShow} toggle ={toggleUploiadFiles}/>
 
       <Card>
         <CardBody>
@@ -235,6 +285,8 @@ console.log("ABABABABABAB 2", getDaysArray)
           </Col>
           <Col md={2}>
             <Button className="btn btn-md btn-info" onClick={()=>handleReportDefaulter()}>Report a Defaulter</Button>
+            {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
+<ReactTooltip id="toolTip1" /> */}
           </Col>
         </Row>
 
@@ -264,25 +316,31 @@ console.log("ABABABABABAB 2", getDaysArray)
     </tr>
   </thead>
   <tbody>
-   {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{
+   {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
+   {dummyData!= undefined ?dummyData.map((item,index)=>{
+
+   
     return  <tr key={item}>
       {console.log("NEW TABLE ", item)}
       
     <th scope="row" className="pt-4">{index + 1}</th>
-    {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
-    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+    {/* <td className="pt-4 text-capitalize">{item.debtor.companyName}</td> */}
+    <td className="pt-4 text-capitalize">{item.companyName}</td>
     {/* <td className="pt-4">{item.referenceNumber}</td> */}
-    <td className="pt-4">{item.invoiceNumber}</td>
-    <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+    <td className="pt-4">{item.InvoiceNUmber}</td>
+    {/* <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
     <br/>
-    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
-    {/* <td className="pt-4">{item.status}</td> */}
-    <td className="pt-4 text-end">
+    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td> */}
+    <td>
+      {item.Address}
+    </td>
+    <td className="pt-4">{item.amount}</td>
+    {/* <td className="pt-4 text-end">
       <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
-    </td>
+    </td> */}
 
-    <td >
+    {/* <td >
    
     <div className="" style={{ padding:"2px 15px"}}>
       
@@ -297,16 +355,23 @@ console.log("ABABABABABAB 2", getDaysArray)
   </div>
 </div>
            
+    </td> */}
+    <td>
+      {item.DueFrom}
     </td>
     <td>
     <div className="pt-2">
-            <Button className="btn btn-info btn-sm"
+            <Button className="btn btn-info btn-sm "
               onClick={() => viewModel(item)
                
               }
+              
             >
-           Record Payment
+    <i className='bx bx-wallet-alt textsizing' ></i>
             </Button>
+
+            <a>
+            </a>
             &nbsp;
 
             <Button className="btn btn-info btn-sm"
@@ -314,8 +379,30 @@ console.log("ABABABABABAB 2", getDaysArray)
                
               // }
             >
-           Request Edit
+            <i className='bx bx-edit textsizing' ></i>
             </Button>
+
+            &nbsp;
+
+            <Button className="btn btn-info btn-sm"
+              onClick={() => handleUploadFiles()
+               
+              }
+            >
+           <i className='bx bx-cloud-upload textsizing' ></i>
+      
+           
+                </Button>
+
+           &nbsp;
+           <Button className="btn btn-info btn-sm"
+              onClick={() => viewModels()
+               
+              }
+            >
+           <i className='bx bx-file textsizing' ></i>
+            </Button>
+  
   
           </div>
     </td>
@@ -332,7 +419,7 @@ console.log("ABABABABABAB 2", getDaysArray)
           </div>
     </td> */}
   </tr>
-   }):''} 
+   }):''}
    
   
   </tbody>

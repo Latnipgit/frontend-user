@@ -32,6 +32,10 @@ export const ReportDefPreviewModal = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.isPreviewModalOpen
 )
+export const uploadFilesModalOpen = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.uploadPendingFilesModalOpen
+)
 
 /* export const selectDebtorsList = (state) => state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [];
 export const selectInvoiceList = (state) => state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : []
