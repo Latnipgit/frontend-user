@@ -295,7 +295,6 @@ const ReportedDefaulterModel = props => {
       toast.error("Please Upload Invoice File")
     }
     else {
-      debugger
       dispatch(addInvoiceReportDebtor(dummy))
       const val = { "InvoiceId": InvoiceAddData.debtorId }
       const avilableInvoiceID = debtorIdArrayForPreview.some(x => x.InvoiceId === val)
