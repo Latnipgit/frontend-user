@@ -29,6 +29,7 @@ import searchCompanysaga from "././auth/companySearch/saga"
 import changePasswordSaga from "./changePassword/saga"
 import employeeListsagaCustomer from "./sendbilltransacttion/saga"
 import debtorsSaga from "./debtors/debtors.saga";
+import { ReportDefulterPreviewSaga } from "./ReportDefulterPreview/ReportDefulterPreview.saga";
 // import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {
@@ -61,6 +62,6 @@ export default function* rootSaga() {
     fork(dashboardBlogSaga),
     fork(dashboardJobSaga),
     fork(searchCompanysaga),
-
+    fork(ReportDefulterPreviewSaga),
   ]);
 }

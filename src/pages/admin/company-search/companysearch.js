@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { ApprovedTranctionData } from "../../../common/data/approvedTransactions";
 import { useSelector, useDispatch } from "react-redux";
+import CompnayViewDetails from "./companyViewDetailsPop";
 
 import {
     Badge,
@@ -51,11 +52,13 @@ import { get } from "helpers/api_helper";
 
 
 const CompanySearch = props => {
+  debugger
   const dispatch = useDispatch();
 
   const { toggleMenuItems } = useMenu();
   const [filteredData, setFilteredData] = useState([]);
   const [modal1, setModal1] = useState(false);
+  const [selected, setSelected] = useState('')
   const [showMenuItems, setShowMenuItems] = useState(true);
   console.log('showMenuItems:', showMenuItems);
   const toggleViewModal = () => setModal1(!modal1);
@@ -63,6 +66,13 @@ const CompanySearch = props => {
     const newPageUrl = '/company-dashboard';
     window.location.href = newPageUrl;
   };
+
+  const viewModel= (value)=>{
+    console.log("VALUE", value)
+    setModal1(true)
+    setSelected(value.cell.row.original)
+  }
+  
   const columns = useMemo(
     () => [
       {
@@ -146,6 +156,7 @@ const CompanySearch = props => {
             <div className="d-flex flex-column align-items-center me-3" style={{ cursor: 'pointer' }}>
               <button
                 className="btn btn-primary"
+                onClick={()=>viewModel(cellProps)}
               >
                 VIEW DETAILS
               </button>
@@ -179,7 +190,7 @@ useEffect(()=>{
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
-      
+      <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} />
       {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/> */}
    
       <InlineFilterForm onFilter={handleFilter} />

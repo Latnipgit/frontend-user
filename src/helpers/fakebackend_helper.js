@@ -1,5 +1,5 @@
 import axios from "axios";
-import { del, get, post, put, addEmployeeAPImethod,getAfter, forgetPasswordAPI } from "./api_helper";
+import { del, get, post, put, addEmployeeAPImethod, getAfter, forgetPasswordAPI } from "./api_helper";
 import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
@@ -48,7 +48,7 @@ export const postSocialLogin = data => post(url.SOCIAL_LOGIN, data);
 export const getProducts = () => get(url.GET_PRODUCTS);
 export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
 
-export const getAllInvoiceList =()=>getAfter("/api/transactions/getAllInvoicesRaisedByMe")
+export const getAllInvoiceList = () => getAfter("/api/transactions/getAllInvoicesRaisedByMe")
 // get Product detail
 export const getProductDetail = id =>
   get(`${url.GET_PRODUCTS_DETAIL}/${id}`, { params: { id } });
@@ -111,7 +111,7 @@ export const addRatingofdebtor = data => addEmployeeAPImethod("/api/user/addQues
 
 
 //ADD invoice
-export const addInvoiceApi =data => addEmployeeAPImethod(url.ADD_INVOICE,data);
+export const addInvoiceApi = data => addEmployeeAPImethod(url.ADD_INVOICE, data);
 
 // add order
 export const addNewOrder = order => post(url.ADD_NEW_ORDER, order);
@@ -272,6 +272,8 @@ const onAddComment = (productId, commentText) => {
     params: { productId, commentText },
   });
 };
+
+export const getAllInvoiceFolder = () => get(url.GET_ALL_INVOICE_FOLDER)
 
 export {
   getLoggedInUser,

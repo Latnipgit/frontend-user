@@ -25,7 +25,7 @@ import crypto from "./crypto/reducer";
 //invoices
 import invoices from "./invoices/reducer";
 
-import companyList  from "./company/Company.reducer"
+import companyList from "./company/Company.reducer"
 //jobs
 import JobReducer from "./jobs/reducer";
 
@@ -60,8 +60,9 @@ import employeeList from "./Employee/reducer";
 import searchCompany from "././auth/companySearch/reducer";
 import changePasswordReducer from "././changePassword/reducer";
 import employeeListCusstomer from "./sendbilltransacttion/reducer"
-import {DebtorsReducer} from "./debtors/debtors.reducer";
+import { DebtorsReducer } from "./debtors/debtors.reducer";
 import { AddCustomerReducer } from "./addCustomer/addCustomer.reducer";
+import { ReportDefulterPreviewReducer } from "./ReportDefulterPreview/ReportDefulterPreview.reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -93,6 +94,7 @@ const rootReducer = combineReducers({
   changePasswordReducer,
   employeeListCusstomer,
   AddCustomerReducer,
+  ReportDefulterPreviewReducer,
 });
 
 export default rootReducer;
