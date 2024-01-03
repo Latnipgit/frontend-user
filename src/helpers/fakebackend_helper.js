@@ -4,7 +4,7 @@ import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
 const getLoggedInUser = () => {
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem("authUser");
   if (user) return JSON.parse(user);
   return null;
 };
@@ -106,6 +106,8 @@ export const addCustomerListAPI = data => addEmployeeAPImethod(url.ADD_CUSTOMER_
 // Get employee
 
 export const getEmployeeList = data => addEmployeeAPImethod(url.GET_EMPLOYEE);
+export const addDebtorIdToarrayForPreviewAPI = data => addEmployeeAPImethod("/api/transactions/getAllInvoicesForIds");
+export const addRatingofdebtor = data => addEmployeeAPImethod("/api/user/addQuestion");
 
 
 //ADD invoice

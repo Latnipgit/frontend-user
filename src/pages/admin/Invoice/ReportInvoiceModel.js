@@ -32,10 +32,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ConfirmReportModal from "./ConfirmReportDefaulterModal";
 import { selectDebtorsList } from "store/debtors/debtors.selecter";
-import { getAllInvoice, setIsReportDefOpen, setIsCustomerFeedbackModalOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList,selectFeedbackModalOpen } from "store/debtors/debtors.selecter"
-import { addInvoiceBill } from '../../../store/actions'
-
+import { getAllInvoice, setIsReportDefOpen, setIsCustomerFeedbackModalOpen,addInvoiceReportDebtor,addInvoiceArray } from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList,selectFeedbackModalOpen,addInvoiceReportDebtorSelector,addInvoiceIdtoArray } from "store/debtors/debtors.selecter"
+import { addInvoiceBill ,addInvoiceBillSuccess} from '../../../store/actions'
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
@@ -43,9 +42,15 @@ const ReportedDefaulterModel = props => {
   const [selectedOption, setSelectedOption] = useState("")
   const { isOpen, toggle, GetAllInvoice } = props
   const [filteredInvoiceList, setfilteredInvoiceList] = useState([])
+  const [debtorIdArrayForPreview, setdebtorIdArrayForPreview] = useState([])
   const isCustomerFeedbackModalOpen = useSelector(selectFeedbackModalOpen)
-
+  const InvoiceAddData = useSelector(addInvoiceReportDebtorSelector)
+  // const InvoiceSuccessData = useSelector(addInvoiceBillSuccess)
   const toggleViewModal1 = () =>  dispatch(setIsCustomerFeedbackModalOpen(!selectFeedbackModalOpen));
+  const { getInvoiceSuccessDetail } = useSelector(state => ({
+    getInvoiceSuccessDetail: state.invoices.invoices != undefined && state.invoices.invoices.data != undefined? state.invoices.invoices.data.response : [],
+  }));
+  console.log("InvoiceAddDataInvoiceAddData",InvoiceAddData)
 
   const formikModal = useFormik({
     initialValues: {
@@ -213,10 +218,20 @@ const ReportedDefaulterModel = props => {
 
 
   useEffect(() => {
-   // const { isOpen, toggle, GetAllInvoice } = props
     dispatch(getAllDebtors());
-   // console.log("ABSCS0 props0", props)
+    dispatch(addInvoiceBillSuccess())
+      // setinvoiceDebtorIdArray(invoiceDebtorIdArray.push(InvoiceAddData.debtorId))
+// invoiceDebtorIdArray.push(InvoiceAddData.debtorId)
+const val =InvoiceAddData.debtorId
+const myarr = []
+let invoiceDebtorIdArray = [...myarr, val];
+setdebtorIdArrayForPreview(invoiceDebtorIdArray)
+
+// return debtorIdArrayForPreview
+
   }, [])
+
+
   const handleFormSubmit = item => {
 
 
@@ -255,21 +270,21 @@ const submitInvoice= ()=>{
   console.log("datadata",data,totalValue)
   const dummy = [{
     "debtorId": selectedOption.value,
-    "billDate": data[0].date,
+    "billDate": moment(data[0].date).format("YYYY-MM-DD"),
     "billDescription": "",
     "billNumber": "",
-    "creditAmount": totalValue,
-    "remainingAmount": totalValue,
+    "creditAmount": 0,
+    "remainingAmount": 0,
     "status": "",
     "interestRate": "",
     "creditLimitDays": "",
     "remark": "",
-    "items": data,
+    "items": [],
     "subTotal": data[0].amount,
     "tax": '',
     "referenceNumber": selectedOption.value != null ? "BAF" + "-" + selectedOption.value.slice(-6).toUpperCase() : '',
     "invoiceNumber": "BAF" + "-" + data[0].itemDetail,
-    "dueDate": '',
+    "dueDate":moment(data[0].date).format("YYYY-MM-DD"),
     "percentage": "",
     "purchaseOrderDocument": uploadpurchaseId,
     "challanDocument": uploadChallanId,
@@ -282,7 +297,7 @@ const submitInvoice= ()=>{
     toast.error("Please Upload Invoice File")
   }
   else {
-    dispatch(addInvoiceBill(dummy))
+    dispatch(addInvoiceReportDebtor(dummy))
   }
 }
 
@@ -342,12 +357,12 @@ const submitInvoice= ()=>{
     setisDisabled(false)
 
     const newData = [...data]
-    newData[index].amount = value.replace(/[^0-9.]/g, "")
+    newData[index].amount = value
 
     const amount = parseFloat(newData[index].amount)
 
     if ( !isNaN(amount)) {
-      newData[index].amount = "₹" + (amount).toFixed(2)
+      newData[index].amount = (amount).toFixed(2)
     } else {
       newData[index].amount = ""
     }
@@ -379,13 +394,14 @@ const submitInvoice= ()=>{
       {
         itemDetail: "",
         date: "",
-        amount: "₹",
+        amount: 0,
       },
     ])
   }
   const handleFeedbackModal = ()=>{
- 
+ dispatch(addInvoiceArray(debtorIdArrayForPreview))
     dispatch(setIsCustomerFeedbackModalOpen(!isCustomerFeedbackModalOpen))
+
   }
   const removeFaqsRow = index => {
     const newData = [...data]
@@ -461,12 +477,13 @@ const submitInvoice= ()=>{
   const calculateSubtotal = newData => {
     // Calculate the subtotal
     let total = 0
-
     newData.forEach(row => {
       if (row.amount !== "") {
-        const amountValue = parseFloat(row.amount.replace("₹", ""))
+        const amountValue = parseFloat(row.amount.replace(""))
+        console.log("newData",newData,row.amount,total)
+
         if (!isNaN(amountValue)) {
-          total += amountValue
+          total = row.amount
         }
       }
     })
@@ -1222,6 +1239,7 @@ console.log("dataoodata",data)
                 </Row>
               <Row className="text-end mt-3">
                 <Col md={12}>
+                  {console.log("totaltotaltotal",total)}
             <h5>  <CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} renderText={value => <div> Total Amount = {value}</div>} />
             </h5>
                 </Col>
@@ -1250,7 +1268,10 @@ console.log("dataoodata",data)
 <Row>
 <Col md={11}></Col>
 <Col md={1} className="">
-<Button className="btn w-100 btn-info" onClick={()=>handleFeedbackModal()}><span className="h5">Next</span></Button>
+<Button className="btn w-100 btn-info" onClick={()=>handleFeedbackModal()}
+                  disabled={ isDisabled == true}
+
+><span className="h5">Next</span></Button>
 
 </Col>
   </Row>

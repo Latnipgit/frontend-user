@@ -16,8 +16,8 @@ import {
 import { useSelector, useDispatch } from "react-redux"
 import Select from "react-select"
 import ConfirmReportModal from'./ConfirmReportDefaulterModal'
-import { setConfirmReportDefaultModal,setPreviewModalOpen} from "../../../store/debtors/debtors.actions"
-import { confirReportDefaultModel,ReportDefPreviewModal } from "store/debtors/debtors.selecter"
+import { setConfirmReportDefaultModal,setPreviewModalOpen,addRatingToDebtor} from "../../../store/debtors/debtors.actions"
+import { confirReportDefaultModel,ReportDefPreviewModal ,addRatingofDebtor} from "store/debtors/debtors.selecter"
 import ReportDefPreviewModals from'./ReportDefaulterapreviewModal'
 import { options } from "toastr"
 
@@ -91,7 +91,7 @@ const ReportedDebtorsModel = props => {
 
   const handlePreviewShow = ()=>{
 
- 
+ dispatch(addRatingToDebtor(feedbackdataPaylod))
     dispatch(setPreviewModalOpen(!isPreviewModalShow))
   }
   const dispatch = useDispatch()
@@ -109,6 +109,24 @@ const ReportedDebtorsModel = props => {
     { label: "Not Aware", value: "Not Aware" },
 
   ])
+  const [selectedOption, setSelectedOption] = useState("")
+  const [feedbackdataPaylod, setfeedbackdataPaylod] = useState([])
+
+
+  const handlefinancialdifficult =(selected)=>{
+    console.log("selected",selected)
+    const sele = [selected]
+var dummy = []
+
+// dummy = dummy.push(selected)
+dummy = [...dummy,sele]
+
+console.log("selected dummy",dummy)
+setfeedbackdataPaylod(dummy)
+
+return dummy
+
+  }
   return (
     <Modal
       isOpen={isOpen}
@@ -154,6 +172,12 @@ const ReportedDebtorsModel = props => {
                                 options={options}
                                 styles={colourStyles}
                                 placeholder="Yes/No"
+                                onChange={(selected)=>handlefinancialdifficult({"questionDesc":"Is the customer facing financial difficulty",
+                                
+                                
+                                "questionType": "DROP-DOWN",
+    "values": selected.value
+                              })}
                               />
   
 
@@ -180,6 +204,10 @@ const ReportedDebtorsModel = props => {
                                 options={options}
                                 styles={colourStyles}
                                 placeholder="Yes/No"
+
+                                onChange={(selected)=>handlefinancialdifficult({"questionDesc":"Does the customer have intention to pay",
+                                "questionType": "DROP-DOWN",
+                                "values": selected.value})}
                               />
               
                 </Col>
@@ -201,6 +229,10 @@ const ReportedDebtorsModel = props => {
                                 options={options}
                                 styles={colourStyles}
                                 placeholder="Yes/No"
+                                onChange={(selected)=>handlefinancialdifficult({"questionDesc":"Does the customer currently buy the same product from your competitors?",
+                                  
+                                "questionType": "DROP-DOWN",
+    "values": selected.value})}
                               />
         
                 </Col>
@@ -223,7 +255,12 @@ const ReportedDebtorsModel = props => {
                                 className="custom-content"
                                 options={optionsRentedOwn}
                                 styles={colourStyles}
-                                placeholder="Yes/No"
+                                placeholder="Owned/Rented"
+
+                                onChange={(selected)=>handlefinancialdifficult({"questionDesc":"Does the customer operate from OWn premises or rented premises?",
+                                    
+                                "questionType": "DROP-DOWN",
+    "values": selected.value})}
                               />
                 </Col>
               </Row>
@@ -243,7 +280,11 @@ const ReportedDebtorsModel = props => {
                                 className="custom-content"
                                 options={options}
                                 styles={colourStyles}
-                                placeholder="Owned/Rented"
+                                placeholder="Yes/No"
+                                onChange={(selected)=>handlefinancialdifficult({"questionDesc":"Has the customer changed his place of business since buying the goods from you? ",
+     
+                                "questionType": "DROP-DOWN",
+    "values": selected.value})}
                               />
               
                 </Col>
@@ -260,9 +301,13 @@ const ReportedDebtorsModel = props => {
                 <Col md={3}>
                 <span>
  <Input
-                        type="text"
+                        type="number"
  className={`form-control custom-content`}
                         placeholder="Input in years"
+                        onChange={(selected)=>handlefinancialdifficult({"questionDesc":" How old your business relationship with this customer?",
+                            
+                        "questionType": "TEXT",
+                        "values": selected.value})}
                    
                       />
 </span>
@@ -294,40 +339,49 @@ const ReportedDebtorsModel = props => {
                 </Col>
                 <Col md={3}>
                 <span>
- <i className='bx bxs-star' onClick={()=>{
-    setIntegrity(1)
- }} 
+ <i className='bx bxs-star'
+//   onClick={()=>{
+//     setIntegrity(1)
+//  }} 
+onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Integrity",
+                            
+ "questionType": "RATING",
+ "values": 1})}
  style={{ color: Integrity != 0 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
  
    <span>
- <i className='bx bxs-star' onClick={()=>{
-    setIntegrity(2)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Integrity",
+                            
+                            "questionType": "RATING",
+                            "values": 2})}
  style={{ color: Integrity != 0 && Integrity > 1 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
 
   
 <span>
- <i className='bx bxs-star' onClick={()=>{
-    setIntegrity(3)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Integrity",
+                            
+                            "questionType": "RATING",
+                            "values": 3})}
  style={{ color: Integrity != 0 && Integrity > 2 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
               
                
    <span>
- <i className='bx bxs-star' onClick={()=>{
-    setIntegrity(4)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Integrity",
+                            
+                            "questionType": "RATING",
+                            "values": 4})}
  style={{ color: Integrity != 0 && Integrity > 3 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
 
   
 <span>
- <i className='bx bxs-star' onClick={()=>{
-    setIntegrity(5)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Integrity",
+                            
+                            "questionType": "RATING",
+                            "values": 5})}
  style={{ color: Integrity != 0 && Integrity > 4 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
                 </Col>
@@ -343,40 +397,45 @@ const ReportedDebtorsModel = props => {
                 </Col>
                 <Col md={3}>
                 <span>
- <i className='bx bxs-star' onClick={()=>{
-    setresponsivestarRating(1)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Responsiveness",
+                            
+                            "questionType": "RATING",
+                            "values": 1})}
  style={{ color: responsivestarRating != 0 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
  
    <span>
- <i className='bx bxs-star' onClick={()=>{
-    setresponsivestarRating(2)
- }} 
+ <i className='bx bxs-star'  onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Responsiveness",
+                            
+                            "questionType": "RATING",
+                            "values": 2})}
  style={{ color: responsivestarRating != 0 && responsivestarRating > 1 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
 
   
 <span>
- <i className='bx bxs-star' onClick={()=>{
-    setresponsivestarRating(3)
- }} 
+ <i className='bx bxs-star'  onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Responsiveness",
+                            
+                            "questionType": "RATING",
+                            "values": 3})}
  style={{ color: responsivestarRating != 0 && responsivestarRating > 2 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
               
                
    <span>
- <i className='bx bxs-star' onClick={()=>{
-    setresponsivestarRating(4)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Responsiveness",
+                            
+                            "questionType": "RATING",
+                            "values": 4})}
  style={{ color: responsivestarRating != 0 && responsivestarRating > 3 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
 
   
 <span>
- <i className='bx bxs-star' onClick={()=>{
-    setresponsivestarRating(5)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"Responsiveness",
+                            
+                            "questionType": "RATING",
+                            "values": 5})}
  style={{ color: responsivestarRating != 0 && responsivestarRating > 4 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
                 </Col>
@@ -392,40 +451,45 @@ const ReportedDebtorsModel = props => {
                 </Col>
                 <Col md={3}>
                 <span>
- <i className='bx bxs-star' onClick={()=>{
-    settimelyStarRating(1)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"TimelyPayment",
+                            
+                            "questionType": "RATING",
+                            "values": 1})}
  style={{ color: timelystarRating != 0 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
  
    <span>
- <i className='bx bxs-star' onClick={()=>{
-    settimelyStarRating(2)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"TimelyPayment",
+                            
+                            "questionType": "RATING",
+                            "values": 2})}
  style={{ color: timelystarRating != 0 && timelystarRating > 1 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
 
   
 <span>
- <i className='bx bxs-star' onClick={()=>{
-    settimelyStarRating(3)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"TimelyPayment",
+                            
+                            "questionType": "RATING",
+                            "values": 3})}
  style={{ color: timelystarRating != 0 && timelystarRating > 2 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
               
                
    <span>
- <i className='bx bxs-star' onClick={()=>{
-    settimelyStarRating(4)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"TimelyPayment",
+                            
+                            "questionType": "RATING",
+                            "values": 4})}
  style={{ color: timelystarRating != 0 && timelystarRating > 3 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
 
   
 <span>
- <i className='bx bxs-star' onClick={()=>{
-    settimelyStarRating(5)
- }} 
+ <i className='bx bxs-star' onClick={(selected)=>handlefinancialdifficult({"questionDesc":"TimelyPayment",
+                            
+                            "questionType": "RATING",
+                            "values": 5})}
  style={{ color: timelystarRating != 0 && timelystarRating > 4 ? '  #ffdb4d':'gray', fontSize:'18px'}}
  ></i></span>
                 </Col>

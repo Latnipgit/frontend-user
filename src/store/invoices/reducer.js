@@ -49,7 +49,7 @@ const Invoices = (state = INIT_STATE, action) => {
         case ADD_INVOICE_SUCCESS:
           return{
             ...state,
-            addInvoice: action.payload
+            invoices: action.payload
           }
           case ADD_INVOICE_FAIL:
             return {

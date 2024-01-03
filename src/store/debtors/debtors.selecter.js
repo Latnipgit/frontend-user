@@ -37,6 +37,20 @@ export const uploadFilesModalOpen = createSelector(
     (DebtorsReducer) => DebtorsReducer.uploadPendingFilesModalOpen
 )
 
+export const addInvoiceReportDebtorSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.addInvoice
+)
 /* export const selectDebtorsList = (state) => state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [];
 export const selectInvoiceList = (state) => state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : []
 export const selectReportDefOpen = (state) => state.DebtorsReducer.isReportDefOpen; */
+
+export const addInvoiceIdtoArray = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.addInvoiceArray
+)
+
+export const addRatingofDebtor = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.addRating
+)

@@ -51,7 +51,7 @@ export const addInvoiceBill = payload => ({
 })
 
 export const addInvoiceBillSuccess = invoices => ({
-  type: ADD_INVOICE_SUCCESSADD_INVOICE,
+  type: ADD_INVOICE_SUCCESS,
   payload: invoices,
 })
 
