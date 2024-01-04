@@ -7,10 +7,10 @@ export const selectDebtorsList = createSelector(
     (DebtorsReducer) => DebtorsReducer.debtors.response
 )
 
-export const selectInvoiceList = createSelector(
+/* export const selectInvoiceList = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.getInvoiceList.response
-)
+) */
 
 export const selectReportDefOpen = createSelector(
     [selectDebtorsReducer],
@@ -41,8 +41,9 @@ export const addInvoiceReportDebtorSelector = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.addInvoice
 )
-/* export const selectDebtorsList = (state) => state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [];
 export const selectInvoiceList = (state) => state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : []
+/* export const selectDebtorsList = (state) => state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [];
+
 export const selectReportDefOpen = (state) => state.DebtorsReducer.isReportDefOpen; */
 
 export const addInvoiceIdtoArray = createSelector(
