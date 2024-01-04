@@ -89,53 +89,48 @@ const CompnayViewDetails = props => {
         >
             <div className="modal-content">
                 <ModalHeader toggle={toggle}>
-                    <div className="modal-header-title me-auto">Company Details</div>
+                    <div className="modal-header-title me-auto ">Company Details</div>
                 </ModalHeader>
                 <ModalBody>
                     <Row>
-                        <Col md="12">
+                        {/*                         <Col md="12">
                             <Card className="mb-1">
                                 <CardBody className="buyer-card-body">
-                                <div className="container">
+                                    <div className="container">
                                         <div className="row">
-            {/*                                 <div className="col-md-8">
-                                                <h5>
-                                                    Reference No. : <span className="text-primary">{selected!= ""? selected.SrNo:''}</span>
-                                                </h5>
-                                            </div> */}
                                             <div className="col-md-4">
-                                                <h5 /* className="text-right" */>
-                                                    Date: <span className="text-primary">{selected!= ""? moment(selected.DueSince).format("DD-MM-YYYY"):''}</span>
+                                                <h5>
+                                                    Date: <span className="text-primary">{selected != "" ? moment(selected.DueSince).format("DD-MM-YYYY") : ''}</span>
                                                 </h5>
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                 </CardBody>
                             </Card>
-                        </Col>
-                        <Col md="6" className="mt-4">
-                            <h4>Company Information</h4>
+                        </Col> */}
+                        <Col md="15" className="mt-4">
+
                             <Card className="mb-3">
                                 <CardBody className="buyer-card-body">
-
+                                    <h4>Company Information</h4>
                                     <p className="mb-2">
-                                        Billing Name: <span className="text-primary">{selected!= ""? selected.CompanyName:''}</span>
+                                        Billing Name: <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
                                     </p>
                                     <p className="mb-2">
-                                        Company name : <span className="text-primary">{selected!= ""? selected.CompanyName:''}</span>
+                                        Company name : <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
                                     </p>
                                     <p className="mb-2">
-                                        GST Number : <span className="text-primary">{selected!= ""? selected.GST:''}</span>
+                                        GST Number : <span className="text-primary">{selected != "" ? selected.GST : ''}</span>
                                     </p>
                                     <p className="mb-2">
-                                        Contact Number : <span className="text-primary">{selected!= ""? selected.PANCARD:''}</span>
+                                        Contact Number : <span className="text-primary">{selected != "" ? selected.PANCARD : ''}</span>
                                     </p>
 
                                 </CardBody>
                             </Card>
                         </Col>
-   {/*                      <Col md="6" className="mt-4">
+                        {/*                      <Col md="6" className="mt-4">
                             <h4>Buyer Information</h4>
                             <Card className="mb-3">
                                 <CardBody className="seller-card-body">
@@ -156,10 +151,9 @@ const CompnayViewDetails = props => {
                             </Card>
                         </Col> */}
                     </Row>
-                    <h4 className="mt-4">Company Report List</h4>
                     <Card className="mb-3 mt-4">
                         <CardBody className="invoice-items-card-body">
-
+                            <h4>Company Report List</h4>
                             <div className="table-responsive">
                                 <Table className="table align-middle table-nowrap">
                                     <thead>
@@ -172,28 +166,28 @@ const CompnayViewDetails = props => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>TATA</td>
-                                        <td>$225</td>
-                                        <td>12-12-2023</td>
-                                        <td>4.2</td>
-                                        <td>Approved</td>
-                                    </tr>
-                                    <tr>
-                                        <td>TATA</td>
-                                        <td>$225</td>
-                                        <td>12-12-2023</td>
-                                        <td>3.2</td>
-                                        <td>InProcess</td>
-                                    </tr>
-                                    <tr>
-                                        <td>TATA</td>
-                                        <td>$225</td>
-                                        <td>12-12-2023</td>
-                                        <td>4.5</td>
-                                        <td>InProcess</td>
-                                    </tr>
-{/*                                     {selected!= ""? selected.Invoice.items.length != 0 ? selected.Invoice.items.map((item)=>{
+                                        <tr>
+                                            <td>TATA</td>
+                                            <td>$225</td>
+                                            <td>12-12-2023</td>
+                                            <td>4.2</td>
+                                            <td>Approved</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TATA</td>
+                                            <td>$225</td>
+                                            <td>12-12-2023</td>
+                                            <td>3.2</td>
+                                            <td>InProcess</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TATA</td>
+                                            <td>$225</td>
+                                            <td>12-12-2023</td>
+                                            <td>4.5</td>
+                                            <td>InProcess</td>
+                                        </tr>
+                                        {/*                                     {selected!= ""? selected.Invoice.items.length != 0 ? selected.Invoice.items.map((item)=>{
                                             return <tr key={item}>
                                                  <td>1</td>
                                                  <td>Wireless Headphone (Black)</td>
@@ -220,9 +214,9 @@ const CompnayViewDetails = props => {
                                    </>
                                              :''
                                     }   */}
-                                      
+
                                     </tbody>
-{/*                                     <tfoot>
+                                    {/*                                     <tfoot>
                                         <tr>
                                             <td colSpan="4">
                                                 <h6 className="m-0 text-right">Sub Total:</h6>
@@ -246,7 +240,7 @@ const CompnayViewDetails = props => {
                             </div>
                         </CardBody>
                     </Card>
-                    <h4 className="mt-4">Company Attachments</h4>
+                    {/*                    <h4 className="mt-4">Company Attachments</h4>
                     <Row className="mt-4">
                         {attachments.map((file, index) => (
                             <Col md="4" key={index}>
@@ -269,8 +263,8 @@ const CompnayViewDetails = props => {
                     </Row>
                     <Row>
 
-                    </Row>
-{/*                     <h4 className="mt-4">Seller Rating</h4>
+                    </Row> */}
+                    {/*                     <h4 className="mt-4">Seller Rating</h4>
                     <div className="existing-reviews d-flex flex-wrap justify-content-between align-items-center mt-4">
                         {existingReviews.map((review, index) => (
                             <div className="review" key={index}>
@@ -302,13 +296,13 @@ const CompnayViewDetails = props => {
 
 
 
-{/*                     <div className="d-flex justify-content-between mt-4">
+                    {/*                     <div className="d-flex justify-content-between mt-4">
                         <h4 className="mt-2">Buyer Payment History</h4>
                         <div className="mr-auto mt-2">
                             <Link to="/company-history" className="btn btn-primary">View Buyer history</Link>
                         </div>
                     </div> */}
-{/*                     <Card className="mb-3 mt-4">
+                    {/*                     <Card className="mb-3 mt-4">
 
                         <CardBody>
                             <div className="table-responsive">
@@ -339,7 +333,7 @@ const CompnayViewDetails = props => {
                             </div>
                         </CardBody>
                     </Card> */}
-{/*                     <h4 className="mt-4">Buyer Attachments</h4>
+                    {/*                     <h4 className="mt-4">Buyer Attachments</h4>
                     <Row className="mt-4">
                         {sellerattachments.map((file, index) => (
                             <Col md="4" key={index}>
@@ -360,7 +354,7 @@ const CompnayViewDetails = props => {
                             </Col>
                         ))}
                     </Row> */}
-{/*                     <Row className="mt-4">
+                    {/*                     <Row className="mt-4">
                         <Col md="4" className="mt-3" ><h3>Action</h3></Col>
                         <Col md="4" className="mt-3" >
                             <div className="col-sm-auto">
