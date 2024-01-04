@@ -2,6 +2,8 @@ import React, {useCallback, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
+import axios from "axios";
+
 import {
     Row,
     Col,
@@ -28,12 +30,24 @@ const uploadDocumentsModel = props => {
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [modal1, setModal1] = useState(false);
     const [error, setError] = useState('');
+    const [uploadedResponse, setUploadedResponse] = useState('');
     const toggleViewModal = () => setModal1(!modal1);
     
 
     const handleUpload = (item) => {
-        console.log("ITEM", item, selectedFiles)
+        console.log("ITEM",  selectedFiles)
         props.Document(selectedFiles)
+
+        const formData = new FormData();
+
+    formData.append('file', selectedFiles[0]);  
+    formData.append('fieldName', '');
+
+   
+
+
+    uploadFile(formData)
+
 
     };
 
@@ -42,23 +56,39 @@ const uploadDocumentsModel = props => {
             console.log("DROP",acceptedFiles[0].type )
 
            
-          // Do something with the files
-
-         if(acceptedFiles[0].type == "image/png" ){
             if ( acceptedFiles[0].size > 2000000){
                 setError('File size should be 200KB - 2MB ')
               }
               else{
                 setSelectedFiles(acceptedFiles)
-    
+
               }
-         }
-         else{
-            setError("File should be Image type")
-         }
         }, [])
         console.log("selectedFiles", selectedFiles)
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+
+    function uploadFile(formData) {
+        console.log("UPLOAD FILE", formData)
+        const token = JSON.parse(localStorage.getItem("authUser")).token
+        const headers = {
+          'x-access-token': token != null ? token : '',
+        };
+    
+    
+        axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
+          headers: headers
+        })
+          .then((response) => {
+            // toast.success("file upload successfully")
+            console.log("SUCCESS RESPO",response)
+     setUploadedResponse(response)
+          })
+          .catch((error) => {
+            console.log("Response ERROR", error)
+    
+          })
+      }
     return (
         <Modal
             isOpen={isOpen}
@@ -81,7 +111,9 @@ const uploadDocumentsModel = props => {
 <div {...getRootProps()}  className='text-center'>
       <input {...getInputProps()} 
       type='file'
-     accept="image/png, image/gif, image/jpeg"
+    //  accept="image/png, image/gif, image/jpeg"
+    accept=
+"application/msword, application/vnd.ms-excel,text/plain, application/pdf, image/*"
       min={"200002"}
       max={2303020}
       />
