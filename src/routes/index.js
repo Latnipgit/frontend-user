@@ -17,6 +17,7 @@ import Document from "../pages/Dashboard/users/Documents/documents";
 import ContactsProfile from "../pages/Dashboard/users/profile";
 import Employee from "../pages/Dashboard/users/employeeRegistratiion/employee"
 import EmployeeList from "../pages/Dashboard/users/employeeRegistratiion/employeeList"
+import ReportMedefulterComponent from "../pages/admin/ReportMeDefualter/ReportaMeDefaulter";
 // Pages Component
 import Chat from "../pages/Chat/Chat";
 
@@ -215,11 +216,12 @@ const authProtectedRoutes = [
   { path: "/EmployeeList", component: <EmployeeList /> },
   { path: "/Invoice", component: <Invoice /> },
   { path: "/Report-defaulter", component: <ReportDebtor /> },
+  { path: "/Report-me-defaulter", component: <ReportMedefulterComponent /> },
   { path: "/Add-customer", component: <AddCustomer /> },
- 
+
 
   { path: "/login-register", component: <Register2 /> },
-  
+
   { path: "/add-company", component: <AddCompany /> },
   {
     path: "/",
