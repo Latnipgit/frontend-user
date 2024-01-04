@@ -83,9 +83,10 @@ const CompnayViewDetails = props => {
             role="dialog"
             autoFocus={true}
             centered={true}
-            className="invoiceModal modal-lg"
+            className="invoiceModal modal-xl"
             tabIndex="-1"
             toggle={toggle}
+            size="xl"
         >
             <div className="modal-content">
                 <ModalHeader toggle={toggle}>
