@@ -9,15 +9,15 @@ import { withTranslation } from "react-i18next"
 import { useMenu } from "./MenuContext"
 
 const SidebarContent = props => {
-  const [ showMenuItems, setshowMenuItems ] = useState(false)
+  const [showMenuItems, setshowMenuItems] = useState(false)
   const [isShowEmployee, setisShowEmployee] = useState()
   const [isShowSales, setShowSales] = useState(false)
   const [currentPath, setCurrentpath] = useState('')
-  
-  
+
+
   useEffect(() => {
-    setCurrentpath(window.location.pathname) 
-    console.log("currentPathcurrentPath 11",currentPath)
+    setCurrentpath(window.location.pathname)
+    console.log("currentPathcurrentPath 11", currentPath)
     if (
       currentPath == "/companies" ||
       currentPath == "/documents" ||
@@ -30,7 +30,7 @@ const SidebarContent = props => {
 
     }
   }, [currentPath, showMenuItems])
-  console.log("currentPathcurrentPath", currentPath,showMenuItems )
+  console.log("currentPathcurrentPath", currentPath, showMenuItems)
   const ref = useRef()
   const activateParentDropdown = useCallback(item => {
     item.classList.add("active")
@@ -166,7 +166,7 @@ const SidebarContent = props => {
       setisShowEmployee(true)
     }
   }
-  const salesListShow =()=>{
+  const salesListShow = () => {
     if (isShowSales == undefined || isShowSales == true) {
       setShowSales(false)
     } else {
@@ -196,18 +196,22 @@ const SidebarContent = props => {
                 </li>
                 <li>
                   <Link to="/Report-defaulter">
-                  <i className='bx bxs-report'></i>
+                    <i className='bx bxs-report'></i>
                     {props.t("Report A Defaulter")}
                   </Link>
+                  <Link to="/Report-me-defaulter">
+                    <i className='bx bxs-report'></i>
+                    {props.t("Report Me as a Defaulter")}
+                  </Link>
                 </li>
-               
+
                 <li>
                   <Link to="/company-search">
                     <i className="bx bx-search"></i>
                     {props.t("Company Search")}
                   </Link>
                 </li>
-               
+
                 {/* <li>
                   <Link onClick={() => salesListShow()}>
                     <i className='bx bx-cart-alt'></i>
@@ -220,43 +224,43 @@ const SidebarContent = props => {
                     )}
                   </Link>
                 </li> */}
-           
-                {isShowSales == true ?
-                
-              <>
-                <li>
-                  <Link to="/bad-debts">
-                    <i className="bx bx-rupee" style={{ paddingLeft:'15px'}}></i>
-                    {props.t("Bad debts")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/debtors">
-                    <i className="bx bx-user" style={{ paddingLeft:'15px'}}></i>
-                    {props.t("Debtors(buyers)")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/creditors">
-                    <i className="bx bx-user" style={{ paddingLeft:'15px'}}></i>
-                    {props.t("Creditors(Seller)")}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Invoice">
-                    <i className="bx bx-search" style={{ paddingLeft:'15px'}}></i>
-                    {props.t("Invoices")}
-                  </Link>
-                </li>
 
-                {/* <li>
+                {isShowSales == true ?
+
+                  <>
+                    <li>
+                      <Link to="/bad-debts">
+                        <i className="bx bx-rupee" style={{ paddingLeft: '15px' }}></i>
+                        {props.t("Bad debts")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/debtors">
+                        <i className="bx bx-user" style={{ paddingLeft: '15px' }}></i>
+                        {props.t("Debtors(buyers)")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/creditors">
+                        <i className="bx bx-user" style={{ paddingLeft: '15px' }}></i>
+                        {props.t("Creditors(Seller)")}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/Invoice">
+                        <i className="bx bx-search" style={{ paddingLeft: '15px' }}></i>
+                        {props.t("Invoices")}
+                      </Link>
+                    </li>
+
+                    {/* <li>
                   <Link to="/send-bill-transaction">
                     <i className="bx bx-send" style={{ paddingLeft:'15px'}}></i>
                     {props.t("Send Bill Transaction")}
                   </Link>
                 </li> */}
-</>
-:''
+                  </>
+                  : ''
                 }
 
                 {/* <li>
@@ -274,13 +278,13 @@ const SidebarContent = props => {
                 {isShowEmployee != undefined && isShowEmployee != false ? (
                   <li>
                     <Link to="/employee">
-                      <i className="bx bxs-notification" style={{ marginLeft:'15px'}}></i>
+                      <i className="bx bxs-notification" style={{ marginLeft: '15px' }}></i>
 
                       {props.t("Employee Registration")}
                     </Link>
 
                     <Link to="/EmployeeList">
-                      <i className="bx bx-list-ul" style={{ marginLeft:'15px'}}></i>
+                      <i className="bx bx-list-ul" style={{ marginLeft: '15px' }}></i>
                       {props.t("Employee List")}
                     </Link>
                   </li>
@@ -288,7 +292,7 @@ const SidebarContent = props => {
                   ""
                 )}
 
-           
+
                 <li>
                   <Link to="/recieved-payment">
                     <i className="bx bx-money"></i>
@@ -325,7 +329,7 @@ const SidebarContent = props => {
                     {props.t("Notification")}
                   </Link>
                 </li>
-               
+
               </>
             )}
           </ul>

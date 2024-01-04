@@ -28,7 +28,7 @@ import {
   DebtorsGraph,
   sampleRepetedDebtors,
 } from "components/graph-components/debtors.componet"
-import { searchCompany as onsearchCompany} from "../../../src/store/actions";
+import { searchCompany as onsearchCompany } from "../../../src/store/actions";
 
 //i18n
 import { withTranslation } from "react-i18next"
@@ -140,7 +140,7 @@ const Dashboard = props => {
     []
   )
 
-  useEffect(()=>{
+  useEffect(() => {
     const companyid = localStorage.getItem("COMPANY-ID")
     console.log("COMPANY-ID", companyid)
     dispatch(onsearchCompany(companyid));
@@ -151,40 +151,44 @@ const Dashboard = props => {
   }
 
   document.title = "Dashboard | Bafana"
-  const companiesURL ="/companies"
+  const companiesURL = "/companies"
 
   return (
     <React.Fragment>
       <div className="page-content">
         <Container fluid>
           <Row className=" ml-auto text-end">
-          <Link >
-                    <i className="bx bx-home" style={{ fontSize:'25px', color:"gray"}} onClick={()=>{
-                      window.location.href =companiesURL;
-                    }}></i>
-                  </Link>
+            <Link >
+              <i className="bx bx-home" style={{ fontSize: '25px', color: "gray" }} onClick={() => {
+                window.location.href = companiesURL;
+              }}></i>
+            </Link>
           </Row>
           <Row>
-            <Col md="12">
-              <div className="mb-4 h4 card-title">Reported Debtors</div>
-              <TableContainer
-                columns={columns}
-                data={sampleRepetedDebtors}
-                isGlobalFilter={false}
-                isAddOptions={false}
-                customPageSize={6}
-              />
-            </Col>
+            <Card>
+              <CardBody>
+                <Col md="12">
+                  <div className="mb-4 h4 card-title">Reported Debtors</div>
+                  <TableContainer
+                    columns={columns}
+                    data={sampleRepetedDebtors}
+                    isGlobalFilter={false}
+                    isAddOptions={false}
+                    customPageSize={6}
+                  />
+                </Col>
+              </CardBody>
+            </Card>
           </Row>
 
-          <Row>
+          {/*           <Row>
             <DebtorsGraph />
             <CreditorsGraph />
           </Row>
           <Row>
             <Col md="6">
               <Card>
-                {/* <div className="card-header">Debtors</div> */}
+               // <div className="card-header">Debtors</div>
                 <CardBody>
                   <Debtors />
                 </CardBody>
@@ -192,13 +196,13 @@ const Dashboard = props => {
             </Col>
             <Col md="6">
               <Card>
-                {/* <div className="card-header">Creditors</div> */}
+                //<div className="card-header">Creditors</div>
                 <CardBody>
                   <Creditors />
                 </CardBody>
               </Card>
             </Col>
-          </Row>
+          </Row> */}
         </Container>
       </div>
 

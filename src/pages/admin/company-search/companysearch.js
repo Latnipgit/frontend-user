@@ -15,36 +15,36 @@ import { useSelector, useDispatch } from "react-redux";
 import CompnayViewDetails from "./companyViewDetailsPop";
 
 import {
-    Badge,
-    Col,
-    Container,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Row,
-    Table,
-    UncontrolledDropdown,
-    UncontrolledTooltip,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    Form,
-    Input,
-    FormFeedback,
-    Label,
-  } from "reactstrap";
+  Badge,
+  Col,
+  Container,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Row,
+  Table,
+  UncontrolledDropdown,
+  UncontrolledTooltip,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  Input,
+  FormFeedback,
+  Label,
+} from "reactstrap";
 import {
   CheckBox,
-    SrNo,
-    PANCARD,
-    AADHAR,
-    GST,
-    CompanyName,
-    DueSince,
-    DueAmount
+  SrNo,
+  PANCARD,
+  AADHAR,
+  GST,
+  CompanyName,
+  DueSince,
+  DueAmount
 } from "./companyssearchColl";
 
-import { getCompanyList as ongetCompanyList} from "../../../../src/store/actions";
+import { getCompanyList as ongetCompanyList } from "../../../../src/store/actions";
 import TableContainer from "../../../components/Common/TableContainer";
 import InlineFilterForm from '../ApprovedTransaction/InlineFilterForm';
 import { get } from "helpers/api_helper";
@@ -52,7 +52,6 @@ import { get } from "helpers/api_helper";
 
 
 const CompanySearch = props => {
-  debugger
   const dispatch = useDispatch();
 
   const { toggleMenuItems } = useMenu();
@@ -67,12 +66,12 @@ const CompanySearch = props => {
     window.location.href = newPageUrl;
   };
 
-  const viewModel= (value)=>{
+  const viewModel = (value) => {
     console.log("VALUE", value)
     setModal1(true)
     setSelected(value.cell.row.original)
   }
-  
+
   const columns = useMemo(
     () => [
       {
@@ -153,15 +152,15 @@ const CompanySearch = props => {
         Cell: cellProps => {
           return (
             <div className="d-flex">
-            <div className="d-flex flex-column align-items-center me-3" style={{ cursor: 'pointer' }}>
-              <button
-                className="btn btn-primary"
-                onClick={()=>viewModel(cellProps)}
-              >
-                VIEW DETAILS
-              </button>
+              <div className="d-flex flex-column align-items-center me-3" style={{ cursor: 'pointer' }}>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => viewModel(cellProps)}
+                >
+                  VIEW DETAILS
+                </button>
+              </div>
             </div>
-          </div>
           );
         },
       },
@@ -169,37 +168,37 @@ const CompanySearch = props => {
     []
   );
   const handleFilter = (filters) => {
-      
+
     const filteredResults = ApprovedTranctionData.filter(item => {
-      const CompanyNameMatch =  item.CompanyName === filters.company.trim();
-      const panMatch =  item.PANCARD === filters.pan.trim();
-      const gstMatch =  item.GST === filters.gst.trim();
+      const CompanyNameMatch = item.CompanyName === filters.company.trim();
+      const panMatch = item.PANCARD === filters.pan.trim();
+      const gstMatch = item.GST === filters.gst.trim();
       return CompanyNameMatch || panMatch || gstMatch;
     });
-console.log("filteredResults", filteredResults)
-  
+    console.log("filteredResults", filteredResults)
+
     setFilteredData(filteredResults);
   };
   const { getCompanyList } = useSelector(state => ({
     getCompanyList: state.getCompanyList,
   }));
-useEffect(()=>{
-  dispatch(ongetCompanyList());
-  console.log("HDHDHDHD", getCompanyList)
-},[getCompanyList])
+  useEffect(() => {
+    dispatch(ongetCompanyList());
+    console.log("HDHDHDHD", getCompanyList)
+  }, [getCompanyList])
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
       <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} />
       {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/> */}
-   
+
       <InlineFilterForm onFilter={handleFilter} />
       <Card >
         <CardBody>
-       
-         {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
 
-        {/* <div>
+          {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
+
+          {/* <div>
           <Row>
             <Col md="10">
             
@@ -217,7 +216,7 @@ useEffect(()=>{
             </Col>
           </Row>
         </div> */}
-       
+
           <TableContainer
             columns={columns}
             data={filteredData.length > 0 ? filteredData : ApprovedTranctionData}
