@@ -131,5 +131,6 @@ export const CHANGE_FIRST_PASSWORD = "/api/user/changePasswordUsingToken"
 export const ADD_CUSTOMER_LIST = "/api/debtors/add"
 
 export const GET_ALL_INVOICE_FOLDER = "/api/transactions/getAllInvoicesForIds"
+export const GET_REPORT_ME_DEFULTER_LIST = "/api/defaulters/getAllDefaultInvoicesSentToMe"
 
 

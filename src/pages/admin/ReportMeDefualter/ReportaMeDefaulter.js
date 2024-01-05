@@ -1,46 +1,27 @@
 import React, { useState, useEffect, useMemo } from "react"
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
-import Select, { components } from "react-select"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
-import ReportedDebtorsModel from "../Invoice/ReportedModel"
 import ReportedDefaulterModel from '../Invoice/ReportDefaulterModel'
 import UploadCACertificateModel from '../Invoice/uploadCACertificateModel'
-import ReportIncoiceModel from '../Invoice/ReportInvoiceModel'
 import 'react-table-6/react-table.css'
-import ReactTable from 'react-table-6'
-import CurrencyFormat from 'react-currency-format';
-// import ReactTooltip from "react-tooltip";
 import {
-  Container,
   Row,
   Col,
   Button,
   Card,
   CardBody,
-  Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  CardHeader,
-  Table,
-  InputGroup,
-  Form,
-  CardTitle,
-  FormGroup,
-  Label,
 } from "reactstrap"
 import { useDispatch, useSelector } from "react-redux";
 import { setUploadFilesOpen, setCACertificateOpen } from "../../../store/debtors/debtors.actions"
 import { uploadFilesModalOpen, selectCACertificateOpen } from "store/debtors/debtors.selecter"
+import { selectReportMeDefData } from "store/ReportMeDefulter/ReportMeDefulter.selecter"
+import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
 import moment from 'moment'
 
 const ReportMedefulterComponent = props => {
+  debugger;
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
@@ -49,10 +30,16 @@ const ReportMedefulterComponent = props => {
   const toggleViewModal1 = () => setModal2(!modal2);
   const dispatch = useDispatch();
   const selectCACertificate = useSelector(selectCACertificateOpen);
-
   const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
+
+
+  const selectReportMeDeflist = useSelector(selectReportMeDefData)
+  console.log("reportMeDefulter", selectReportMeDeflist);
+  useEffect(() => {
+    dispatch(fetchReportMeDefulterStart());
+  }, [])
 
   const viewModel = (value) => {
     setSelected(value)
@@ -62,6 +49,9 @@ const ReportMedefulterComponent = props => {
   const viewModels = (value) => {
     setModal3(true)
   }
+
+
+
   const dummyData = [{
     "companyName": "Latnip",
     "InvoiceNUmber": "BAF-65650",

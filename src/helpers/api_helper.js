@@ -20,7 +20,7 @@ axiosApi.interceptors.response.use(
 );
 
 export async function get(url, config = {}) {
-  
+
 
   return await axiosApi
     .get(url, { ...config })
@@ -40,11 +40,11 @@ export async function getAfter(url, config = {}) {
   const token = localStorage.getItem("tokenemployeeRegister")
   const headers = {
     ...config.headers,
-    'x-access-token': token != null ? token :'',
-  }; 
+    'x-access-token': token != null ? token : '',
+  };
 
   return await axiosApi
-    .get(url, { ...config,headers })
+    .get(url, { ...config, headers })
     .then((response) => response.data)
     .catch((error) => {
       if (error.response) {
@@ -56,31 +56,31 @@ export async function getAfter(url, config = {}) {
 }
 
 export async function post(url, data, config = {}) {
-   
+
   // console.log("UJUJU", JSON.parse(localStorage.getItem("authUser")).token)
-  const token = JSON.parse(localStorage.getItem("authUser"))!= null ? JSON.parse(localStorage.getItem("authUser")).token :'';
+  const token = JSON.parse(localStorage.getItem("authUser")) != null ? JSON.parse(localStorage.getItem("authUser")).token : '';
   // console.log("HAHAHA", token)
 
   const headers = {
     ...config.headers,
-    'x-access-token': token != null ? token :'',
-  };  
-    return axiosApi
-        .post(url, { ...data }, { ...config,headers })
-        .then((response) =>response)
-        .catch((error) => {
-          if (error.response) {
-            console.log("Server responded with an error:", error.response.status);
-          } else if (error.request) {
-            console.log("No response received from the server:", error.request);
-          }
-        });
-  }
-    
+    'x-access-token': token != null ? token : '',
+  };
+  return axiosApi
+    .post(url, { ...data }, { ...config, headers })
+    .then((response) => response)
+    .catch((error) => {
+      if (error.response) {
+        console.log("Server responded with an error:", error.response.status);
+      } else if (error.request) {
+        console.log("No response received from the server:", error.request);
+      }
+    });
+}
+
 
 
 export async function put(url, data, config = {}) {
-  
+
 
   return axiosApi
     .put(url, { ...data }, { ...config })
@@ -113,36 +113,36 @@ export async function addEmployeeAPImethod(url, data, config = {}) {
   const token = localStorage.getItem("tokenemployeeRegister")
   const headers = {
     ...config.headers,
-    'x-access-token': token != null ? token :'',
-  };  
-    return axiosApi
-        .post(url, { ...data }, { ...config,headers })
-        .then((response) =>response)
-        .catch((error) => {
-          if (error.response) {
-            console.log("Server responded with an error:", error.response.status);
-          } else if (error.request) {
-            console.log("No response received from the server:", error.request);
-          }
-        });
+    'x-access-token': token != null ? token : '',
+  };
+  return axiosApi
+    .post(url, { ...data }, { ...config, headers })
+    .then((response) => response)
+    .catch((error) => {
+      if (error.response) {
+        console.log("Server responded with an error:", error.response.status);
+      } else if (error.request) {
+        console.log("No response received from the server:", error.request);
+      }
+    });
+}
+
+
+
+export async function forgetPasswordAPI(url, data, config = {}) {
+  console.log("APIII", url, data)
+  const payload = {
+    "emailId": data
   }
-    
 
-
-  export async function forgetPasswordAPI(url, data, config = {}) {
-   console.log("APIII", url, data)
-   const payload ={
-    "emailId":data
-   }
- 
-      return axiosApi
-          .post(url,payload)
-          .then((response) =>response)
-          .catch((error) => {
-            if (error.response) {
-              console.log("Server responded with an error:", error.response.status);
-            } else if (error.request) {
-              console.log("No response received from the server:", error.request);
-            }
-          });
-    }
+  return axiosApi
+    .post(url, payload)
+    .then((response) => response)
+    .catch((error) => {
+      if (error.response) {
+        console.log("Server responded with an error:", error.response.status);
+      } else if (error.request) {
+        console.log("No response received from the server:", error.request);
+      }
+    });
+}
