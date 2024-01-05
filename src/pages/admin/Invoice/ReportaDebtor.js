@@ -14,6 +14,8 @@ import 'react-table-6/react-table.css'
 import ReactTable from 'react-table-6'
 import CurrencyFormat from 'react-currency-format';
 // import ReactTooltip from "react-tooltip";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
 import {
   Container,
   Row,
@@ -56,7 +58,7 @@ const ReportDebtor = props => {
   const [selected, setSelected] = useState('');
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
-  const toggleViewModal2 = () => setModal2(!modal3);
+  const toggleViewModal2 = () => setModal3(!modal3);
   //const [modal4, setModal4] = useState(false);
  /*  const toggleViewModal3 = () => setModal4(!modal4); */
   const dispatch = useDispatch();
@@ -361,7 +363,14 @@ console.log("ABABABABABAB 2", getDaysArray)
     </td>
     <td>
     <div className="pt-2">
-            <Button className="btn btn-info btn-sm "
+           
+
+         
+       
+         
+            <Tooltip title="Record Payment">
+                <IconButton>
+                <Button className="btn btn-info btn-sm "
               onClick={() => viewModel(item)
                
               }
@@ -369,22 +378,28 @@ console.log("ABABABABABAB 2", getDaysArray)
             >
     <i className='bx bx-wallet-alt textsizing' ></i>
             </Button>
+                </IconButton>
+            </Tooltip>
 
-            <a>
-            </a>
-            &nbsp;
+           
 
-            <Button className="btn btn-info btn-sm"
+         
+            <Tooltip title="Request Edit">
+                <IconButton>
+                <Button className="btn btn-info btn-sm"
               // onClick={() => viewModels()
                
               // }
             >
             <i className='bx bx-edit textsizing' ></i>
             </Button>
-
-            &nbsp;
-
-            <Button className="btn btn-info btn-sm"
+                </IconButton>
+            </Tooltip>
+           
+              
+            <Tooltip title="Upload Pending Files">
+                <IconButton>
+                <Button className="btn btn-info btn-sm"
               onClick={() => handleUploadFiles()
                
               }
@@ -393,15 +408,24 @@ console.log("ABABABABABAB 2", getDaysArray)
       
            
                 </Button>
+                </IconButton>
+            </Tooltip>
 
-           &nbsp;
-           <Button className="btn btn-info btn-sm"
+          
+          
+
+                  
+            <Tooltip title="Upload CA certificate">
+                <IconButton>
+                <Button className="btn btn-info btn-sm"
               onClick={() => viewModels()
                
               }
             >
            <i className='bx bx-file textsizing' ></i>
             </Button>
+                </IconButton>
+            </Tooltip>
   
   
           </div>
