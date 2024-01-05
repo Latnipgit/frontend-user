@@ -14,8 +14,8 @@ import 'react-table-6/react-table.css'
 import ReactTable from 'react-table-6'
 import CurrencyFormat from 'react-currency-format';
 // import ReactTooltip from "react-tooltip";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
+/* import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton"; */
 import {
   Container,
   Row,
@@ -66,7 +66,7 @@ const ReportDebtor = props => {
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const selectCACertificate = useSelector(selectCACertificateOpen);
 
-  const toggleViewModal2 = () => dispatch(setCACertificateOpen(!modal3));
+  const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
   const toggleViewModal3 = () => dispatch(setIsReportDefOpen(!isReportDefOpen));
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
 
@@ -272,7 +272,7 @@ const ReportDebtor = props => {
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
-      <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} />
+      <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} />
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} />
 
@@ -361,57 +361,57 @@ const ReportDebtor = props => {
 </div>
            
     </td> */}
-    <td>
-      {item.DueFrom}
-    </td>
-    <td>
-    <div className="pt-2">
-            <Button className="btn btn-info btn-sm "
-              onClick={() => viewModel(item)
-               
-              }
-              
-            >
-    <i className='bx bx-wallet-alt textsizing' ></i>
-            </Button>
+                    <td>
+                      {item.DueFrom}
+                    </td>
+                    <td>
+                      <div className="pt-2">
+                        <Button className="btn btn-info btn-sm "
+                          onClick={() => viewModel(item)
 
-            <a>
-            </a>
-            &nbsp;
+                          }
 
-            <Button className="btn btn-info btn-sm"
-              // onClick={() => viewModels()
-               
-              // }
-            >
-            <i className='bx bx-edit textsizing' ></i>
-            </Button>
+                        >
+                          <i className='bx bx-wallet-alt textsizing' ></i>
+                        </Button>
 
-            &nbsp;
+                        <a>
+                        </a>
+                        &nbsp;
 
-            <Button className="btn btn-info btn-sm"
-              onClick={() => handleUploadFiles()
-               
-              }
-            >
-           <i className='bx bx-cloud-upload textsizing' ></i>
-      
-           
-                </Button>
+                        <Button className="btn btn-info btn-sm"
+                        // onClick={() => viewModels()
 
-           &nbsp;
-           <Button className="btn btn-info btn-sm"
-              onClick={() => viewModels()
-               
-              }
-            >
-           <i className='bx bx-file textsizing' ></i>
-            </Button>
-  
-  
-          </div>
-    </td>
-    {/* <td>
+                        // }
+                        >
+                          <i className='bx bx-edit textsizing' ></i>
+                        </Button>
+
+                        &nbsp;
+
+                        <Button className="btn btn-info btn-sm"
+                          onClick={() => handleUploadFiles()
+
+                          }
+                        >
+                          <i className='bx bx-cloud-upload textsizing' ></i>
+
+
+                        </Button>
+
+                        &nbsp;
+                        <Button className="btn btn-info btn-sm"
+                          onClick={() => toggleViewModal2()
+
+                          }
+                        >
+                          <i className='bx bx-file textsizing' ></i>
+                        </Button>
+
+
+                      </div>
+                    </td>
+                    {/* <td>
     <div className="pt-2">
             <Button className="btn btn-info btn-sm"
               onClick={() => viewModels()
