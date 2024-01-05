@@ -66,7 +66,7 @@ const ReportDebtor = props => {
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const selectCACertificate = useSelector(selectCACertificateOpen);
 
-  const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
+  const toggleViewModal2 = () => dispatch(setCACertificateOpen(!modal3));
   const toggleViewModal3 = () => dispatch(setIsReportDefOpen(!isReportDefOpen));
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
 
@@ -272,7 +272,7 @@ const ReportDebtor = props => {
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
-      <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} />
+      <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} />
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} />
 
