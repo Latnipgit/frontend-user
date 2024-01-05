@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import moment from 'moment'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCACertificateOpen } from "../../../store/debtors/debtors.actions"
+import { selectCACertificateOpen } from "store/debtors/debtors.selecter"
 
 import {
   Button,
@@ -18,54 +21,57 @@ import {
 
 
 const UploadCACertificateModel = props => {
-  const { isOpen, toggle,  } = props
-const handleFileChange = ()=>{
+  const { isOpen, toggle, } = props
+  const dispatch = useDispatch();
+  const selectCACertificate = useSelector(selectCACertificateOpen);
 
-}
+  const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
+  const handleFileChange = () => {
+
+  }
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={selectCACertificate}
       role="dialog"
       size="md"
       autoFocus={true}
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle}
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>Upload CA Certificate</ModalHeader>
+        <ModalHeader toggle={() => toggleViewModal2()}>Upload CA Certificate</ModalHeader>
 
         <ModalBody>
-      <Row className="mt-4 mb-4">
-        <Col md={3}></Col>
-        <Col md={6}>
-    
+          <Row className="mt-4 mb-4">
+            <Col md={3}></Col>
+            <Col md={6}>
 
-                       <InputGroup className="text-capitalize">
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="uploadPurchaseOrder"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                              onChange={e =>
-                                handleFileChange(e)
-                              }
-                            />
-                          </InputGroup>
-                          
-                          <div id="fileUploadHelp" className="form-text">
-                            Choose a file to upload (PDF, DOC, DOCX, TXT).
-                          </div>
 
-        </Col>
-        <Col md={3}></Col>
-      </Row>
+              <InputGroup className="text-capitalize">
+                <input
+                  type="file"
+                  className="form-control"
+                  id="uploadPurchaseOrder"
+                  accept=".pdf, .doc, .docx, .txt"
+                  aria-describedby="fileUploadHelp"
+                  onChange={e =>
+                    handleFileChange(e)
+                  }
+                />
+              </InputGroup>
+
+              <div id="fileUploadHelp" className="form-text">
+                Choose a file to upload (PDF, DOC, DOCX, TXT).
+              </div>
+
+            </Col>
+            <Col md={3}></Col>
+          </Row>
 
         </ModalBody>
-        </div>
+      </div>
     </Modal>
   )
 }

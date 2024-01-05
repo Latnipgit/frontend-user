@@ -63,6 +63,7 @@ import employeeListCusstomer from "./sendbilltransacttion/reducer"
 import { DebtorsReducer } from "./debtors/debtors.reducer";
 import { AddCustomerReducer } from "./addCustomer/addCustomer.reducer";
 import { ReportDefulterPreviewReducer } from "./ReportDefulterPreview/ReportDefulterPreview.reducer";
+import { ReportMeDefulterReducer } from "./ReportMeDefulter/ReportMeDefulter.reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -95,6 +96,7 @@ const rootReducer = combineReducers({
   employeeListCusstomer,
   AddCustomerReducer,
   ReportDefulterPreviewReducer,
+  ReportMeDefulterReducer,
 });
 
 export default rootReducer;

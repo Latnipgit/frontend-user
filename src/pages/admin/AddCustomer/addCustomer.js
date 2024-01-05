@@ -123,9 +123,9 @@ const AddCustomer = props => {
                     {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
                     <td className="pt-4 text-capitalize">{item.firstname + '' + item.lastname}</td>
                     {/* <td className="pt-4">{item.referenceNumber}</td> */}
-                    <td className="pt-4 text-capitalize">{item.companyName}</td>
-                    <td className="pt-4 text-capitalize">{item.address1},{item.address2},{item.city}</td>
-                    <td className="pt-4 text-capitalize">{item.gstin}</td>
+                    <td className="pt-4">{item.companyName}</td>
+                    <td className="pt-4">{/* {item.address1},{item.address2}, */}{item.city}</td>
+                    <td className="pt-4">{item.gstin}</td>
                     <td className="pt-4 text-start">{item.customerMobile}</td>
                     {/* <td className="pt-4">{item.status}</td> */}
                     <td className="pt-4 text-start">
