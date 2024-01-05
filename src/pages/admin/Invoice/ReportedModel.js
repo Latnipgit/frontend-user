@@ -26,7 +26,7 @@ const ReportedDebtorsModel = props => {
   const [timelystarRating, settimelyStarRating] = useState(0)
   const [responsivestarRating, setresponsivestarRating] = useState(0)
   const [Integrity, setIntegrity] = useState(0)
-  const { isOpen, toggle, filteredCustomerDetail } = props
+  const { isOpen, toggle, filteredCustomerDetail,allInvoiceList } = props
 
   const colourStyles = {
     menuList: styles => ({
@@ -94,6 +94,13 @@ const ReportedDebtorsModel = props => {
 
     dispatch(addRatingToDebtor(feedbackdataPaylod))
     dispatch(setPreviewModalOpen(!isPreviewModalShow))
+    setratingValue(
+      {
+        "timelystarRating":timelystarRating,
+        "responsivestarRating": responsivestarRating,
+        "Integrity":Integrity
+      }
+    )
   }
   const dispatch = useDispatch()
 
@@ -116,7 +123,7 @@ const ReportedDebtorsModel = props => {
   console.log('feedbackdataPaylod', feedbackdataPaylod);
 
   const handlefinancialdifficult = (selected) => {
-    debugger
+    
     console.log("selected", selected)
     const userFeedbackcheck = feedbackdataPaylod.findIndex(x => x.questionDesc == selected.questionDesc)
     if (userFeedbackcheck !== -1) {
@@ -125,6 +132,10 @@ const ReportedDebtorsModel = props => {
       setfeedbackdataPaylod(lists => [...lists, selected])
     }
   }
+  const [ratingValue,setratingValue]=useState([])
+
+
+  console.log("allInvoiceList",allInvoiceList)
   return (
     <Modal
       isOpen={isOpen}
@@ -139,7 +150,7 @@ const ReportedDebtorsModel = props => {
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Customer Feedback </ModalHeader>
         <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} />
-        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} />
+        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue}/>
         <ModalBody>
           <div className="mt-3 mb-3">
             <Row>
@@ -220,7 +231,7 @@ const ReportedDebtorsModel = props => {
             <Row>
               <Col md={9}>
                 <span className="mb-2">
-                  4. Does the customer operate from OWn premises or rented premises?   </span>
+                  4. Does the customer operate from Own premises or rented premises?   </span>
               </Col>
               <Col md={3}>
                 <Select
@@ -269,13 +280,13 @@ const ReportedDebtorsModel = props => {
               <Col md={3}>
                 <span>
                   <Input
-                    type="number"
+
                     className={`form-control custom-content`}
                     placeholder="Input in years"
-                    onChange={(selected) => handlefinancialdifficult({
+                    onChange={(e) => handlefinancialdifficult({
                       "questionDesc": " How old your business relationship with this customer?",
                       "questionType": "TEXT",
-                      "values": selected.value
+                      "values": e.target.value
                     })}
                   />
                 </span>
@@ -301,49 +312,70 @@ const ReportedDebtorsModel = props => {
               <Col md={3}>
                 <span>
                   <i className='bx bxs-star'
-                    //   onClick={()=>{
-                    //     setIntegrity(1)
-                    //  }} 
-                    onClick={(selected) => handlefinancialdifficult({
-                      "questionDesc": "Integrity",
-                      "questionType": "RATING",
-                      "values": 1
-                    })}
+                      onClick={()=>{
+                        setIntegrity(1)
+                     }} 
+                    // onClick={(selected) => {
+                    //   handlefinancialdifficult({
+                    //     "questionDesc": "Integrity",
+                    //     "questionType": "RATING",
+                    //     "values": 1
+                    //   })
+                    //   setIntegrity(1)
+                    // }
+                    //  }
                     style={{ color: Integrity != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Integrity",
-                    "questionType": "RATING",
-                    "values": 2
-                  })}
+                  <i className='bx bxs-star'
+                   onClick={(selected) => {
+                    // handlefinancialdifficult({
+                    //   "questionDesc": "Integrity",
+                    //   "questionType": "RATING",
+                    //   "values": 2
+                    // })
+                    setIntegrity(2)
+                  }
+                   }
                     style={{ color: Integrity != 0 && Integrity > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Integrity",
-
-                    "questionType": "RATING",
-                    "values": 3
-                  })}
+                  <i className='bx bxs-star'
+                   onClick={(selected) => {
+                    // handlefinancialdifficult({
+                    //   "questionDesc": "Integrity",
+                    //   "questionType": "RATING",
+                    //   "values": 3
+                    // })
+                    setIntegrity(3)
+                  }
+                   }
                     style={{ color: Integrity != 0 && Integrity > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Integrity",
-
-                    "questionType": "RATING",
-                    "values": 4
-                  })}
+                  <i className='bx bxs-star' 
+                  onClick={(selected) => {
+                    // handlefinancialdifficult({
+                    //   "questionDesc": "Integrity",
+                    //   "questionType": "RATING",
+                    //   "values": 4
+                    // })
+                    setIntegrity(4)
+                  }
+                   }
                     style={{ color: Integrity != 0 && Integrity > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Integrity",
-
-                    "questionType": "RATING",
-                    "values": 5
-                  })}
+                  <i className='bx bxs-star'
+                 onClick={(selected) => {
+                  // handlefinancialdifficult({
+                  //   "questionDesc": "Integrity",
+                  //   "questionType": "RATING",
+                  //   "values": 5
+                  // })
+                  setIntegrity(5)
+                }
+                 }
                     style={{ color: Integrity != 0 && Integrity > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
               </Col>
@@ -357,44 +389,64 @@ const ReportedDebtorsModel = props => {
               </Col>
               <Col md={3}>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Responsiveness",
+                  <i className='bx bxs-star'
+                   onClick={(selected) => {
+                  //   handlefinancialdifficult({
+                  //   "questionDesc": "Responsiveness",
 
-                    "questionType": "RATING",
-                    "values": 1
-                  })}
+                  //   "questionType": "RATING",
+                  //   "values": 1
+                  // })
+                  setresponsivestarRating(1)
+                }}
                     style={{ color: responsivestarRating != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Responsiveness",
-                    "questionType": "RATING",
-                    "values": 2
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) =>{
+                  //    handlefinancialdifficult({
+                  //   "questionDesc": "Responsiveness",
+                  //   "questionType": "RATING",
+                  //   "values": 2
+                  // })
+                  setresponsivestarRating(2)
+
+                }}
                     style={{ color: responsivestarRating != 0 && responsivestarRating > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Responsiveness",
-                    "questionType": "RATING",
-                    "values": 3
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) =>{
+                  //    handlefinancialdifficult({
+                  //   "questionDesc": "Responsiveness",
+                  //   "questionType": "RATING",
+                  //   "values": 3
+                  // })
+                  setresponsivestarRating(3)
+
+                }}
                     style={{ color: responsivestarRating != 0 && responsivestarRating > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Responsiveness",
-                    "questionType": "RATING",
-                    "values": 4
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) =>{ 
+                  //   handlefinancialdifficult({
+                  //   "questionDesc": "Responsiveness",
+                  //   "questionType": "RATING",
+                  //   "values": 4
+                  // })
+                  setresponsivestarRating(4)
+
+                }}
                     style={{ color: responsivestarRating != 0 && responsivestarRating > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Responsiveness",
-                    "questionType": "RATING",
-                    "values": 5
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) =>{
+                  //    handlefinancialdifficult({
+                  //   "questionDesc": "Responsiveness",
+                  //   "questionType": "RATING",
+                  //   "values": 5
+                  // })
+                  setresponsivestarRating(5)
+
+                }}
                     style={{ color: responsivestarRating != 0 && responsivestarRating > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
               </Col>
@@ -408,43 +460,63 @@ const ReportedDebtorsModel = props => {
               </Col>
               <Col md={3}>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "TimelyPayment",
-                    "questionType": "RATING",
-                    "values": 1
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) => {
+                  //   handlefinancialdifficult({
+                  //   "questionDesc": "TimelyPayment",
+                  //   "questionType": "RATING",
+                  //   "values": 1
+                  // })
+                  settimelyStarRating(1)
+                }}
                     style={{ color: timelystarRating != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "TimelyPayment",
-                    "questionType": "RATING",
-                    "values": 2
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) =>{ 
+                  //   handlefinancialdifficult({
+                  //   "questionDesc": "TimelyPayment",
+                  //   "questionType": "RATING",
+                  //   "values": 2
+                  // })
+                  settimelyStarRating(2)
+
+                }}
                     style={{ color: timelystarRating != 0 && timelystarRating > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "TimelyPayment",
-                    "questionType": "RATING",
-                    "values": 3
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) => {
+                    
+                  //   handlefinancialdifficult({
+                  //   "questionDesc": "TimelyPayment",
+                  //   "questionType": "RATING",
+                  //   "values": 3
+                  // })
+                  settimelyStarRating(3)
+
+                }}
                     style={{ color: timelystarRating != 0 && timelystarRating > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "TimelyPayment",
-                    "questionType": "RATING",
-                    "values": 4
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) =>{
+                  //    handlefinancialdifficult({
+                  //   "questionDesc": "TimelyPayment",
+                  //   "questionType": "RATING",
+                  //   "values": 4
+                  // })
+                  settimelyStarRating(4)
+
+                }}
                     style={{ color: timelystarRating != 0 && timelystarRating > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
                 <span>
-                  <i className='bx bxs-star' onClick={(selected) => handlefinancialdifficult({
-                    "questionDesc": "TimelyPayment",
-                    "questionType": "RATING",
-                    "values": 5
-                  })}
+                  <i className='bx bxs-star' onClick={(selected) => {
+                  //   handlefinancialdifficult({
+                  //   "questionDesc": "TimelyPayment",
+                  //   "questionType": "RATING",
+                  //   "values": 5
+                  // })
+                  settimelyStarRating(5)
+
+                }}
                     style={{ color: timelystarRating != 0 && timelystarRating > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
                   ></i></span>
               </Col>
