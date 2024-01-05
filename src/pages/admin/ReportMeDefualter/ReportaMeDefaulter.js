@@ -34,32 +34,23 @@ import {
   FormGroup,
   Label,
 } from "reactstrap"
-import TableContainer from "../../../components/Common/TableContainer";
-import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
-import { success } from "toastr"
-//import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
-import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen } from "store/debtors/debtors.selecter"
+import { setUploadFilesOpen, setCACertificateOpen } from "../../../store/debtors/debtors.actions"
+import { uploadFilesModalOpen, selectCACertificateOpen } from "store/debtors/debtors.selecter"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
 import moment from 'moment'
 
-/* import './style.css' */
-
-
-
 const ReportMedefulterComponent = props => {
   const [modal1, setModal1] = useState(false);
-  const [getDaysArray, setgetDaysArray] = useState([]);
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
   const [selected, setSelected] = useState('');
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
-  const toggleViewModal2 = () => setModal2(!modal3);
-  //const [modal4, setModal4] = useState(false);
-  /*  const toggleViewModal3 = () => setModal4(!modal4); */
   const dispatch = useDispatch();
+  const selectCACertificate = useSelector(selectCACertificateOpen);
+
+  const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
 
@@ -121,7 +112,7 @@ const ReportMedefulterComponent = props => {
   return (
     <React.Fragment>
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
-      <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} />
+      <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} />
 
       <Card>
@@ -202,7 +193,7 @@ const ReportMedefulterComponent = props => {
 
                         &nbsp;
                         <Button className="btn btn-info btn-sm"
-                          onClick={() => viewModels()
+                          onClick={() => toggleViewModal2()
                           }
                         >
                           <i className='bx bx-file textsizing' ></i>

@@ -10,6 +10,7 @@ import {
   CONFIRM_REPORT_DEFAULT_MODAL,
   GET_REPORT_DEF_PREVIEW,
   UPLOAD_PENDING_FILES,
+  GET_CA_CERTIFICATE_FILE,
   ADD_iNVOICE_REPORT_DEBTOR,
   ADD_iNVOICE_REPORT_DEBTOR_FAIL,
   ADD_iNVOICE_REPORT_DEBTOR_SUCCESS,
@@ -28,16 +29,17 @@ const INIT_STATE = {
   isConfirmReportDefaultModal: false,
   isCustomerFeedbackModalOpen: false,
   isPreviewModalOpen: false,
+  isCACACertificateOpen: false,
   uploadPendingFilesModalOpen: false,
   debtors: [],
   getInvoiceList: [],
   error: {},
   addInvoice: [],
   addInvoiceSuccess: [],
-  addInvoiceArray:[],
-  addInvoiceSuccessArray:[],
-  addRating:[],
-  addRatingSuccess:[]
+  addInvoiceArray: [],
+  addInvoiceSuccessArray: [],
+  addRating: [],
+  addRatingSuccess: []
 }
 
 export const DebtorsReducer = (state = INIT_STATE, action) => {
@@ -61,25 +63,27 @@ export const DebtorsReducer = (state = INIT_STATE, action) => {
       return { ...state, isPreviewModalOpen: payload, }
     case UPLOAD_PENDING_FILES:
       return { ...state, uploadPendingFilesModalOpen: payload, }
+    case GET_CA_CERTIFICATE_FILE:
+      return { ...state, isCACACertificateOpen: payload, }
     case ADD_iNVOICE_REPORT_DEBTOR:
       return { ...state, addInvoice: payload, }
     case ADD_iNVOICE_REPORT_DEBTOR_SUCCESS:
       return { ...state, addInvoiceSuccess: payload, }
     case ADD_iNVOICE_REPORT_DEBTOR_FAIL:
       return { ...state, error: payload, }
-      case ADD_iNVOICE_ARRAY_DEBTORID:
+    case ADD_iNVOICE_ARRAY_DEBTORID:
       return { ...state, addInvoiceArray: payload, }
-      case ADD_iNVOICE_ARRAY_DEBTORID_SUCCESS:
+    case ADD_iNVOICE_ARRAY_DEBTORID_SUCCESS:
       return { ...state, addInvoiceSuccess: payload, }
-      case ADD_iNVOICE_ARRAY_DEBTORID_FAIL:
+    case ADD_iNVOICE_ARRAY_DEBTORID_FAIL:
       return { ...state, error: payload, }
 
-      case ADD_RATING_TO_DEBTOR:
-        return { ...state, addRating: payload, }
-        case ADD_RATING_TO_DEBTOR_SUCCESS:
-        return { ...state, addRatingSuccess: payload, }
-        case ADD_RATING_TO_DEBTOR_FAIL:
-        return { ...state, error: payload, }
+    case ADD_RATING_TO_DEBTOR:
+      return { ...state, addRating: payload, }
+    case ADD_RATING_TO_DEBTOR_SUCCESS:
+      return { ...state, addRatingSuccess: payload, }
+    case ADD_RATING_TO_DEBTOR_FAIL:
+      return { ...state, error: payload, }
 
     default:
       return state
