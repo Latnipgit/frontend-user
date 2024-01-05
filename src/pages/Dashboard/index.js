@@ -24,6 +24,10 @@ import Breadcrumbs from "../../components/Common/Breadcrumb"
 import TableContainer from "../../components/Common/TableContainer"
 
 import { CreditorsGraph } from "components/graph-components/creditors.componet"
+import { getAllInvoice } from "../../../src/store/actions"
+import { selectInvoiceList } from "store/debtors/debtors.selecter"
+import { selectInvoiceListMap } from "store/debtors/debtors.selecter"
+import moment from 'moment'
 import {
   DebtorsGraph,
   sampleRepetedDebtors,
@@ -38,6 +42,7 @@ import { useSelector, useDispatch } from "react-redux"
 // import { Creditor } from "pages/admin/DisputedBillings/disputedCol";
 
 const Dashboard = props => {
+  const [subscribemodal, setSubscribemodal] = useState(false)
   const dispatch = useDispatch();
 
   const renderStarRating = rating => {
@@ -63,82 +68,10 @@ const Dashboard = props => {
     return stars
   }
 
-  const [subscribemodal, setSubscribemodal] = useState(false)
-
-  const columns = useMemo(
-    () => [
-      {
-        Header: "#",
-        filterable: false,
-        disableFilters: true,
-        Cell: cellProps => {
-          return <input type="checkbox" className="form-check-input" />
-        },
-      },
-      {
-        Header: "Ref No",
-        accessor: "Refnumber",
-        filterable: false,
-        disableFilters: true,
-      },
-      {
-        Header: "Buyer Name",
-        accessor: "Buyer",
-        disableFilters: true,
-        filterable: false,
-      },
-      {
-        Header: "Amount",
-        accessor: "Amount",
-        disableFilters: true,
-        filterable: false,
-      },
-      {
-        Header: "Due From",
-        accessor: "DueFrom",
-        disableFilters: true,
-        filterable: false,
-      },
-      {
-        Header: "status",
-        accessor: "status",
-        disableFilters: true,
-        filterable: false,
-        Cell: cellProps => {
-          return (
-            <div>
-              {cellProps.row.original.status == "Complete" ? (
-                <span className="text-success">
-                  {cellProps.row.original.status}
-                </span>
-              ) : (
-                <span className="text-danger">
-                  {cellProps.row.original.status}
-                </span>
-              )}
-            </div>
-          )
-        },
-      },
-
-      // {
-      //   Header: "Action",
-      //   accessor: "",
-      //   disableFilters: true,
-      //   filterable: false,
-      //   Cell: cellProps => {
-      //     return (
-      //       <div>
-      //         <Button className="btn btn-danger btn-sm" disabled>
-      //           Report a Defaulter
-      //         </Button>
-      //       </div>
-      //     )
-      //   },
-      // },
-    ],
-    []
-  )
+  const GetAllInvoice = useSelector(selectInvoiceList)
+  useEffect(() => {
+    dispatch(getAllInvoice());
+  }, [])
 
   useEffect(() => {
     const companyid = localStorage.getItem("COMPANY-ID")
@@ -155,113 +88,126 @@ const Dashboard = props => {
 
   return (
     <React.Fragment>
-      <div className="">
-        <Container fluid className="">
-        <br/>
-        <br/>
-        <br/>
-          <Row className="mt-4">
-            <Card>
-              <CardBody>
-              <Row className="pt-3 pb-3">
-          <Col md={10} className="pl-3">
-            <h5 className="m-1">Reported Debtors</h5>
-          </Col>
-          <Col md={2} className="text-end">
-          {/* <Link >
-              <i className="bx bx-home" style={{ fontSize: '25px', color: "gray" }} onClick={() => {
-                window.location.href = companiesURL;
-              }}></i>
-            </Link> */}
-            <Button className="'btn btn-info"  onClick={() => {
-                window.location.href = companiesURL;
-              }}>
-              Back
-            </Button>
-          </Col>
-        </Row>
-                <Col md="12">
-                  {/* <div className="mb-4 h4 card-title">Reported Debtors</div> */}
-                  <TableContainer
-                    columns={columns}
-                    data={sampleRepetedDebtors}
-                    isGlobalFilter={false}
-                    isAddOptions={false}
-                    customPageSize={6}
-                  />
-                </Col>
-              </CardBody>
-            </Card>
-          </Row>
+      <Card>
+        <CardBody>
+          <div className="mb-4 h4 card-title"></div>
+          <br />
+          <br />
+          <br />
 
-          {/*           <Row>
-            <DebtorsGraph />
-            <CreditorsGraph />
-          </Row>
+
           <Row>
-            <Col md="6">
-              <Card>
-               // <div className="card-header">Debtors</div>
-                <CardBody>
-                  <Debtors />
-                </CardBody>
-              </Card>
+            <Col md={10} className="pl-3">
+              <h5 className="m-1">Report a Defaulter</h5>
             </Col>
-            <Col md="6">
-              <Card>
-                //<div className="card-header">Creditors</div>
-                <CardBody>
-                  <Creditors />
-                </CardBody>
-              </Card>
+            <Col md={2}>
+              <Button className="btn btn-md btn-info" onClick={() => handleReportDefaulter()}>Report a Defaulter</Button>
+              {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
+<ReactTooltip id="toolTip1" /> */}
             </Col>
-          </Row> */}
-        </Container>
-      </div>
+          </Row>
 
-      <Modal
-        isOpen={subscribemodal}
-        role="dialog"
-        autoFocus={true}
-        centered
-        data-toggle="modal"
-        toggle={() => {
-          setSubscribemodal(!subscribemodal)
-        }}
-      >
-        <div>
-          <ModalHeader
-            className="border-bottom-0"
-            toggle={() => {
-              setSubscribemodal(!subscribemodal)
-            }}
-          ></ModalHeader>
-        </div>
-        <div className="modal-body">
-          <div className="text-center mb-4">
-            <div className="avatar-md mx-auto mb-4">
-              <div className="avatar-title bg-light rounded-circle text-primary h1">
-                <i className="mdi mdi-email-open"></i>
-              </div>
-            </div>
+          <Row className="p-4  ml-5">
+            {/* <br/> */}
 
-            <div className="row justify-content-center">
-              <div className="col-xl-10">
-                <h4 className="text-primary">Confirmation</h4>
-                <p className="text-muted font-size-14 mb-4">
-                  By signing up, you agree not to post false information about
-                  any party and to take complete responsibility if your posts or
-                  reviews lead to defamation of any party.
-                </p>
+            {/* <ReactTable
+              data={GetAllInvoice != undefined ? GetAllInvoice : []}
+              columns={columns}
+              showPagination={true}
+              defaultPageSize={5}
+            /> */}
 
-                <Button color="primary" type="button" onClick={handleSignUp}>
-                  Confirm
-                </Button>
-              </div>
-            </div>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Company Name</th>
+                  {/* <th scope="col">Refrence Number</th> */}
+                  <th scope="col">Invoice Number</th>
+                  {/* <th scope="col">Status</th> */}
+                  <th scope="col">Address</th>
+                  <th scope="col">Due Amount</th>
+                  <th scope="col">Due From</th>
+                  <th scope="col">Action</th>
+                  {/* <th scope="col">Upload Document</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
+                {GetAllInvoice != undefined ? GetAllInvoice.map((item, index) => {
+
+                  let newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
+                  return <tr key={item}>
+                    {console.log("NEW TABLE ", item)}
+
+                    <th scope="row" className="pt-4">{index + 1}</th>
+                    {/* <td className="pt-4 text-capitalize">{item.debtor.companyName}</td> */}
+                    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+                    {/* <td className="pt-4">{item.referenceNumber}</td> */}
+                    <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
+                    {/* <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+    <br/>
+    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td> */}
+                    <td>
+                      {item.debtor.address1}, {item.debtor.address2}
+                    </td>
+                    <td className="pt-4">{item.totalAmount}</td>
+                    {/* <td className="pt-4 text-end">
+      <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+
+    </td> */}
+
+                    {/* <td >
+   
+    <div className="" style={{ padding:"2px 15px"}}>
+      
+  <div className=" text-center bg-success rounded text-light">
+    <div className="text-capitalize">
+      
+       {getDaysArray[index]}  &nbsp;
+
+
+       <span className="ml-1">Days</span> </div>
+    <div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
+  </div>
+</div>
+           
+    </td> */}
+                    <td>
+                      {newDate}
+                    </td>
+                    <td>
+                      <td className={item.status == undefined ? 'text-success' : 'text-danger'}>{item.status == undefined ? "Approved" : item.status}</td>
+                    </td>
+                    {/* <td>
+                              <span className="text-success">
+                  {cellProps.row.original.status}
+                </span>
+              ) : (
+                <span className="text-danger">
+                  {cellProps.row.original.status}
+                </span>
+    <div className="pt-2">
+            <Button className="btn btn-info btn-sm"
+              onClick={() => viewModels()
+               
+              }
+            >
+           Upload Document
+            </Button>
+  
           </div>
-        </div>
-      </Modal>
+    </td> */}
+                  </tr>
+                }) : ''}
+
+
+              </tbody>
+            </table>
+
+          </Row>
+        </CardBody>
+      </Card>
     </React.Fragment>
   )
 }

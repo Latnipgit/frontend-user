@@ -48,7 +48,7 @@ export const postSocialLogin = data => post(url.SOCIAL_LOGIN, data);
 export const getProducts = () => get(url.GET_PRODUCTS);
 export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
 
-export const getAllInvoiceList = () => getAfter("/api/transactions/getAllInvoicesRaisedByMe")
+export const getAllInvoiceList = () => getAfter("/api/defaulters/getAllDefaultInvoicesRaisedByMe")
 // get Product detail
 export const getProductDetail = id =>
   get(`${url.GET_PRODUCTS_DETAIL}/${id}`, { params: { id } });
@@ -108,7 +108,7 @@ export const addCustomerListAPI = data => addEmployeeAPImethod(url.ADD_CUSTOMER_
 export const getEmployeeList = data => addEmployeeAPImethod(url.GET_EMPLOYEE);
 export const addDebtorIdToarrayForPreviewAPI = data => addEmployeeAPImethod("/api/transactions/getAllInvoicesForIds");
 export const addRatingofdebtor = data => addEmployeeAPImethod("/api/user/addQuestion");
-export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api/defaulters/initiatePaymentVerification");
+export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api/defaulters/initiatePaymentVerificationGeneral");
 
 
 //ADD invoice

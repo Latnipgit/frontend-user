@@ -37,8 +37,9 @@ const ReportMedefulterComponent = props => {
 
   const selectReportMeDeflist = useSelector(selectReportMeDefData)
   console.log("reportMeDefulter", selectReportMeDeflist);
+
   useEffect(() => {
-    dispatch(fetchReportMeDefulterStart());
+    dispatch(fetchReportMeDefulterStart())
   }, [])
 
   const viewModel = (value) => {

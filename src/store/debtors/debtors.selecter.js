@@ -7,9 +7,30 @@ export const selectDebtorsList = createSelector(
     (DebtorsReducer) => DebtorsReducer.debtors.response
 )
 
-/* export const selectInvoiceList = createSelector(
+export const selectInvoiceList = createSelector(
     [selectDebtorsReducer],
-    (DebtorsReducer) => DebtorsReducer.getInvoiceList.response
+    (DebtorsReducer) => DebtorsReducer.getInvoiceList != undefined ? DebtorsReducer.getInvoiceList.response : []
+)
+
+/* export const selectInvoiceListMap = createSelector(
+    [selectInvoiceList],
+    (DebtorsReducer) => {
+        if (DebtorsReducer) {
+            DebtorsReducer.map(data => {
+                const { debtor: { companyName, address1, address2, firstname, lastname, }, invoices, totalAmount: amount, } = data;
+                const status = "Pending"
+                if (data.status === undefined) {
+                    status = "Approved"
+                } else {
+                    status = data.status
+                }
+                const InvoiceNUmber = invoices[0].invoiceNumber
+                const DueFrom = invoices[0].dueDate
+
+                return { companyName, InvoiceNUmber, address1, address2, amount, DueFrom, firstname, lastname, status }
+            })
+        }
+    }
 ) */
 
 export const selectReportDefOpen = createSelector(
@@ -46,8 +67,8 @@ export const addInvoiceReportDebtorSelector = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.addInvoice
 )
-export const selectInvoiceList = (state) => state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : []
 /* export const selectDebtorsList = (state) => state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [];
+export const selectInvoiceList = (state) => state.DebtorsReducer.getInvoiceList != undefined ? state.DebtorsReducer.getInvoiceList.response : []
 
 export const selectReportDefOpen = (state) => state.DebtorsReducer.isReportDefOpen; */
 
