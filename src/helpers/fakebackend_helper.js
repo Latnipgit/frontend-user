@@ -108,7 +108,7 @@ export const addCustomerListAPI = data => addEmployeeAPImethod(url.ADD_CUSTOMER_
 export const getEmployeeList = data => addEmployeeAPImethod(url.GET_EMPLOYEE);
 export const addDebtorIdToarrayForPreviewAPI = data => addEmployeeAPImethod("/api/transactions/getAllInvoicesForIds");
 export const addRatingofdebtor = data => addEmployeeAPImethod("/api/user/addQuestion");
-export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api/defaulters/getAllDefaultInvoicesSentToMe");
+export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api/defaulters/initiatePaymentVerification");
 
 
 //ADD invoice

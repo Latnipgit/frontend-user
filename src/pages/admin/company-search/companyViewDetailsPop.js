@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { FcCheckmark, FcClock, FcCancel } from "react-icons/fc";
 import PropTypes from "prop-types"
 import {
     Button,
@@ -119,7 +120,7 @@ const CompnayViewDetails = props => {
                                         Billing Name: <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
                                     </p>
                                     <p className="mb-2">
-                                        Company name : <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
+                                        Company Name : <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
                                     </p>
                                     <p className="mb-2">
                                         GST Number : <span className="text-primary">{selected != "" ? selected.GST : ''}</span>
@@ -159,34 +160,42 @@ const CompnayViewDetails = props => {
                                 <Table className="table align-middle table-nowrap">
                                     <thead>
                                         <tr>
+                                            <th scope="col">Company Name</th>
                                             <th scope="col">seller Name</th>
                                             <th scope="col">Due Amount</th>
+                                            <th scope="col">Totle</th>
                                             <th scope="col">Due fROM</th>
-                                            <th scope="col">Rating, Status</th>
+                                            <th scope="col">Rating</th>
                                             <th scope="col">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                             <td>TATA</td>
-                                            <td>$225</td>
+                                            <td>Prem</td>
+                                            <td>₹100,00,00</td>
+                                            <td>₹250,00,00</td>
                                             <td>12-12-2023</td>
                                             <td>4.2</td>
-                                            <td>Approved</td>
+                                            <td style={{ color: "green" }}>Approved <FcCheckmark /></td>
                                         </tr>
                                         <tr>
-                                            <td>TATA</td>
-                                            <td>$225</td>
-                                            <td>12-12-2023</td>
+                                            <td>Latnip</td>
+                                            <td>Harshit</td>
+                                            <td>₹250,00,00</td>
+                                            <td style={{ filter: 'blur(2px)' }}>₹100,00,00</td>
+                                            <td >12-12-2023</td>
                                             <td>3.2</td>
-                                            <td>InProcess</td>
+                                            <td style={{ color: "red" }}>InProcess <FcClock /></td>
                                         </tr>
                                         <tr>
-                                            <td>TATA</td>
-                                            <td>$225</td>
+                                            <td>Bafama</td>
+                                            <td>rohan</td>
+                                            <td>₹110,00,00</td>
+                                            <td style={{ filter: 'blur(2px)' }}>₹250,00,00</td>
                                             <td>12-12-2023</td>
                                             <td>4.5</td>
-                                            <td>InProcess</td>
+                                            <td style={{ color: "red", filter: "2px" }} >Disputed <FcCancel /></td>
                                         </tr>
                                         {/*                                     {selected!= ""? selected.Invoice.items.length != 0 ? selected.Invoice.items.map((item)=>{
                                             return <tr key={item}>
