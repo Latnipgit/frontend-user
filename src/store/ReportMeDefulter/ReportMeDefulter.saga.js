@@ -1,4 +1,4 @@
-import { takeLatest, call, put, all, fork } from "redux-saga/effects"
+import { takeLatest, call, put, all, fork, takeEvery } from "redux-saga/effects"
 
 import { fetchReportMeDefulterSuccess, fetchReportMeDefulterFailure } from "./ReportMeDefulter.action"
 
@@ -9,7 +9,7 @@ import { getReportMeDefulterList } from "helpers/fakebackend_helper"
 
 export function* fetchReportMeDefulterAsync() {
   try {
-    debugger
+    debugger;
     const ReportMeDefulterArray = yield call(getReportMeDefulterList)
     yield put(fetchReportMeDefulterSuccess(ReportMeDefulterArray.data.response))
   } catch (error) {
@@ -18,7 +18,7 @@ export function* fetchReportMeDefulterAsync() {
 }
 
 export function* onFetchReportMeDefulter() {
-  yield takeLatest(FETCH_REPORT_ME_DEFULTER_START, fetchReportMeDefulterAsync)
+  yield takeEvery(FETCH_REPORT_ME_DEFULTER_START, fetchReportMeDefulterAsync)
 }
 
 export function* ReportMeDefulterSaga() {

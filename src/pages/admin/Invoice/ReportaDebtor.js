@@ -71,7 +71,6 @@ const ReportDebtor = props => {
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
 
   const GetAllInvoice = useSelector(selectInvoiceList)
-
   useEffect(() => {
     dispatch(getAllInvoice());
 
