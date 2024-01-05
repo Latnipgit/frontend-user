@@ -155,20 +155,33 @@ const Dashboard = props => {
 
   return (
     <React.Fragment>
-      <div className="page-content">
-        <Container fluid>
-          <Row className=" ml-auto text-end">
-            <Link >
+      <div className="">
+        <Container fluid className="">
+        <br/>
+        <br/>
+        <br/>
+          <Row className="mt-4">
+            <Card>
+              <CardBody>
+              <Row className="pt-3 pb-3">
+          <Col md={10} className="pl-3">
+            <h5 className="m-1">Reported Debtors</h5>
+          </Col>
+          <Col md={2} className="text-end">
+          {/* <Link >
               <i className="bx bx-home" style={{ fontSize: '25px', color: "gray" }} onClick={() => {
                 window.location.href = companiesURL;
               }}></i>
-            </Link>
-          </Row>
-          <Row>
-            <Card>
-              <CardBody>
+            </Link> */}
+            <Button className="'btn btn-info"  onClick={() => {
+                window.location.href = companiesURL;
+              }}>
+              Back
+            </Button>
+          </Col>
+        </Row>
                 <Col md="12">
-                  <div className="mb-4 h4 card-title">Reported Debtors</div>
+                  {/* <div className="mb-4 h4 card-title">Reported Debtors</div> */}
                   <TableContainer
                     columns={columns}
                     data={sampleRepetedDebtors}

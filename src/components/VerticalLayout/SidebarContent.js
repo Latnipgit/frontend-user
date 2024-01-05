@@ -200,8 +200,8 @@ const SidebarContent = props => {
                     {props.t("Report A Defaulter")}
                   </Link>
                   <Link to="/Report-me-defaulter">
-                    <i className='bx bxs-report'></i>
-                    {props.t("Report Me as a Defaulter")}
+                    <i className='bx bxs-shield-alt-2'></i>
+                    {props.t("Report me as a Defaulter")}
                   </Link>
                 </li>
 
@@ -295,8 +295,8 @@ const SidebarContent = props => {
 
                 <li>
                   <Link to="/recieved-payment">
-                    <i className="bx bx-money"></i>
-                    {props.t("Recieved Payment")}
+                    <i className="bx bx-wallet"></i>
+                    {props.t("Record Payment")}
                   </Link>
                 </li>
               </>
