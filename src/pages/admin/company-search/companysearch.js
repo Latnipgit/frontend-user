@@ -48,7 +48,8 @@ import { getCompanyList as ongetCompanyList } from "../../../../src/store/action
 import TableContainer from "../../../components/Common/TableContainer";
 import InlineFilterForm from '../ApprovedTransaction/InlineFilterForm';
 import { get } from "helpers/api_helper";
-
+import { fetchCompanySearchStart } from "store/CompanySearch/CompanySearch.action";
+import { selectCompanySearchList, selectdashboardAdminDataMap } from "store/CompanySearch/CompanySearch.selecter";
 
 
 const CompanySearch = props => {
@@ -71,6 +72,15 @@ const CompanySearch = props => {
     setModal1(true)
     setSelected(value.cell.row.original)
   }
+
+  const selectCompanySearchLists = useSelector(selectCompanySearchList)
+  const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
+  const selectCopanySearchlistRevers = selectCompanySearchListMap.reverse()
+
+  useEffect(() => {
+    dispatch(fetchCompanySearchStart())
+  }, [])
+
 
   const columns = useMemo(
     () => [
@@ -169,7 +179,7 @@ const CompanySearch = props => {
   );
   const handleFilter = (filters) => {
 
-    const filteredResults = ApprovedTranctionData.filter(item => {
+    const filteredResults = selectCopanySearchlistRevers.filter(item => {
       const CompanyNameMatch = item.CompanyName === filters.company.trim();
       const panMatch = item.PANCARD === filters.pan.trim();
       const gstMatch = item.GST === filters.gst.trim();
@@ -219,7 +229,7 @@ const CompanySearch = props => {
 
           <TableContainer
             columns={columns}
-            data={filteredData.length > 0 ? filteredData : ApprovedTranctionData}
+            data={filteredData.length > 0 ? filteredData : selectCopanySearchlistRevers}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}

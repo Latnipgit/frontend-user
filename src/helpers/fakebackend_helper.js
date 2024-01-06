@@ -49,6 +49,8 @@ export const getProducts = () => get(url.GET_PRODUCTS);
 export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
 
 export const getAllInvoiceList = () => getAfter("/api/defaulters/getAllDefaultInvoicesRaisedByMe")
+export const getCompanySearchList = () => getAfter("/api/debtors/getAllDebtorsByCompanyId")
+/* export const getCompanySearchList = data => post(url.GET_COMPNAY_SEARCH_LIST, data); */
 // get Product detail
 export const getProductDetail = id =>
   get(`${url.GET_PRODUCTS_DETAIL}/${id}`, { params: { id } });

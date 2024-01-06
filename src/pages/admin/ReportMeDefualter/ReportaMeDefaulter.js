@@ -21,7 +21,6 @@ import UploadPendingFiles from "../Invoice/uploadFilesModal"
 import moment from 'moment'
 
 const ReportMedefulterComponent = props => {
-  debugger;
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
