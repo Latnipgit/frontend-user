@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Col,
@@ -14,17 +14,22 @@ import {
 } from "reactstrap";
 
 export const CompanySerchForm = ({ onFilter }) => {
-  const [filters, setFilters] = useState({
-    company: '',
-  });
+  const [filters, setFilters] = useState('');
   const [company, setCompany] = useState('');
   const [gstError, setGSTError] = useState('');
   const [panError, setPANError] = useState('');
 
 
+  useEffect(() => {
+    onFilter(filters);
+  }, [filters])
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    onFilter(filters);
+    // onFilter(filters);
+
+
   };
 
   const handleReset = (event) => {
@@ -35,18 +40,15 @@ export const CompanySerchForm = ({ onFilter }) => {
     }
     onFilter(resetAray)
   }
-  const handleNameChange = (event) => {
-    const nameValue = event.target.value;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      company: nameValue,
-    }));
-  }
 
+  const onSearchChange = (event) => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+    setFilters(searchFieldString);
+  };
 
   return (
 
-    <Container fluid={true} className="mt-5">
+    <Container fluid={true} className="mt-2">
       <Row>
         <Col lg={12}>
           <Card>
@@ -74,24 +76,11 @@ export const CompanySerchForm = ({ onFilter }) => {
                       className={`form-control`}
                       id="nameFilter"
                       placeholder="Company Name"
-                      value={filters.company}
-                      onChange={handleNameChange}
+                      value={filters}
+                      onChange={onSearchChange}
                     />
                   </InputGroup>
                   {/* {aadharError && <div className="text-danger">{aadharError}</div>} */}
-                </Col>
-
-                <Col xs={12} className=''>
-
-
-                  <button type="submit" className="btn btn-primary w-md ml-2" onClick={handleSubmit}>
-                    Search
-                  </button>
-                  &nbsp;
-                  &nbsp;
-                  <button type="submit" className="btn btn-secondary w-md mr-2" onClick={handleReset}>
-                    Reset
-                  </button>
                 </Col>
               </Form>
             </CardBody>

@@ -86,12 +86,18 @@ const Dashboard = props => {
   }
 
   const handleFilterdata = (filters) => {
-    debugger
-    const filteredResults = GetAllInvoice.filter(item => {
-      const CompanyNameMatch = item.debtor.companyName === filters.company.trim();
-      return CompanyNameMatch
-    });
-    setFilteredData(filteredResults);
+    if (GetAllInvoice) {
+      if (filters === "") {
+        setFilteredData(GetAllInvoice)
+      } else {
+        const filteredResults = GetAllInvoice.filter(item => {
+          return item.debtor.companyName.toLocaleLowerCase().includes(filters);
+        });
+        setFilteredData(filteredResults);
+      }
+    }
+
+
   };
 
   document.title = "Dashboard | Bafana"
@@ -117,7 +123,8 @@ const Dashboard = props => {
 <ReactTooltip id="toolTip1" /> */}
             </Col>
           </Row>
-          <CompanySerchForm onFilter={handleFilterdata} />
+          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} /> : ""}
+
           <Row className="p-4  ml-5">
             {/* <br/> */}
 
@@ -144,8 +151,9 @@ const Dashboard = props => {
                 </tr>
               </thead>
               <tbody>
+                {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
                 {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
-                {filteredData.length > 0 ? <FilterData GetAllInvoicedata={filteredData} /> : <FilterData GetAllInvoicedata={GetAllInvoice} />}
+                {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} /> : <FilterData GetAllInvoicedata={GetAllInvoice} />}
               </tbody>
             </table>
 
@@ -167,68 +175,24 @@ const FilterData = ({ GetAllInvoicedata }) => {
           {console.log("NEW TABLE ", item)}
 
           <th scope="row" className="pt-4">{index + 1}</th>
-          {/* <td className="pt-4 text-capitalize">{item.debtor.companyName}</td> */}
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-          {/* <td className="pt-4">{item.referenceNumber}</td> */}
           <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-          {/* <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
-<br/>
-{item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td> */}
           <td>
             {item.debtor.address1}, {item.debtor.address2}
           </td>
           <td className="pt-4">{item.totalAmount}</td>
-          {/* <td className="pt-4 text-end">
-<CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
-
-</td> */}
-
-          {/* <td >
-
-<div className="" style={{ padding:"2px 15px"}}>
-
-<div className=" text-center bg-success rounded text-light">
-<div className="text-capitalize">
-
-{getDaysArray[index]}  &nbsp;
-
-
-<span className="ml-1">Days</span> </div>
-<div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
-</div>
-</div>
-
-</td> */}
           <td>
             {newDate}
           </td>
           <td>
             <td className={item.status == undefined ? 'text-success' : 'text-danger'}>{item.status == undefined ? "Approved" : item.status}</td>
           </td>
-          {/* <td>
-            <span className="text-success">
-{cellProps.row.original.status}
-</span>
-) : (
-<span className="text-danger">
-{cellProps.row.original.status}
-</span>
-<div className="pt-2">
-<Button className="btn btn-info btn-sm"
-onClick={() => viewModels()
-
-}
->
-Upload Document
-</Button>
-
-</div>
-</td> */}
         </tr>
       }) : ''}
     </>
   )
 }
+
 
 Dashboard.propTypes = {
   t: PropTypes.any,
