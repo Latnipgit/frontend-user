@@ -325,13 +325,13 @@ const SidebarContent = props => {
                     {props.t("Profile")}
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/notification">
                     <i className="bx bxs-notification"></i>
 
                     {props.t("Notification")}
                   </Link>
-                </li>
+                </li> */}
 
               </>
             )}
