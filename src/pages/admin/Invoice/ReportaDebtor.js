@@ -41,8 +41,8 @@ import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
-import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen } from "store/debtors/debtors.selecter"
+import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen,requestInvoiceDefEdit } from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen,requestEditSelector } from "store/debtors/debtors.selecter"
 import UploadPendingFiles from "./uploadFilesModal"
 import moment from 'moment'
 
@@ -243,7 +243,7 @@ const ReportDebtor = props => {
   );
 
   const additionalValue = "Hello from additional prop!";
-
+const [invoiceIdsForCAcertificate , setinvoiceIdsForCAcertificate] =useState('')
   const handleReportDefaulter = () => {
     // window.location.href = "/ReportDefaulter"
     //setModal4(true)
@@ -267,11 +267,21 @@ const ReportDebtor = props => {
   }
   console.log("ABABABABABAB 2", getDaysArray)
 
+  const requestEdit =(item)=>{
+
+    console.log("ITEMMMMM",item.invoices[0].invoiceNumber)
+    const payload={
+      "invoiceId": item.invoices[0].invoiceNumber
+  }
+
+dispatch(requestInvoiceDefEdit(payload))
+  }
+
   return (
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
-      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
-      <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} />
+      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} customerName={invoiceIdsForCAcertificate}/>
+      <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} />
 
@@ -311,7 +321,6 @@ const ReportDebtor = props => {
                   <th scope="col">Company Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
                   <th scope="col">Invoice Number</th>
-                  {/* <th scope="col">Status</th> */}
                   <th scope="col">Address</th>
                   <th scope="col">Due Amount</th>
                   <th scope="col">Due From</th>
@@ -320,31 +329,30 @@ const ReportDebtor = props => {
                 </tr>
               </thead>
               <tbody>
-                {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
-                {dummyData != undefined ? dummyData.map((item, index) => {
+                {console.log("GetAllInvoiceGetAllInvoice",GetAllInvoice)}
+                {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{
+                {/* {dummyData != undefined ? dummyData.map((item, index) => { */}
 
 
                   return <tr key={item}>
-                    {console.log("NEW TABLE ", item)}
+                    {console.log("NEW TABLE ", item.remainingAmount)}
 
                     <th scope="row" className="pt-4">{index + 1}</th>
-                    {/* <td className="pt-4 text-capitalize">{item.debtor.companyName}</td> */}
-                    <td className="pt-4 text-capitalize">{item.companyName}</td>
-                    {/* <td className="pt-4">{item.referenceNumber}</td> */}
-                    <td className="pt-4">{item.InvoiceNUmber}</td>
-                    {/* <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+                    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+                    <td className="pt-4">{item.invoices.map((item)=>{
+                      return <span key={item}>{item.invoiceNumber}, &nbsp;</span> 
+                    })}</td>
+                  
+                    <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
     <br/>
-    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td> */}
-                    <td>
-                      {item.Address}
-                    </td>
-                    <td className="pt-4">{item.amount}</td>
-                    {/* <td className="pt-4 text-end">
-      <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
+                 
+                    <td className="pt-4 text-end">
+      <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
-    </td> */}
+    </td>
 
-                    {/* <td >
+                    <td >
    
     <div className="" style={{ padding:"2px 15px"}}>
       
@@ -355,14 +363,12 @@ const ReportDebtor = props => {
 
 
        <span className="ml-1">Days</span> </div>
-    <div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
+    <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
   </div>
 </div>
            
-    </td> */}
-                    <td>
-                      {item.DueFrom}
-                    </td>
+    </td>
+                   
                     <td>
                       <div className="pt-2">
                         <Button className="btn btn-info btn-sm "
@@ -379,9 +385,9 @@ const ReportDebtor = props => {
                         &nbsp;
 
                         <Button className="btn btn-info btn-sm"
-                        // onClick={() => viewModels()
+                        onClick={() => requestEdit(item)
 
-                        // }
+                        }
                         >
                           <i className='bx bx-edit textsizing' ></i>
                         </Button>
@@ -400,7 +406,9 @@ const ReportDebtor = props => {
 
                         &nbsp;
                         <Button className="btn btn-info btn-sm"
-                          onClick={() => toggleViewModal2()
+                          onClick={() => {toggleViewModal2()
+                            setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                          }
 
                           }
                         >

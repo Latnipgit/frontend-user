@@ -19,7 +19,13 @@ import {
   ADD_iNVOICE_ARRAY_DEBTORID,
   ADD_RATING_TO_DEBTOR,
   ADD_RATING_TO_DEBTOR_FAIL,
-  ADD_RATING_TO_DEBTOR_SUCCESS
+  ADD_RATING_TO_DEBTOR_SUCCESS,
+  UPLOAD_CA_CERTIFICATE_ID,
+  UPLOAD_CA_CERTIFICATE_ID_SUCCESS,
+  UPLOAD_CA_CERTIFICATE_ID_FAIL,
+  REQUEST_INVOICE_DEF_EDIT,
+  REQUEST_INVOICE_DEF_EDIT_SUCCESS,
+  REQUEST_INVOICE_DEF_EDIT_FAIL
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -61,3 +67,11 @@ export const addInvoiceArrayFail = (data) => createAction(ADD_iNVOICE_ARRAY_DEBT
 export const addRatingToDebtor = (data) => createAction(ADD_RATING_TO_DEBTOR, data)
 export const addRatingToDebtorSuccess = (data) => createAction(ADD_RATING_TO_DEBTOR_SUCCESS, data)
 export const addRatingToDebtorFail = (data) => createAction(ADD_RATING_TO_DEBTOR_FAIL, data)
+
+export const uploadCACertificateID = (data) => createAction(UPLOAD_CA_CERTIFICATE_ID, data)
+export const uploadCACertificateIDSuccess = (data) => createAction(UPLOAD_CA_CERTIFICATE_ID_SUCCESS, data)
+export const uploadCACertificateIDFail = (data) => createAction(UPLOAD_CA_CERTIFICATE_ID_FAIL, data)
+
+export const requestInvoiceDefEdit = (data) => createAction(REQUEST_INVOICE_DEF_EDIT, data)
+export const requestInvoiceDefEditSuccess = (data) => createAction(REQUEST_INVOICE_DEF_EDIT_SUCCESS, data)
+export const requestInvoiceDefEditFail = (data) => createAction(REQUEST_INVOICE_DEF_EDIT_FAIL, data)

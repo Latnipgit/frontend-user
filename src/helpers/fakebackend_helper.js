@@ -109,6 +109,8 @@ export const getEmployeeList = data => addEmployeeAPImethod(url.GET_EMPLOYEE);
 export const addDebtorIdToarrayForPreviewAPI = data => addEmployeeAPImethod("/api/transactions/getAllInvoicesForIds");
 export const addRatingofdebtor = data => addEmployeeAPImethod("/api/user/addQuestion");
 export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api/defaulters/initiatePaymentVerificationGeneral");
+export const uploadCACertificateAPIMethod = data => addEmployeeAPImethod("/api/transactions/updateInvoiceDocumentsCACertificate");
+export const requestAEdit = data => addEmployeeAPImethod("/api/transactions/requestDefaultInvoiceEdit");
 
 
 //ADD invoice

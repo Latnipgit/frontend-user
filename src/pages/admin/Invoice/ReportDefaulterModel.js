@@ -19,112 +19,103 @@ import {
 } from "reactstrap"
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from "react";
+import Select from "react-select"
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import { useSelector, useDispatch } from "react-redux"
+import { selectDebtorsList } from "store/debtors/debtors.selecter";
 
 const ReportedDefaulterModel = props => {
+  const [selectedOption, setSelectedOption] = useState("")
+
     const [isProceed, setisProceed] = useState(false)
-  const { isOpen, toggle ,selected } = props
-  console.log("PROPSS", selected)
-
-  const handleFileChange = (event, fieldName) => {
-    const files = event.target.files
-    console.log("FILEEE", event.target.files,fieldName)
-   
-    const formData = new FormData();
-   
-    formData.append('file', files[0]);   //append the values with key, value pair
-    formData.append('fieldName', fieldName);
-   
- 
-    uploadFile(formData)
-
+  const { isOpen, toggle ,selected,  } = props
+  console.log("PROPSS 12321", selected)
+  const colourStyles = {
+    menuList: styles => ({
+      ...styles,
+      background: '#FFFFFF'
+    })
 
   }
-    
-  const [uploadTransportId, setuploadTransportId] = useState('')
-  const [uploadpurchaseId, setuploadpurchaseId] = useState('')
-  const [uploadInvoiceId, setuploadInvoiceId] = useState('')
-  const [uploadChallanId, setuploadChallanId] = useState('')
+  const customStyles = {
 
-  
+    control: (provided, state) => ({
+      ...provided,
+      background: "#FAFAFA",
+      width: "300px",
+      // match with the menu
+      borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+      // Overwrittes the different states of border
+      borderColor: state.isFocused ? " #4da6ff" : " #80d4ff",
+      // Removes weird border around container  
+      boxShadow: state.isFocused ? null : null,
+      "&:hover": {
+        // Overwrittes the different states of border
+        borderColor: state.isFocused ? " #4da6ff" : " #80d4ff"
+      }
+    }),
+    option: (provided, state) => ({
 
-  console.log("selected.debtor",selected.debtorId)
-  function uploadFile(formData){
-    console.log("UPLOAD FILE", formData)
-    const token = localStorage.getItem("tokenemployeeRegister")
-    const headers = {
-      'x-access-token': token != null ? token :'',
-    };
-    
-  
-    axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
-      headers: headers
-      })       
-      .then((response) => {
-        toast.success("file upload successfully")
-        console.log("Response", response)
-        if(response.data.response.fieldName == "uploadInvoice"){
-          setuploadInvoiceId(response.data.response.documentId)
-        }
-        if(response.data.response.fieldName == "uploadPurchaseOrder"){
-          setuploadpurchaseId(response.data.response.documentId)
-        }
-        if(response.data.response.fieldName == "uploadchallanDispatchDocument"){
-          setuploadChallanId(response.data.response.documentId )
-        }
-        if(response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`"){
-          setuploadTransportId(response.data.response.documentId)
-        }
+      // Your custom option styles here
+      backgroundColor: state.isFocused ? '#80bfff' : '#FAFAFA',
+      ':hover': {
+        backgroundColor: '#80bfff', // Change background color on hover
+      },
+
+
+      menu: base => ({
+        ...base,
+        // override border radius to match the box
+        borderRadius: 0,
+        // kill the gap
+        marginTop: 2
+      }),
+      menuList: base => ({
+        ...base,
+        // kill the white space on first and last option
+        padding: 2,
+        margin: 2
       })
-.catch((error) => {
-  console.log("Response", error)
+    }),
+    // Add more styles as needed for other parts of the Select component
+  };
+  function getDebtrosLists(responsData) {
+    return (responsData && (
+      responsData.map((item) => {
+        return (
+          {
+            "value": item.id, "label": item.firstname + " " + item.lastname + ", " + item.companyName,
+          }
 
-})
+        )
+      })
+    )
+    )
   }
+  const checkboxStyle = {
+    border: '2px solid #3498db', // Set the border color (change #3498db to your desired color)
+    borderRadius: '4px', // Optional: Add rounded corners for a nicer look
+    padding: '5px', // Optional: Add padding to the checkbox
+    marginRight: '5px', // Optional: Add some spacing between the checkbox and label
+  };
+  const [salutations, setsalutations] = useState([
+    { label: "Cash", value: "Cash" },
+    { label: "Credit Card", value: "Credit Card" },
+    { label: "Chaque", value: "Chaque" },
+    { label: "Bank Transfer", value: "Bank Transfer" },
 
-  const handleProceed =(Value)=>{
-    const payload =[{
-      "invoiceId": selected.debtorId,
-      "purchaseOrderDocument": uploadpurchaseId,
-      "challanDocument": uploadChallanId,
-      "invoiceDocument": uploadInvoiceId ,
-      "transportationDocument": uploadTransportId
-  }]
-  upload(payload)
-  }
+  ])
+  const GetAllDebtors = useSelector(selectDebtorsList)
+
+  const getDebtrosList = getDebtrosLists(GetAllDebtors)
   
-  useEffect(()=>{
-    setisProceed(false)
-  },[])
-  console.log("uploadpurchaseId", uploadpurchaseId)
-  const upload=(value)=>{
-    console.log("UPLOAD", value)
-    const token = localStorage.getItem("tokenemployeeRegister")
-    const headers = {
-      'x-access-token': token != null ? token :'',
-    };
-    
+
   
-    axios.post('https://bafana-backend.azurewebsites.net/api/transactions/updateInvoiceDocuments', value, {
-      headers: headers
-      })       
-.then((response) => {
-  console.log("Response", response)
-
-  toast.success("upload file successfully")
-
-  setInterval(() => {
-window.location.reload()
-  }, 2000);
-
-})
-.catch((error) => {
-  console.log("Response", error)
-  toast.error("something went wrong")
 
 
-})
-  }
   return (
     <Modal
       isOpen={isOpen}
@@ -140,211 +131,191 @@ window.location.reload()
         <ModalHeader toggle={toggle}>Report A Defaulter</ModalHeader>
       
       <ModalBody>
-    {isProceed == false?
-<form>
-   <Row className="mt-2">
-   <Col md={2} ></Col>
-    <Col md={2} className=" pt-2"><Label>Name</Label></Col>
-    <Col md={6}>
-        <Input type="text" placeholder="Please Enter Name"
-        value={selected != ''? selected.debtor.firstname +" " + selected.debtor.lastname:''}
-        disabled
-        />
-        </Col>
-        <Col md={2} ></Col>
-
-   </Row>
-
-   <Row className="mt-2">
-   <Col md={2} ></Col>
-
-    <Col md={2} className=" pt-2"><Label>Company Name</Label></Col>
-    <Col md={6}>
-        <Input type="text" placeholder="Please Enter Company Name"
-                value={selected != ''? selected.debtor.companyName :""}
-                disabled
-
-        />
-        </Col>
-        <Col md={2} ></Col>
-
-   </Row>
-
-   <Row className="mt-2">
-   <Col md={2} ></Col>
-
-    <Col md={2} className=" pt-2"><Label>Email</Label></Col>
-    <Col md={6}>
-        <Input type="text" placeholder="Please Enter Email"
-                        value={selected != ''? selected.debtor.customerEmail :""}
-                        disabled
-                        />
-        </Col>
-        <Col md={2} ></Col>
-
-   </Row>
-   <Row className="mt-2">
-   <Col md={2} ></Col>
-
-    <Col md={2} className=" pt-2"><Label>GST Number</Label></Col>
-    <Col md={6}>
-        <Input type="text" placeholder="Please Enter GST number"
-          value={selected != ''? selected.debtor.gstin :""}
-          disabled
-        />
-        </Col>
-        <Col md={2} ></Col>
-
-   </Row>
    
-</form>
-       :
-       <form>
-        <Label>Please Upload Following Document</Label>
+     <form>
+     <Row className="selectionListss">
+       <Col xs={12} md={2}>
+         <div className="mb-2"><b className="mt-2">Customer Name*</b></div>
+       </Col>
+       <Col xs={12} md={5}>
+         <div className="d-inline">
+           <label
+             className="visually-hidden custom-content"
+             htmlFor="customerSelect"
+           >
+             Customer Name
+           </label>
+           <Input
+                         type="text"
+                         id="customerEmail"
+                         name="customerEmail"
+                         value={selected.debtor.companyName}
+                         disabled
 
-        <Row className="terms">
-                  <Col md={11}>
-                    <Card className="overflow-hidden rounded-lg bg-light">
-                      <CardBody className="pt-0">
-                      {selected.purchaseOrderDocument == null ?      <Col md={4} className="mt-2 hoverable-cell">
-                          <div className="mb-2 mt-5">
-                        Upload File to Purchase Order
-                          </div>
+                       
+                         placeholder="Amount Recieved"
+                       />
+         </div>
+       </Col>
+       <Col xs={12} md={3}>
+        
+       </Col>
 
-                       <InputGroup className="text-capitalize">
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="uploadPurchaseOrder"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                              onChange={e =>
-                                handleFileChange(e, "uploadPurchaseOrder")
-                              }
-                            />
-                          </InputGroup>
-                          
-                          <div id="fileUploadHelp" className="form-text">
-                            Choose a file to upload (PDF, DOC, DOCX, TXT).
-                          </div>
-                          
-                        </Col>
-                        :
-                        <div className="text-center">                    <i className='bx bxs-file-pdf' style={{ fontSize:'40px'}}></i>
-                    
-                          <p> Purchase Order File</p>
-                          </div>
+     </Row>
 
-                          }
-                      
-                      
-                      {selected.challanDocument == null ?  <Col md={5} className="mt-2 hoverable-cell">
-                          <div className="mb-2 mt-5">
-                          Upload File to challan / Dispatch Document
-                          </div>
+     <Row className="selectionListss">
+       <Col xs={12} md={2}>
+         <div className="mb-2"><b className="mt-2">Amount Recieved*</b></div>
+       </Col>
+       <Col xs={12} md={5}>
+         <div className="d-inline">
+           <label
+             className="visually-hidden custom-content"
+             htmlFor="customerSelect"
+           >
+             Select Customer
+           </label>
 
-                          <InputGroup>
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="uploadchallanDispatchDocument"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                              onChange={e =>
-                                handleFileChange(
-                                  e,
-                                  "uploadchallanDispatchDocument"
-                                )
-                              }
-                            />
+           <Input
+                         type="number"
+                         id="customerEmail"
+                         name="customerEmail"
 
-                          </InputGroup>
-                          <div id="fileUploadHelp" className="form-text">
-                            Choose a file to upload (PDF, DOC, DOCX, TXT).
-                          </div>
-                        </Col>  
-                       :
-                       <div className="text-center">                    <i className='bx bxs-file-pdf' style={{ fontSize:'40px'}}></i>
-                   
-                         <p> Challan / Dispatch Document File</p>
-                         </div>  
-                      }
-                      </CardBody>
-                    </Card>
-                  </Col>
+                       
+                         placeholder="Amount Recieved"
+                       />
+                       
+         </div>
+       </Col>
+       <Col xs={12} md={3}>
+        
+       </Col>
 
-                
-                </Row>
-                <Row className="terms">
-                  <Col md={11}>
-                    <Card className="overflow-hidden rounded-lg bg-light">
-                      <CardBody className="pt-0">
-                       {selected.invoiceDocument == null ? <Col md={4} className="mt-2 hoverable-cell">
-                          <div className="mb-2 mt-5">
-                          Upload File to Invoice*
-                          </div>
+     </Row>
+     <Row style={{marginTop:"-10px"}}>
+     <Col xs={12} md={2}>
+       </Col>
+       <Col xs={12} md={5}>
+         <div className="d-inline">
+         
+         <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} /> 
 
-                          <InputGroup>
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="uploadInvoice"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                              onChange={e =>
-                                handleFileChange(e, "uploadInvoice")
-                              }
-                            />
-                          </InputGroup>
-                          <div id="fileUploadHelp" className="form-text">
-                            Choose a file to upload (PDF, DOC, DOCX, TXT).
-                          </div>
-                        </Col>
-                        
-                        :
-                       <div className="text-center">                    <i className='bx bxs-file-pdf' style={{ fontSize:'40px'}}></i>
-                   
-                         <p> Invoice Document File</p>
-                         </div>  
-                      }
-                     {selected.transportationDocument== null?   <Col md={5} className="mt-2 hoverable-cell">
-                          <div className="mb-2 mt-5">
-                          Upload File to Transportation Document / Delivery
-                            Receipt
-                          </div>
+                       <span>Received full amount (90000)</span>
+         </div>
+       </Col>
+       <Col xs={12} md={3}>
+        
+       </Col>
+     </Row>
 
-                          <InputGroup>
-                            <input
-                              type="file"
-                              className="form-control"
-                              id="uploadTransportationDocumentDeliveryReceipt"
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                              onChange={e =>
-                                handleFileChange(
-                                  e,
-                                  "uploadTransportationDocumentDeliveryReceipt~`"
-                                )
-                              }
-                            />
-                          </InputGroup>
-                          <div id="fileUploadHelp" className="form-text">
-                            Choose a file to upload (PDF, DOC, DOCX, TXT).
-                          </div>
-                        </Col>
-                        :
-                       <div className="text-center">                    <i className='bx bxs-file-pdf' style={{ fontSize:'40px'}}></i>
-                   
-                         <p> Transportation Document / Delivery Receipt</p>
-                         </div>  
-                      }
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
-       </form>
+     <Row className="selectionListss">
+       <Col xs={12} md={2}>
+         <div className="mb-2"><b className="mt-2">Payment Date*</b></div>
+       </Col>
+       <Col xs={12} md={5}>
+         <div className="d-inline">
+           <label
+             className="visually-hidden custom-content"
+             htmlFor="customerSelect"
+           >
+             Select Customer
+           </label>
+
+           <DatePicker
+                       selected={new Date()}
+                       // value={row.date}
+
+                       
+                       dateFormat="dd-MMM-yyyy" // Format to display year, month, and day
+                       className="form-control custom-content"
+
+                     />
+                       
+         </div>
+       </Col>
+       <Col xs={12} md={3}>
+        
+       </Col>
+
+     </Row>
+
+     <Row className="selectionListss">
+       <Col xs={12} md={2}>
+         <div className="mb-2"><b className="mt-2">Payment Mode*</b></div>
+       </Col>
+       <Col xs={12} md={5}>
+         <div className="d-inline">
+           <label
+             className="visually-hidden custom-content"
+             htmlFor="customerSelect"
+           >
+             Select Customer
+           </label>
+
+           <Select
+                         id="primaryContact"
+                         className="custom-content"
+                         options={salutations}
+                         styles={colourStyles}
+                         // onChange={selected => setSelectedOption(selected)}
+                         placeholder="Cash"
+                       />
+                       
+         </div>
+       </Col>
+       <Col xs={12} md={3}>
+        
+       </Col>
+
+     </Row>
+
+
+
+     <Row className="selectionListss">
+       <Col xs={12} md={2}>
+         <div className="mb-2"><b className="mt-2">Attachment*</b></div>
+       </Col>
+       <Col xs={12} md={5}>
+         <div className="d-inline">
+           <label
+             className="visually-hidden custom-content"
+             htmlFor="customerSelect"
+           >
+             Select Customer
+           </label>
+           <InputGroup className="text-capitalize">
+                       <input
+                         type="file"
+                         className="form-control"
+                         id="uploadPurchaseOrder"
+                         accept=".pdf, .doc, .docx, .txt"
+                         aria-describedby="fileUploadHelp"
+                         // onChange={e =>
+                         //   handleFileChange(e, "uploadPurchaseOrder")
+                         // }
+                       />
+                     </InputGroup>
+                       
+         </div>
+       </Col>
+       <Col xs={12} md={3}>
+        
+       </Col>
+
+     </Row>
+
+     <Row className="">
+       <Col md={4}>
+         <Button className="btn btn-info">
+           Submit
+         </Button>
+       </Col>
+       <Col md={4}></Col>
+       <Col md={4}></Col>
+     </Row>
+   </form>
        
-       }
+     
 
       </ModalBody>
         <ModalFooter>

@@ -10,7 +10,11 @@ ADD_iNVOICE_REPORT_DEBTOR,
 ADD_iNVOICE_REPORT_DEBTOR_FAIL,
 ADD_iNVOICE_REPORT_DEBTOR_SUCCESS,
 ADD_iNVOICE_ARRAY_DEBTORID,
-ADD_RATING_TO_DEBTOR
+ADD_RATING_TO_DEBTOR,
+UPLOAD_CA_CERTIFICATE_ID,
+UPLOAD_CA_CERTIFICATE_ID_FAIL,
+UPLOAD_CA_CERTIFICATE_ID_SUCCESS,
+REQUEST_INVOICE_DEF_EDIT
 } from "./debtors.actiontype";
 import {
 getAllDebtors,
@@ -26,14 +30,20 @@ addInvoiceArray,
 addInvoiceArrayFail,
 addInvoiceArraySuccess,
 addRatingToDebtorFail,
-addRatingToDebtorSuccess
+addRatingToDebtorSuccess,
+uploadCACertificateID,
+uploadCACertificateIDSuccess,
+uploadCACertificateIDFail,
+requestInvoiceDefEdit,
+requestInvoiceDefEditFail,
+requestInvoiceDefEditSuccess
 
 } from "./debtors.actions";
 
 //Include Both Helper File with needed methods
 import { getAllDebtorsAPI } from "helpers/fakebackend_helper";
 import { getAllInvoiceList} from "helpers/fakebackend_helper";
-import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor } from "helpers/fakebackend_helper";
+import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,requestAEdit} from "helpers/fakebackend_helper";
 
 
 function* fetchdebtors() {
@@ -72,12 +82,29 @@ function* addDebtorIdToPreview(payload) {
   }
 }
 
+function* uploadCACertyifaicateSaga(payload) {
+  try {
+    const response = yield call(uploadCACertificateAPIMethod, payload.payload)
+    yield put(uploadCACertificateIDSuccess(response))
+  } catch (error) {
+    yield put(uploadCACertificateIDFail(error))
+  }
+}
+
 function* addRatingToDebtor(payload) {
   try {
     const response = yield call(addRatingofdebtor, payload.payload)
     yield put(addRatingToDebtorSuccess(response))
   } catch (error) {
     yield put(addRatingToDebtorFail(error))
+  }
+}
+function* requestEditSaga(payload) {
+  try {
+    const response = yield call(requestAEdit, payload.payload)
+    yield put(requestInvoiceDefEditSuccess(response))
+  } catch (error) {
+    yield put(requestInvoiceDefEditFail(error))
   }
 }
 function* debtorsSaga() {
@@ -87,6 +114,8 @@ function* debtorsSaga() {
   yield takeEvery(ADD_iNVOICE_REPORT_DEBTOR, addInvoicesaga)
   yield takeEvery(ADD_iNVOICE_ARRAY_DEBTORID, addDebtorIdToPreview)
   yield takeEvery(ADD_RATING_TO_DEBTOR, addRatingToDebtor)
+  yield takeEvery(UPLOAD_CA_CERTIFICATE_ID, uploadCACertyifaicateSaga)
+  yield takeEvery(REQUEST_INVOICE_DEF_EDIT, requestEditSaga)
 }
 
 export default debtorsSaga;

@@ -38,6 +38,14 @@ export const selectReportDefOpen = createSelector(
     (DebtorsReducer) => DebtorsReducer.isReportDefOpen
 )
 
+export const uploadCAcertificateSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.uploadCACertifateID != undefined ? DebtorsReducer.uploadCACertifateID.response : []
+)
+export const requestEditSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.requestAeditdefId != undefined ? DebtorsReducer.requestAeditdefId.response : []
+)
 
 export const selectFeedbackModalOpen = createSelector(
     [selectDebtorsReducer],

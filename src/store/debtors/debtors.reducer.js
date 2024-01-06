@@ -19,7 +19,14 @@ import {
   ADD_iNVOICE_ARRAY_DEBTORID,
   ADD_RATING_TO_DEBTOR,
   ADD_RATING_TO_DEBTOR_FAIL,
-  ADD_RATING_TO_DEBTOR_SUCCESS
+  ADD_RATING_TO_DEBTOR_SUCCESS,
+  UPLOAD_CA_CERTIFICATE_ID,
+  UPLOAD_CA_CERTIFICATE_ID_SUCCESS,
+  UPLOAD_CA_CERTIFICATE_ID_FAIL,
+  REQUEST_INVOICE_DEF_EDIT,
+  REQUEST_INVOICE_DEF_EDIT_FAIL,
+  REQUEST_INVOICE_DEF_EDIT_SUCCESS
+  
 } from "./debtors.actiontype"
 
 
@@ -31,6 +38,12 @@ const INIT_STATE = {
   isPreviewModalOpen: false,
   isCACACertificateOpen: false,
   uploadPendingFilesModalOpen: false,
+  uploadCACertifateID: [],
+  uploadCACertifateIDSuccess: false,
+  uploadCACertifateIDFail: false,
+  requestAeditdefId: [],
+  requestAeditdefIdSuccess: false,
+  requestAeditdefIdFail: false,
   debtors: [],
   getInvoiceList: [],
   error: {},
@@ -84,6 +97,20 @@ export const DebtorsReducer = (state = INIT_STATE, action) => {
       return { ...state, addRatingSuccess: payload, }
     case ADD_RATING_TO_DEBTOR_FAIL:
       return { ...state, error: payload, }
+
+      case UPLOAD_CA_CERTIFICATE_ID:
+        return { ...state, uploadCACertifateID: payload, }
+      case UPLOAD_CA_CERTIFICATE_ID_SUCCESS:
+        return { ...state, uploadCACertifateIDSuccess: payload, }
+      case UPLOAD_CA_CERTIFICATE_ID_FAIL:
+        return { ...state, error: payload, }
+
+        case REQUEST_INVOICE_DEF_EDIT:
+          return { ...state, requestAeditdefId: payload, }
+        case REQUEST_INVOICE_DEF_EDIT_SUCCESS:
+          return { ...state, requestAeditdefIdSuccess: payload, }
+        case REQUEST_INVOICE_DEF_EDIT_FAIL:
+          return { ...state, error: payload, }
 
     default:
       return state
