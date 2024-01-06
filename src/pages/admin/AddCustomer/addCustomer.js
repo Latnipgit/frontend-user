@@ -80,10 +80,10 @@ const AddCustomer = props => {
           <br />
           <Row>
             <Col md={10} className="pl-3">
-              <h5 className="m-1">Add Customer</h5>
+              <h5 className="m-1">Customer List</h5>
             </Col>
             <Col md={2}>
-              <Button className="btn btn-md btn-info" onClick={() => toggleAddCustomer()}>Add new customer</Button>
+              <Button className="btn btn-md btn-info" onClick={() => toggleAddCustomer()}>Add New Customer</Button>
             </Col>
           </Row>
 
@@ -103,7 +103,7 @@ const AddCustomer = props => {
                   <th scope="col">#</th>
                   <th scope="col">Customer Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
-                  <th scope="col">companyName</th>
+                  <th scope="col">Company Name</th>
                   <th scope="col">Address</th>
                   <th scope="col">GST Number</th>
                   {/* <th scope="col">Status</th> */}

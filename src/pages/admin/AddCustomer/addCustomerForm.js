@@ -112,7 +112,6 @@ export const AddcustomerFomr = () => {
   })
 
   const handleFormSubmit = (item, e) => {
-    toggleAddCustomer()
     const dummy = [
       {
         "debtorType": item.customerType,
@@ -135,7 +134,7 @@ export const AddcustomerFomr = () => {
     let checkvalue = Object.values(dummyData).includes('')
     if (checkvalue) return
     dispatch(addCustomerlist(dummy))
-
+    toggleAddCustomer()
     e.preventDefault();
   }
 

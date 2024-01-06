@@ -74,9 +74,10 @@ const CompanySearch = props => {
   }
 
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
-  const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
-  const selectCopanySearchlistRevers = selectCompanySearchListMap.reverse()
-  console.log(selectCopanySearchlistRevers);
+  const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
+  /*   const selectCopanySearchlistRevers = selectCompanySearchListMap.reverse() */
+  console.log("selectCompanySearchLists", selectCompanySearchListMap);
+  console.log("selectCompanySearchListMap", selectCompanySearchLists);
 
   useEffect(() => {
     dispatch(fetchCompanySearchStart())
@@ -180,7 +181,7 @@ const CompanySearch = props => {
   );
   const handleFilter = (filters) => {
 
-    const filteredResults = selectCopanySearchlistRevers.filter(item => {
+    const filteredResults = selectCompanySearchListMap.filter(item => {
       const CompanyNameMatch = item.CompanyName === filters.company.trim();
       const panMatch = item.PANCARD === filters.pan.trim();
       const gstMatch = item.GST === filters.gst.trim();
@@ -230,7 +231,7 @@ const CompanySearch = props => {
 
           <TableContainer
             columns={columns}
-            data={filteredData.length > 0 ? filteredData : selectCopanySearchlistRevers}
+            data={filteredData.length > 0 ? filteredData : selectCompanySearchListMap}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}
