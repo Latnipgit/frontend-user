@@ -25,6 +25,7 @@ const ReportMedefulterComponent = props => {
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
   const [selected, setSelected] = useState('');
+  const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
   const dispatch = useDispatch();
@@ -95,7 +96,8 @@ const ReportMedefulterComponent = props => {
 
   }]
 
-  const handleUploadFiles = () => {
+  const handleUploadFiles = (item) => {
+    setuploadFilesModelDataForUpload(item)
     dispatch(setUploadFilesOpen(!uploadFilesModalShow))
   }
 
@@ -103,7 +105,7 @@ const ReportMedefulterComponent = props => {
     <React.Fragment>
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} />
-      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} />
+      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
 
       <Card>
         <CardBody>
@@ -135,6 +137,7 @@ const ReportMedefulterComponent = props => {
               <tbody>
                 {selectReportMeDeflist != undefined ? selectReportMeDeflist.map((item, index) => {
 
+                  debugger
                   const newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
                   return <tr key={item}>
                     {console.log("NEW TABLE ", item)}
