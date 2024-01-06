@@ -98,7 +98,7 @@ const Dashboard = props => {
 
           <Row>
             <Col md={10} className="pl-3">
-              <h5 className="m-1">Report a Defaulter</h5>
+              <h5 className="m-1">Reported Defaulter</h5>
             </Col>
             <Col md={2}>
               {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}

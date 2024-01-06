@@ -113,7 +113,7 @@ const ReportMedefulterComponent = props => {
           <br />
           <Row>
             <Col md={10} className="pl-3">
-              <h5 className="m-1">Report me as a Defaulter</h5>
+              <h5 className="m-1">Report Me As a Defaulter</h5>
             </Col>
           </Row>
           <Row className="p-4  ml-5">
@@ -134,7 +134,8 @@ const ReportMedefulterComponent = props => {
               </thead>
               <tbody>
                 {selectReportMeDeflist != undefined ? selectReportMeDeflist.map((item, index) => {
-                  let newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
+
+                  const newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
                   return <tr key={item}>
                     {console.log("NEW TABLE ", item)}
                     <th scope="row" className="pt-4">{index + 1}</th>
@@ -145,7 +146,7 @@ const ReportMedefulterComponent = props => {
                     </td>
                     <td className="pt-4">{item.totalAmount}</td>
                     <td>
-                      {item.newDate}
+                      {newDate}
                     </td>
                     <td>
                       <div className="pt-2">
