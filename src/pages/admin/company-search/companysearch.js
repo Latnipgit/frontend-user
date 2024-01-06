@@ -76,6 +76,7 @@ const CompanySearch = props => {
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const selectCopanySearchlistRevers = selectCompanySearchListMap.reverse()
+  console.log(selectCopanySearchlistRevers);
 
   useEffect(() => {
     dispatch(fetchCompanySearchStart())

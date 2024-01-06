@@ -163,7 +163,6 @@ const CompnayViewDetails = props => {
                                             <th scope="col">Company Name</th>
                                             <th scope="col">seller Name</th>
                                             <th scope="col">Due Amount</th>
-                                            <th scope="col">Totle</th>
                                             <th scope="col">Due fROM</th>
                                             <th scope="col">Rating</th>
                                             <th scope="col">Status</th>
@@ -174,7 +173,6 @@ const CompnayViewDetails = props => {
                                             <td>TATA</td>
                                             <td>Prem</td>
                                             <td>₹100,00,00</td>
-                                            <td>₹250,00,00</td>
                                             <td>12-12-2023</td>
                                             <td>4.2</td>
                                             <td style={{ color: "green" }}>Approved <FcCheckmark /></td>
@@ -182,8 +180,7 @@ const CompnayViewDetails = props => {
                                         <tr>
                                             <td>Latnip</td>
                                             <td>Harshit</td>
-                                            <td>₹250,00,00</td>
-                                            <td style={{ filter: 'blur(2px)' }}>₹100,00,00</td>
+                                            <td >₹100,00,00</td>
                                             <td >12-12-2023</td>
                                             <td>3.2</td>
                                             <td style={{ color: "red" }}>InProcess <FcClock /></td>
@@ -192,7 +189,6 @@ const CompnayViewDetails = props => {
                                             <td>Bafama</td>
                                             <td>rohan</td>
                                             <td>₹110,00,00</td>
-                                            <td style={{ filter: 'blur(2px)' }}>₹250,00,00</td>
                                             <td>12-12-2023</td>
                                             <td>4.5</td>
                                             <td style={{ color: "red", filter: "2px" }} >Disputed <FcCancel /></td>

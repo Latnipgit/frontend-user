@@ -14,7 +14,7 @@ export const selectdashboardAdminDataMap = createSelector(
     return reportMeDefulter.map((list, i) => {
       debugger
       const { createdAt } = list
-      let DueSince = moment.utc(createdAt).format('DD-MM-YY');
+      let DueSince = moment.utc(createdAt).format('DD MM, YY');
       let SrNo = i + 1
       let rating = list.ratings.length !== 0 ? list.ratings[0].rating : "";
       let CompanyName = list.companyName !== undefined ? list.companyName : "";
