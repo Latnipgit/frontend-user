@@ -258,21 +258,37 @@ const ReportedDefaulterModel = props => {
       itemDetail: "",
       date: "",
       amount: "",
+      invoiceDocument:"",
+      DispatchDocument:"",
+      DeliveryDocument:"",
+      purchaseOrderDocument:""
+
     },
   ])
   const [uploadTransportId, setuploadTransportId] = useState('')
   const [uploadpurchaseId, setuploadpurchaseId] = useState('')
   const [uploadInvoiceId, setuploadInvoiceId] = useState('')
   const [uploadChallanId, setuploadChallanId] = useState('')
+  const [allInvoiceList, setallInvoiceList] = useState([])
+  const [filteredCustomerDetail, setfilteredCustomerDetail] = useState([])
+  const [isChangedCustomername, setisChangedCustomername] = useState(false)
+  const [faqsRow, setFaqsRow] = useState(1)
+  const [currenIndex, setCurrentIndex] = useState(0)
+  const [isDisabled, setisDisabled] = useState(true)
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [total, setTotal] = useState(0)
+
+
   const submitInvoice = () => {
-    console.log("datadata", data, totalValue)
+    calculateSubtotal(data)
+
     const dummy = [{
       "debtorId": selectedOption.value,
       "billDate": moment(data[0].date).format("YYYY-MM-DD"),
       "billDescription": "",
       "billNumber": "",
       "creditAmount": 0,
-      "remainingAmount": 0,
+      "remainingAmount": total,
       "status": "",
       "interestRate": "",
       "creditLimitDays": "",
@@ -287,27 +303,33 @@ const ReportedDefaulterModel = props => {
       "purchaseOrderDocument": uploadpurchaseId,
       "challanDocument": uploadChallanId,
       "invoiceDocument": uploadInvoiceId,
-      "transportationDocument": uploadTransportId
+      "transportationDocument": uploadTransportId,
+      "allInvoiceListForPreview": data
 
     }]
-    if (uploadInvoiceId == '') {
+    if (uploadInvoiceId != "" && data[0].amount !="" && data[0].date  !="" && data[0].itemDetail  !="") {
 
-      toast.error("Please Upload Invoice File")
+      setallInvoiceList(dummy)
+      toast.success("Invoice Add Successfully")
+// const val = { "InvoiceId": InvoiceAddData.debtorId }
+//       const avilableInvoiceID = debtorIdArrayForPreview.some(x => x.InvoiceId === val)
+//       if (val) {
+//         if (!avilableInvoiceID) {
+//           setdebtorIdArrayForPreview(myArr => [...myArr, val])
+//         }
+    // }
     }
     else {
-      dispatch(addInvoiceReportDebtor(dummy))
-      const val = { "InvoiceId": InvoiceAddData.debtorId }
-      const avilableInvoiceID = debtorIdArrayForPreview.some(x => x.InvoiceId === val)
-      if (val) {
-        if (!avilableInvoiceID) {
-          setdebtorIdArrayForPreview(myArr => [...myArr, val])
-        }
+      toast.error("Please Fill All Required Fields")
+
+      // dispatch(addInvoiceReportDebtor(dummy))
+      
       }
-    }
+ 
   }
 
 
-  // console.log("GetAllDebtors Data",DebtorsList,GetAllInvoice,GetAllDebtors)
+ 
   const TotalDebtorPayment = (item) => {
     if (item != undefined) {
       settotalValue(item.remainingAmount)
@@ -328,8 +350,7 @@ const ReportedDefaulterModel = props => {
 
     }
   }
-  const [filteredCustomerDetail, setfilteredCustomerDetail] = useState([])
-  const [isChangedCustomername, setisChangedCustomername] = useState(false)
+
 
   const handleSelectCustomer = (item) => {
 
@@ -345,9 +366,7 @@ const ReportedDefaulterModel = props => {
     handleFilterInvoiceList(item)
   }
 
-  const [faqsRow, setFaqsRow] = useState(1)
-  const [currenIndex, setCurrentIndex] = useState(0)
-  const [isDisabled, setisDisabled] = useState(true)
+
   const handleItemDetailChange = (index, value) => {
     console.log("HARSHIT hs", index, value, data)
     setCurrentIndex(index)
@@ -356,9 +375,7 @@ const ReportedDefaulterModel = props => {
     setData(newData)
   }
   const handleAmountChange = (index, value) => {
-    // const newData = [...data]
-    // newData[index].amount = value
-    // setData(newData)
+   
     setisDisabled(false)
 
     const newData = [...data]
@@ -373,7 +390,6 @@ const ReportedDefaulterModel = props => {
     }
 
     setData(newData)
-    calculateSubtotal(newData)
   }
 
   const addFaqsRow = () => {
@@ -414,21 +430,16 @@ const ReportedDefaulterModel = props => {
     setData(newData)
     setFaqsRow(faqsRow - 1)
   }
-
-  console.log("datadatadata", data)
-
-  const [selectedDate, setSelectedDate] = useState(null);
   const handleDateChange = (value, index) => {
     const newData = [...data]
     newData[index].date = value
     setData(newData)
     setSelectedDate(value)
   };
-  console.log("filteredCustomerDetail", GetAllDebtors, filteredCustomerDetail)
 
-  const handleFileChange = (event, fieldName) => {
+  const handleFileChange = (event, fieldName, index) => {
     const files = event.target.files
-    console.log("FILEEE", event.target.files, fieldName)
+    console.log("FILEEE", event.target.files, fieldName, index)
 
     const formData = new FormData();
 
@@ -436,30 +447,18 @@ const ReportedDefaulterModel = props => {
     formData.append('fieldName', fieldName);
 
 
-    uploadFile(formData)
+    uploadFile(formData, index)
 
 
   }
 
-  const handleInoiceForm = (event, fieldName) => {
-    const files = event.target.files
-    console.log("FILEEE", event.target.files, fieldName)
-
-    const formData = new FormData();
-
-    formData.append('file', files[0]);   //append the values with key, value pair
-    formData.append('fieldName', fieldName);
-
-
-    uploadFile(formData)
-
-  }
+ 
 
 
 
 
 
-  function uploadFile(formData) {
+  function uploadFile(formData,index) {
     console.log("UPLOAD FILE", formData)
     const token = localStorage.getItem("tokenemployeeRegister")
     const headers = {
@@ -474,16 +473,30 @@ const ReportedDefaulterModel = props => {
         // toast.success("file upload successfully")
         console.log("Response", response)
         if (response.data.response.fieldName == "uploadInvoice") {
-          setuploadInvoiceId(response.data.response.documentId)
+          setuploadInvoiceId(response.data.response)
+          const newData = [...data]
+          newData[index].invoiceDocument = response.data.response
+          setData(newData)
+        
+
         }
         if (response.data.response.fieldName == "uploadPurchaseOrder") {
-          setuploadpurchaseId(response.data.response.documentId)
+          // setuploadpurchaseId(response.data.response)
+          const newData = [...data]
+          newData[index].purchaseOrderDocument = response.data.response
+          setData(newData)
         }
         if (response.data.response.fieldName == "uploadchallanDispatchDocument") {
-          setuploadChallanId(response.data.response.documentId)
+          // setuploadChallanId(response.data.response)
+          const newData = [...data]
+          newData[index].DispatchDocument = response.data.response
+          setData(newData)
         }
         if (response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`") {
-          setuploadTransportId(response.data.response.documentId)
+          // setuploadTransportId(response.data.response)
+          const newData = [...data]
+          newData[index].DeliveryDocument = response.data.response
+          setData(newData)
         }
       })
       .catch((error) => {
@@ -491,29 +504,29 @@ const ReportedDefaulterModel = props => {
 
       })
   }
-  const [total, setTotal] = useState(0.0)
 
   const calculateSubtotal = newData => {
     // Calculate the subtotal
-    let total = 0
     newData.forEach(row => {
       if (row.amount !== "") {
-        const amountValue = parseFloat(row.amount.replace(""))
-        console.log("newData", newData, row.amount, total)
+        const amountValue = parseFloat(row.amount)
+        console.log("amountValueamountValue",typeof(amountValue))
 
         if (!isNaN(amountValue)) {
-          total = row.amount
+          
+       setTotal(total+amountValue)
         }
+        console.log("TOTOTL", total)
       }
+             
+
     })
-    setTotal(total)
+   
   }
+  console.log("newDat4545a ", data)
 
 
-  const handleRepoertProceed = () => {
-    setshowConfirmModal(true)
-  }
-  console.log("dataoodata", data)
+
   return (
     <Modal
       isOpen={isOpen}
@@ -527,7 +540,7 @@ const ReportedDefaulterModel = props => {
     >
       <div className="modal-contents">
         <ModalHeader toggle={toggle}>Report A Defaulter</ModalHeader>
-        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1} filteredCustomerDetail={filteredCustomerDetail} />
+        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1} filteredCustomerDetail={filteredCustomerDetail} allInvoiceList={allInvoiceList} />
 
 
         <ModalBody className="" >
@@ -535,7 +548,7 @@ const ReportedDefaulterModel = props => {
           <form>
             <Row className="selectionList">
               <Col xs={12} md={2}>
-                <div className="mb-2"><b className="mt-2">Customer Name*</b></div>
+                <div className="mt-2"><b className="mt-2">Customer Name*</b></div>
               </Col>
               <Col xs={12} md={4}>
                 <div className="d-inline">
@@ -1026,45 +1039,7 @@ const ReportedDefaulterModel = props => {
 
           <Row className="tableRow">
             {isChangedCustomername != true ?
-              // <table className="table table-bordered tableRowtable" >
-              //   <thead>
-              //     <tr>
-              //       <th scope="col">#</th>
-              //       <th scope="col">Company Name</th>
-              //       <th scope="col">Invoice number</th>
-              //       <th scope="col">Date</th>
-              //       <th scope="col">Amount</th>
-
-              //     </tr>
-              //   </thead>
-              //   <tbody>
-              //     {filteredInvoiceList != undefined && filteredInvoiceList.length != 0 ? filteredInvoiceList.map((item) => {
-              //       return <tr key={item}>
-              //         <td>
-              //           <input type="checkbox" className="form-check-input" id="exampleCheck1" onChange={() => TotalDebtorPayment(item)} />
-              //         </td>
-              //         <td>
-              //           {console.log("HELLO0", item)}
-              //           {item != undefined ? item.debtor.companyName : ''}
-              //         </td>
-              //         <td> {item != undefined ? item.invoiceNumber : ""}</td>
-              //         <td>{moment(item != undefined ? item.dueDate : '').format("DD-MMM-YYYY")}</td>
-              //         <td className="text-end">
-
-              //           <CurrencyFormat value={item != undefined ? item.remainingAmount.toFixed(2) : ''} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{ }</div>} />
-              //         </td>
-
-              //       </tr>
-              //     }) :
-              //       <tr>
-              //         <td></td>
-              //         <td></td>
-              //         <td></td>
-              //         <td></td>
-              //         <td></td>
-              //       </tr>
-              //     }
-              //   </tbody></table>
+          
               ''
 
               :
@@ -1141,7 +1116,7 @@ const ReportedDefaulterModel = props => {
                                 accept=".pdf, .doc, .docx, .txt"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
-                                  handleFileChange(e, "uploadInvoice")
+                                  handleFileChange(e, "uploadInvoice", index)
                                 }
                               />
                             </InputGroup>
@@ -1161,7 +1136,7 @@ const ReportedDefaulterModel = props => {
                                 onChange={e =>
                                   handleFileChange(
                                     e,
-                                    "uploadchallanDispatchDocument"
+                                    "uploadchallanDispatchDocument", index
                                   )
                                 }
                               />
@@ -1180,7 +1155,7 @@ const ReportedDefaulterModel = props => {
                                 onChange={e =>
                                   handleFileChange(
                                     e,
-                                    "uploadTransportationDocumentDeliveryReceipt~`"
+                                    "uploadTransportationDocumentDeliveryReceipt~`", index
                                   )
                                 }
                               />
@@ -1201,7 +1176,7 @@ const ReportedDefaulterModel = props => {
                                 accept=".pdf, .doc, .docx, .txt"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
-                                  handleFileChange(e, "uploadPurchaseOrder")
+                                  handleFileChange(e, "uploadPurchaseOrder", index)
                                 }
                               />
                             </InputGroup>
@@ -1209,18 +1184,7 @@ const ReportedDefaulterModel = props => {
 
 
                           <Col md={4} className="p-2">
-                            {/* <Label>Upload CA Certificate</Label>  <InputGroup className="text-capitalize">
-                          <input
-                            type="file"
-                            className="form-control"
-                            id="uploadPurchaseOrder"
-                            accept=".pdf, .doc, .docx, .txt"
-                            aria-describedby="fileUploadHelp"
-                            onChange={e =>
-                              handleFileChange(e, "uploadCACertificate")
-                            }
-                          />
-                        </InputGroup> */}
+                          
                           </Col>
                           <Col md={4} className="p-2 text-end pt-4">
 
@@ -1237,7 +1201,6 @@ const ReportedDefaulterModel = props => {
                 ))}
                 <Row>
                   <Col md={12} className="text-end">
-                    {/* <Button>Add Another Invoice</Button> */}
                     {currenIndex > 0 ? (
                       <span
                         className="icon-container delete-icon"
@@ -1259,7 +1222,7 @@ const ReportedDefaulterModel = props => {
                 <Row className="text-end mt-3">
                   <Col md={12}>
                     {console.log("totaltotaltotal", total)}
-                    <h5>  <CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} renderText={value => <div> Total Amount = {value}</div>} />
+                    <h5>  <CurrencyFormat value={total} displayType={'text'} thousandSeparator={true} renderText={value => <div> Total Amount = {value}</div>} />
                     </h5>
                   </Col>
 
