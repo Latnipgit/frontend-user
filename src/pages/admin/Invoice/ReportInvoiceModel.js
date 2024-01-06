@@ -288,8 +288,8 @@ const ReportedDefaulterModel = props => {
       "billDate": moment(data[0].date).format("YYYY-MM-DD"),
       "billDescription": "",
       "billNumber": "",
-      "creditAmount": 0,
-      "remainingAmount": total,
+      "creditAmount": data[0].amount,
+      "remainingAmount": total.toFixed(1),
       "status": "",
       "interestRate": "",
       "creditLimitDays": "",
@@ -301,10 +301,10 @@ const ReportedDefaulterModel = props => {
       "invoiceNumber": "BAF" + "-" + data[0].itemDetail,
       "dueDate": moment(data[0].date).format("YYYY-MM-DD"),
       "percentage": "",
-      "purchaseOrderDocument": uploadpurchaseId,
-      "challanDocument": uploadChallanId,
-      "invoiceDocument": uploadInvoiceId,
-      "transportationDocument": uploadTransportId,
+      "purchaseOrderDocument": "6595ca1d2f9f01a03ae5ab76",
+        "challanDocument": "6595ca1d2f9f01a03ae5ab76",
+        "invoiceDocument": "6595ca1d2f9f01a03ae5ab76",
+        "transportationDocument": "6595ca1d2f9f01a03ae5ab76",
       "allInvoiceListForPreview": data
 
     }]
@@ -432,8 +432,9 @@ const ReportedDefaulterModel = props => {
     setFaqsRow(faqsRow - 1)
   }
   const handleDateChange = (value, index) => {
+    console.log("VALUEYE",moment(value).format("YYYY-MM-DD"))
     const newData = [...data]
-    newData[index].date = value
+    newData[index].date = moment(value).format("YYYY-MM-DD")
     setData(newData)
     setSelectedDate(value)
   };

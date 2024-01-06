@@ -249,7 +249,10 @@ const [invoiceIdsForCAcertificate , setinvoiceIdsForCAcertificate] =useState('')
     //setModal4(true)
     dispatch(setIsReportDefOpen(!isReportDefOpen))
   }
-  const handleUploadFiles = () => {
+const [uploadFilesModelDataForUpload , setuploadFilesModelDataForUpload] =useState('')
+
+  const handleUploadFiles = (item) => {
+    setuploadFilesModelDataForUpload(item)
     dispatch(setUploadFilesOpen(!uploadFilesModalShow))
   }
   const getDays = () => {
@@ -283,7 +286,7 @@ dispatch(requestInvoiceDefEdit(payload))
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} customerName={invoiceIdsForCAcertificate}/>
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
-      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} />
+      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload}/>
 
       <Card>
         <CardBody>
@@ -395,7 +398,7 @@ dispatch(requestInvoiceDefEdit(payload))
                         &nbsp;
 
                         <Button className="btn btn-info btn-sm"
-                          onClick={() => handleUploadFiles()
+                          onClick={() => handleUploadFiles(item)
 
                           }
                         >

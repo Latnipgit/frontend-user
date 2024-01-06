@@ -25,7 +25,10 @@ import {
   UPLOAD_CA_CERTIFICATE_ID_FAIL,
   REQUEST_INVOICE_DEF_EDIT,
   REQUEST_INVOICE_DEF_EDIT_FAIL,
-  REQUEST_INVOICE_DEF_EDIT_SUCCESS
+  REQUEST_INVOICE_DEF_EDIT_SUCCESS,
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL,
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC_SUCCESS
   
 } from "./debtors.actiontype"
 
@@ -44,6 +47,10 @@ const INIT_STATE = {
   requestAeditdefId: [],
   requestAeditdefIdSuccess: false,
   requestAeditdefIdFail: false,
+  addInvoiceReportDefaulter: [],
+  addInvoiceReportDefaulterSuccess: false,
+  addInvoiceReportDefaulterFail: false,
+  debtors: [],
   debtors: [],
   getInvoiceList: [],
   error: {},
@@ -110,6 +117,13 @@ export const DebtorsReducer = (state = INIT_STATE, action) => {
         case REQUEST_INVOICE_DEF_EDIT_SUCCESS:
           return { ...state, requestAeditdefIdSuccess: payload, }
         case REQUEST_INVOICE_DEF_EDIT_FAIL:
+          return { ...state, error: payload, }
+          
+        case ADD_INVOICE_REPORT_DEFAULTER_ASYNC:
+          return { ...state, addInvoiceReportDefaulter: payload, }
+        case ADD_INVOICE_REPORT_DEFAULTER_ASYNC_SUCCESS:
+          return { ...state, raddInvoiceReportDefaulterSuccess: payload, }
+        case ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL:
           return { ...state, error: payload, }
 
     default:

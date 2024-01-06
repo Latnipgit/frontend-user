@@ -50,13 +50,21 @@ const ProfileMenu = props => {
           id="page-header-user-dropdown"
           tag="button"
         >
-          <img
+          
+          <div className="d-flex">
+          <i className='bx bxs-user-circle' style={{ fontSize:"35px", marginTop:'20px'}}></i>
+          <i className="mdi mdi-chevron-down d-none d-xl-inline-block"  style={{ fontSize:"15px", marginTop:'25px'}}/>
+          
+          </div>
+
+          {/* <img
             className="rounded-circle header-profile-user"
             src={user1}
             alt="Header Avatar"
-          />
-          <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span>
-          <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
+          /> */}
+
+
+          {/* <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span> */}
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
           <DropdownItem tag="a" href="/profile">

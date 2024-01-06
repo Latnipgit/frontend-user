@@ -70,7 +70,7 @@ console.log("PREVIEW PROPS ",props)
     >
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Report Defaulter Preview</ModalHeader>
-        <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} />
+        <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue}/>
 
         <ModalBody className="bg-light">
           <Row className="p-3">

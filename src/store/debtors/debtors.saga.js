@@ -14,7 +14,8 @@ ADD_RATING_TO_DEBTOR,
 UPLOAD_CA_CERTIFICATE_ID,
 UPLOAD_CA_CERTIFICATE_ID_FAIL,
 UPLOAD_CA_CERTIFICATE_ID_SUCCESS,
-REQUEST_INVOICE_DEF_EDIT
+REQUEST_INVOICE_DEF_EDIT,
+ADD_INVOICE_REPORT_DEFAULTER_ASYNC
 } from "./debtors.actiontype";
 import {
 getAllDebtors,
@@ -36,14 +37,17 @@ uploadCACertificateIDSuccess,
 uploadCACertificateIDFail,
 requestInvoiceDefEdit,
 requestInvoiceDefEditFail,
-requestInvoiceDefEditSuccess
+requestInvoiceDefEditSuccess,
+addInvoiceReportDefaulterInvoice,
+addInvoiceReportDefaulterInvoiceFail,
+addInvoiceReportDefaulterInvoiceSuccess
 
 } from "./debtors.actions";
 
 //Include Both Helper File with needed methods
 import { getAllDebtorsAPI } from "helpers/fakebackend_helper";
 import { getAllInvoiceList} from "helpers/fakebackend_helper";
-import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,requestAEdit} from "helpers/fakebackend_helper";
+import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,requestAEdit, addInVoiceDefaulter} from "helpers/fakebackend_helper";
 
 
 function* fetchdebtors() {
@@ -107,6 +111,17 @@ function* requestEditSaga(payload) {
     yield put(requestInvoiceDefEditFail(error))
   }
 }
+
+function* addInvoiceReportDefSaga(payload) {
+  try {
+    const response = yield call(addInVoiceDefaulter, payload.payload)
+    yield put(addInvoiceReportDefaulterInvoiceSuccess(response))
+  } catch (error) {
+    yield put(addInvoiceReportDefaulterInvoiceFail(error))
+  }
+}
+
+
 function* debtorsSaga() {
   //  
   yield takeEvery(GET_DEBTORS, fetchdebtors)
@@ -116,6 +131,7 @@ function* debtorsSaga() {
   yield takeEvery(ADD_RATING_TO_DEBTOR, addRatingToDebtor)
   yield takeEvery(UPLOAD_CA_CERTIFICATE_ID, uploadCACertyifaicateSaga)
   yield takeEvery(REQUEST_INVOICE_DEF_EDIT, requestEditSaga)
+  yield takeEvery(ADD_INVOICE_REPORT_DEFAULTER_ASYNC, addInvoiceReportDefSaga)
 }
 
 export default debtorsSaga;
