@@ -5,11 +5,7 @@ import {
 } from "./ReportMeDefulter.type"
 import { createAction } from "store/utils/reducer/reducer.utils"
 
-export const fetchReportMeDefulterStart = () => {
-  debugger
-  return createAction(FETCH_REPORT_ME_DEFULTER_START)
-}
-
+export const fetchReportMeDefulterStart = () => createAction(FETCH_REPORT_ME_DEFULTER_START)
 
 export const fetchReportMeDefulterSuccess = ReportMeDefulterArray => createAction(FETCH_REPORT_ME_DEFULTER_SUCCESS, ReportMeDefulterArray)
 

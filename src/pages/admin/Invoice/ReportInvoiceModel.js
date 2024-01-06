@@ -231,8 +231,6 @@ const ReportedDefaulterModel = props => {
 
 
   const handleFormSubmit = item => {
-
-
     const dummy = [
       {
         "debtorType": item.customerType,
@@ -251,6 +249,9 @@ const ReportedDefaulterModel = props => {
         "companyName": item.companyName
       }
     ]
+    let dummyData = dummy[0]
+    let checkvalue = Object.values(dummyData).includes('')
+    if (checkvalue) return
     dispatch(addCustomerlist(dummy))
   }
   const [data, setData] = useState([
@@ -258,10 +259,10 @@ const ReportedDefaulterModel = props => {
       itemDetail: "",
       date: "",
       amount: "",
-      invoiceDocument:"",
-      DispatchDocument:"",
-      DeliveryDocument:"",
-      purchaseOrderDocument:""
+      invoiceDocument: "",
+      DispatchDocument: "",
+      DeliveryDocument: "",
+      purchaseOrderDocument: ""
 
     },
   ])
@@ -307,29 +308,29 @@ const ReportedDefaulterModel = props => {
       "allInvoiceListForPreview": data
 
     }]
-    if (uploadInvoiceId != "" && data[0].amount !="" && data[0].date  !="" && data[0].itemDetail  !="") {
+    if (uploadInvoiceId != "" && data[0].amount != "" && data[0].date != "" && data[0].itemDetail != "") {
 
       setallInvoiceList(dummy)
       toast.success("Invoice Add Successfully")
-// const val = { "InvoiceId": InvoiceAddData.debtorId }
-//       const avilableInvoiceID = debtorIdArrayForPreview.some(x => x.InvoiceId === val)
-//       if (val) {
-//         if (!avilableInvoiceID) {
-//           setdebtorIdArrayForPreview(myArr => [...myArr, val])
-//         }
-    // }
+      // const val = { "InvoiceId": InvoiceAddData.debtorId }
+      //       const avilableInvoiceID = debtorIdArrayForPreview.some(x => x.InvoiceId === val)
+      //       if (val) {
+      //         if (!avilableInvoiceID) {
+      //           setdebtorIdArrayForPreview(myArr => [...myArr, val])
+      //         }
+      // }
     }
     else {
       toast.error("Please Fill All Required Fields")
 
       // dispatch(addInvoiceReportDebtor(dummy))
-      
-      }
- 
+
+    }
+
   }
 
 
- 
+
   const TotalDebtorPayment = (item) => {
     if (item != undefined) {
       settotalValue(item.remainingAmount)
@@ -375,7 +376,7 @@ const ReportedDefaulterModel = props => {
     setData(newData)
   }
   const handleAmountChange = (index, value) => {
-   
+
     setisDisabled(false)
 
     const newData = [...data]
@@ -452,13 +453,13 @@ const ReportedDefaulterModel = props => {
 
   }
 
- 
 
 
 
 
 
-  function uploadFile(formData,index) {
+
+  function uploadFile(formData, index) {
     console.log("UPLOAD FILE", formData)
     const token = localStorage.getItem("tokenemployeeRegister")
     const headers = {
@@ -477,7 +478,7 @@ const ReportedDefaulterModel = props => {
           const newData = [...data]
           newData[index].invoiceDocument = response.data.response
           setData(newData)
-        
+
 
         }
         if (response.data.response.fieldName == "uploadPurchaseOrder") {
@@ -510,18 +511,18 @@ const ReportedDefaulterModel = props => {
     newData.forEach(row => {
       if (row.amount !== "") {
         const amountValue = parseFloat(row.amount)
-        console.log("amountValueamountValue",typeof(amountValue))
+        console.log("amountValueamountValue", typeof (amountValue))
 
         if (!isNaN(amountValue)) {
-          
-       setTotal(total+amountValue)
+
+          setTotal(total + amountValue)
         }
         console.log("TOTOTL", total)
       }
-             
+
 
     })
-   
+
   }
   console.log("newDat4545a ", data)
 
@@ -577,7 +578,7 @@ const ReportedDefaulterModel = props => {
 
                   <Modal isOpen={showModal} toggle={() => setShowModal(false)}>
                     <ModalHeader toggle={() => setShowModal(false)}>
-                      Add New Customer{" "}
+                      Add New Customerss{" "}
                     </ModalHeader>
                     <ModalBody>
                       <form onSubmit={formikModal.handleSubmit}>
@@ -1039,7 +1040,7 @@ const ReportedDefaulterModel = props => {
 
           <Row className="tableRow">
             {isChangedCustomername != true ?
-          
+
               ''
 
               :
@@ -1184,7 +1185,7 @@ const ReportedDefaulterModel = props => {
 
 
                           <Col md={4} className="p-2">
-                          
+
                           </Col>
                           <Col md={4} className="p-2 text-end pt-4">
 

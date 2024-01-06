@@ -9,7 +9,6 @@ import { getReportMeDefulterList } from "helpers/fakebackend_helper"
 
 export function* fetchReportMeDefulterAsync() {
   try {
-    debugger;
     const ReportMeDefulterArray = yield call(getReportMeDefulterList)
     yield put(fetchReportMeDefulterSuccess(ReportMeDefulterArray.data.response))
   } catch (error) {

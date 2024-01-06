@@ -64,6 +64,7 @@ import { DebtorsReducer } from "./debtors/debtors.reducer";
 import { AddCustomerReducer } from "./addCustomer/addCustomer.reducer";
 import { ReportDefulterPreviewReducer } from "./ReportDefulterPreview/ReportDefulterPreview.reducer";
 import { ReportMeDefulterReducer } from "./ReportMeDefulter/ReportMeDefulter.reducer";
+import { CompanySearchReducer } from "./CompanySearch/CompanySearch.reducer";
 
 const rootReducer = combineReducers({
   // public
@@ -97,6 +98,7 @@ const rootReducer = combineReducers({
   AddCustomerReducer,
   ReportDefulterPreviewReducer,
   ReportMeDefulterReducer,
+  CompanySearchReducer
 });
 
 export default rootReducer;

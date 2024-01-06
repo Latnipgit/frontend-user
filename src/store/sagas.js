@@ -31,6 +31,7 @@ import employeeListsagaCustomer from "./sendbilltransacttion/saga"
 import debtorsSaga from "./debtors/debtors.saga";
 import { ReportDefulterPreviewSaga } from "./ReportDefulterPreview/ReportDefulterPreview.saga";
 import { ReportMeDefulterSaga } from "./ReportMeDefulter/ReportMeDefulter.saga";
+import { CompanySearchSaga } from "./CompanySearch/CompanySearch.saga";
 // import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {
@@ -65,5 +66,6 @@ export default function* rootSaga() {
     fork(searchCompanysaga),
     fork(ReportDefulterPreviewSaga),
     fork(ReportMeDefulterSaga),
+    fork(CompanySearchSaga),
   ]);
 }
