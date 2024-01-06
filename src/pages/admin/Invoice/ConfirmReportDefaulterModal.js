@@ -20,13 +20,19 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from "react";
 import './style.css'
-
+import { useSelector, useDispatch } from "react-redux"
+import moment from "moment";
+import { addInvoiceReportDefaulterInvoice } from "../../../store/debtors/debtors.actions"
+import { addInvoiceReportDefaulterSelector } from "store/debtors/debtors.selecter"
 const confirmReportModal = props => {
-  const { isOpen, toggle ,selected } = props
+  const { isOpen, toggle ,filteredCustomerDetail,feedbackdataPaylod,allInvoiceList,ratingValue  } = props
  const handleSubmit =()=>{
+  handleSubmitInvoice()
   toast.success("Reported Defaulter successfully")
+  toggle()
 
  }
+ console.log("CHECKPROPSATAAA",props)
  const checkboxStyle = {
   border: '2px solid #3498db', // Set the border color (change #3498db to your desired color)
   borderRadius: '4px', // Optional: Add rounded corners for a nicer look
@@ -37,6 +43,95 @@ const [isCheck, setisCheck] = useState(false);
 const handleChecked =()=>{
   setisCheck(true)
 }
+const addInvoiceReportDefaulter = useSelector(addInvoiceReportDefaulterSelector)
+const dispatch = useDispatch()
+
+
+const handleSubmitInvoice=()=>{
+
+  const payload =
+  
+  {
+    "invoicesList": [
+{
+  "debtorId": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].debtorId:'',
+  "billDate": allInvoiceList[0].debtorId != undefined ? moment(allInvoiceList[0].billDate).format("YYYY-MM-DD"):'',
+  "billDescription": "Bill for things",
+  "billNumber": "112233",
+  "creditAmount": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].remainingAmount:'',
+  "remainingAmount": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].remainingAmount:'', 
+  "interestRate": "1",
+  "creditLimitDays": "20",
+  "remark": "remarks",
+  "items": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].allInvoiceListForPreview:[],
+  "subTotal": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].subTotal:'',
+  "tax": "5",
+
+  "referenceNumber": "12",
+  "invoiceNumber": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].allInvoiceListForPreview[0].itemDetail:'',
+  "dueDate": allInvoiceList[0].debtorId != undefined ?moment(allInvoiceList[0].allInvoiceListForPreview[0].date).format("YYYY-MM-DD"):'',
+  "percentage": "4",
+
+  "purchaseOrderDocument": "6595ca1d2f9f01a03ae5ab76",
+  "challanDocument": "6595ca1d2f9f01a03ae5ab76",
+  "invoiceDocument": "6595ca1d2f9f01a03ae5ab76",
+  "transportationDocument": "6595ca1d2f9f01a03ae5ab76"
+}
+
+                    ],
+    "status": "PENDING"
+}
+
+
+dispatch(addInvoiceReportDefaulterInvoice(payload))
+
+}
+
+
+
+const handleDraftInvoice=()=>{
+  
+
+
+  const payload =
+  
+  {
+    "invoicesList": [
+{
+  "debtorId": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].debtorId:'',
+  "billDate": allInvoiceList[0].debtorId != undefined ? moment(allInvoiceList[0].billDate).format("YYYY-MM-DD"):'',
+  "billDescription": "Bill for things",
+  "billNumber": "112233",
+  "creditAmount": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].remainingAmount:'',
+  "remainingAmount": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].remainingAmount:'', 
+  "interestRate": "1",
+  "creditLimitDays": "20",
+  "remark": "remarks",
+  "items": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].allInvoiceListForPreview:[],
+  "subTotal": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].subTotal:'',
+  "tax": "5",
+
+  "referenceNumber": "12",
+  "invoiceNumber": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].allInvoiceListForPreview[0].itemDetail:'',
+  "dueDate": allInvoiceList[0].debtorId != undefined ?moment(allInvoiceList[0].allInvoiceListForPreview[0].date).format("YYYY-MM-DD"):'',
+  "percentage": "4",
+
+  "purchaseOrderDocument": "6595ca1d2f9f01a03ae5ab76",
+  "challanDocument": "6595ca1d2f9f01a03ae5ab76",
+  "invoiceDocument": "6595ca1d2f9f01a03ae5ab76",
+  "transportationDocument": "6595ca1d2f9f01a03ae5ab76"
+}
+
+                    ],
+    "status": "DRAFT"
+}
+
+
+dispatch(addInvoiceReportDefaulterInvoice(payload))
+
+
+}
+
   useEffect(()=>{
 
   },[isCheck])
@@ -69,7 +164,7 @@ const handleChecked =()=>{
         <ModalFooter>
         <Row>
     <Col md={7}>
-    <Button className="text-center btn btn-secondary" onClick={()=>alert("Save as Draft")}>Save as Draft</Button>
+    <Button className="text-center btn btn-secondary" onClick={()=>handleDraftInvoice()}>Save as Draft</Button>
 
     </Col>
     <Col md={2}>

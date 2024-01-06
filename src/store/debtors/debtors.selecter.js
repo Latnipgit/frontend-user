@@ -66,6 +66,11 @@ export const uploadFilesModalOpen = createSelector(
     (DebtorsReducer) => DebtorsReducer.uploadPendingFilesModalOpen
 )
 
+export const addInvoiceReportDefaulterSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.addInvoiceReportDefaulter
+)
+
 export const selectCACertificateOpen = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.isCACACertificateOpen

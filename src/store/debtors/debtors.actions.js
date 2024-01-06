@@ -25,7 +25,10 @@ import {
   UPLOAD_CA_CERTIFICATE_ID_FAIL,
   REQUEST_INVOICE_DEF_EDIT,
   REQUEST_INVOICE_DEF_EDIT_SUCCESS,
-  REQUEST_INVOICE_DEF_EDIT_FAIL
+  REQUEST_INVOICE_DEF_EDIT_FAIL,
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC_SUCCESS,
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -75,3 +78,7 @@ export const uploadCACertificateIDFail = (data) => createAction(UPLOAD_CA_CERTIF
 export const requestInvoiceDefEdit = (data) => createAction(REQUEST_INVOICE_DEF_EDIT, data)
 export const requestInvoiceDefEditSuccess = (data) => createAction(REQUEST_INVOICE_DEF_EDIT_SUCCESS, data)
 export const requestInvoiceDefEditFail = (data) => createAction(REQUEST_INVOICE_DEF_EDIT_FAIL, data)
+
+export const addInvoiceReportDefaulterInvoice = (data) => createAction(ADD_INVOICE_REPORT_DEFAULTER_ASYNC, data)
+export const addInvoiceReportDefaulterInvoiceSuccess = (data) => createAction(ADD_INVOICE_REPORT_DEFAULTER_ASYNC_SUCCESS, data)
+export const addInvoiceReportDefaulterInvoiceFail = (data) => createAction(ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL, data)

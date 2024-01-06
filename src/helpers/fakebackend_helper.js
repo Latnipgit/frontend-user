@@ -23,6 +23,7 @@ export const searchCompanyAPI = data => post("/api/companies/selectCompany", dat
 const postFakeLogin = data => post(url.POST_FAKE_LOGIN, data);
 export const forgetPassword = data => forgetPasswordAPI(url.PASSWORD_FORGET, data);
 export const addFilesApiMethod = data => addEmployeeAPImethod("/api/files/upload", data);
+export const addInVoiceDefaulter = data => addEmployeeAPImethod("/api/defaulters/create", data);
 
 // postForgetPwd
 const postFakeForgetPwd = data => post(url.POST_FAKE_PASSWORD_FORGET, data);
