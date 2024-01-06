@@ -30,10 +30,12 @@ import { getAllDebtors } from "../../../store/debtors/debtors.actions"
 import { selectDebtorsList } from "store/debtors/debtors.selecter"
 import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter"
 import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
+import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
 
 const AddCustomer = props => {
   const [getDaysArray, setgetDaysArray] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const dispatch = useDispatch();
 
   const isAddCustomerOpen = useSelector(SelectAddCustomer);
@@ -58,18 +60,25 @@ const AddCustomer = props => {
         getDaysArray.push(d.days())
       }
     }
-
-    /*     GetAllDebtors != undefined ? GetAllDebtors.map((item , i)=>{
-       const a = moment(item.dueDate);
-        const b =moment()
-        const c = moment(b).diff(a)
-        const d = moment.duration(c)
-        if(getDaysArray.length != GetAllDebtors.length ){
-          getDaysArray.push(d.days())
-    
-        }
-      }):[] */
   }
+
+  const handleFilterdata = (filters) => {
+    if (GetAllDebtors) {
+      if (filters === "") {
+        setFilteredData(GetAllDebtors)
+      } else {
+        const filteredResults = GetAllDebtors.filter(item => {
+          debugger
+          if (item.firstname === undefined) return
+          const fullname = item.firstname + item.lastname.toLocaleLowerCase()
+          return fullname.toLocaleLowerCase().includes(filters);
+        });
+        setFilteredData(filteredResults);
+      }
+    }
+
+
+  };
   return (
     <React.Fragment>
       <Card>
@@ -86,7 +95,7 @@ const AddCustomer = props => {
               <Button className="btn btn-md btn-info" onClick={() => toggleAddCustomer()}>Add New Customer</Button>
             </Col>
           </Row>
-
+          {GetAllDebtors != undefined ? <CompanySerchForm onFilter={handleFilterdata} /> : ""}
           <Row className="p-4  ml-5">
             {/* <br/> */}
 
@@ -115,25 +124,40 @@ const AddCustomer = props => {
                 </tr>
               </thead>
               <tbody>
-                {GetAllDebtors != undefined ? GetAllDebtors.map((item, index) => {
-                  return <tr key={item}>
-                    {console.log("NEW TABLE ", item)}
+                {filteredData.length >= 0 ? <CustomerList GetAllDebtorsdata={filteredData} /> : <CustomerList GetAllDebtorsdata={GetAllDebtors} />}
+              </tbody>
+            </table>
 
-                    <th scope="row" className="pt-4">{index + 1}</th>
-                    {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
-                    <td className="pt-4 text-capitalize">{item.firstname + '' + item.lastname}</td>
-                    {/* <td className="pt-4">{item.referenceNumber}</td> */}
-                    <td className="pt-4">{item.companyName}</td>
-                    <td className="pt-4">{/* {item.address1},{item.address2}, */}{item.city}</td>
-                    <td className="pt-4">{item.gstin}</td>
-                    <td className="pt-4 text-start">{item.customerMobile}</td>
-                    {/* <td className="pt-4">{item.status}</td> */}
-                    <td className="pt-4 text-start">
-                      {/* <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
-                      {item.customerEmail}
-                    </td>
+          </Row>
+        </CardBody>
+      </Card>
+      {isAddCustomerOpen && <AddcustomerFomr />}
+    </React.Fragment>
+  );
+}
 
-                    {/*  <td >
+const CustomerList = ({ GetAllDebtorsdata }) => {
+  return (
+    <>
+      {GetAllDebtorsdata != undefined ? GetAllDebtorsdata.map((item, index) => {
+        return <tr key={item}>
+          {console.log("NEW TABLE ", item)}
+
+          <th scope="row" className="pt-4">{index + 1}</th>
+          {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
+          <td className="pt-4 text-capitalize">{item.firstname + '' + item.lastname}</td>
+          {/* <td className="pt-4">{item.referenceNumber}</td> */}
+          <td className="pt-4">{item.companyName}</td>
+          <td className="pt-4">{/* {item.address1},{item.address2}, */}{item.city}</td>
+          <td className="pt-4">{item.gstin}</td>
+          <td className="pt-4 text-start">{item.customerMobile}</td>
+          {/* <td className="pt-4">{item.status}</td> */}
+          <td className="pt-4 text-start">
+            {/* <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
+            {item.customerEmail}
+          </td>
+
+          {/*  <td >
    
     <div className="" style={{ padding:"2px 15px"}}>
       
@@ -170,7 +194,7 @@ const AddCustomer = props => {
   
           </div>
     </td> */}
-                    {/* <td>
+          {/* <td>
     <div className="pt-2">
             <Button className="btn btn-info btn-sm"
               onClick={() => viewModels()
@@ -182,19 +206,10 @@ const AddCustomer = props => {
   
           </div>
     </td> */}
-                  </tr>
-                }) : ''}
-
-
-              </tbody>
-            </table>
-
-          </Row>
-        </CardBody>
-      </Card>
-      {isAddCustomerOpen && <AddcustomerFomr />}
-    </React.Fragment>
-  );
+        </tr>
+      }) : ''}
+    </>
+  )
 }
 
 export default withRouter(AddCustomer)

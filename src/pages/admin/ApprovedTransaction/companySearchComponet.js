@@ -15,31 +15,10 @@ import {
 
 export const CompanySerchForm = ({ onFilter }) => {
   const [filters, setFilters] = useState('');
-  const [company, setCompany] = useState('');
-  const [gstError, setGSTError] = useState('');
-  const [panError, setPANError] = useState('');
-
 
   useEffect(() => {
     onFilter(filters);
   }, [filters])
-
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // onFilter(filters);
-
-
-  };
-
-  const handleReset = (event) => {
-    event.preventDefault();
-
-    const resetAray = {
-      company: '',
-    }
-    onFilter(resetAray)
-  }
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
