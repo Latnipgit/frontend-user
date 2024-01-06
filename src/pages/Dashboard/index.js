@@ -101,7 +101,7 @@ const Dashboard = props => {
               <h5 className="m-1">Report a Defaulter</h5>
             </Col>
             <Col md={2}>
-              <Button className="btn btn-md btn-info" onClick={() => handleReportDefaulter()}>Report a Defaulter</Button>
+              {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}
               {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
 <ReactTooltip id="toolTip1" /> */}
             </Col>

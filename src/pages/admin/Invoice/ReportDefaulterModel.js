@@ -82,19 +82,7 @@ const ReportedDefaulterModel = props => {
     }),
     // Add more styles as needed for other parts of the Select component
   };
-  function getDebtrosLists(responsData) {
-    return (responsData && (
-      responsData.map((item) => {
-        return (
-          {
-            "value": item.id, "label": item.firstname + " " + item.lastname + ", " + item.companyName,
-          }
 
-        )
-      })
-    )
-    )
-  }
   const checkboxStyle = {
     border: '2px solid #3498db', // Set the border color (change #3498db to your desired color)
     borderRadius: '4px', // Optional: Add rounded corners for a nicer look
@@ -108,9 +96,7 @@ const ReportedDefaulterModel = props => {
     { label: "Bank Transfer", value: "Bank Transfer" },
 
   ])
-  const GetAllDebtors = useSelector(selectDebtorsList)
 
-  const getDebtrosList = getDebtrosLists(GetAllDebtors)
   
 
   
@@ -149,7 +135,7 @@ const ReportedDefaulterModel = props => {
                          type="text"
                          id="customerEmail"
                          name="customerEmail"
-                         value={selected.debtor.companyName}
+                         value={selected.debtor!= undefined ? selected.debtor.companyName:""}
                          disabled
 
                        
