@@ -172,26 +172,26 @@ const CompnayViewDetails = props => {
                                         <tr>
                                             <td>TATA</td>
                                             <td>Prem</td>
-                                            <td>₹100,00,00</td>
+                                            <td>₹1000,00,00</td>
                                             <td>12-12-2023</td>
                                             <td>4.2</td>
-                                            <td style={{ color: "green" }}>Approved <FcCheckmark /></td>
+                                            <td style={{ color: "green" }}><FcCheckmark /> Approved </td>
                                         </tr>
                                         <tr>
                                             <td>Latnip</td>
                                             <td>Harshit</td>
-                                            <td >₹100,00,00</td>
+                                            <td >******</td>
                                             <td >12-12-2023</td>
                                             <td>3.2</td>
-                                            <td style={{ color: "red" }}>InProcess <FcClock /></td>
+                                            <td style={{ color: "red" }}><FcClock /> InProcess </td>
                                         </tr>
                                         <tr>
                                             <td>Bafama</td>
                                             <td>rohan</td>
-                                            <td>₹110,00,00</td>
+                                            <td>******</td>
                                             <td>12-12-2023</td>
                                             <td>4.5</td>
-                                            <td style={{ color: "red", filter: "2px" }} >Disputed <FcCancel /></td>
+                                            <td style={{ color: "red", filter: "2px" }} ><FcCancel /> Disputed </td>
                                         </tr>
                                         {/*                                     {selected!= ""? selected.Invoice.items.length != 0 ? selected.Invoice.items.map((item)=>{
                                             return <tr key={item}>
