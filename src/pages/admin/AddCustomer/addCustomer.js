@@ -95,7 +95,7 @@ const AddCustomer = props => {
               <Button className="btn btn-md btn-info" onClick={() => toggleAddCustomer()}>Add New Customer</Button>
             </Col>
           </Row>
-          {GetAllDebtors != undefined ? <CompanySerchForm onFilter={handleFilterdata} /> : ""}
+          {GetAllDebtors != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Customer"} /> : ""}
           <Row className="p-4  ml-5">
             {/* <br/> */}
 

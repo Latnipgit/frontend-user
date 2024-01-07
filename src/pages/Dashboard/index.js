@@ -128,7 +128,7 @@ const Dashboard = props => {
               </Button>
             </Col>
           </Row>
-          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} /> : ""}
+          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
 
           <Row className="p-4  ml-5">
             {/* <br/> */}

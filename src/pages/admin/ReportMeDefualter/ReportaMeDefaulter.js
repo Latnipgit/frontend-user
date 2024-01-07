@@ -18,6 +18,7 @@ import { uploadFilesModalOpen, selectCACertificateOpen } from "store/debtors/deb
 import { selectReportMeDefData } from "store/ReportMeDefulter/ReportMeDefulter.selecter"
 import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
+import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
 
 const ReportMedefulterComponent = props => {
@@ -27,6 +28,7 @@ const ReportMedefulterComponent = props => {
   const [selected, setSelected] = useState('');
   const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
   const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
+  const [filteredData, setFilteredData] = useState([]);
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
   const dispatch = useDispatch();
@@ -101,6 +103,21 @@ const ReportMedefulterComponent = props => {
     setuploadFilesModelDataForUpload(item)
     dispatch(setUploadFilesOpen(!uploadFilesModalShow))
   }
+
+  const handleFilterdata = (filters) => {
+    if (selectReportMeDeflist) {
+      if (filters === "") {
+        setFilteredData(selectReportMeDeflist)
+      } else {
+        const filteredResults = selectReportMeDeflist.filter(item => {
+          return item.debtor.companyName.toLocaleLowerCase().includes(filters);
+        });
+        setFilteredData(filteredResults);
+      }
+    }
+  };
+
+
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
@@ -118,6 +135,7 @@ const ReportMedefulterComponent = props => {
             <Col md={10} className="pl-3">
               <h5 className="m-1">Report Me As a Defaulter</h5>
             </Col>
+            {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
           </Row>
           <Row className="p-4  ml-5">
             <table className="table table-bordered">
@@ -136,74 +154,7 @@ const ReportMedefulterComponent = props => {
                 </tr>
               </thead>
               <tbody>
-                {selectReportMeDeflist != undefined ? selectReportMeDeflist.map((item, index) => {
-
-                  debugger
-                  const newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
-                  return <tr key={item}>
-                    {console.log("NEW TABLE ", item)}
-                    <th scope="row" className="pt-4">{index + 1}</th>
-                    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-                    <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-                    <td>
-                      {item.debtor.address1}<br />{item.debtor.address2}
-                    </td>
-                    <td className="pt-4">{item.totalAmount}</td>
-                    <td>
-                      {newDate}
-                    </td>
-                    <td>
-                      <div className="pt-2">
-                        <Button className="btn btn-info btn-sm "
-                          onClick={() => viewModel(item)
-
-                          }
-
-                        >
-                          <i className='bx bx-wallet-alt textsizing' ></i>
-                        </Button>
-
-                        <a>
-                        </a>
-                        &nbsp;
-
-                        {/*                        <Button className="btn btn-info btn-sm"
-                        // onClick={() => viewModels()
-
-                        // }
-                        >
-                          <i className='bx bx-edit textsizing' ></i>
-                        </Button> */}
-
-                        &nbsp;
-
-                        <Button className="btn btn-info btn-sm"
-                        /*         onClick={() => handleUploadFiles()
-      
-                                } */
-                        >
-                          <i className='bx bx-message textsizing' ></i>
-
-
-                        </Button>
-
-                        &nbsp;
-                        <Button className="btn btn-info btn-sm"
-                          onClick={() => {
-                            toggleViewModal2()
-                            setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                          }
-
-                          }
-                        >
-                          <i className='bx bx-file textsizing' ></i>
-                        </Button>
-
-
-                      </div>
-                    </td>
-                  </tr>
-                }) : ''}
+                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} />}
 
 
               </tbody>
@@ -214,6 +165,80 @@ const ReportMedefulterComponent = props => {
       </Card>
     </React.Fragment >
   );
+}
+
+const ReportMeDefulterList = ({ selectReportMeDeflistData }) => {
+  return (
+    <>
+      {selectReportMeDeflistData != undefined ? selectReportMeDeflistData.map((item, index) => {
+
+        const newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
+        return <tr key={item}>
+          {console.log("NEW TABLE ", item)}
+          <th scope="row" className="pt-4">{index + 1}</th>
+          <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+          <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
+          <td>
+            {item.debtor.address1}<br />{item.debtor.address2}
+          </td>
+          <td className="pt-4">{item.totalAmount}</td>
+          <td>
+            {newDate}
+          </td>
+          <td>
+            <div className="pt-2">
+              <Button className="btn btn-info btn-sm "
+                onClick={() => viewModel(item)
+
+                }
+
+              >
+                <i className='bx bx-wallet-alt textsizing' ></i>
+              </Button>
+
+              <a>
+              </a>
+              &nbsp;
+
+              {/*                        <Button className="btn btn-info btn-sm"
+      // onClick={() => viewModels()
+
+      // }
+      >
+        <i className='bx bx-edit textsizing' ></i>
+      </Button> */}
+
+              &nbsp;
+
+              <Button className="btn btn-info btn-sm"
+              /*         onClick={() => handleUploadFiles()
+        
+                      } */
+              >
+                <i className='bx bx-message textsizing' ></i>
+
+
+              </Button>
+
+              &nbsp;
+              <Button className="btn btn-info btn-sm"
+                onClick={() => {
+                  toggleViewModal2()
+                  setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                }
+
+                }
+              >
+                <i className='bx bx-file textsizing' ></i>
+              </Button>
+
+
+            </div>
+          </td>
+        </tr>
+      }) : ''}
+    </>
+  )
 }
 
 export default withRouter(ReportMedefulterComponent)

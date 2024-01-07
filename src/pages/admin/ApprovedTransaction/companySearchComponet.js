@@ -13,7 +13,7 @@ import {
   InputGroup,
 } from "reactstrap";
 
-export const CompanySerchForm = ({ onFilter }) => {
+export const CompanySerchForm = ({ onFilter, SearchName }) => {
   const [filters, setFilters] = useState('');
 
   useEffect(() => {
@@ -32,29 +32,18 @@ export const CompanySerchForm = ({ onFilter }) => {
         <Col lg={12}>
           <Card>
             <CardBody>
-              <CardTitle className="h5 mb-4">Company Search
-
-              </CardTitle>
-              <Row>
-                <p style={{ fontWeight: '500', fontSize: '12px' }}>
-                  Search using any one below details
-                </p>
-              </Row>
               <Form className="row row-cols-lg-auto g-3 align-items-center">
-
                 <Col xs={12} md={12}>
-
-                  <label className="visually-hidden" htmlFor="nameFilter">Company Name</label>
                   <InputGroup>
                     {/* <div className="input-group-text">
                         <i className="mdi mdi-account-card-details" />
                     </div> */}
                     <input
                       type="text"
-                      style={{ width: '15rem' }}
+                      style={{ width: '20rem' }}
                       className={`form-control`}
                       id="nameFilter"
-                      placeholder="Company Name"
+                      placeholder={`${SearchName} Name Search`}
                       value={filters}
                       onChange={onSearchChange}
                     />
