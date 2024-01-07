@@ -189,7 +189,7 @@ const DiputedBillings = props => {
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} customerName={invoiceIdsForCAcertificate} />
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
-      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} />
+      {/*       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} /> */}
 
       <Card>
         <CardBody>
@@ -285,7 +285,7 @@ const DiputedBillings = props => {
                         </a>
                         &nbsp;
 
-                        <Button className="btn btn-info btn-sm"
+                        {/*                    <Button className="btn btn-info btn-sm"
                           onClick={() => requestEdit(item)
 
                           }
@@ -293,14 +293,14 @@ const DiputedBillings = props => {
                           <i className='bx bx-edit textsizing' ></i>
                         </Button>
 
-                        &nbsp;
+                        &nbsp; */}
 
                         <Button className="btn btn-info btn-sm"
-                          onClick={() => handleUploadFiles()
+                        /*  onClick={() => handleUploadFiles()
 
-                          }
+                         } */
                         >
-                          <i className='bx bx-cloud-upload textsizing' ></i>
+                          <i className='bx bx-message textsizing' ></i>
 
 
                         </Button>

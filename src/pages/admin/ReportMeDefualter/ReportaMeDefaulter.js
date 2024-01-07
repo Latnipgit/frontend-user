@@ -26,6 +26,7 @@ const ReportMedefulterComponent = props => {
   const [modal3, setModal3] = useState(false);
   const [selected, setSelected] = useState('');
   const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
+  const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
   const dispatch = useDispatch();
@@ -100,12 +101,12 @@ const ReportMedefulterComponent = props => {
     setuploadFilesModelDataForUpload(item)
     dispatch(setUploadFilesOpen(!uploadFilesModalShow))
   }
-
+  const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
-      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
-      <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} />
-      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
+      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} additionalValue={additionalValue} selected={selected} />
+      <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
+      {/* <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
 
       <Card>
         <CardBody>
@@ -153,7 +154,7 @@ const ReportMedefulterComponent = props => {
                     </td>
                     <td>
                       <div className="pt-2">
-                        {/*                  <Button className="btn btn-info btn-sm "
+                        <Button className="btn btn-info btn-sm "
                           onClick={() => viewModel(item)
 
                           }
@@ -164,31 +165,35 @@ const ReportMedefulterComponent = props => {
 
                         <a>
                         </a>
-                        &nbsp; */}
+                        &nbsp;
 
-                        <Button className="btn btn-info btn-sm"
+                        {/*                        <Button className="btn btn-info btn-sm"
                         // onClick={() => viewModels()
 
                         // }
                         >
                           <i className='bx bx-edit textsizing' ></i>
-                        </Button>
+                        </Button> */}
 
                         &nbsp;
 
                         <Button className="btn btn-info btn-sm"
-                          onClick={() => handleUploadFiles()
-
-                          }
+                        /*         onClick={() => handleUploadFiles()
+      
+                                } */
                         >
-                          <i className='bx bx-cloud-upload textsizing' ></i>
+                          <i className='bx bx-message textsizing' ></i>
 
 
                         </Button>
 
                         &nbsp;
                         <Button className="btn btn-info btn-sm"
-                          onClick={() => toggleViewModal2()
+                          onClick={() => {
+                            toggleViewModal2()
+                            setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                          }
+
                           }
                         >
                           <i className='bx bx-file textsizing' ></i>
@@ -207,7 +212,7 @@ const ReportMedefulterComponent = props => {
           </Row>
         </CardBody>
       </Card>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 
