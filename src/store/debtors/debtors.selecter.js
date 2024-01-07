@@ -103,3 +103,10 @@ export const updatePendingDocsSelector = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.updatePendingDocs
 )
+
+
+
+export const isViewDetailMOdalOpenSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.isViewDetailsModalOpen
+)

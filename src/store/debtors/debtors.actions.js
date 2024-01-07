@@ -34,7 +34,8 @@ import {
   RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS,
   UPDATE_PENDING_DOCUMENT,
   UPDATE_PENDING_DOCUMENT_FAIL,
-  UPDATE_PENDING_DOCUMENT_SUCCESS
+  UPDATE_PENDING_DOCUMENT_SUCCESS,
+  View_DETAIL_MODAL_OPEN
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -55,6 +56,7 @@ export const getAllInvoiceFail = (error) => createAction(GET_INVOICE_LIST_FAIL, 
 
 
 export const setIsReportDefOpen = (boolean) => createAction(GET_REPORT_DEF_OPEN, boolean);
+export const setIsViewDetailModalOpen = (boolean) => createAction(View_DETAIL_MODAL_OPEN, boolean);
 export const setConfirmReportDefaultModal = (boolean) => createAction(CONFIRM_REPORT_DEFAULT_MODAL, boolean);
 export const setPreviewModalOpen = (boolean) => createAction(GET_REPORT_DEF_PREVIEW, boolean);
 export const setIsCustomerFeedbackModalOpen = (boolean) => createAction(GET_CUSTOMER_FEEDBACK_MODAL_OPEN, boolean);

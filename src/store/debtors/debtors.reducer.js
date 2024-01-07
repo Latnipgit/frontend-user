@@ -34,7 +34,8 @@ import {
   RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS,
   UPDATE_PENDING_DOCUMENT,
   UPDATE_PENDING_DOCUMENT_FAIL,
-  UPDATE_PENDING_DOCUMENT_SUCCESS
+  UPDATE_PENDING_DOCUMENT_SUCCESS,
+  View_DETAIL_MODAL_OPEN
   
 } from "./debtors.actiontype"
 
@@ -42,6 +43,7 @@ import {
 
 const INIT_STATE = {
   isReportDefOpen: false,
+  isViewDetailsModalOpen: false,
   isConfirmReportDefaultModal: false,
   isCustomerFeedbackModalOpen: false,
   isPreviewModalOpen: false,
@@ -145,7 +147,8 @@ export const DebtorsReducer = (state = INIT_STATE, action) => {
           case RECORD_PAYMENT_REPORT_DEFAULT_FAIL:
             return { ...state, error: payload, }
 
-
+            case View_DETAIL_MODAL_OPEN:
+              return { ...state, isViewDetailsModalOpen: payload, }
              case UPDATE_PENDING_DOCUMENT:
             return { ...state, updatePendingDocs: payload, }
           case UPDATE_PENDING_DOCUMENT_SUCCESS:
