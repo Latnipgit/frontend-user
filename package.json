@@ -10,6 +10,8 @@
     "@fullcalendar/daygrid": "^5.11.2",
     "@fullcalendar/interaction": "^5.11.2",
     "@fullcalendar/react": "^5.11.2",
+    "@material-ui/icons": "^4.11.3",
+    "@material/tooltip": "^14.0.0",
     "@mdi/js": "^7.3.67",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.4.0",

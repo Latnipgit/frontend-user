@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import TableContainer from "./TableContainer";
 import UploadDocumentModel from './uploadDocumentsmodel'
 import { useDispatch, useSelector } from "react-redux";
-
 import { getGeneralDoucments } from "../../../../store/Documents/documents.actions"
 import { getGeneralDocumentsSelector } from "../../../../store/Documents/documents.selector"
 // import { selectReportDefOpen } from "store/debtors/debtors.selecter"
@@ -156,7 +155,7 @@ useEffect(()=>{
                         
 
                         <Row>
-                         {
+                         {GetDocument != undefined ?
                           GetDocument.map((item)=>{
                             return<Col md={3} key={item}>
                                  
@@ -165,10 +164,14 @@ useEffect(()=>{
 
                     <Row>
                       <Col md={4} className="text-end">
-                      <a href={item.url} rel='noreferrer' target='_blank'>
-                      <i className='bx bxs-file mt-2 fileSizing'></i>
+             
+  {/* <a >
+                      <i className='bx bxs-file mt-2 fileSizing'></i></a> */}
 
-                    </a>    
+                      <button type="button" className="btn btn-white" data-toggle="tooltip" data-placement="top" title="View Document" href={item.url} rel='noreferrer' target='_blank'>
+                      <i className='bx bxs-file mt-2 fileSizing '></i>
+</button>
+                      
                       </Col>
                       <Col md={8} className="pt-3">
                       <b>{item.name}</b>
@@ -176,7 +179,7 @@ useEffect(()=>{
                       </Col>
                     </Row>
                             </Col>
-                          })
+                          }):""
                          } 
                         
                         </Row>
