@@ -15,6 +15,8 @@ import {
     ModalBody,
     ModalHeader,
     Modal,
+    InputGroup,
+
     Button,
 } from "reactstrap";
 import Dropzone from "react-dropzone";
@@ -30,45 +32,32 @@ const uploadDocumentsModel = props => {
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [modal1, setModal1] = useState(false);
     const [error, setError] = useState('');
-    const [uploadedResponse, setUploadedResponse] = useState('');
+    const [uploadDocumentID, setuploadDocumentID] = useState('');
     const toggleViewModal = () => setModal1(!modal1);
     
-
-    const handleUpload = (item) => {
-        console.log("ITEM",  selectedFiles)
-        props.Document(selectedFiles)
-
+    const handleFileChange = (event) => {
+        const files = event.target.files
+        console.log("FILEEE", event.target.files)
+    
         const formData = new FormData();
-
-    formData.append('file', selectedFiles[0]);  
-    formData.append('fieldName', '');
-
-   
-
-
-    uploadFile(formData)
-
-
-    };
-
-
-        const onDrop = useCallback(acceptedFiles => {
-            console.log("DROP",acceptedFiles[0].type )
-
-           
-            if ( acceptedFiles[0].size > 2000000){
-                setError('File size should be 200KB - 2MB ')
-              }
-              else{
-                setSelectedFiles(acceptedFiles)
-
-              }
-        }, [])
-        console.log("selectedFiles", selectedFiles)
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-
-
-    function uploadFile(formData) {
+    
+        formData.append('file', files[0]);   //append the values with key, value pair
+        formData.append('fieldName', "");
+        formData.append('type', "GENERAL");
+    
+    
+        // uploadFile(formData)
+    
+        setuploadDocumentID(formData)
+      }
+    
+     
+    
+    
+    
+    
+    
+      function uploadFile(formData) {
         console.log("UPLOAD FILE", formData)
         const token = JSON.parse(localStorage.getItem("authUser")).token
         const headers = {
@@ -80,15 +69,23 @@ const uploadDocumentsModel = props => {
           headers: headers
         })
           .then((response) => {
-            // toast.success("file upload successfully")
-            console.log("SUCCESS RESPO",response)
-     setUploadedResponse(response)
+       console.log("respo+++",response.data.response)
+       setuploadedCertificate(response.data.response)
           })
           .catch((error) => {
-            console.log("Response ERROR", error)
+            console.log("Response", error)
     
           })
       }
+    
+      const handleSubmit=()=>{
+        uploadFile(uploadDocumentID)
+      
+        // dispatch(uploadCACertificateID(payload))
+        toggle()
+    
+      }
+    
     return (
         <Modal
             isOpen={isOpen}
@@ -107,7 +104,7 @@ const uploadDocumentsModel = props => {
                    
                   
            
-
+{/* 
 <div {...getRootProps()}  className='text-center'>
       <input {...getInputProps()} 
       type='file'
@@ -136,21 +133,49 @@ const uploadDocumentsModel = props => {
 
           </p>
       }
-    </div>
+    </div> */}
+
+
+          <Row className="mt-4 mb-4">
+            <Col md={3}></Col>
+            <Col md={6}>
+
+
+              <InputGroup className="text-capitalize">
+                <input
+                  type="file"
+                  className="form-control"
+                  id="uploadPurchaseOrder"
+                  accept=".pdf, .doc, .docx, .txt"
+                  aria-describedby="fileUploadHelp"
+                  onChange={e =>
+                    handleFileChange(e)
+                  }
+                />
+              </InputGroup>
+
+              <div id="fileUploadHelp" className="form-text">
+                Choose a file to upload (PDF, DOC, DOCX, TXT).
+              </div>
+
+
+            </Col>
+            <Col md={3}></Col>
+          </Row>
+
+     
+
                 </ModalBody>
                 <ModalFooter>
                     <div className="text-center">
                         <Button
                             type="button"
                             color="primary"
-                            onClick={()=>{
-                                handleUpload()
-                                toggle()
-                            }
+                            onClick={()=>handleSubmit()
                                
                             
                             }
-                            disabled={selectedFiles.length == 0}
+                            // disabled={selectedFiles.length == 0}
                         >
                         submit
                         </Button>

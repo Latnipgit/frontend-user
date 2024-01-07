@@ -1,5 +1,5 @@
 import axios from "axios";
-import { del, get, post, put, addEmployeeAPImethod, getAfter, forgetPasswordAPI } from "./api_helper";
+import { del, get, post, put, addEmployeeAPImethod, getAfter, forgetPasswordAPI, getwithToken } from "./api_helper";
 import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
@@ -50,6 +50,7 @@ export const getProducts = () => get(url.GET_PRODUCTS);
 export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
 
 export const getAllInvoiceList = () => getAfter("/api/defaulters/getAllDefaultInvoicesRaisedByMe")
+export const getGeneralDoucmentsAPI = () => getwithToken("/api/files/getGeneralDocuments")
 export const getCompanySearchList = () => getAfter("/api/debtors/getAllDebtorsByCompanyId")
 /* export const getCompanySearchList = data => post(url.GET_COMPNAY_SEARCH_LIST, data); */
 // get Product detail

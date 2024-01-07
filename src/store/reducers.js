@@ -65,6 +65,8 @@ import { AddCustomerReducer } from "./addCustomer/addCustomer.reducer";
 import { ReportDefulterPreviewReducer } from "./ReportDefulterPreview/ReportDefulterPreview.reducer";
 import { ReportMeDefulterReducer } from "./ReportMeDefulter/ReportMeDefulter.reducer";
 import { CompanySearchReducer } from "./CompanySearch/CompanySearch.reducer";
+import documentsReducer from "./Documents/DocumentsdReducer";
+
 
 const rootReducer = combineReducers({
   // public
@@ -80,6 +82,7 @@ const rootReducer = combineReducers({
   chat,
   mails,
   crypto,
+  documentsReducer,
   invoices,
   JobReducer,
   projects,
@@ -98,7 +101,8 @@ const rootReducer = combineReducers({
   AddCustomerReducer,
   ReportDefulterPreviewReducer,
   ReportMeDefulterReducer,
-  CompanySearchReducer
+  CompanySearchReducer,
+  
 });
 
 export default rootReducer;

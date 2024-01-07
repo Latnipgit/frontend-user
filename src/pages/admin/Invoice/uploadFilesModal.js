@@ -24,7 +24,7 @@ const handleFileChange = ()=>{
 
 }
 const PDF ="https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-file.pdf"
-console.log("uploadFilesModelDataForUpload",uploadFilesModelDataForUpload.invoices)
+// console.log("uploadFilesModelDataForUpload",uploadFilesModelDataForUpload.invoices)
 
   return (
     <Modal
@@ -42,7 +42,7 @@ console.log("uploadFilesModelDataForUpload",uploadFilesModelDataForUpload.invoic
 
         <ModalBody>
     
-{uploadFilesModelDataForUpload.invoices!= undefined ? uploadFilesModelDataForUpload.invoices.map((item)=>{
+{uploadFilesModelDataForUpload != undefined && uploadFilesModelDataForUpload.invoices!= undefined ? uploadFilesModelDataForUpload.invoices.map((item)=>{
   return    <Row className="bg-light p-3 mt-2" key={item}>
   <Row>
 <Col md={3}><strong>Invoice Number - {item.invoiceNumber}</strong></Col>

@@ -9,11 +9,17 @@ import {
   CardBody,
   Container,
   Button,
+  CardHeader,
 } from "reactstrap";
 import Dropzone from "react-dropzone";
 import { Link } from "react-router-dom";
 import TableContainer from "./TableContainer";
 import UploadDocumentModel from './uploadDocumentsmodel'
+import { useDispatch, useSelector } from "react-redux";
+
+import { getGeneralDoucments } from "../../../../store/Documents/documents.actions"
+import { getGeneralDocumentsSelector } from "../../../../store/Documents/documents.selector"
+// import { selectReportDefOpen } from "store/debtors/debtors.selecter"
 
 
 const Document = (props) => {
@@ -22,11 +28,14 @@ const Document = (props) => {
   const [modal1, setModal1] = useState(false);
   const toggleViewModal = () => setModal1(!modal1);
   const handleAcceptedFiles = (acceptedFiles) => {
-     
-    console.log("handle accepeted", selectedFiles)
+  
     setSelectedFiles([...selectedFiles, ...acceptedFiles]);
   };
 
+  const dispatch = useDispatch();
+    const GetDocument = useSelector(getGeneralDocumentsSelector);
+
+    console.log("handle GetDocument", GetDocument)
   const removeFile = (index) => {
     console.log("index9898", index)
     const newFiles = [...selectedFiles];
@@ -37,7 +46,9 @@ const Document = (props) => {
 
     setSelectedFiles(newFiles);
   };
-
+useEffect(()=>{
+  dispatch(getGeneralDoucments())
+},[])
   const handleUpload = () => {
     setTimeout(() => {
       setSelectedFiles([]); // Clear selected files
@@ -133,35 +144,43 @@ const Document = (props) => {
           <Row>
             <Col className="col-12">
               <Card>
+                <CardHeader>
+               <h5>General Documents</h5>
+                </CardHeader>
                 <CardBody>
 
                   <div className="gallery mt-3 mr-5">
                     <div className="row">
 
 
-
-                      {selectedFiles.length != 0 ? <TableContainer
-                        columns={columns}
-                        data={selectedFiles}
-                        isGlobalFilter={true}
-                        isAddOptions={false}
-                        customPageSize={20}
-                      />
-                        :
+                        
 
                         <Row>
-                          <Col md={4}></Col>
-                          <Col md={4}>
-                          
-                                <h5 className="mt-5 mb-5 ">
-                                  No Document Found
+                         {
+                          GetDocument.map((item)=>{
+                            return<Col md={3} key={item}>
+                                 
+                     
 
-                                </h5>
-                            
-                          </Col>
-                          <Col md={4}></Col>
+
+                    <Row>
+                      <Col md={4} className="text-end">
+                      <a href={item.url} rel='noreferrer' target='_blank'>
+                      <i className='bx bxs-file mt-2 fileSizing'></i>
+
+                    </a>    
+                      </Col>
+                      <Col md={8} className="pt-3">
+                      <b>{item.name}</b>
+
+                      </Col>
+                    </Row>
+                            </Col>
+                          })
+                         } 
+                        
                         </Row>
-                      }
+                   
                     </div>
                   </div>
 

@@ -120,7 +120,7 @@ const ReportedDefaulterModel = props => {
    
      <form>
      <Row className="selectionListss">
-       <Col xs={12} md={2}>
+       <Col xs={12} md={4}>
          <div className="mb-2"><b className="mt-2">Customer Name*</b></div>
        </Col>
        <Col xs={12} md={5}>
@@ -150,7 +150,7 @@ const ReportedDefaulterModel = props => {
      </Row>
 
      <Row className="selectionListss">
-       <Col xs={12} md={2}>
+       <Col xs={12} md={4}>
          <div className="mb-2"><b className="mt-2">Amount Recieved*</b></div>
        </Col>
        <Col xs={12} md={5}>
@@ -178,13 +178,13 @@ const ReportedDefaulterModel = props => {
        </Col>
 
      </Row>
-     <Row style={{marginTop:"-10px"}}>
-     <Col xs={12} md={2}>
+     <Row style={{marginTop:"-5px"}}>
+     <Col xs={12} md={4}>
        </Col>
        <Col xs={12} md={5}>
          <div className="d-inline">
          
-         <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} /> 
+         <Input type="checkbox" className="" style={checkboxStyle} /> 
 
                        <span>Received full amount (90000)</span>
          </div>
@@ -290,15 +290,6 @@ const ReportedDefaulterModel = props => {
 
      </Row>
 
-     <Row className="">
-       <Col md={4}>
-         <Button className="btn btn-info">
-           Submit
-         </Button>
-       </Col>
-       <Col md={4}></Col>
-       <Col md={4}></Col>
-     </Row>
    </form>
        
      
@@ -306,7 +297,7 @@ const ReportedDefaulterModel = props => {
       </ModalBody>
         <ModalFooter>
           {isProceed != true ?   <Button type="button" color="primary" onClick={()=>setisProceed(true)}>
-                      Next
+                      Submit
             </Button>
             :
             <Button type="button" color="primary" onClick={()=>handleProceed()}>
