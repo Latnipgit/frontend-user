@@ -282,10 +282,11 @@ const ReportedDefaulterModel = props => {
 
   const submitInvoice = () => {
     calculateSubtotal(data)
-
+    debugger;
+    const date = moment()
     const dummy = [{
       "debtorId": selectedOption.value,
-      "billDate": moment(data[0].date).format("YYYY-MM-DD"),
+      "billDate": data[0].date === "" ? date.format("YYYY-MM-DD") : moment(data[0].date).format("YYYY-MM-DD"),
       "billDescription": "",
       "billNumber": "",
       "creditAmount": data[0].amount,
@@ -308,7 +309,7 @@ const ReportedDefaulterModel = props => {
       "allInvoiceListForPreview": data
 
     }]
-    if (uploadInvoiceId != "" && data[0].amount != "" && data[0].date != "" && data[0].itemDetail != "") {
+    if (uploadInvoiceId != "" && data[0].amount != "" && data[0].itemDetail != "") {
 
       setallInvoiceList(dummy)
       toast.success("Invoice Add Successfully")
