@@ -28,7 +28,10 @@ import {
   REQUEST_INVOICE_DEF_EDIT_SUCCESS,
   ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
   ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL,
-  ADD_INVOICE_REPORT_DEFAULTER_ASYNC_SUCCESS
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC_SUCCESS,
+  RECORD_PAYMENT_REPORT_DEFAULT,
+  RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
+  RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS
   
 } from "./debtors.actiontype"
 
@@ -59,7 +62,11 @@ const INIT_STATE = {
   addInvoiceArray: [],
   addInvoiceSuccessArray: [],
   addRating: [],
-  addRatingSuccess: []
+  addRatingSuccess: [],
+  recordPaymentAddReportDef:[],
+  recordPaymentAddReportDefSuccess:[],
+  recordPaymentAddReportDefFail:false
+
 }
 
 export const DebtorsReducer = (state = INIT_STATE, action) => {
@@ -126,6 +133,12 @@ export const DebtorsReducer = (state = INIT_STATE, action) => {
         case ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL:
           return { ...state, error: payload, }
 
+          case RECORD_PAYMENT_REPORT_DEFAULT:
+            return { ...state, recordPaymentAddReportDef: payload, }
+          case RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS:
+            return { ...state, recordPaymentAddReportDefSuccess: payload, }
+          case RECORD_PAYMENT_REPORT_DEFAULT_FAIL:
+            return { ...state, error: payload, }
     default:
       return state
   }

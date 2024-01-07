@@ -20,19 +20,21 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from "react";
 import Select from "react-select"
-
+import moment from "moment"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+// import axios from "axios";
 import { useSelector, useDispatch } from "react-redux"
-import { selectDebtorsList } from "store/debtors/debtors.selecter";
+import { recoredPaymentReportDefault } from "../../../store/debtors/debtors.actions"
+import { recordPaymentReportDefaulter} from "store/debtors/debtors.selecter"
+
 
 const ReportedDefaulterModel = props => {
   const [selectedOption, setSelectedOption] = useState("")
 
     const [isProceed, setisProceed] = useState(false)
   const { isOpen, toggle ,selected,  } = props
-  console.log("PROPSS 12321", selected)
+  const dispatch = useDispatch()
   const colourStyles = {
     menuList: styles => ({
       ...styles,
@@ -40,49 +42,7 @@ const ReportedDefaulterModel = props => {
     })
 
   }
-  const customStyles = {
-
-    control: (provided, state) => ({
-      ...provided,
-      background: "#FAFAFA",
-      width: "300px",
-      // match with the menu
-      borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
-      // Overwrittes the different states of border
-      borderColor: state.isFocused ? " #4da6ff" : " #80d4ff",
-      // Removes weird border around container  
-      boxShadow: state.isFocused ? null : null,
-      "&:hover": {
-        // Overwrittes the different states of border
-        borderColor: state.isFocused ? " #4da6ff" : " #80d4ff"
-      }
-    }),
-    option: (provided, state) => ({
-
-      // Your custom option styles here
-      backgroundColor: state.isFocused ? '#80bfff' : '#FAFAFA',
-      ':hover': {
-        backgroundColor: '#80bfff', // Change background color on hover
-      },
-
-
-      menu: base => ({
-        ...base,
-        // override border radius to match the box
-        borderRadius: 0,
-        // kill the gap
-        marginTop: 2
-      }),
-      menuList: base => ({
-        ...base,
-        // kill the white space on first and last option
-        padding: 2,
-        margin: 2
-      })
-    }),
-    // Add more styles as needed for other parts of the Select component
-  };
-
+const Recordedpyment = useSelector(recordPaymentReportDefaulter)
   const checkboxStyle = {
     border: '2px solid #3498db', // Set the border color (change #3498db to your desired color)
     borderRadius: '4px', // Optional: Add rounded corners for a nicer look
@@ -91,17 +51,84 @@ const ReportedDefaulterModel = props => {
   };
   const [salutations, setsalutations] = useState([
     { label: "Cash", value: "Cash" },
-    { label: "Credit Card", value: "Credit Card" },
-    { label: "Chaque", value: "Chaque" },
+
     { label: "Bank Transfer", value: "Bank Transfer" },
 
   ])
 
+  useEffect(()=>{
+    // dispatch()
+  },[])
+ const [amount , setAmount] = useState('')
+ const [date , setDate] = useState('')
+ const [payentMode , setPaymentMode] = useState('')
+ const [attachment , setAttachment] = useState('')
   
 
-  
+ const handleFileChange = (event) => {
+  const files = event.target.files
+  console.log("FILEEE", event.target.files)
+
+  const formData = new FormData();
+
+  formData.append('file', files[0]);   //append the values with key, value pair
+  formData.append('fieldName', "");
 
 
+  uploadFile(formData)
+
+
+}
+
+
+
+
+
+
+
+function uploadFile(formData) {
+  console.log("UPLOAD FILE", formData)
+  const token = localStorage.getItem("tokenemployeeRegister")
+  const headers = {
+    'x-access-token': token != null ? token : '',
+  };
+
+
+  axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
+    headers: headers
+  })
+    .then((response) => {
+ console.log("respo+++",response.data.response)
+ setAttachment(response.data.response/documentId)
+    })
+    .catch((error) => {
+      console.log("Response", error)
+
+    })
+}
+
+const handleSubmit=()=>{
+  const payload =[
+    {
+      "defaulterEntryId": selected.id,
+      "amtPaid": amount,
+      "requestor": "CREDITOR", // CREDITOR/DEBTOR
+      "paymentDate": date,
+      "paymentMode": payentMode,
+      "attachments": attachment.documentId,
+      "isDispute": false // make this flag as true whenever recording payment for a disputed transaction
+  }
+
+  ]
+  console.log("payloadpayload",payload)
+  dispatch(recoredPaymentReportDefault(payload[0]))
+  toggle()
+}
+const handleDateChange = (value) => {
+ const Dates = moment(value).format("YYYY-MM-DD")
+  setDate(Dates)
+};
+console.log("attachmentattachment",attachment)
   return (
     <Modal
       isOpen={isOpen}
@@ -114,16 +141,16 @@ const ReportedDefaulterModel = props => {
       toggle={toggle} 
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>Report A Defaulter</ModalHeader>
+        <ModalHeader toggle={toggle}>Record A Payment</ModalHeader>
       
       <ModalBody>
    
      <form>
      <Row className="selectionListss">
-       <Col xs={12} md={4}>
-         <div className="mb-2"><b className="mt-2">Customer Name*</b></div>
+       <Col md={3}>
+         <div className="mb-2"><b className="mt-2">Company Name*</b></div>
        </Col>
-       <Col xs={12} md={5}>
+       <Col md={5}>
          <div className="d-inline">
            <label
              className="visually-hidden custom-content"
@@ -143,17 +170,17 @@ const ReportedDefaulterModel = props => {
                        />
          </div>
        </Col>
-       <Col xs={12} md={3}>
+       <Col md={3}>
         
        </Col>
 
      </Row>
 
      <Row className="selectionListss">
-       <Col xs={12} md={4}>
-         <div className="mb-2"><b className="mt-2">Amount Recieved*</b></div>
+       <Col  md={3}>
+         <div className="mb-2"><b className="mt-2">Amount*</b></div>
        </Col>
-       <Col xs={12} md={5}>
+       <Col  md={5}>
          <div className="d-inline">
            <label
              className="visually-hidden custom-content"
@@ -166,39 +193,39 @@ const ReportedDefaulterModel = props => {
                          type="number"
                          id="customerEmail"
                          name="customerEmail"
-
-                       
+                         value={amount}
+                         onChange={(e)=>setAmount(e.target.value)}
                          placeholder="Amount Recieved"
                        />
                        
          </div>
        </Col>
-       <Col xs={12} md={3}>
+       <Col  md={3}>
         
        </Col>
 
      </Row>
      <Row style={{marginTop:"-5px"}}>
-     <Col xs={12} md={4}>
+     <Col  md={3}>
        </Col>
-       <Col xs={12} md={5}>
+       <Col  md={5}>
          <div className="d-inline">
          
-         <Input type="checkbox" className="" style={checkboxStyle} /> 
+         <Input type="checkbox" className="" style={checkboxStyle} onClick={()=>setAmount(selected.totalAmount)} /> 
 
-                       <span>Received full amount (90000)</span>
+                       <span>Full amount ({selected.totalAmount})</span>
          </div>
        </Col>
-       <Col xs={12} md={3}>
+       <Col  md={3}>
         
        </Col>
      </Row>
 
      <Row className="selectionListss">
-       <Col xs={12} md={2}>
+       <Col  md={3}>
          <div className="mb-2"><b className="mt-2">Payment Date*</b></div>
        </Col>
-       <Col xs={12} md={5}>
+       <Col  md={5}>
          <div className="d-inline">
            <label
              className="visually-hidden custom-content"
@@ -209,8 +236,10 @@ const ReportedDefaulterModel = props => {
 
            <DatePicker
                        selected={new Date()}
-                       // value={row.date}
-
+                       value={date}
+                       onChange={(date) =>
+                        handleDateChange(date)
+                      }
                        
                        dateFormat="dd-MMM-yyyy" // Format to display year, month, and day
                        className="form-control custom-content"
@@ -219,17 +248,17 @@ const ReportedDefaulterModel = props => {
                        
          </div>
        </Col>
-       <Col xs={12} md={3}>
+       <Col  md={3}>
         
        </Col>
 
      </Row>
 
      <Row className="selectionListss">
-       <Col xs={12} md={2}>
+       <Col  md={3}>
          <div className="mb-2"><b className="mt-2">Payment Mode*</b></div>
        </Col>
-       <Col xs={12} md={5}>
+       <Col  md={5}>
          <div className="d-inline">
            <label
              className="visually-hidden custom-content"
@@ -243,13 +272,13 @@ const ReportedDefaulterModel = props => {
                          className="custom-content"
                          options={salutations}
                          styles={colourStyles}
-                         // onChange={selected => setSelectedOption(selected)}
+                         onChange={selected => setPaymentMode(selected.value)}
                          placeholder="Cash"
                        />
                        
          </div>
        </Col>
-       <Col xs={12} md={3}>
+       <Col  md={3}>
         
        </Col>
 
@@ -258,10 +287,10 @@ const ReportedDefaulterModel = props => {
 
 
      <Row className="selectionListss">
-       <Col xs={12} md={2}>
+       <Col  md={3}>
          <div className="mb-2"><b className="mt-2">Attachment*</b></div>
        </Col>
-       <Col xs={12} md={5}>
+       <Col  md={5}>
          <div className="d-inline">
            <label
              className="visually-hidden custom-content"
@@ -273,18 +302,18 @@ const ReportedDefaulterModel = props => {
                        <input
                          type="file"
                          className="form-control"
-                         id="uploadPurchaseOrder"
+                         id=""
                          accept=".pdf, .doc, .docx, .txt"
                          aria-describedby="fileUploadHelp"
-                         // onChange={e =>
-                         //   handleFileChange(e, "uploadPurchaseOrder")
-                         // }
+                         onChange={e =>
+                          handleFileChange(e, "")
+                         }
                        />
                      </InputGroup>
                        
          </div>
        </Col>
-       <Col xs={12} md={3}>
+       <Col  md={3}>
         
        </Col>
 
@@ -296,14 +325,10 @@ const ReportedDefaulterModel = props => {
 
       </ModalBody>
         <ModalFooter>
-          {isProceed != true ?   <Button type="button" color="primary" onClick={()=>setisProceed(true)}>
+          <Button type="button" color="primary" onClick={()=>handleSubmit(true)}>
                       Submit
             </Button>
-            :
-            <Button type="button" color="primary" onClick={()=>handleProceed()}>
-                      Proceed
-            </Button>
-            }
+          
           <Button type="button" color="secondary" onClick={toggle}>
             Close
           </Button>
