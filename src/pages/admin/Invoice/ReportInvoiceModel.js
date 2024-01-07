@@ -302,9 +302,9 @@ const ReportedDefaulterModel = props => {
       "dueDate": moment(data[0].date).format("YYYY-MM-DD"),
       "percentage": "",
       "purchaseOrderDocument": "6595ca1d2f9f01a03ae5ab76",
-        "challanDocument": "6595ca1d2f9f01a03ae5ab76",
-        "invoiceDocument": "6595ca1d2f9f01a03ae5ab76",
-        "transportationDocument": "6595ca1d2f9f01a03ae5ab76",
+      "challanDocument": "6595ca1d2f9f01a03ae5ab76",
+      "invoiceDocument": "6595ca1d2f9f01a03ae5ab76",
+      "transportationDocument": "6595ca1d2f9f01a03ae5ab76",
       "allInvoiceListForPreview": data
 
     }]
@@ -432,7 +432,7 @@ const ReportedDefaulterModel = props => {
     setFaqsRow(faqsRow - 1)
   }
   const handleDateChange = (value, index) => {
-    console.log("VALUEYE",moment(value).format("YYYY-MM-DD"))
+    console.log("VALUEYE", moment(value).format("YYYY-MM-DD"))
     const newData = [...data]
     newData[index].date = moment(value).format("YYYY-MM-DD")
     setData(newData)
@@ -509,20 +509,21 @@ const ReportedDefaulterModel = props => {
 
   const calculateSubtotal = newData => {
     // Calculate the subtotal
-    newData.forEach(row => {
+
+    let totleamount = 0
+
+    newData.forEach((row, i) => {
+      debugger
       if (row.amount !== "") {
         const amountValue = parseFloat(row.amount)
         console.log("amountValueamountValue", typeof (amountValue))
 
-        if (!isNaN(amountValue)) {
-
-          setTotal(total + amountValue)
-        }
-        console.log("TOTOTL", total)
+        totleamount += amountValue
       }
 
 
     })
+    setTotal(totleamount)
 
   }
   console.log("newDat4545a ", data)
