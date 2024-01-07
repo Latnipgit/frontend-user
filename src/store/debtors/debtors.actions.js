@@ -28,7 +28,10 @@ import {
   REQUEST_INVOICE_DEF_EDIT_FAIL,
   ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
   ADD_INVOICE_REPORT_DEFAULTER_ASYNC_SUCCESS,
-  ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL,
+  RECORD_PAYMENT_REPORT_DEFAULT,
+  RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
+  RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -44,7 +47,7 @@ export const getAllInvoice = () => createAction(GET_INVOICE_LIST)
 export const getAllInvoiceSuccess = (data) => createAction(GET_INVOICE_LIST_SUCCESS, data)
 
 export const getAllInvoiceFail = (error) => createAction(GET_INVOICE_LIST_FAIL, error)
-
+ 
 
 
 
@@ -82,3 +85,7 @@ export const requestInvoiceDefEditFail = (data) => createAction(REQUEST_INVOICE_
 export const addInvoiceReportDefaulterInvoice = (data) => createAction(ADD_INVOICE_REPORT_DEFAULTER_ASYNC, data)
 export const addInvoiceReportDefaulterInvoiceSuccess = (data) => createAction(ADD_INVOICE_REPORT_DEFAULTER_ASYNC_SUCCESS, data)
 export const addInvoiceReportDefaulterInvoiceFail = (data) => createAction(ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL, data)
+
+export const recoredPaymentReportDefault = (data) => createAction(RECORD_PAYMENT_REPORT_DEFAULT, data)
+export const recoredPaymentReportDefaultSucccess = (data) => createAction(RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS, data)
+export const recoredPaymentReportDefaultFail = (data) => createAction(RECORD_PAYMENT_REPORT_DEFAULT_FAIL, data)

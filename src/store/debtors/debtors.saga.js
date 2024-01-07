@@ -15,7 +15,10 @@ UPLOAD_CA_CERTIFICATE_ID,
 UPLOAD_CA_CERTIFICATE_ID_FAIL,
 UPLOAD_CA_CERTIFICATE_ID_SUCCESS,
 REQUEST_INVOICE_DEF_EDIT,
-ADD_INVOICE_REPORT_DEFAULTER_ASYNC
+ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
+RECORD_PAYMENT_REPORT_DEFAULT,
+RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
+RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS
 } from "./debtors.actiontype";
 import {
 getAllDebtors,
@@ -40,14 +43,17 @@ requestInvoiceDefEditFail,
 requestInvoiceDefEditSuccess,
 addInvoiceReportDefaulterInvoice,
 addInvoiceReportDefaulterInvoiceFail,
-addInvoiceReportDefaulterInvoiceSuccess
+addInvoiceReportDefaulterInvoiceSuccess,
+recoredPaymentReportDefault,
+recoredPaymentReportDefaultFail,
+recoredPaymentReportDefaultSucccess
 
 } from "./debtors.actions";
 
 //Include Both Helper File with needed methods
 import { getAllDebtorsAPI } from "helpers/fakebackend_helper";
 import { getAllInvoiceList} from "helpers/fakebackend_helper";
-import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,requestAEdit, addInVoiceDefaulter} from "helpers/fakebackend_helper";
+import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,requestAEdit, addInVoiceDefaulter,recordPaymentAPIMethod} from "helpers/fakebackend_helper";
 
 
 function* fetchdebtors() {
@@ -122,6 +128,15 @@ function* addInvoiceReportDefSaga(payload) {
 }
 
 
+function* recordPaymentSaga(payload) {
+  try {
+    const response = yield call(recordPaymentAPIMethod, payload.payload)
+    yield put(recoredPaymentReportDefaultSucccess(response))
+  } catch (error) {
+    yield put(recoredPaymentReportDefaultFail(error))
+  }
+}
+
 function* debtorsSaga() {
   //  
   yield takeEvery(GET_DEBTORS, fetchdebtors)
@@ -132,6 +147,7 @@ function* debtorsSaga() {
   yield takeEvery(UPLOAD_CA_CERTIFICATE_ID, uploadCACertyifaicateSaga)
   yield takeEvery(REQUEST_INVOICE_DEF_EDIT, requestEditSaga)
   yield takeEvery(ADD_INVOICE_REPORT_DEFAULTER_ASYNC, addInvoiceReportDefSaga)
+  yield takeEvery(RECORD_PAYMENT_REPORT_DEFAULT, recordPaymentSaga)
 }
 
 export default debtorsSaga;

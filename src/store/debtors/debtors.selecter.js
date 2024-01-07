@@ -94,3 +94,7 @@ export const addRatingofDebtor = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.addRating
 )
+export const recordPaymentReportDefaulter = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.recordPaymentAddReportDef
+)
