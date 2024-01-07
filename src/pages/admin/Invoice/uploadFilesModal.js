@@ -93,14 +93,17 @@ function uploadFile(formData, index) {
 const dispatch = useDispatch()
 
 const handleSubmit =(item)=>{
+  // console.log("itemitemitemitem",item)
+
   const payload ={
     "invoiceId": item.invoiceNumber,
-    "purchaseOrderDocument": uploadpurchaseId,
-    "challanDocument": uploadChallanId,
-    "invoiceDocument": uploadInvoiceId,
-    "transportationDocument": uploadTransportId
+    "purchaseOrderDocument": uploadpurchaseId == ""?uploadpurchaseId:item.purchaseOrderDocument._id ,
+    "challanDocument": uploadChallanId == ""? uploadChallanId : item.challanDocument._id,
+    "invoiceDocument": uploadInvoiceId == ""?uploadInvoiceId : item.invoiceDocument._id,
+    "transportationDocument": uploadTransportId == ""? uploadTransportId : item.transportationDocument._id
 }
 console.log("itemitemitemitem",payload)
+
 dispatch(updatePendingDocumentss(payload))
 }
   return (
