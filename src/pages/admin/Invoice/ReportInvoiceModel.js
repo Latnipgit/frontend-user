@@ -282,7 +282,7 @@ const ReportedDefaulterModel = props => {
 
   const submitInvoice = () => {
     calculateSubtotal(data)
-    debugger;
+
     const date = moment()
     const dummy = [{
       "debtorId": selectedOption.value,
@@ -310,7 +310,7 @@ const ReportedDefaulterModel = props => {
 
     }]
     if (uploadInvoiceId != "" && data[0].amount != "" && data[0].itemDetail != "") {
-
+      setisDisabled(false)
       setallInvoiceList(dummy)
       toast.success("Invoice Add Successfully")
       // const val = { "InvoiceId": InvoiceAddData.debtorId }
@@ -377,8 +377,6 @@ const ReportedDefaulterModel = props => {
     setData(newData)
   }
   const handleAmountChange = (index, value) => {
-
-    setisDisabled(false)
 
     const newData = [...data]
     newData[index].amount = value
