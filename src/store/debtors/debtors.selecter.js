@@ -98,3 +98,8 @@ export const recordPaymentReportDefaulter = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.recordPaymentAddReportDef
 )
+
+export const updatePendingDocsSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.updatePendingDocs
+)
