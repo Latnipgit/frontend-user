@@ -12,15 +12,15 @@ const dateFormat = (date, format) => {
 };
 const toLowerCase1 = str => {
     return (
-      str === "" || str === undefined ? "" : str.toLowerCase()
+        str === "" || str === undefined ? "" : str.toLowerCase()
     );
-  };
+};
 
 const CheckBox = (cell) => {
     return cell.value ? cell.value : '';
 };
 
-const DueAmount= (cell) => {
+const DueAmount = (cell) => {
     return cell.value ? cell.value : '';
 };
 
@@ -43,7 +43,7 @@ const PANCARD = (cell) => {
 const daysSinceReference = (cellValue, referenceDate) => {
     if (cellValue) {
         const currentDate = new Date(cellValue);
-        const timeDifference = referenceDate-currentDate;
+        const timeDifference = referenceDate - currentDate;
         const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
         return daysDifference;
     }
@@ -51,13 +51,12 @@ const daysSinceReference = (cellValue, referenceDate) => {
 };
 
 const DueSince = (cell) => {
-          
+    /*  const [startDate, setStartDate] = useState(new Date('1965-04-05')); */
     //const startDate = new Date('2019-10-07'); // October 7, 2019
     const today = new Date(); // Current date
-    
+    // const currentDate = moment(today).format('YYYY-MM-DD')
     const daysSince = daysSinceReference(cell.value, today);
-    console.log(daysSince);
-    
+
     let badgeClassName = "font-size-11 badge ";
     if (daysSince > 1 && daysSince < 800) {
         badgeClassName += "bg-success text-white";
@@ -66,20 +65,28 @@ const DueSince = (cell) => {
     } else {
         badgeClassName += "bg-danger text-white";
     }
-    const formattedDate = new Date(cell.value).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
+    /*     const formattedDate = new Date(cell.value).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        }); */
 
+    const newDate = cell.value.split("-").reverse().join("-");
+    const currentDate = new Date(newDate);
+
+    const calculateDateDifference = () => {
+        const differenceInMilliseconds = today - currentDate;
+        const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+        return differenceInDays;
+    };
     const divStyle = {
         padding: '3px' // Adjust the padding value as needed
     };
 
     return (
         <span className={badgeClassName}>
-            <div style={divStyle}>({daysSince} days)</div>
-            <div style={divStyle}>{formattedDate}</div>
+            <div style={divStyle}>({calculateDateDifference()} days)</div>
+            <div style={divStyle}>{cell.value}</div>
         </span>
     );
 };
@@ -93,5 +100,5 @@ export {
     CompanyName,
     DueSince,
     DueAmount,
-    
+
 };
