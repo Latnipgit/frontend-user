@@ -121,6 +121,11 @@ const Dashboard = props => {
               {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}
               {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
 <ReactTooltip id="toolTip1" /> */}
+              <Button style={{ float: 'right' }} className="'btn btn-info " onClick={() => {
+                window.location.href = companiesURL;
+              }}>
+                Back
+              </Button>
             </Col>
           </Row>
           {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} /> : ""}
@@ -165,7 +170,6 @@ const Dashboard = props => {
 }
 
 const FilterData = ({ GetAllInvoicedata }) => {
-  debugger
   return (
     <>
       {GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
