@@ -277,7 +277,7 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
             <br />
             {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
 
-          <td className="pt-4 text-end">
+          <td className="pt-4">
             <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
           </td>
@@ -289,7 +289,7 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
               <div className=" text-center bg-success rounded text-light">
                 <div className="text-capitalize">
 
-                  {getDaysArray && (getDaysArray[index])}  &nbsp;
+                  {getDaysArray[index]}  &nbsp;
 
 
                   <span className="ml-1">Days</span> </div>

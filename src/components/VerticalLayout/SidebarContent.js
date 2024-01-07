@@ -199,12 +199,12 @@ const SidebarContent = props => {
                     <i className='bx bxs-report'></i>
                     {props.t("Report A Defaulter")}
                   </Link>
-                 
+
                 </li>
                 <li>
-                <Link to="/Report-me-defaulter">
+                  <Link to="/Report-me-defaulter">
                     <i className='bx bx-shield-quarter'></i>
-                    {props.t("Report me as a Defaulter")}
+                    {props.t("Report Me As a Defaulter")}
                   </Link>
                 </li>
 

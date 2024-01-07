@@ -40,11 +40,13 @@ import { withTranslation } from "react-i18next"
 
 //redux
 import { useSelector, useDispatch } from "react-redux"
+import CurrencyFormat from 'react-currency-format';
 // import { Creditor } from "pages/admin/DisputedBillings/disputedCol";
 
 const Dashboard = props => {
   const [subscribemodal, setSubscribemodal] = useState(false)
   const [filteredData, setFilteredData] = useState([]);
+  const [getDaysArray, setgetDaysArray] = useState([]);
   const dispatch = useDispatch();
 
   const renderStarRating = rating => {
@@ -73,6 +75,7 @@ const Dashboard = props => {
   const GetAllInvoice = useSelector(selectInvoiceList)
   useEffect(() => {
     dispatch(getAllInvoice());
+    getDays()
   }, [])
 
   useEffect(() => {
@@ -99,6 +102,19 @@ const Dashboard = props => {
 
 
   };
+
+  const getDays = () => {
+    GetAllInvoice != undefined ? GetAllInvoice.map((item) => {
+      const a = moment(item.invoices[0].dueDate);
+      const b = moment()
+      const c = moment(b).diff(a)
+      const d = moment.duration(c)
+      if (getDaysArray.length != GetAllInvoice.length) {
+        getDaysArray.push(d.days())
+
+      }
+    }) : []
+  }
 
   document.title = "Dashboard | Bafana"
   const companiesURL = "/companies"
@@ -158,7 +174,7 @@ const Dashboard = props => {
               <tbody>
                 {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
                 {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
-                {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} /> : <FilterData GetAllInvoicedata={GetAllInvoice} />}
+                {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} /> : <FilterData GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} />}
               </tbody>
             </table>
 
@@ -169,12 +185,10 @@ const Dashboard = props => {
   )
 }
 
-const FilterData = ({ GetAllInvoicedata }) => {
+const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
   return (
     <>
       {GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
-
-        let newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
         return <tr key={item}>
           {console.log("NEW TABLE ", item)}
 
@@ -184,9 +198,21 @@ const FilterData = ({ GetAllInvoicedata }) => {
           <td>
             {item.debtor.address1}, {item.debtor.address2}
           </td>
-          <td className="pt-4">{item.totalAmount}</td>
+          <td className="pt-4"><CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /></td>
           <td>
-            {newDate}
+            <div className="" style={{ padding: "2px 15px" }}>
+
+              <div className=" text-center bg-success rounded text-light">
+                <div className="text-capitalize">
+
+                  {getDaysArray[index]}  &nbsp;
+
+
+                  <span className="ml-1">Days</span> </div>
+                <div className="text-capitalize" >{moment(item.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
+              </div>
+            </div>
+            {/*  {newDate} */}
           </td>
           <td>
             <td className={item.status == undefined ? 'text-success' : 'text-danger'}>{item.status == undefined ? "Approved" : item.status}</td>
