@@ -41,9 +41,10 @@ import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
-import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen,requestInvoiceDefEdit } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen,requestEditSelector } from "store/debtors/debtors.selecter"
+import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit } from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector } from "store/debtors/debtors.selecter"
 import UploadPendingFiles from "./uploadFilesModal"
+import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
 
 import './style.css'
@@ -243,13 +244,14 @@ const ReportDebtor = props => {
   );
 
   const additionalValue = "Hello from additional prop!";
-const [invoiceIdsForCAcertificate , setinvoiceIdsForCAcertificate] =useState('')
+  const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
+  const [filteredData, setFilteredData] = useState([]);
   const handleReportDefaulter = () => {
     // window.location.href = "/ReportDefaulter"
     //setModal4(true)
     dispatch(setIsReportDefOpen(!isReportDefOpen))
   }
-const [uploadFilesModelDataForUpload , setuploadFilesModelDataForUpload] =useState('')
+  const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
 
   const handleUploadFiles = (item) => {
     setuploadFilesModelDataForUpload(item)
@@ -270,23 +272,36 @@ const [uploadFilesModelDataForUpload , setuploadFilesModelDataForUpload] =useSta
   }
   console.log("ABABABABABAB 2", getDaysArray)
 
-  const requestEdit =(item)=>{
+  const requestEdit = (item) => {
 
-    console.log("ITEMMMMM",item.invoices[0].invoiceNumber)
-    const payload={
+    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
+    const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
+    }
+
+    dispatch(requestInvoiceDefEdit(payload))
   }
 
-dispatch(requestInvoiceDefEdit(payload))
-  }
+  const handleFilterdata = (filters) => {
+    if (GetAllInvoice) {
+      if (filters === "") {
+        setFilteredData(GetAllInvoice)
+      } else {
+        const filteredResults = GetAllInvoice.filter(item => {
+          return item.debtor.companyName.toLocaleLowerCase().includes(filters);
+        });
+        setFilteredData(filteredResults);
+      }
+    }
+  };
 
   return (
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
-      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} customerName={invoiceIdsForCAcertificate}/>
+      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} customerName={invoiceIdsForCAcertificate} />
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
-      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload}/>
+      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
 
       <Card>
         <CardBody>
@@ -306,7 +321,7 @@ dispatch(requestInvoiceDefEdit(payload))
 <ReactTooltip id="toolTip1" /> */}
             </Col>
           </Row>
-
+          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
           <Row className="p-4  ml-5">
             {/* <br/> */}
 
@@ -332,111 +347,8 @@ dispatch(requestInvoiceDefEdit(payload))
                 </tr>
               </thead>
               <tbody>
-                {console.log("GetAllInvoiceGetAllInvoice",GetAllInvoice)}
-                {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{
-                {/* {dummyData != undefined ? dummyData.map((item, index) => { */}
-
-
-                  return <tr key={item}>
-                    {console.log("NEW TABLE ", item.remainingAmount)}
-
-                    <th scope="row" className="pt-4">{index + 1}</th>
-                    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-                    <td className="pt-4">{item.invoices.map((item)=>{
-                      return <span key={item}>{item.invoiceNumber}, &nbsp;</span> 
-                    })}</td>
-                  
-                    <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
-    <br/>
-    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
-                 
-                    <td className="pt-4 text-end">
-      <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
-
-    </td>
-
-                    <td >
-   
-    <div className="" style={{ padding:"2px 15px"}}>
-      
-  <div className=" text-center bg-success rounded text-light">
-    <div className="text-capitalize">
-      
-       {getDaysArray[index]}  &nbsp;
-
-
-       <span className="ml-1">Days</span> </div>
-    <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
-  </div>
-</div>
-           
-    </td>
-                   
-                    <td>
-                      <div className="pt-2">
-                        <Button className="btn btn-info btn-sm "
-                          onClick={() => viewModel(item)
-
-                          }
-
-                        >
-                          <i className='bx bx-wallet-alt textsizing' ></i>
-                        </Button>
-
-                        <a>
-                        </a>
-                        &nbsp;
-
-                        <Button className="btn btn-info btn-sm"
-                        onClick={() => requestEdit(item)
-
-                        }
-                        >
-                          <i className='bx bx-edit textsizing' ></i>
-                        </Button>
-
-                        &nbsp;
-
-                        <Button className="btn btn-info btn-sm"
-                          onClick={() => handleUploadFiles(item)
-
-                          }
-                        >
-                          <i className='bx bx-cloud-upload textsizing' ></i>
-
-
-                        </Button>
-
-                        &nbsp;
-                        <Button className="btn btn-info btn-sm"
-                          onClick={() => {toggleViewModal2()
-                            setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                          }
-
-                          }
-                        >
-                          <i className='bx bx-file textsizing' ></i>
-                        </Button>
-
-
-                      </div>
-                    </td>
-                    {/* <td>
-    <div className="pt-2">
-            <Button className="btn btn-info btn-sm"
-              onClick={() => viewModels()
-               
-              }
-            >
-           Upload Document
-            </Button>
-  
-          </div>
-    </td> */}
-                  </tr>
-                }) : ''}
-
-
+                {console.log("GetAllInvoiceGetAllInvoice", GetAllInvoice)}
+                {filteredData.length >= 0 ? <ReportDefulterTable GetAllInvoicedata={filteredData} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
               </tbody>
             </table>
 
@@ -445,6 +357,120 @@ dispatch(requestInvoiceDefEdit(payload))
       </Card>
     </React.Fragment>
   );
+}
+
+const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handleUploadFiles, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray }) => {
+
+  return (
+    <>
+      {
+        GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
+          {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
+
+
+          return <tr key={item}>
+            {console.log("NEW TABLE ", item.remainingAmount)}
+
+            <th scope="row" className="pt-4">{index + 1}</th>
+            <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+            <td className="pt-4">{item.invoices.map((item) => {
+              return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
+            })}</td>
+
+            <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+              <br />
+              {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
+
+            <td className="pt-4 text-end">
+              <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+
+            </td>
+
+            <td >
+
+              <div className="" style={{ padding: "2px 15px" }}>
+
+                <div className=" text-center bg-success rounded text-light">
+                  <div className="text-capitalize">
+
+                    {getDaysArray[index]}  &nbsp;
+
+
+                    <span className="ml-1">Days</span> </div>
+                  <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
+                </div>
+              </div>
+
+            </td>
+
+            <td>
+              <div className="pt-2">
+                <Button className="btn btn-info btn-sm "
+                  onClick={() => viewModel(item)
+
+                  }
+
+                >
+                  <i className='bx bx-wallet-alt textsizing' ></i>
+                </Button>
+
+                <a>
+                </a>
+                &nbsp;
+
+                <Button className="btn btn-info btn-sm"
+                  onClick={() => requestEdit(item)
+
+                  }
+                >
+                  <i className='bx bx-edit textsizing' ></i>
+                </Button>
+
+                &nbsp;
+
+                <Button className="btn btn-info btn-sm"
+                  onClick={() => handleUploadFiles(item)
+
+                  }
+                >
+                  <i className='bx bx-cloud-upload textsizing' ></i>
+
+
+                </Button>
+
+                &nbsp;
+                <Button className="btn btn-info btn-sm"
+                  onClick={() => {
+                    toggleViewModal2()
+                    setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                  }
+
+                  }
+                >
+                  <i className='bx bx-file textsizing' ></i>
+                </Button>
+
+
+              </div>
+            </td>
+            {/* <td>
+<div className="pt-2">
+<Button className="btn btn-info btn-sm"
+onClick={() => viewModels()
+ 
+}
+>
+Upload Document
+</Button>
+
+</div>
+</td> */}
+          </tr>
+        }) : ''
+      }
+    </>
+  )
+
 }
 
 export default withRouter(ReportDebtor)

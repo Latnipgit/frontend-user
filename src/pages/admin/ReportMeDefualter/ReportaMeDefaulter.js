@@ -154,9 +154,7 @@ const ReportMedefulterComponent = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} />}
-
-
+                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} />}
               </tbody>
             </table>
 
@@ -167,7 +165,7 @@ const ReportMedefulterComponent = props => {
   );
 }
 
-const ReportMeDefulterList = ({ selectReportMeDeflistData }) => {
+const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate }) => {
   return (
     <>
       {selectReportMeDeflistData != undefined ? selectReportMeDeflistData.map((item, index) => {

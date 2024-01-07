@@ -245,7 +245,7 @@ const DiputedBillings = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <RecordPaymentList GetAllInvoicedata={filteredData} /> : <RecordPaymentList GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} />}
+                {filteredData.length >= 0 ? <RecordPaymentList GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} /> : <RecordPaymentList GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} />}
 
               </tbody>
             </table>
@@ -258,7 +258,7 @@ const DiputedBillings = props => {
 };
 
 
-const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray }) => {
+const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate }) => {
   debugger
   return (
     <>
@@ -267,8 +267,6 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray }) => {
 
 
         return <tr key={item}>
-          {console.log("NEW TABLE ", item.remainingAmount)}
-
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
           <td className="pt-4">{item.invoices.map((item) => {
