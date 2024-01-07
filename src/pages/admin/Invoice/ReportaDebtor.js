@@ -381,7 +381,7 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
               <br />
               {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
 
-            <td className="pt-4 text-end">
+            <td className="pt-4">
               <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
             </td>

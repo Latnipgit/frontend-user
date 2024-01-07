@@ -19,6 +19,7 @@ import { selectReportMeDefData } from "store/ReportMeDefulter/ReportMeDefulter.s
 import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
+import CurrencyFormat from "react-currency-format"
 import moment from 'moment'
 
 const ReportMedefulterComponent = props => {
@@ -26,6 +27,7 @@ const ReportMedefulterComponent = props => {
   const [modal2, setModal2] = useState(false);
   const [modal3, setModal3] = useState(false);
   const [selected, setSelected] = useState('');
+  const [getDaysArray, setgetDaysArray] = useState([]);
   const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
   const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
   const [filteredData, setFilteredData] = useState([]);
@@ -43,6 +45,7 @@ const ReportMedefulterComponent = props => {
 
   useEffect(() => {
     dispatch(fetchReportMeDefulterStart())
+    getDays()
   }, [])
 
   const viewModel = (value) => {
@@ -117,6 +120,18 @@ const ReportMedefulterComponent = props => {
     }
   };
 
+  const getDays = () => {
+    selectReportMeDeflist != undefined ? selectReportMeDeflist.map((item) => {
+      const a = moment(item.invoices[0].dueDate);
+      const b = moment()
+      const c = moment(b).diff(a)
+      const d = moment.duration(c)
+      if (getDaysArray.length != selectReportMeDeflist.length) {
+        getDaysArray.push(d.days())
+
+      }
+    }) : []
+  }
 
   const additionalValue = "Hello from additional prop!";
   return (
@@ -154,7 +169,7 @@ const ReportMedefulterComponent = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} />}
+                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
               </tbody>
             </table>
 
@@ -165,12 +180,10 @@ const ReportMedefulterComponent = props => {
   );
 }
 
-const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate }) => {
+const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray }) => {
   return (
     <>
       {selectReportMeDeflistData != undefined ? selectReportMeDeflistData.map((item, index) => {
-
-        const newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
         return <tr key={item}>
           {console.log("NEW TABLE ", item)}
           <th scope="row" className="pt-4">{index + 1}</th>
@@ -179,9 +192,21 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
           <td>
             {item.debtor.address1}<br />{item.debtor.address2}
           </td>
-          <td className="pt-4">{item.totalAmount}</td>
+          <td className="pt-4">
+            <CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /></td>
           <td>
-            {newDate}
+            <div className="" style={{ padding: "2px 15px" }}>
+
+              <div className=" text-center bg-success rounded text-light">
+                <div className="text-capitalize">
+
+                  {getDaysArray[index]}  &nbsp;
+
+
+                  <span className="ml-1">Days</span> </div>
+                <div className="text-capitalize" >{moment(item.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
+              </div>
+            </div>
           </td>
           <td>
             <div className="pt-2">
