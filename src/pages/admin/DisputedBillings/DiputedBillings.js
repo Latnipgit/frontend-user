@@ -20,6 +20,7 @@ import CurrencyFormat from 'react-currency-format';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Disputeddata } from "../../../common/data/disputedData";
+import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet";
 import {
 
   Col,
@@ -41,6 +42,7 @@ const DiputedBillings = props => {
   const [modal2, setModal2] = useState(false);
   const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
   const [getDaysArray, setgetDaysArray] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   const dispatch = useDispatch();
   const toggleViewModal = () => setModal1(!modal1);
@@ -141,8 +143,7 @@ const DiputedBillings = props => {
     }) : []
     console.log("ABABABABABAB", getDaysArray)
   }
-  console.log("ABABABABABAB 2", getDaysArray)
-
+  console.log("ABABABABABAB", getDaysArray)
   const requestEdit = (item) => {
 
     console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
@@ -183,13 +184,27 @@ const DiputedBillings = props => {
 
   const getDebtrosList = getDebtrosLists(GetAllDebtors)
 
+  const handleFilterdata = (filters) => {
+    if (GetAllInvoice) {
+      if (filters === "") {
+        setFilteredData(GetAllInvoice)
+      } else {
+        const filteredResults = GetAllInvoice.filter(item => {
+          return item.debtor.companyName.toLocaleLowerCase().includes(filters);
+        });
+        setFilteredData(filteredResults);
+      }
+    }
+
+
+  };
 
   return (
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} customerName={invoiceIdsForCAcertificate} />
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
-      <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} />
+      {/*       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} /> */}
 
       <Card>
         <CardBody>
@@ -204,7 +219,7 @@ const DiputedBillings = props => {
               <h5 className="m-1">Recieved Payment</h5>
             </Col>
           </Row>
-
+          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
           <Row className="p-4  ml-5">
             {/* <br/> */}
 
@@ -230,62 +245,78 @@ const DiputedBillings = props => {
                 </tr>
               </thead>
               <tbody>
-                {console.log("GetAllInvoiceGetAllInvoice", GetAllInvoice)}
-                {GetAllInvoice != undefined ? GetAllInvoice.map((item, index) => {
-                  {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
+                {filteredData.length >= 0 ? <RecordPaymentList GetAllInvoicedata={filteredData} /> : <RecordPaymentList GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} />}
+
+              </tbody>
+            </table>
+
+          </Row>
+        </CardBody>
+      </Card>
+    </React.Fragment>
+  );
+};
 
 
-                  return <tr key={item}>
-                    {console.log("NEW TABLE ", item.remainingAmount)}
-
-                    <th scope="row" className="pt-4">{index + 1}</th>
-                    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-                    <td className="pt-4">{item.invoices.map((item) => {
-                      return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
-                    })}</td>
-
-                    <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
-                      <br />
-                      {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
-
-                    <td className="pt-4 text-end">
-                      <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
-
-                    </td>
-
-                    <td >
-
-                      <div className="" style={{ padding: "2px 15px" }}>
-
-                        <div className=" text-center bg-success rounded text-light">
-                          <div className="text-capitalize">
-
-                            {getDaysArray[index]}  &nbsp;
+const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray }) => {
+  debugger
+  return (
+    <>
+      {GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
+        {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
 
 
-                            <span className="ml-1">Days</span> </div>
-                          <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
-                        </div>
-                      </div>
+        return <tr key={item}>
+          {console.log("NEW TABLE ", item.remainingAmount)}
 
-                    </td>
+          <th scope="row" className="pt-4">{index + 1}</th>
+          <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+          <td className="pt-4">{item.invoices.map((item) => {
+            return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
+          })}</td>
 
-                    <td>
-                      <div className="pt-2">
-                        <Button className="btn btn-info btn-sm "
-                          onClick={() => viewModel(item)
+          <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+            <br />
+            {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
 
-                          }
+          <td className="pt-4 text-end">
+            <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
-                        >
-                          <i className='bx bx-wallet-alt textsizing' ></i>
-                        </Button>
+          </td>
 
-                        <a>
-                        </a>
-                        &nbsp;
+          <td >
 
-                        <Button className="btn btn-info btn-sm"
+            <div className="" style={{ padding: "2px 15px" }}>
+
+              <div className=" text-center bg-success rounded text-light">
+                <div className="text-capitalize">
+
+                  {getDaysArray && (getDaysArray[index])}  &nbsp;
+
+
+                  <span className="ml-1">Days</span> </div>
+                <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
+              </div>
+            </div>
+
+          </td>
+
+          <td>
+            <div className="pt-2">
+              <Button className="btn btn-info btn-sm "
+                onClick={() => viewModel(item)
+
+                }
+
+              >
+                <i className='bx bx-wallet-alt textsizing' ></i>
+              </Button>
+
+              <a>
+              </a>
+              &nbsp;
+
+              {/*                    <Button className="btn btn-info btn-sm"
                           onClick={() => requestEdit(item)
 
                           }
@@ -293,34 +324,34 @@ const DiputedBillings = props => {
                           <i className='bx bx-edit textsizing' ></i>
                         </Button>
 
-                        &nbsp;
+                        &nbsp; */}
 
-                        <Button className="btn btn-info btn-sm"
-                          onClick={() => handleUploadFiles()
+              <Button className="btn btn-info btn-sm"
+              /*  onClick={() => handleUploadFiles()
 
-                          }
-                        >
-                          <i className='bx bx-cloud-upload textsizing' ></i>
-
-
-                        </Button>
-
-                        &nbsp;
-                        <Button className="btn btn-info btn-sm"
-                          onClick={() => {
-                            toggleViewModal2()
-                            setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                          }
-
-                          }
-                        >
-                          <i className='bx bx-file textsizing' ></i>
-                        </Button>
+               } */
+              >
+                <i className='bx bx-message textsizing' ></i>
 
 
-                      </div>
-                    </td>
-                    {/* <td>
+              </Button>
+
+              &nbsp;
+              <Button className="btn btn-info btn-sm"
+                onClick={() => {
+                  toggleViewModal2()
+                  setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                }
+
+                }
+              >
+                <i className='bx bx-file textsizing' ></i>
+              </Button>
+
+
+            </div>
+          </td>
+          {/* <td>
     <div className="pt-2">
             <Button className="btn btn-info btn-sm"
               onClick={() => viewModels()
@@ -332,19 +363,11 @@ const DiputedBillings = props => {
   
           </div>
     </td> */}
-                  </tr>
-                }) : ''}
-
-
-              </tbody>
-            </table>
-
-          </Row>
-        </CardBody>
-      </Card>
-    </React.Fragment>
-  );
-};
+        </tr>
+      }) : ''}
+    </>
+  )
+}
 
 DiputedBillings.propTypes = {
   orders: PropTypes.array,

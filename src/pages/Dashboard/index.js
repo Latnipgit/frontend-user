@@ -33,6 +33,7 @@ import {
   sampleRepetedDebtors,
 } from "components/graph-components/debtors.componet"
 import { searchCompany as onsearchCompany } from "../../../src/store/actions";
+import { CompanySerchForm } from "pages/admin/ApprovedTransaction/companySearchComponet"
 
 //i18n
 import { withTranslation } from "react-i18next"
@@ -43,6 +44,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 const Dashboard = props => {
   const [subscribemodal, setSubscribemodal] = useState(false)
+  const [filteredData, setFilteredData] = useState([]);
   const dispatch = useDispatch();
 
   const renderStarRating = rating => {
@@ -83,6 +85,21 @@ const Dashboard = props => {
     setSubscribemodal(false)
   }
 
+  const handleFilterdata = (filters) => {
+    if (GetAllInvoice) {
+      if (filters === "") {
+        setFilteredData(GetAllInvoice)
+      } else {
+        const filteredResults = GetAllInvoice.filter(item => {
+          return item.debtor.companyName.toLocaleLowerCase().includes(filters);
+        });
+        setFilteredData(filteredResults);
+      }
+    }
+
+
+  };
+
   document.title = "Dashboard | Bafana"
   const companiesURL = "/companies"
 
@@ -104,8 +121,14 @@ const Dashboard = props => {
               {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}
               {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
 <ReactTooltip id="toolTip1" /> */}
+              <Button style={{ float: 'right' }} className="'btn btn-info " onClick={() => {
+                window.location.href = companiesURL;
+              }}>
+                Back
+              </Button>
             </Col>
           </Row>
+          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
 
           <Row className="p-4  ml-5">
             {/* <br/> */}
@@ -133,75 +156,9 @@ const Dashboard = props => {
                 </tr>
               </thead>
               <tbody>
+                {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
                 {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
-                {GetAllInvoice != undefined ? GetAllInvoice.map((item, index) => {
-
-                  let newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
-                  return <tr key={item}>
-                    {console.log("NEW TABLE ", item)}
-
-                    <th scope="row" className="pt-4">{index + 1}</th>
-                    {/* <td className="pt-4 text-capitalize">{item.debtor.companyName}</td> */}
-                    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-                    {/* <td className="pt-4">{item.referenceNumber}</td> */}
-                    <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-                    {/* <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
-    <br/>
-    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td> */}
-                    <td>
-                      {item.debtor.address1}, {item.debtor.address2}
-                    </td>
-                    <td className="pt-4">{item.totalAmount}</td>
-                    {/* <td className="pt-4 text-end">
-      <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
-
-    </td> */}
-
-                    {/* <td >
-   
-    <div className="" style={{ padding:"2px 15px"}}>
-      
-  <div className=" text-center bg-success rounded text-light">
-    <div className="text-capitalize">
-      
-       {getDaysArray[index]}  &nbsp;
-
-
-       <span className="ml-1">Days</span> </div>
-    <div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
-  </div>
-</div>
-           
-    </td> */}
-                    <td>
-                      {newDate}
-                    </td>
-                    <td>
-                      <td className={item.status == undefined ? 'text-success' : 'text-danger'}>{item.status == undefined ? "Approved" : item.status}</td>
-                    </td>
-                    {/* <td>
-                              <span className="text-success">
-                  {cellProps.row.original.status}
-                </span>
-              ) : (
-                <span className="text-danger">
-                  {cellProps.row.original.status}
-                </span>
-    <div className="pt-2">
-            <Button className="btn btn-info btn-sm"
-              onClick={() => viewModels()
-               
-              }
-            >
-           Upload Document
-            </Button>
-  
-          </div>
-    </td> */}
-                  </tr>
-                }) : ''}
-
-
+                {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} /> : <FilterData GetAllInvoicedata={GetAllInvoice} />}
               </tbody>
             </table>
 
@@ -211,6 +168,35 @@ const Dashboard = props => {
     </React.Fragment>
   )
 }
+
+const FilterData = ({ GetAllInvoicedata }) => {
+  return (
+    <>
+      {GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
+
+        let newDate = moment.utc(item.invoices[0].dueDate).format('DD-MM-YY');
+        return <tr key={item}>
+          {console.log("NEW TABLE ", item)}
+
+          <th scope="row" className="pt-4">{index + 1}</th>
+          <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+          <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
+          <td>
+            {item.debtor.address1}, {item.debtor.address2}
+          </td>
+          <td className="pt-4">{item.totalAmount}</td>
+          <td>
+            {newDate}
+          </td>
+          <td>
+            <td className={item.status == undefined ? 'text-success' : 'text-danger'}>{item.status == undefined ? "Approved" : item.status}</td>
+          </td>
+        </tr>
+      }) : ''}
+    </>
+  )
+}
+
 
 Dashboard.propTypes = {
   t: PropTypes.any,
