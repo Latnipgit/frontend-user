@@ -13,14 +13,16 @@ import {
   CardBody,
 } from "reactstrap"
 import { useDispatch, useSelector } from "react-redux";
-import { setUploadFilesOpen, setCACertificateOpen } from "../../../store/debtors/debtors.actions"
-import { uploadFilesModalOpen, selectCACertificateOpen } from "store/debtors/debtors.selecter"
+import { setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen } from "../../../store/debtors/debtors.actions"
+import { uploadFilesModalOpen, selectCACertificateOpen, isViewDetailMOdalOpenSelector } from "store/debtors/debtors.selecter"
 import { selectReportMeDefData } from "store/ReportMeDefulter/ReportMeDefulter.selecter"
 import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import CurrencyFormat from "react-currency-format"
 import moment from 'moment'
+import { ToastContainer, toast } from 'react-toastify';
+import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultModal"
 
 const ReportMedefulterComponent = props => {
   const [modal1, setModal1] = useState(false);
@@ -28,6 +30,7 @@ const ReportMedefulterComponent = props => {
   const [modal3, setModal3] = useState(false);
   const [selected, setSelected] = useState('');
   const [getDaysArray, setgetDaysArray] = useState([]);
+  const [viewModalData, setViewModalData] = useState('');
   const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
   const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
   const [filteredData, setFilteredData] = useState([]);
@@ -39,12 +42,16 @@ const ReportMedefulterComponent = props => {
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
 
+  const isViewDetailModal = useSelector(isViewDetailMOdalOpenSelector);
+  const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
+
 
   const selectReportMeDeflist = useSelector(selectReportMeDefData)
   console.log("reportMeDefulter", selectReportMeDeflist);
 
   useEffect(() => {
     dispatch(fetchReportMeDefulterStart())
+    dispatch(setIsViewDetailModalOpen())
     getDays()
   }, [])
 
@@ -133,12 +140,32 @@ const ReportMedefulterComponent = props => {
     }) : []
   }
 
+  const requestEdit = (item) => {
+
+    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
+    const payload = {
+      "invoiceId": item.invoices[0].invoiceNumber
+    }
+
+    dispatch(requestInvoiceDefEdit(payload))
+    toast.success("Edit Request Sent Successfully")
+  }
+
+  const handleViewDetail = (item) => {
+
+    // window.location.href = "/ReportDefaulter"
+    //setModal4(true)
+    setViewModalData(item)
+    dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
+
+  }
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} additionalValue={additionalValue} selected={selected} />
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       {/* <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
+      <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
 
       <Card>
         <CardBody>
@@ -169,7 +196,7 @@ const ReportMedefulterComponent = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
+                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} handleViewDetail={handleViewDetail} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} handleViewDetail={handleViewDetail} />}
               </tbody>
             </table>
 
@@ -180,7 +207,7 @@ const ReportMedefulterComponent = props => {
   );
 }
 
-const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray }) => {
+const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, handleViewDetail }) => {
   return (
     <>
       {selectReportMeDeflistData != undefined ? selectReportMeDeflistData.map((item, index) => {
@@ -210,56 +237,96 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
           </td>
           <td>
             <div className="pt-2">
-              <Button className="btn btn-info btn-sm "
-                onClick={() => viewModel(item)
+              {/* <Button className="btn btn-info btn-sm "
+                  onClick={() => viewModel(item)
 
-                }
+                  }
 
-              >
+                >
+               
+                </Button> */}
+
+
+              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Record Payment" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => viewModel(item)
+
+                }>
                 <i className='bx bx-wallet-alt textsizing' ></i>
-              </Button>
-
-              <a>
-              </a>
-              &nbsp;
-
-              {/*                        <Button className="btn btn-info btn-sm"
-      // onClick={() => viewModels()
-
-      // }
-      >
-        <i className='bx bx-edit textsizing' ></i>
-      </Button> */}
+              </button>
 
               &nbsp;
 
-              <Button className="btn btn-info btn-sm"
-              /*         onClick={() => handleUploadFiles()
-        
-                      } */
-              >
-                <i className='bx bx-message textsizing' ></i>
+              {/* <Button className="btn btn-info btn-sm"
+                  onClick={() => requestEdit(item)
 
+                  }
+                >
+                  <i className='bx bx-edit textsizing' ></i>
+                </Button> */}
 
-              </Button>
+              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Request Edit" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => requestEdit(item)
+
+                }>
+                <i className='bx bx-edit textsizing' ></i>
+              </button>
 
               &nbsp;
-              <Button className="btn btn-info btn-sm"
-                onClick={() => {
+
+              {/* <Button className="btn btn-info btn-sm"
+                  onClick={() => handleUploadFiles(item)
+
+                  }
+                >
+                  <i className='bx bx-cloud-upload textsizing' ></i>
+
+
+                </Button> */}
+              {/*               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Upload Pending Files" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => handleUploadFiles(item)
+
+                }>
+                <i className='bx bx-cloud-upload textsizing' ></i>
+              </button>
+
+              &nbsp; */}
+              {/* <Button className="btn btn-info btn-sm"
+                  onClick={() => {
+                    toggleViewModal2()
+                    setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                  }
+
+                  }
+                >
+                  <i className='bx bx-file textsizing' ></i>
+                </Button> */}
+              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Upload CA Certificate" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => {
                   toggleViewModal2()
                   setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
                 }
 
-                }
-              >
+                }>
                 <i className='bx bx-file textsizing' ></i>
-              </Button>
+              </button>
+              &nbsp;
+              <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="View Details" href={item.url} rel='noreferrer'
+                target='_blank'
+
+                onClick={() => handleViewDetail(item)}>
+                <i className='bx bxs-user-detail textsizing' ></i>   </Button>
 
 
             </div>
           </td>
         </tr>
       }) : ''}
+      <ToastContainer />
     </>
   )
 }

@@ -20,6 +20,7 @@ import CurrencyFormat from 'react-currency-format';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Disputeddata } from "../../../common/data/disputedData";
+import { ToastContainer, toast } from 'react-toastify';
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet";
 import {
 
@@ -144,15 +145,7 @@ const DiputedBillings = props => {
     console.log("ABABABABABAB", getDaysArray)
   }
   console.log("ABABABABABAB", getDaysArray)
-  const requestEdit = (item) => {
 
-    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
-    const payload = {
-      "invoiceId": item.invoices[0].invoiceNumber
-    }
-
-    dispatch(requestInvoiceDefEdit(payload))
-  }
 
   function getDebtrosLists(responsData) {
     return (responsData && (
@@ -199,6 +192,16 @@ const DiputedBillings = props => {
 
   };
 
+  const requestEdit = (item) => {
+
+    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
+    const payload = {
+      "invoiceId": item.invoices[0].invoiceNumber
+    }
+
+    dispatch(requestInvoiceDefEdit(payload))
+    toast.success("Edit Request Sent Successfully")
+  }
   return (
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
@@ -245,7 +248,7 @@ const DiputedBillings = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <RecordPaymentList GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} /> : <RecordPaymentList GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} />}
+                {filteredData.length >= 0 ? <RecordPaymentList GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} requestEdit={requestEdit} /> : <RecordPaymentList GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} requestEdit={requestEdit} />}
 
               </tbody>
             </table>
@@ -258,7 +261,7 @@ const DiputedBillings = props => {
 };
 
 
-const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate }) => {
+const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, requestEdit }) => {
   debugger
   return (
     <>
@@ -301,50 +304,89 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
 
           <td>
             <div className="pt-2">
-              <Button className="btn btn-info btn-sm "
-                onClick={() => viewModel(item)
+              {/* <Button className="btn btn-info btn-sm "
+                  onClick={() => viewModel(item)
 
-                }
+                  }
 
-              >
+                >
+               
+                </Button> */}
+
+
+              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Record Payment" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => viewModel(item)
+
+                }>
                 <i className='bx bx-wallet-alt textsizing' ></i>
-              </Button>
-
-              <a>
-              </a>
-              &nbsp;
-
-              {/*                    <Button className="btn btn-info btn-sm"
-                          onClick={() => requestEdit(item)
-
-                          }
-                        >
-                          <i className='bx bx-edit textsizing' ></i>
-                        </Button>
-
-                        &nbsp; */}
-
-              <Button className="btn btn-info btn-sm"
-              /*  onClick={() => handleUploadFiles()
-
-               } */
-              >
-                <i className='bx bx-message textsizing' ></i>
-
-
-              </Button>
+              </button>
 
               &nbsp;
-              <Button className="btn btn-info btn-sm"
-                onClick={() => {
+
+              {/* <Button className="btn btn-info btn-sm"
+                  onClick={() => requestEdit(item)
+
+                  }
+                >
+                  <i className='bx bx-edit textsizing' ></i>
+                </Button> */}
+
+              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Request Edit" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => requestEdit(item)
+
+                }>
+                <i className='bx bx-edit textsizing' ></i>
+              </button>
+
+              &nbsp;
+
+              {/* <Button className="btn btn-info btn-sm"
+                  onClick={() => handleUploadFiles(item)
+
+                  }
+                >
+                  <i className='bx bx-cloud-upload textsizing' ></i>
+
+
+                </Button> */}
+              {/*               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Upload Pending Files" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => handleUploadFiles(item)
+
+                }>
+                <i className='bx bx-cloud-upload textsizing' ></i>
+              </button>
+
+              &nbsp; */}
+              {/* <Button className="btn btn-info btn-sm"
+                  onClick={() => {
+                    toggleViewModal2()
+                    setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                  }
+
+                  }
+                >
+                  <i className='bx bx-file textsizing' ></i>
+                </Button> */}
+              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Upload CA Certificate" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => {
                   toggleViewModal2()
                   setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
                 }
 
-                }
-              >
+                }>
                 <i className='bx bx-file textsizing' ></i>
-              </Button>
+              </button>
+              &nbsp;
+              {/*               <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="View Details" href={item.url} rel='noreferrer'
+                target='_blank'
+
+                onClick={() => handleViewDetail(item)}>
+                <i className='bx bxs-user-detail textsizing' ></i>   </Button> */}
 
 
             </div>
@@ -363,6 +405,7 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
     </td> */}
         </tr>
       }) : ''}
+      <ToastContainer />
     </>
   )
 }
