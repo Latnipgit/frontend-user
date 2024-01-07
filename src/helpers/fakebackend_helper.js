@@ -106,6 +106,8 @@ export const changeFirstPass = (data) => post(url.CHANGE_FIRST_PASSWORD, data.pa
 export const addEmployeeList = data => addEmployeeAPImethod(url.ADD_EMPLOYEE_LIST, data);
 export const addCustomerListAPI = data => addEmployeeAPImethod(url.ADD_CUSTOMER_LIST, data);
 export const recordPaymentAPIMethod = data => addEmployeeAPImethod("api/defaulters/initiatePaymentVerification", data);
+export const updatePendingDocument = data => addEmployeeAPImethod("api/transactions/updateInvoiceDocuments", data);
+
 
 
 // Get employee

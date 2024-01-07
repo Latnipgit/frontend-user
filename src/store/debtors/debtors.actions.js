@@ -31,7 +31,10 @@ import {
   ADD_INVOICE_REPORT_DEFAULTER_ASYNC_FAIL,
   RECORD_PAYMENT_REPORT_DEFAULT,
   RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
-  RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS
+  RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS,
+  UPDATE_PENDING_DOCUMENT,
+  UPDATE_PENDING_DOCUMENT_FAIL,
+  UPDATE_PENDING_DOCUMENT_SUCCESS
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -89,3 +92,7 @@ export const addInvoiceReportDefaulterInvoiceFail = (data) => createAction(ADD_I
 export const recoredPaymentReportDefault = (data) => createAction(RECORD_PAYMENT_REPORT_DEFAULT, data)
 export const recoredPaymentReportDefaultSucccess = (data) => createAction(RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS, data)
 export const recoredPaymentReportDefaultFail = (data) => createAction(RECORD_PAYMENT_REPORT_DEFAULT_FAIL, data)
+
+export const updatePendingDocumentss = (data) => createAction(UPDATE_PENDING_DOCUMENT, data)
+export const updatePendingDocumentssSucccess = (data) => createAction(UPDATE_PENDING_DOCUMENT_SUCCESS, data)
+export const updatePendingDocumentssFail = (data) => createAction(UPDATE_PENDING_DOCUMENT_FAIL, data)

@@ -18,7 +18,8 @@ REQUEST_INVOICE_DEF_EDIT,
 ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
 RECORD_PAYMENT_REPORT_DEFAULT,
 RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
-RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS
+RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS,
+UPDATE_PENDING_DOCUMENT
 } from "./debtors.actiontype";
 import {
 getAllDebtors,
@@ -46,14 +47,16 @@ addInvoiceReportDefaulterInvoiceFail,
 addInvoiceReportDefaulterInvoiceSuccess,
 recoredPaymentReportDefault,
 recoredPaymentReportDefaultFail,
-recoredPaymentReportDefaultSucccess
+recoredPaymentReportDefaultSucccess,
+updatePendingDocumentssSucccess,
+updatePendingDocumentssFail
 
 } from "./debtors.actions";
 
 //Include Both Helper File with needed methods
 import { getAllDebtorsAPI } from "helpers/fakebackend_helper";
 import { getAllInvoiceList} from "helpers/fakebackend_helper";
-import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,requestAEdit, addInVoiceDefaulter,recordPaymentAPIMethod} from "helpers/fakebackend_helper";
+import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,updatePendingDocument,requestAEdit, addInVoiceDefaulter,recordPaymentAPIMethod} from "helpers/fakebackend_helper";
 
 
 function* fetchdebtors() {
@@ -136,7 +139,14 @@ function* recordPaymentSaga(payload) {
     yield put(recoredPaymentReportDefaultFail(error))
   }
 }
-
+function* updatePendingDocumentSaga(payload) {
+  try {
+    const response = yield call(updatePendingDocument, payload.payload)
+    yield put(updatePendingDocumentssSucccess(response))
+  } catch (error) {
+    yield put(updatePendingDocumentssFail(error))
+  }
+}
 function* debtorsSaga() {
   //  
   yield takeEvery(GET_DEBTORS, fetchdebtors)
@@ -148,6 +158,7 @@ function* debtorsSaga() {
   yield takeEvery(REQUEST_INVOICE_DEF_EDIT, requestEditSaga)
   yield takeEvery(ADD_INVOICE_REPORT_DEFAULTER_ASYNC, addInvoiceReportDefSaga)
   yield takeEvery(RECORD_PAYMENT_REPORT_DEFAULT, recordPaymentSaga)
+  yield takeEvery(UPDATE_PENDING_DOCUMENT, updatePendingDocumentSaga)
 }
 
 export default debtorsSaga;
