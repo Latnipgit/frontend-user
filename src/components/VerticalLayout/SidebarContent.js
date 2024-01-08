@@ -204,7 +204,7 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/Report-me-defaulter">
                     <i className='bx bx-shield-quarter'></i>
-                    <p>{props.t("Reported Me As a Defaulter")}</p>
+                    {props.t("Reported Me Defaulter")}
                   </Link>
                 </li>
                 <li>
@@ -216,7 +216,7 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/upload-pending-documents">
                     <i className="bx bx-search"></i>
-                    {props.t("Upload Pending Documents")}
+                    {props.t("Upload Pending File")}
                   </Link>
                 </li>
 
