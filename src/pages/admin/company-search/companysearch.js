@@ -73,19 +73,17 @@ const CompanySearch = props => {
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
 
-  console.log('currentUserViewDetails', currentUserViewDetails);
-
   const viewModel = (value) => {
     console.log("VALUE", value)
     const valueDate = value.cell.row.original
-    const currentID = value.cell.row.original.id
-    dispatch(fetchCompanySearchViewDatatlStart({ "debtorId": { currentID } }))
+    dispatch(fetchCompanySearchViewDatatlStart({ "debtorId": `${valueDate.id}` }))
     openViewModule(valueDate)
   }
 
   function openViewModule(value) {
     setModal1(true)
     setSelected(value)
+
   }
 
   useEffect(() => {

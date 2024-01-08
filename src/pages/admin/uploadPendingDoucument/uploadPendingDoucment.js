@@ -179,10 +179,9 @@ const UploadPendingListModule = props => {
 
                     <Row>
                         <Col md={10} className="pl-3">
-                            <h5 className="m-1">Upload Pending Document</h5>
+                            <h5 className="m-1">Report a Defaulter</h5>
                         </Col>
                     </Row>
-                    {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
                     <Row className="p-4  ml-5">
                         {/* <br/> */}
 
@@ -212,6 +211,50 @@ const UploadPendingListModule = props => {
                                 {filteredData.length >= 0 ? <ReportDefulterTable GetAllInvoicedata={filteredData} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} handleViewDetail={handleViewDetail} /> : <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
                             </tbody>
                         </table>
+
+
+
+                    </Row>
+                </CardBody>
+
+                <CardBody>
+                    <div className="mb-4 h4 card-title"></div>
+                    <Row>
+                        <Col md={10} className="pl-3">
+                            <h5 className="m-1">Reported Me As a Defaulter</h5>
+                        </Col>
+                    </Row>
+                    <Row className="p-4  ml-5">
+                        {/* <br/> */}
+
+                        {/* <ReactTable
+              data={GetAllInvoice != undefined ? GetAllInvoice : []}
+              columns={columns}
+              showPagination={true}
+              defaultPageSize={5}
+            /> */}
+
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Company Name</th>
+                                    {/* <th scope="col">Refrence Number</th> */}
+                                    <th scope="col">Invoice Number</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Due Amount</th>
+                                    <th scope="col">Due From</th>
+                                    <th scope="col">Action</th>
+                                    {/* <th scope="col">Upload Document</th> */}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {console.log("GetAllInvoiceGetAllInvoice", GetAllInvoice)}
+                                {filteredData.length >= 0 ? <ReportDefulterTable GetAllInvoicedata={filteredData} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} handleViewDetail={handleViewDetail} /> : <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
+                            </tbody>
+                        </table>
+
+
 
                     </Row>
                 </CardBody>

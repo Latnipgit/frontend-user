@@ -135,5 +135,6 @@ export const GET_REPORT_ME_DEFULTER_LIST = "/api/defaulters/getAllDefaultInvoice
 export const GET_UPLOAD_PENDING_LIST = "/api/user/getTransactionsPendingForDocs"
 
 export const GET_COMPNAY_SEARCH_LIST = "/api/companies/"
+export const GET_COMPANY_SEARCH_VIEW_LIST = '/api/debtors/getAllCreditorsByDebtorId'
 
 
