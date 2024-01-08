@@ -34,6 +34,7 @@ import { ReportMeDefulterSaga } from "./ReportMeDefulter/ReportMeDefulter.saga";
 import { CompanySearchSaga } from "./CompanySearch/CompanySearch.saga";
 import documentSaga from "./Documents/documents.saga";
 import { UploadPendingListSaga } from "./UploadPendingDocList/UploadPendingDocList.saga";
+import { CompanySearchViewSaga } from "./CompanySearchView/CompanySearchView.saga";
 // import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {
@@ -71,5 +72,6 @@ export default function* rootSaga() {
     fork(CompanySearchSaga),
     fork(documentSaga),
     fork(UploadPendingListSaga),
+    fork(CompanySearchViewSaga),
   ]);
 }

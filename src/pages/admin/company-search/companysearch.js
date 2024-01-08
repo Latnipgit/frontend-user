@@ -50,6 +50,8 @@ import InlineFilterForm from '../ApprovedTransaction/InlineFilterForm';
 import { get } from "helpers/api_helper";
 import { fetchCompanySearchStart } from "store/CompanySearch/CompanySearch.action";
 import { selectCompanySearchList, selectdashboardAdminDataMap } from "store/CompanySearch/CompanySearch.selecter";
+import { fetchCompanySearchViewDatatlStart } from "store/CompanySearchView/CompanySearchView.action";
+import { selectCompanySearchVeiwDatilsList } from "store/CompanySearchView/CompanySearchView.selecter";
 
 
 const CompanySearch = props => {
@@ -67,21 +69,30 @@ const CompanySearch = props => {
     window.location.href = newPageUrl;
   };
 
-  const viewModel = (value) => {
-    console.log("VALUE", value)
-    setModal1(true)
-    setSelected(value.cell.row.original)
-  }
-
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
-  /*   const selectCopanySearchlistRevers = selectCompanySearchListMap.reverse() */
-  console.log("selectCompanySearchLists", selectCompanySearchListMap);
-  console.log("selectCompanySearchListMap", selectCompanySearchLists);
+  const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
+
+  console.log('currentUserViewDetails', currentUserViewDetails);
+
+  const viewModel = (value) => {
+    console.log("VALUE", value)
+    const valueDate = value.cell.row.original
+    const currentID = value.cell.row.original.id
+    dispatch(fetchCompanySearchViewDatatlStart({ "debtorId": { currentID } }))
+    openViewModule(valueDate)
+  }
+
+  function openViewModule(value) {
+    setModal1(true)
+    setSelected(value)
+  }
 
   useEffect(() => {
     dispatch(fetchCompanySearchStart())
   }, [])
+
+
 
 
   const columns = useMemo(
