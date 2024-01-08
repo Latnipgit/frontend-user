@@ -285,6 +285,7 @@ const onAddComment = (productId, commentText) => {
 
 export const getAllInvoiceFolder = () => get(url.GET_ALL_INVOICE_FOLDER)
 export const getReportMeDefulterList = () => getAfter(url.GET_REPORT_ME_DEFULTER_LIST)
+export const getUploaddocpendigrList = () => getAfter(url.GET_UPLOAD_PENDING_LIST)
 
 export {
   getLoggedInUser,
