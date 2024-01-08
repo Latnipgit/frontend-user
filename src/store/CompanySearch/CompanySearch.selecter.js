@@ -28,3 +28,8 @@ export const selectDoardAdminDataLoading = createSelector(
   (reportMeDefulter) => reportMeDefulter.loading
 );
 
+export const selectCompanySearchVeiwDatilsList = createSelector(
+  [selectCompanySearchReducer],
+  (reportMeDefulter) => reportMeDefulter.companySearchViewDatails
+);
+
