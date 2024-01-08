@@ -175,7 +175,7 @@ const ReportMedefulterComponent = props => {
           <br />
           <Row>
             <Col md={10} className="pl-3">
-              <h5 className="m-1">Report Me As a Defaulter</h5>
+              <h5 className="m-1">Reported Me As a Defaulter</h5>
             </Col>
             {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
           </Row>
