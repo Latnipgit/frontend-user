@@ -84,7 +84,7 @@ export async function getMethodResponse(url, data, config = {}) {
     'x-access-token': token != null ? token : '',
   };
   return axiosApi
-    .get(url, { ...data }, { ...config, headers })
+    .get(url,{ ...config, headers },data)
     .then((response) => {
       debugger
       return response

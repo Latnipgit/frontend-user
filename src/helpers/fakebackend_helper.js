@@ -118,7 +118,7 @@ export const addRatingofdebtor = data => addEmployeeAPImethod("/api/user/addQues
 export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api/defaulters/initiatePaymentVerificationGeneral");
 export const uploadCACertificateAPIMethod = data => addEmployeeAPImethod("/api/transactions/updateInvoiceDocumentsCACertificate");
 export const requestAEdit = data => addEmployeeAPImethod("/api/transactions/requestDefaultInvoiceEdit");
-export const getcompanySerachViewDatils = data => getMethodResponse("/api/debtors/getAllCreditorsByDebtorId", data);
+export const getcompanySerachViewDatils = data => getMethodResponse("/api/debtors/getAllDebtorsByCompanyId", data);
 
 
 //ADD invoice
