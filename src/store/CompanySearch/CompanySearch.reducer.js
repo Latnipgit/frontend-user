@@ -6,6 +6,8 @@ import {
 
 export const REPORT_ME_DEFULTER_INITIAL_STATE = {
   companySearchList: [],
+  recordPaymentAddReportDef: {},
+  companySearchViewDatailsSuccess: [],
   loading: false,
   error: null,
 }

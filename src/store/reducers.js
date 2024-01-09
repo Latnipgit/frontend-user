@@ -66,6 +66,8 @@ import { ReportDefulterPreviewReducer } from "./ReportDefulterPreview/ReportDefu
 import { ReportMeDefulterReducer } from "./ReportMeDefulter/ReportMeDefulter.reducer";
 import { CompanySearchReducer } from "./CompanySearch/CompanySearch.reducer";
 import documentsReducer from "./Documents/DocumentsdReducer";
+import { UploadPendingListReducer } from "./UploadPendingDocList/UploadPendingDocList.reducer";
+import { CompanySearchViewReducer } from "./CompanySearchView/CompanySearchView.reducer";
 
 
 const rootReducer = combineReducers({
@@ -102,7 +104,9 @@ const rootReducer = combineReducers({
   ReportDefulterPreviewReducer,
   ReportMeDefulterReducer,
   CompanySearchReducer,
-  
+  UploadPendingListReducer,
+  CompanySearchViewReducer,
+
 });
 
 export default rootReducer;

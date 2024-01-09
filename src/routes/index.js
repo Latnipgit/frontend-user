@@ -18,6 +18,7 @@ import ContactsProfile from "../pages/Dashboard/users/profile";
 import Employee from "../pages/Dashboard/users/employeeRegistratiion/employee"
 import EmployeeList from "../pages/Dashboard/users/employeeRegistratiion/employeeList"
 import ReportMedefulterComponent from "../pages/admin/ReportMeDefualter/ReportaMeDefaulter";
+import UploadPendingListModule from "../pages/admin/uploadPendingDoucument/uploadPendingDoucment"
 // Pages Component
 import Chat from "../pages/Chat/Chat";
 
@@ -218,6 +219,7 @@ const authProtectedRoutes = [
   { path: "/Report-defaulter", component: <ReportDebtor /> },
   { path: "/Report-me-defaulter", component: <ReportMedefulterComponent /> },
   { path: "/Add-customer", component: <AddCustomer /> },
+  { path: "/upload-pending-documents", component: <UploadPendingListModule /> },
 
 
   { path: "/login-register", component: <Register2 /> },

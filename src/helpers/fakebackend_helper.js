@@ -1,5 +1,5 @@
 import axios from "axios";
-import { del, get, post, put, addEmployeeAPImethod, getAfter, forgetPasswordAPI, getwithToken } from "./api_helper";
+import { del, get, post, put, addEmployeeAPImethod, getAfter, forgetPasswordAPI, getwithToken, getMethodResponse } from "./api_helper";
 import * as url from "./url_helper";
 
 // Gets the logged in user data from local session
@@ -118,6 +118,7 @@ export const addRatingofdebtor = data => addEmployeeAPImethod("/api/user/addQues
 export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api/defaulters/initiatePaymentVerificationGeneral");
 export const uploadCACertificateAPIMethod = data => addEmployeeAPImethod("/api/transactions/updateInvoiceDocumentsCACertificate");
 export const requestAEdit = data => addEmployeeAPImethod("/api/transactions/requestDefaultInvoiceEdit");
+export const getcompanySerachViewDatils = data => getMethodResponse("/api/debtors/getAllCreditorsByDebtorId", data);
 
 
 //ADD invoice
@@ -285,6 +286,7 @@ const onAddComment = (productId, commentText) => {
 
 export const getAllInvoiceFolder = () => get(url.GET_ALL_INVOICE_FOLDER)
 export const getReportMeDefulterList = () => getAfter(url.GET_REPORT_ME_DEFULTER_LIST)
+export const getUploaddocpendigrList = () => getAfter(url.GET_UPLOAD_PENDING_LIST)
 
 export {
   getLoggedInUser,

@@ -132,7 +132,9 @@ export const ADD_CUSTOMER_LIST = "/api/debtors/add"
 
 export const GET_ALL_INVOICE_FOLDER = "/api/transactions/getAllInvoicesForIds"
 export const GET_REPORT_ME_DEFULTER_LIST = "/api/defaulters/getAllDefaultInvoicesSentToMe"
+export const GET_UPLOAD_PENDING_LIST = "/api/user/getTransactionsPendingForDocs"
 
 export const GET_COMPNAY_SEARCH_LIST = "/api/companies/"
+export const GET_COMPANY_SEARCH_VIEW_LIST = '/api/debtors/getAllCreditorsByDebtorId'
 
 

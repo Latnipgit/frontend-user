@@ -204,14 +204,19 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/Report-me-defaulter">
                     <i className='bx bx-shield-quarter'></i>
-                    {props.t("Report Me As a Defaulter")}
+                    {props.t("Reported Me Defaulter")}
                   </Link>
                 </li>
-
                 <li>
                   <Link to="/company-search">
                     <i className="bx bx-search"></i>
                     {props.t("Company Search")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/upload-pending-documents">
+                    <i className="bx bx-cloud-upload"></i>
+                    {props.t("Upload Pending File")}
                   </Link>
                 </li>
 

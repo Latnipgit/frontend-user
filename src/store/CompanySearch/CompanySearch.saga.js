@@ -1,6 +1,6 @@
 import { takeLatest, call, put, all, fork, takeEvery } from "redux-saga/effects"
 
-import { fetchCompanySearchSuccess, fetchCompanySearchFailure } from "./CompanySearch.action"
+import { fetchCompanySearchSuccess, fetchCompanySearchFailure, } from "./CompanySearch.action"
 
 import { FETCH_COMPANY_SEARCH_START } from "./CompanySearch.type"
 
@@ -15,6 +15,7 @@ export function* fetchCompanySearchAsync() {
     yield put(fetchCompanySearchFailure(error))
   }
 }
+
 
 export function* onFetchCompanySearch() {
   yield takeEvery(FETCH_COMPANY_SEARCH_START, fetchCompanySearchAsync)

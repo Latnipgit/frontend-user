@@ -10,3 +10,4 @@ export const fetchCompanySearchStart = () => createAction(FETCH_COMPANY_SEARCH_S
 export const fetchCompanySearchSuccess = CompanySearchArray => createAction(FETCH_COMPANY_SEARCH_SUCCESS, CompanySearchArray)
 
 export const fetchCompanySearchFailure = error => createAction(FETCH_COMPANY_SEARCH_FAILED, error)
+
