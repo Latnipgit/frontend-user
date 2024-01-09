@@ -215,7 +215,7 @@ const SidebarContent = props => {
                 </li>
                 <li>
                   <Link to="/upload-pending-documents">
-                    <i className="bx bx-search"></i>
+                    <i className="bx bx-cloud-upload"></i>
                     {props.t("Upload Pending File")}
                   </Link>
                 </li>
