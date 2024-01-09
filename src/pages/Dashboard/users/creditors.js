@@ -58,7 +58,7 @@ const Creditors = props => {
   const columns = useMemo(
     () => [
       {
-        Header: "Ref. No.",
+        Header: "Invoice No.",
         accessor: "orderId",
         filterable: false,
         disableFilters: true,

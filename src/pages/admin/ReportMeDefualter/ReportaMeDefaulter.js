@@ -41,7 +41,7 @@ const ReportMedefulterComponent = props => {
   const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
-
+console.log("isClickedToReported",props.isClickedToReported)
   const isViewDetailModal = useSelector(isViewDetailMOdalOpenSelector);
   const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
 
@@ -170,12 +170,19 @@ const ReportMedefulterComponent = props => {
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
-          <br />
-          <br />
-          <br />
+      { props.isClickedToReported != undefined && props.isClickedToReported != false ?
+
+
+<div>
+<br />
+  <br />
+  <br />
+  </div>
+  :""
+      } 
           <Row>
             <Col md={10} className="pl-3">
-              <h5 className="m-1">Report Me As a Defaulter</h5>
+              <h5 className="m-1">Reported Me As a Defaulter</h5>
             </Col>
             {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
           </Row>
