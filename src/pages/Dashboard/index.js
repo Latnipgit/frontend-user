@@ -147,7 +147,7 @@ const Dashboard = props => {
          <Row className="text-center">
           <Col md={12}>
           <div className="btn-group" role="group" aria-label="Basic example">
-  <button type="button" className="btn btn-info "  style={{ background: isClickedToReported == false ? "#ff4d4d":"	 #050505", border:"none", width:"230px"}} onClick={()=>setisClickedToReported(false)} >Reported Me as A Defaulter</button>
+  <button type="button" className="btn btn-info "  style={{ background: isClickedToReported == false ? "#ff4d4d":"	 #050505", border:"none", width:"230px", marginRight:"10px"}} onClick={()=>setisClickedToReported(false)} >Reported Me as A Defaulter</button>
   &nbsp;  
   <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#ff4d4d":"	 #050505" , border:"none", width:"230px"}} onClick={()=>setisClickedToReported(true)} >Reported Defaulter</button>
 </div>
