@@ -8,7 +8,6 @@ import Select, { components } from "react-select"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 import ReportedDebtorsModel from "../Invoice/ReportedModel"
 import ReportedDefaulterModel from "../Invoice/ReportDefaulterModel"
-import UploadCACertificateModel from "../Invoice/uploadCACertificateModel"
 /* import ReportIncoiceModel from './ReportInvoiceModel' */
 import 'react-table-6/react-table.css'
 import ReactTable from 'react-table-6'
@@ -44,8 +43,8 @@ import { success } from "toastr"
 import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen } from "../../../store/debtors/debtors.actions"
 import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector } from "store/debtors/debtors.selecter"
 import { fetchUploadPendingListStart } from "store/UploadPendingDocList/UploadPendingDocList.action"
-import { selectUploadingPendingListData } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
-
+import { selectUploadingPendingListData, selectTransactionsRaisedByMeData, selectTransactionsSentToMeData } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
+import UploadPendingDocModel from "./uploadPendingDoc"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
@@ -81,9 +80,12 @@ const UploadPendingListModule = props => {
     const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
 
     const GetAllInvoice = useSelector(selectInvoiceList)
-    debugger
     const uploadpendingFilelist = useSelector(selectUploadingPendingListData);
+    const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeData);
+    const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeData);
     console.log('uploadpendingFilelist', uploadpendingFilelist);
+    console.log('selectTransactionsRaisedByMe', selectTransactionsRaisedByMe);
+    console.log('selectTransactionsSentToMe', selectTransactionsSentToMe);
     useEffect(() => {
         dispatch(getAllInvoice());
         dispatch(setIsViewDetailModalOpen())
@@ -168,7 +170,8 @@ const UploadPendingListModule = props => {
 
     return (
         <React.Fragment>
-            <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
+            {/*    <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
+            <UploadPendingDocModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
             <Card>
                 <CardBody>
                     <div className="mb-4 h4 card-title"></div>
@@ -207,8 +210,7 @@ const UploadPendingListModule = props => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {console.log("GetAllInvoiceGetAllInvoice", GetAllInvoice)}
-                                {filteredData.length >= 0 ? <ReportDefulterTable GetAllInvoicedata={filteredData} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} handleViewDetail={handleViewDetail} /> : <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
+                                <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />
                             </tbody>
                         </table>
 
@@ -249,8 +251,7 @@ const UploadPendingListModule = props => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {console.log("GetAllInvoiceGetAllInvoice", GetAllInvoice)}
-                                {filteredData.length >= 0 ? <ReportDefulterTable GetAllInvoicedata={filteredData} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} handleViewDetail={handleViewDetail} /> : <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
+                                <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />
                             </tbody>
                         </table>
 
@@ -309,25 +310,18 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
 
                         <td>
                             <div className="pt-2">
+                                &nbsp;
                                 <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                                    title="Upload Pending Files" href={item.url} rel='noreferrer'
-                                    target='_blank' onClick={() => handleUploadFiles(item)
+                                    title="Upload CA Certificate" href={item.url} rel='noreferrer'
+                                    target='_blank' onClick={() => {
+                                        toggleViewModal2()
+                                        setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                                    }
 
                                     }>
                                     <i className='bx bx-cloud-upload textsizing' ></i>
                                 </button>
-
                                 &nbsp;
-                                {/* <Button className="btn btn-info btn-sm"
-                  onClick={() => {
-                    toggleViewModal2()
-                    setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                  }
-
-                  }
-                >
-                  <i className='bx bx-file textsizing' ></i>
-                </Button> */}
 
 
                             </div>

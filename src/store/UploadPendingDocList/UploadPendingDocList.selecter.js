@@ -8,6 +8,19 @@ export const selectUploadingPendingListData = createSelector(
 
 );
 
+export const selectTransactionsRaisedByMeData = createSelector(
+  [selectUploadingPendingListData],
+  (transactionuploainglist) => transactionuploainglist.transactionsRaisedByMe
+
+);
+
+export const selectTransactionsSentToMeData = createSelector(
+  [selectUploadingPendingListData],
+  (transactionuploainglist) => transactionuploainglist.transactionsSentToMe
+
+);
+
+
 export const selectdashboardAdminDataMap = createSelector(
   [selectUploadingPendingListData],
   (transactionuploainglist) => transactionuploainglist
@@ -17,3 +30,13 @@ export const selectDoardAdminDataLoading = createSelector(
   (transactionuploainglist) => transactionuploainglist.loading
 );
 
+
+export const selectUploadPendigDocOpen = createSelector(
+  [selectUploadPendingListReducer],
+  (transactionuploainglist) => transactionuploainglist.isUploadPendingdocOpen
+)
+
+export const uploadPendigDocSelector = createSelector(
+  [selectUploadPendingListReducer],
+  (transactionuploainglist) => transactionuploainglist.uploadPendingDocID != undefined ? transactionuploainglist.uploadPendingDocID.response : []
+)
