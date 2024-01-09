@@ -4,19 +4,19 @@ const selectUploadPendingListReducer = (state) => state.UploadPendingListReducer
 
 export const selectUploadingPendingListData = createSelector(
   [selectUploadPendingListReducer],
-  (transactionuploainglist) => transactionuploainglist.uploadPendingList
+  (transactionuploainglist) => transactionuploainglist.uploadPendingList != undefined ? transactionuploainglist.uploadPendingList : []
 
 );
 
 export const selectTransactionsRaisedByMeData = createSelector(
   [selectUploadingPendingListData],
-  (transactionuploainglist) => transactionuploainglist.transactionsRaisedByMe
+  (transactionuploainglist) => transactionuploainglist.transactionsRaisedByMe != undefined ? transactionuploainglist.transactionsRaisedByMe : []
 
 );
 
 export const selectTransactionsSentToMeData = createSelector(
   [selectUploadingPendingListData],
-  (transactionuploainglist) => transactionuploainglist.transactionsSentToMe
+  (transactionuploainglist) => transactionuploainglist.transactionsSentToMe != undefined ? transactionuploainglist.transactionsSentToMe : []
 
 );
 

@@ -184,7 +184,27 @@ const UploadPendingListModule = props => {
                         </Col>
                     </Row>
                     <Row className="p-4  ml-5">
-                        <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Company Name</th>
+                                    {/* <th scope="col">Refrence Number</th> */}
+                                    <th scope="col">Invoice Number</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Due Amount</th>
+                                    <th scope="col">Due From</th>
+                                    <th scope="col">Ratings</th>
+                                    <th scope="col">Action</th>
+                                    {/* <th scope="col">Upload Document</th> */}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectTransactionsRaisedByMe.length > 0 ? <ReportDefulterTable GetAllInvoicedata={selectTransactionsRaisedByMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
+                            </tbody>
+                        </table>
+
+
                     </Row>
                 </CardBody>
 
@@ -196,7 +216,27 @@ const UploadPendingListModule = props => {
                         </Col>
                     </Row>
                     <Row className="p-4  ml-5">
-                        <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />
+                        <table className="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Company Name</th>
+                                    {/* <th scope="col">Refrence Number</th> */}
+                                    <th scope="col">Invoice Number</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Due Amount</th>
+                                    <th scope="col">Due From</th>
+                                    <th scope="col">Ratings</th>
+                                    <th scope="col">Action</th>
+                                    {/* <th scope="col">Upload Document</th> */}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectTransactionsSentToMe.length > 0 ? <ReportDefulterTable GetAllInvoicedata={selectTransactionsSentToMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
+                            </tbody>
+                        </table>
+
+
                     </Row>
                 </CardBody>
             </Card>
@@ -208,78 +248,63 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
 
     return (
         <>
-            <table className="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Company Name</th>
-                        {/* <th scope="col">Refrence Number</th> */}
-                        <th scope="col">Invoice Number</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Due Amount</th>
-                        <th scope="col">Due From</th>
-                        <th scope="col">Ratings</th>
-                        <th scope="col">Action</th>
-                        {/* <th scope="col">Upload Document</th> */}
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
-                            {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
+
+            {
+                GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
+                    {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
+                    debugger
+
+                    return <tr key={item}>
+                        {/* {console.log("NEW TABLE ", item.remainingAmount)} */}
+
+                        <th scope="row" className="pt-4">{index + 1}</th>
+                        <td className="pt-4 text-capitalize">{item.defaulterEntry.debtor.companyName}</td>
+                        <td className="pt-4">{item.defaulterEntry.invoices.map((item) => {
+                            return <span key={item}>{item}, &nbsp;</span>
+                        })}</td>
+
+                        <td className="pt-4 d-flex text-capitalize">{item.defaulterEntry.debtor.companyName}
+                            <br />
+                            {item.defaulterEntry.debtor.address1} {item.defaulterEntry.debtor.address2}, {item.defaulterEntry.debtor.city}</td>
+
+                        <td className="pt-4">
+                            <CurrencyFormat value={item.defaulterEntry.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+
+                        </td>
+
+                        <td >
+
+                            <div className="" style={{ padding: "2px 15px" }}>
+
+                                <div className=" text-center bg-success rounded text-light">
+                                    <div className="text-capitalize">
+
+                                        {getDaysArray[index]}  &nbsp;
 
 
-                            return <tr key={item}>
-                                {console.log("NEW TABLE ", item.remainingAmount)}
+                                        <span className="ml-1">Days</span> </div>
+                                    <div className="text-capitalize" >{item.paymentDate}</div>
+                                </div>
+                            </div>
 
-                                <th scope="row" className="pt-4">{index + 1}</th>
-                                <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-                                <td className="pt-4">{item.invoices.map((item) => {
-                                    return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
-                                })}</td>
+                        </td>
+                        <td className="pt-4">4.2</td>
+                        <td>
+                            <div className="pt-2">
+                                &nbsp;
+                                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                    title="Upload Pending Files" href={item.url} rel='noreferrer'
+                                    target='_blank' onClick={() => handleUploadFiles(item)
 
-                                <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
-                                    <br />
-                                    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
-
-                                <td className="pt-4">
-                                    <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
-
-                                </td>
-
-                                <td >
-
-                                    <div className="" style={{ padding: "2px 15px" }}>
-
-                                        <div className=" text-center bg-success rounded text-light">
-                                            <div className="text-capitalize">
-
-                                                {getDaysArray[index]}  &nbsp;
+                                    }>
+                                    <i className='bx bx-cloud-upload textsizing' ></i>
+                                </button>
+                                &nbsp;
 
 
-                                                <span className="ml-1">Days</span> </div>
-                                            <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
-                                        </div>
-                                    </div>
-
-                                </td>
-                                <td className="pt-4">4.2</td>
-                                <td>
-                                    <div className="pt-2">
-                                        &nbsp;
-                                        <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                                            title="Upload Pending Files" href={item.url} rel='noreferrer'
-                                            target='_blank' onClick={() => handleUploadFiles(item)
-
-                                            }>
-                                            <i className='bx bx-cloud-upload textsizing' ></i>
-                                        </button>
-                                        &nbsp;
-
-
-                                    </div>
-                                </td>
-                                {/* <td>
+                            </div>
+                        </td>
+                        {/* <td>
 <div className="pt-2">
 <Button className="btn btn-info btn-sm"
 onClick={() => viewModels()
@@ -291,11 +316,9 @@ Upload Document
 
 </div>
 </td> */}
-                            </tr>
-                        }) : ''
-                    }
-                </tbody>
-            </table>
+                    </tr>
+                }) : ''
+            }
             <ToastContainer />
         </>
     )
