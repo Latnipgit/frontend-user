@@ -205,8 +205,10 @@ const ReportDebtor = props => {
                   <th scope="col">Company Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
                   <th scope="col">Invoice Number</th>
-                  <th scope="col">Address</th>
+                  <th scope="col" className="reportDebAdd">Address</th>
                   <th scope="col">Due Amount</th>
+                  <th scope="col">status</th>
+
                   <th scope="col">Due From</th>
                   <th scope="col">Action</th>
                   {/* <th scope="col">Upload Document</th> */}
@@ -235,7 +237,7 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
 
 
           return <tr key={item}>
-            {console.log("NEW TABLE ", item.remainingAmount)}
+            {console.log("NEW TABLE ", item)}
 
             <th scope="row" className="pt-4">{index + 1}</th>
             <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
@@ -243,27 +245,29 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
               return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
             })}</td>
 
-            <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+            <td className="pt-4 d-flex text-capitalize reportDebAdd">{item.debtor.companyName}
               <br />
-              {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
+              {item.debtor.address1} <br/>{item.debtor.address2},  <br />{item.debtor.city}</td>
+
 
             <td className="pt-4">
               <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
             </td>
+            <td className="pt-4  text-capitalize">{item.status}</td>
 
             <td >
 
               <div className="" style={{ padding: "2px 15px" }}>
 
-                <div className=" text-center bg-success rounded text-light">
+                <div className=" text-center bg-danger rounded text-light">
                   <div className="text-capitalize">
 
                     {getDaysArray[index]}  &nbsp;
 
 
                     <span className="ml-1">Days</span> </div>
-                  <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
+                  <div className="text-capitalize" >{moment(item.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
                 </div>
               </div>
 

@@ -42,11 +42,12 @@ import { withTranslation } from "react-i18next"
 import { useSelector, useDispatch } from "react-redux"
 import CurrencyFormat from 'react-currency-format';
 // import { Creditor } from "pages/admin/DisputedBillings/disputedCol";
-
+import ReportMedefulterComponent from '../../pages/admin/ReportMeDefualter/ReportaMeDefaulter'
 const Dashboard = props => {
   const [subscribemodal, setSubscribemodal] = useState(false)
   const [filteredData, setFilteredData] = useState([]);
   const [getDaysArray, setgetDaysArray] = useState([]);
+  const [isClickedToReported, setisClickedToReported] = useState(false);
   const dispatch = useDispatch();
 
   const renderStarRating = rating => {
@@ -127,58 +128,96 @@ const Dashboard = props => {
           <br />
           <br />
           <br />
-
-
           <Row>
-            <Col md={10} className="pl-3">
-              <h5 className="m-1">Reported Defaulter</h5>
+            <Col md={8}>
+            <h5 className="m-1">Company Dashboard</h5>
             </Col>
-            <Col md={2}>
-              {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}
-              {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
+            <Col md={4}>
+            <Button style={{ float: 'right', width:"180px" }} className="'btn btn-info p-2" onClick={() => {
+      window.location.href = companiesURL;
+    }}>
+      Back To Main Dashboard
+    </Button>
+            </Col>
+          
+          
+          </Row>
+          <br />
+
+         <Row className="text-center">
+          <Col md={12}>
+          <div className="btn-group" role="group" aria-label="Basic example">
+  <button type="button" className="btn btn-info "  style={{ background: isClickedToReported == false ? "#ff4d4d":"	 #050505", border:"none", width:"230px", marginRight:"10px"}} onClick={()=>setisClickedToReported(false)} >Reported Me as A Defaulter</button>
+  &nbsp;  
+  <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#ff4d4d":"	 #050505" , border:"none", width:"230px"}} onClick={()=>setisClickedToReported(true)} >Reported Defaulter</button>
+</div>
+
+          </Col>
+       
+
+
+         </Row>
+          <br/>
+
+{isClickedToReported != true ?
+
+  <Row style={{ marginTop:'-20px'}}>
+  <ReportMedefulterComponent isClickedToReported={isClickedToReported}/>
+
+  </Row>
+  :<> 
+   <Row>
+  <Col md={10} className="pl-3">
+    <h5 className="m-1">Reported Defaulter</h5>
+  </Col>
+  <Col md={2}>
+    {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}
+    {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
 <ReactTooltip id="toolTip1" /> */}
-              <Button style={{ float: 'right' }} className="'btn btn-info " onClick={() => {
-                window.location.href = companiesURL;
-              }}>
-                Back
-              </Button>
-            </Col>
-          </Row>
-          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
+  
+  </Col>
+</Row>
+{GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
 
-          <Row className="p-4  ml-5">
-            {/* <br/> */}
+<Row className="p-4  ml-5">
+  {/* <br/> */}
 
-            {/* <ReactTable
-              data={GetAllInvoice != undefined ? GetAllInvoice : []}
-              columns={columns}
-              showPagination={true}
-              defaultPageSize={5}
-            /> */}
+  {/* <ReactTable
+    data={GetAllInvoice != undefined ? GetAllInvoice : []}
+    columns={columns}
+    showPagination={true}
+    defaultPageSize={5}
+  /> */}
 
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Company Name</th>
-                  {/* <th scope="col">Refrence Number</th> */}
-                  <th scope="col">Invoice Number</th>
-                  {/* <th scope="col">Status</th> */}
-                  <th scope="col">Address</th>
-                  <th scope="col">Due Amount</th>
-                  <th scope="col">Due From</th>
-                  <th scope="col">Action</th>
-                  {/* <th scope="col">Upload Document</th> */}
-                </tr>
-              </thead>
-              <tbody>
-                {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
-                {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
-                {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} /> : <FilterData GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} />}
-              </tbody>
-            </table>
+  <table className="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Company Name</th>
+        {/* <th scope="col">Refrence Number</th> */}
+        <th scope="col">Invoice Number</th>
+        {/* <th scope="col">Status</th> */}
+        <th scope="col">Address</th>
+        <th scope="col">Due Amount</th>
+        <th scope="col">Due From</th>
+        <th scope="col">Action</th>
+        {/* <th scope="col">Upload Document</th> */}
+      </tr>
+    </thead>
+    <tbody>
+      {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
+      {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
+      {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} /> : <FilterData GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} />}
+    </tbody>
+  </table>
 
-          </Row>
+</Row>
+</>
+
+}
+       
+
+       
         </CardBody>
       </Card>
     </React.Fragment>
@@ -219,8 +258,10 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
           </td>
         </tr>
       }) : ''}
+
     </>
   )
+
 }
 
 
