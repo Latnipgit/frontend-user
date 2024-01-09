@@ -5,6 +5,7 @@ import { fetchUploadPendingListSuccess, fetchUploadPendingListFailure } from "./
 import { FETCH_UPLOADING_PENDING_DOC_LIST_START, UPLOAD_PENDING_DOCUMENT_ID } from "./UploadPendingDocList.type"
 
 import { getUploaddocpendigrList } from "helpers/fakebackend_helper"
+import { uploadCACertificateAPIMethod } from "helpers/fakebackend_helper"
 
 
 export function* fetchUploadPendingListAsync() {

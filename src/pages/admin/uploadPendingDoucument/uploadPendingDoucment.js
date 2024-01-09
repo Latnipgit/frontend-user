@@ -170,52 +170,21 @@ const UploadPendingListModule = props => {
 
     return (
         <React.Fragment>
-            {/*    <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
-            <UploadPendingDocModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
+            <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
+            {/* <UploadPendingDocModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} /> */}
             <Card>
                 <CardBody>
                     <div className="mb-4 h4 card-title"></div>
                     <br />
                     <br />
                     <br />
-
-
                     <Row>
                         <Col md={10} className="pl-3">
                             <h5 className="m-1">Report a Defaulter</h5>
                         </Col>
                     </Row>
                     <Row className="p-4  ml-5">
-                        {/* <br/> */}
-
-                        {/* <ReactTable
-              data={GetAllInvoice != undefined ? GetAllInvoice : []}
-              columns={columns}
-              showPagination={true}
-              defaultPageSize={5}
-            /> */}
-
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Company Name</th>
-                                    {/* <th scope="col">Refrence Number</th> */}
-                                    <th scope="col">Invoice Number</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Due Amount</th>
-                                    <th scope="col">Due From</th>
-                                    <th scope="col">Action</th>
-                                    {/* <th scope="col">Upload Document</th> */}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />
-                            </tbody>
-                        </table>
-
-
-
+                        <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />
                     </Row>
                 </CardBody>
 
@@ -227,36 +196,7 @@ const UploadPendingListModule = props => {
                         </Col>
                     </Row>
                     <Row className="p-4  ml-5">
-                        {/* <br/> */}
-
-                        {/* <ReactTable
-              data={GetAllInvoice != undefined ? GetAllInvoice : []}
-              columns={columns}
-              showPagination={true}
-              defaultPageSize={5}
-            /> */}
-
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Company Name</th>
-                                    {/* <th scope="col">Refrence Number</th> */}
-                                    <th scope="col">Invoice Number</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Due Amount</th>
-                                    <th scope="col">Due From</th>
-                                    <th scope="col">Action</th>
-                                    {/* <th scope="col">Upload Document</th> */}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />
-                            </tbody>
-                        </table>
-
-
-
+                        <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />
                     </Row>
                 </CardBody>
             </Card>
@@ -268,65 +208,78 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
 
     return (
         <>
-            {
-                GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
-                    {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
+            <table className="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Company Name</th>
+                        {/* <th scope="col">Refrence Number</th> */}
+                        <th scope="col">Invoice Number</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Due Amount</th>
+                        <th scope="col">Due From</th>
+                        <th scope="col">Ratings</th>
+                        <th scope="col">Action</th>
+                        {/* <th scope="col">Upload Document</th> */}
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
+                            {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
 
 
-                    return <tr key={item}>
-                        {console.log("NEW TABLE ", item.remainingAmount)}
+                            return <tr key={item}>
+                                {console.log("NEW TABLE ", item.remainingAmount)}
 
-                        <th scope="row" className="pt-4">{index + 1}</th>
-                        <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-                        <td className="pt-4">{item.invoices.map((item) => {
-                            return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
-                        })}</td>
+                                <th scope="row" className="pt-4">{index + 1}</th>
+                                <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+                                <td className="pt-4">{item.invoices.map((item) => {
+                                    return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
+                                })}</td>
 
-                        <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
-                            <br />
-                            {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
+                                <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+                                    <br />
+                                    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
 
-                        <td className="pt-4">
-                            <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+                                <td className="pt-4">
+                                    <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
-                        </td>
+                                </td>
 
-                        <td >
+                                <td >
 
-                            <div className="" style={{ padding: "2px 15px" }}>
+                                    <div className="" style={{ padding: "2px 15px" }}>
 
-                                <div className=" text-center bg-success rounded text-light">
-                                    <div className="text-capitalize">
+                                        <div className=" text-center bg-success rounded text-light">
+                                            <div className="text-capitalize">
 
-                                        {getDaysArray[index]}  &nbsp;
-
-
-                                        <span className="ml-1">Days</span> </div>
-                                    <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
-                                </div>
-                            </div>
-
-                        </td>
-
-                        <td>
-                            <div className="pt-2">
-                                &nbsp;
-                                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                                    title="Upload CA Certificate" href={item.url} rel='noreferrer'
-                                    target='_blank' onClick={() => {
-                                        toggleViewModal2()
-                                        setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                                    }
-
-                                    }>
-                                    <i className='bx bx-cloud-upload textsizing' ></i>
-                                </button>
-                                &nbsp;
+                                                {getDaysArray[index]}  &nbsp;
 
 
-                            </div>
-                        </td>
-                        {/* <td>
+                                                <span className="ml-1">Days</span> </div>
+                                            <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td className="pt-4">4.2</td>
+                                <td>
+                                    <div className="pt-2">
+                                        &nbsp;
+                                        <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                            title="Upload Pending Files" href={item.url} rel='noreferrer'
+                                            target='_blank' onClick={() => handleUploadFiles(item)
+
+                                            }>
+                                            <i className='bx bx-cloud-upload textsizing' ></i>
+                                        </button>
+                                        &nbsp;
+
+
+                                    </div>
+                                </td>
+                                {/* <td>
 <div className="pt-2">
 <Button className="btn btn-info btn-sm"
 onClick={() => viewModels()
@@ -338,9 +291,11 @@ Upload Document
 
 </div>
 </td> */}
-                    </tr>
-                }) : ''
-            }
+                            </tr>
+                        }) : ''
+                    }
+                </tbody>
+            </table>
             <ToastContainer />
         </>
     )
