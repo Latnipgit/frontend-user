@@ -12,7 +12,7 @@ import { getcompanySerachViewDatils } from "helpers/fakebackend_helper"
 export function* fetchCompanyViewDatailAsync(payload) {
   try {
     const response = yield call(getcompanySerachViewDatils, payload.payload)
-    yield put(fetchCompanySearchViewDatatlSuccess(response))
+    yield put(fetchCompanySearchViewDatatlSuccess(response.data.response))
   } catch (error) {
     yield put(fetchCompanySearchViewDatatlFailure(error))
   }

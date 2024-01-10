@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment'
 
 const CompnayViewDetails = props => {
-    const { isOpen, toggle, selected } = props
+    const { isOpen, toggle, selected, currenViewList } = props
     console.log("InvoiceModal", selected
     )
     const [attachments, setAttachments] = useState([
@@ -161,7 +161,6 @@ const CompnayViewDetails = props => {
                                     <thead>
                                         <tr>
                                             <th scope="col">Company Name</th>
-                                            <th scope="col">seller Name</th>
                                             <th scope="col">Due Amount</th>
                                             <th scope="col">Due fROM</th>
                                             <th scope="col">Rating</th>
@@ -169,9 +168,18 @@ const CompnayViewDetails = props => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        {currenViewList != undefined ? currenViewList.map((item, i) => {
+                                            return <tr key={i}>
+                                                <td>{item.companyName}</td>
+                                                <td>₹1000,00,00</td>
+                                                <td>12-12-2023</td>
+                                                <td>4.2</td>
+                                                <td style={{ color: "green" }}><FcCheckmark /> Approved </td>
+                                            </tr>
+                                        }) : ''}
+
+                                        {/*                                         <tr>
                                             <td>TATA</td>
-                                            <td>Prem</td>
                                             <td>₹1000,00,00</td>
                                             <td>12-12-2023</td>
                                             <td>4.2</td>
@@ -179,7 +187,6 @@ const CompnayViewDetails = props => {
                                         </tr>
                                         <tr>
                                             <td>Latnip</td>
-                                            <td>Harshit</td>
                                             <td >******</td>
                                             <td >12-12-2023</td>
                                             <td>3.2</td>
@@ -187,12 +194,11 @@ const CompnayViewDetails = props => {
                                         </tr>
                                         <tr>
                                             <td>Bafama</td>
-                                            <td>rohan</td>
                                             <td>******</td>
                                             <td>12-12-2023</td>
                                             <td>4.5</td>
                                             <td style={{ color: "red", filter: "2px" }} ><FcCancel /> Disputed </td>
-                                        </tr>
+                                        </tr> */}
                                         {/*                                     {selected!= ""? selected.Invoice.items.length != 0 ? selected.Invoice.items.map((item)=>{
                                             return <tr key={item}>
                                                  <td>1</td>

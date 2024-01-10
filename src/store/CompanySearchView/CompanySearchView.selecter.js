@@ -5,6 +5,6 @@ const selectCompanySearchViewReducer = (state) => state.CompanySearchViewReducer
 
 export const selectCompanySearchVeiwDatilsList = createSelector(
   [selectCompanySearchViewReducer],
-  (reportMeDefulter) => reportMeDefulter.companySearchViewDatailsSuccess
+  (reportMeDefulter) => reportMeDefulter.companySearchViewDatailsSuccess != undefined ? reportMeDefulter.companySearchViewDatailsSuccess : []
 );
 
