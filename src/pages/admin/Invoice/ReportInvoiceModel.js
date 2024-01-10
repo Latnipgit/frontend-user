@@ -36,7 +36,6 @@ import { getAllInvoice, setIsReportDefOpen, setIsCustomerFeedbackModalOpen, addI
 import { selectReportDefOpen, selectInvoiceList, selectFeedbackModalOpen, addInvoiceReportDebtorSelector, addInvoiceIdtoArray } from "store/debtors/debtors.selecter"
 import { addInvoiceBill, addInvoiceBillSuccess } from '../../../store/actions'
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
-
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
 const ReportedDefaulterModel = props => {
   const [selectedOption, setSelectedOption] = useState("")
@@ -1019,23 +1018,23 @@ const ReportedDefaulterModel = props => {
               <div className="mb-2"><b className="">Company Detail -</b></div>
 
               <Label className="text-capitalize">
-                Name - {filteredCustomerDetail.companyName}
+                Name : {filteredCustomerDetail.companyName}
               </Label>
               <Label className="text-capitalize">
-                Email - {filteredCustomerDetail.customerEmail}
+                Email : {filteredCustomerDetail.customerEmail}
               </Label>
               <Label className="text-capitalize">
-                Mobile - {filteredCustomerDetail.customerMobile}
+                Mobile : {filteredCustomerDetail.customerMobile}
               </Label>
               <Label className="text-capitalize">
-                GST Number - {filteredCustomerDetail.gstin}
+                GST Number : {filteredCustomerDetail.gstin}
               </Label>
               <Label className="text-capitalize">
                 {console.log("filteredCustomerDetail.address1", filteredCustomerDetail.address1)}
-                Address - {filteredCustomerDetail.address1 != '' ? filteredCustomerDetail.address1 + "," : ''} {filteredCustomerDetail.address2 != '' ? filteredCustomerDetail.address2 + "," : ''} {filteredCustomerDetail.city != '' ? filteredCustomerDetail.city + "," : ''} {filteredCustomerDetail.zipcode}
+                Address : {filteredCustomerDetail.address1 != '' ? filteredCustomerDetail.address1 + "," : ''} {filteredCustomerDetail.address2 != '' ? filteredCustomerDetail.address2 + "," : ''} {filteredCustomerDetail.city != '' ? filteredCustomerDetail.city + "," : ''} {filteredCustomerDetail.zipcode}
               </Label>
               <Label className="text-uppercase">
-                PAN Number - {filteredCustomerDetail.companyPan}
+                PAN Number : {filteredCustomerDetail.companyPan}
               </Label>
             </Row> : ""}
 

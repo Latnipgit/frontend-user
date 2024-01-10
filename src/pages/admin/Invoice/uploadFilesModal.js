@@ -19,6 +19,8 @@ import {
 import { updatePendingDocumentss } from "../../../store/debtors/debtors.actions"
 import { updatePendingDocsSelector } from "store/debtors/debtors.selecter"
 import { useSelector, useDispatch } from "react-redux"
+import fileImg2 from '../../../assets/images/newImg/pdf.png'
+import fileImg1 from '../../../assets/images/newImg/png-file-.png'
 
 const UploadPendingFiles = props => {
   const { isOpen, toggle, uploadFilesModelDataForUpload } = props
@@ -125,9 +127,9 @@ const UploadPendingFiles = props => {
           {uploadFilesModelDataForUpload != undefined && uploadFilesModelDataForUpload.invoices != undefined ? uploadFilesModelDataForUpload.invoices.map((item) => {
             return <Row className="bg-light p-3 mt-2" key={item}>
               <Row>
-                <Col md={3}><strong>Invoice Number - {item.invoiceNumber}</strong></Col>
-                <Col md={3}><strong>Due Date - {moment(item.dueDate).format("DD-MM-YYYY")}</strong></Col>
-                <Col md={4}><strong className="d-flex">Due Amount -
+                <Col md={3}><strong>Invoice Number : {item.invoiceNumber}</strong></Col>
+                <Col md={3}><strong>Due Date : {moment(item.dueDate).format("DD-MM-YYYY")}</strong></Col>
+                <Col md={4}><strong className="d-flex">Due Amount :
                   <CurrencyFormat value={item.remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
                 </strong></Col>
@@ -165,8 +167,11 @@ const UploadPendingFiles = props => {
                   </Col>
                     :
                     <Col md={3} className="text-center">
+                      {console.log("item.invoiceDocument",item)}
                       <a href={item.invoiceDocument.url} rel='noreferrer' target='_blank'>
-                        <i className='bx bxs-file mt-2 fileSizing'></i>
+                        {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
+                        <img src={fileImg1} className="iconsImage"/>
+
 
                       </a>
                       <br />
@@ -204,8 +209,10 @@ const UploadPendingFiles = props => {
                   :
 
                   <Col md={3} className="text-center">
-                    <a href={item.challanDocument.url} rel='noreferrer' target='_blank'>
-                      <i className='bx bxs-file mt-2 fileSizing'></i>
+                    <a href={item.challanDocument.url} rel='noreferrer' target='_blank' className="">
+                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
+                      <img src={fileImg2} className="iconsImage shadow"/>
+
 
                     </a>
                     <br />
@@ -240,7 +247,9 @@ const UploadPendingFiles = props => {
                   :
                   <Col md={3} className="text-center">
                     <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
-                      <i className='bx bxs-file mt-2 fileSizing'></i>
+                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
+                      <img src={fileImg2} className="iconsImage shadow"/>
+
 
                     </a>
                     <br />
@@ -276,7 +285,9 @@ const UploadPendingFiles = props => {
                   :
                   <Col md={3} className="text-center">
                     <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
-                      <i className='bx bxs-file mt-2 fileSizing'></i>
+                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
+                      <img src={fileImg2} className="iconsImage shadow"/>
+
 
                     </a>
                     <br />
