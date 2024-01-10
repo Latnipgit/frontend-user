@@ -71,6 +71,7 @@ const uploadDocumentsModel = props => {
           .then((response) => {
        console.log("respo+++",response.data.response)
        setuploadedCertificate(response.data.response)
+
           })
           .catch((error) => {
             console.log("Response", error)
@@ -80,9 +81,15 @@ const uploadDocumentsModel = props => {
     
       const handleSubmit=()=>{
         uploadFile(uploadDocumentID)
-      
+
+        const timer = setInterval(() => {
+           window.location.reload()
+           toggle()
+          return ()=> clearInterval(timer)
+        }, 1000);
+    
         // dispatch(uploadCACertificateID(payload))
-        toggle()
+     
     
       }
     

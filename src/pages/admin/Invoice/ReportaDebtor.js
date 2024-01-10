@@ -295,13 +295,13 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,req
                 </Button> */}
 
                 
-                <button type="button" className="btn btn-success p-0" data-toggle="tooltip" data-placement="top"
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
                  title="Record Payment" href={item.url} rel='noreferrer' 
                 target='_blank'  onClick={() => viewModel(item)
                   
 }>
-   {/* <i className='bx bx-wallet-alt textsizing' ></i> */}
-   <img src={RecordPayImg} className="iconsImage"/>
+   <i className='bx bx-wallet-alt textsizing' ></i>
+   {/* <img src={RecordPayImg} className="iconsImage"/> */}
 
    </button>
 
@@ -315,7 +315,7 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,req
                   <i className='bx bx-edit textsizing' ></i>
                 </Button> */}
 
-                <button type="button" className="btn btn-success p-0" data-toggle="tooltip" data-placement="top"
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
                  title="Request Edit" href={item.url} rel='noreferrer' 
                 target='_blank'  onClick={() => requestEdit(item)
                 
@@ -323,8 +323,8 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,req
 }
 disabled={ isRequestedEdit == true}
 >
-                  {/* <i className='bx bx-edit textsizing' ></i> */}
-                  <img src={ReqEdit} className="iconsImage"/>
+                  <i className='bx bx-edit textsizing' ></i>
+                  {/* <img src={ReqEdit} className="iconsImage"/> */}
 
    </button>
 
@@ -339,13 +339,13 @@ disabled={ isRequestedEdit == true}
 
 
                 </Button> */}
-                <button type="button" className="btn btn-success p-0" data-toggle="tooltip" data-placement="top"
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
                  title="Upload Pending Files" href={item.url} rel='noreferrer' 
                 target='_blank'  onClick={() => handleUploadFiles(item)
 
 }>
-                  {/* <i className='bx bx-cloud-upload textsizing' ></i> */}
-                  <img src={fileImg} className="iconsImage"/>
+                  <i className='bx bx-cloud-upload textsizing' ></i>
+                  {/* <img src={fileImg} className="iconsImage"/> */}
 
    </button>
 
@@ -360,7 +360,7 @@ disabled={ isRequestedEdit == true}
                 >
                   <i className='bx bx-file textsizing' ></i>
                 </Button> */}
-                <button type="button" className="btn btn-success p-0" data-toggle="tooltip" data-placement="top"
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
                  title="Upload CA Certificate" href={item.url} rel='noreferrer' 
                 target='_blank'   onClick={() => {
                   toggleViewModal2()
@@ -368,17 +368,17 @@ disabled={ isRequestedEdit == true}
                 }
 
                 }>
-                  {/* <i className='bx bx-file textsizing' ></i> */}
-                  <img src={CaImg} className="iconsImage"/>
+                  <i className='bx bx-file textsizing' ></i>
+                  {/* <img src={CaImg} className="iconsImage"/> */}
    </button>
 &nbsp;
-   <Button type="button" className="btn btn-success p-0" data-toggle="tooltip" data-placement="top"
+   <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                  title="View Details" href={item.url} rel='noreferrer' 
                 target='_blank' 
                 
                 onClick={()=> handleViewDetail(item)}>
-{/* <i className='bx bxs-user-detail textsizing' ></i>   */}
-<img src={profileimg} className="iconsImage"/>
+<i className='bx bxs-user-detail textsizing' ></i>  
+{/* <img src={profileimg} className="iconsImage"/> */}
 
 
  </Button>

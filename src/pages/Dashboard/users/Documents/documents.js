@@ -18,14 +18,17 @@ import UploadDocumentModel from './uploadDocumentsmodel'
 import { useDispatch, useSelector } from "react-redux";
 import { getGeneralDoucments } from "../../../../store/Documents/documents.actions"
 import { getGeneralDocumentsSelector } from "../../../../store/Documents/documents.selector"
+import pdfImg from '../../../../assets/images/newImg/pdf.png'
 // import { selectReportDefOpen } from "store/debtors/debtors.selecter"
-
+import './Gallary.css'
 
 const Document = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [genralDocs, setgenralDocs] = useState([]);
   const [modal1, setModal1] = useState(false);
   const toggleViewModal = () => setModal1(!modal1);
+
   const handleAcceptedFiles = (acceptedFiles) => {
   
     setSelectedFiles([...selectedFiles, ...acceptedFiles]);
@@ -47,79 +50,14 @@ const Document = (props) => {
   };
 useEffect(()=>{
   dispatch(getGeneralDoucments())
+  setgenralDocs(GetDocument)
+ 
 },[])
-  const handleUpload = () => {
-    setTimeout(() => {
-      setSelectedFiles([]); // Clear selected files
-      setUploadSuccess(true); // Show upload success message
-      // Remove the success message after 5 seconds
-      setTimeout(() => {
-        setUploadSuccess(false);
-      }, 5000);
-    }, 2000);
-  };
-
-  const renderAlert = () => {
-    if (uploadSuccess) {
-      return (
-        <div className="alert alert-success mt-3">
-          Files uploaded successfully!
-        </div>
-      );
-    }
-    return null;
-  };
-
-  const columns = useMemo(
-    () => [
 
 
-      {
-        Header: "File Name",
-        accessor: "name",
-        filterable: false,
-        disableFilters: true,
+ 
 
-        Cell: cellProps => {
-          return <span>{cellProps.row.original.name}</span>;
-        },
-      },
-      {
-        Header: "File type",
-        accessor: "type",
-        filterable: false,
-        disableFilters: true,
-
-        Cell: cellProps => {
-          return <span>{cellProps.row.original.type}</span>;
-        },
-      },
-
-
-
-      {
-        Header: "Action",
-        disableFilters: true,
-        accessor: "view",
-        Cell: cellProps => {
-          const project = cellProps.row.index;
-          return (
-            <div className="d-flex">
-
-
-              <div className="d-flex  align-items-center" onClick={() => removeFile(project)} style={{ cursor: 'pointer' }}>
-                <i className="mdi mdi-trash-can font-size-16 text-danger me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" />
-                <span>
-              Delete
-             </span>
-              </div>
-            </div>
-          );
-        },
-      },
-    ],
-    []
-  );
+ 
   const reciveDocument=(item)=>{
     console.log("IJIJIJI", item, selectedFiles)
     setSelectedFiles([...selectedFiles, ...item]);
@@ -163,14 +101,19 @@ useEffect(()=>{
 
 
                     <Row>
-                      <Col md={4} className="text-end">
+                      <Col md={4} className="text-end p-3">
              
   {/* <a >
                       <i className='bx bxs-file mt-2 fileSizing'></i></a> */}
+<a href={item.url} rel='noreferrer' target='_blank'>
 
-                      <button type="button" className="btn btn-white" data-toggle="tooltip" data-placement="top" title="View Document" href={item.url} rel='noreferrer' target='_blank'>
-                      <i className='bx bxs-file mt-2 fileSizing '></i>
+
+
+                      <button type="button" className="btn btn-white" data-toggle="tooltip" data-placement="top" title="View Document"  rel='noreferrer' target='_blank'>
+                      {/* <i className='bx bxs-file mt-2 fileSizing '></i> */}
+                      <img src={pdfImg} className="imgsizing"/>
 </button>
+</a>
                       
                       </Col>
                       <Col md={8} className="pt-3">
