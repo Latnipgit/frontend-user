@@ -25,6 +25,9 @@ const DueAmount = (cell) => {
     return cell.value ? numberFormat(cell.value) : '';
 };
 
+const Reating = (cell) => {
+    return cell.value ? cell.value : '';
+};
 const SrNo = (cell) => {
     return cell.value ? cell.value : '';
 };
@@ -101,5 +104,5 @@ export {
     CompanyName,
     DueSince,
     DueAmount,
-
+    Reating
 };
