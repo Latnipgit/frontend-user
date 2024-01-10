@@ -41,7 +41,8 @@ import {
   GST,
   CompanyName,
   DueSince,
-  DueAmount
+  DueAmount,
+  Reating
 } from "./companyssearchColl";
 
 import { getCompanyList as ongetCompanyList } from "../../../../src/store/actions";
@@ -167,7 +168,7 @@ const CompanySearch = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <DueAmount {...cellProps} />;
+          return <Reating {...cellProps} />;
         },
       },
       {
@@ -214,7 +215,7 @@ const CompanySearch = props => {
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
-      <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currenViewList} />
+      <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currentUserViewDetails} />
       {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/> */}
 
       <InlineFilterForm onFilter={handleFilter} />
