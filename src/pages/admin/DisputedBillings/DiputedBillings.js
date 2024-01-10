@@ -33,7 +33,7 @@ import {
 
 } from "reactstrap";
 
-
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 import TableContainer from "../../../components/Common/TableContainer";
 import DisputedViewModal from "./NewPaymentModel";
 
@@ -281,7 +281,8 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
             {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
 
           <td className="pt-4">
-            <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+            {numberFormat(item.invoices[0].remainingAmount)}
+            {/*             <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
 
           </td>
 

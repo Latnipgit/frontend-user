@@ -42,12 +42,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
 import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector , isViewDetailMOdalOpenSelector} from "store/debtors/debtors.selecter"
+import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector } from "store/debtors/debtors.selecter"
 import UploadPendingFiles from "./uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
 import { ToastContainer, toast } from 'react-toastify';
 import ViewDetailsReportDefaultModal from './viewDetailsReportDefaultModal'
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
 
 import './style.css'
 // import { ToastContainer } from "react-toastify"
@@ -109,7 +110,7 @@ const ReportDebtor = props => {
 
 
   const handleViewDetail = (item) => {
-    
+
     // window.location.href = "/ReportDefaulter"
     //setModal4(true)
     setViewModalData(item)
@@ -168,7 +169,7 @@ const ReportDebtor = props => {
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
-      <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData}/>
+      <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
@@ -247,11 +248,12 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
 
             <td className="pt-4 d-flex text-capitalize reportDebAdd">{item.debtor.companyName}
               <br />
-              {item.debtor.address1} <br/>{item.debtor.address2},  <br />{item.debtor.city}</td>
+              {item.debtor.address1} <br />{item.debtor.address2},  <br />{item.debtor.city}</td>
 
 
             <td className="pt-4">
-              <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+              {numberFormat(item.invoices[0].remainingAmount)}
+              {/*           <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
 
             </td>
             <td className="pt-4  text-capitalize">{item.status}</td>
@@ -284,14 +286,14 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
                
                 </Button> */}
 
-                
-                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                 title="Record Payment" href={item.url} rel='noreferrer' 
-                target='_blank'  onClick={() => viewModel(item)
 
-}>
-   <i className='bx bx-wallet-alt textsizing' ></i>
-   </button>
+                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                  title="Record Payment" href={item.url} rel='noreferrer'
+                  target='_blank' onClick={() => viewModel(item)
+
+                  }>
+                  <i className='bx bx-wallet-alt textsizing' ></i>
+                </button>
 
                 &nbsp;
 
@@ -304,12 +306,12 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
                 </Button> */}
 
                 <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                 title="Request Edit" href={item.url} rel='noreferrer' 
-                target='_blank'  onClick={() => requestEdit(item)
+                  title="Request Edit" href={item.url} rel='noreferrer'
+                  target='_blank' onClick={() => requestEdit(item)
 
-}>
+                  }>
                   <i className='bx bx-edit textsizing' ></i>
-   </button>
+                </button>
 
                 &nbsp;
 
@@ -323,12 +325,12 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
 
                 </Button> */}
                 <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                 title="Upload Pending Files" href={item.url} rel='noreferrer' 
-                target='_blank'  onClick={() => handleUploadFiles(item)
+                  title="Upload Pending Files" href={item.url} rel='noreferrer'
+                  target='_blank' onClick={() => handleUploadFiles(item)
 
-}>
+                  }>
                   <i className='bx bx-cloud-upload textsizing' ></i>
-   </button>
+                </button>
 
                 &nbsp;
                 {/* <Button className="btn btn-info btn-sm"
@@ -342,22 +344,22 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
                   <i className='bx bx-file textsizing' ></i>
                 </Button> */}
                 <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                 title="Upload CA Certificate" href={item.url} rel='noreferrer' 
-                target='_blank'   onClick={() => {
-                  toggleViewModal2()
-                  setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                }
+                  title="Upload CA Certificate" href={item.url} rel='noreferrer'
+                  target='_blank' onClick={() => {
+                    toggleViewModal2()
+                    setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                  }
 
-                }>
+                  }>
                   <i className='bx bx-file textsizing' ></i>
-   </button>
-&nbsp;
-   <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                 title="View Details" href={item.url} rel='noreferrer' 
-                target='_blank' 
-                
-                onClick={()=> handleViewDetail(item)}>
-<i className='bx bxs-user-detail textsizing' ></i>   </Button>
+                </button>
+                &nbsp;
+                <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                  title="View Details" href={item.url} rel='noreferrer'
+                  target='_blank'
+
+                  onClick={() => handleViewDetail(item)}>
+                  <i className='bx bxs-user-detail textsizing' ></i>   </Button>
 
 
               </div>
@@ -377,7 +379,7 @@ Upload Document
           </tr>
         }) : ''
       }
-      <ToastContainer/>
+      <ToastContainer />
     </>
   )
 

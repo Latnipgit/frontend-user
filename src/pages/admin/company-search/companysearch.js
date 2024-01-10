@@ -52,6 +52,7 @@ import { fetchCompanySearchStart } from "store/CompanySearch/CompanySearch.actio
 import { selectCompanySearchList, selectdashboardAdminDataMap } from "store/CompanySearch/CompanySearch.selecter";
 import { fetchCompanySearchViewDatatlStart } from "store/CompanySearchView/CompanySearchView.action";
 import { selectCompanySearchVeiwDatilsList } from "store/CompanySearchView/CompanySearchView.selecter";
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 
 
 const CompanySearch = props => {
