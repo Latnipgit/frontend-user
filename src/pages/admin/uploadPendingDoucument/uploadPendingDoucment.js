@@ -49,6 +49,7 @@ import UploadPendingFiles from "../Invoice/uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
 import { ToastContainer, toast } from 'react-toastify';
+import { numberFormat } from "./uploadPendingDoc"
 import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultModal"
 
 /* import './style.css' */
@@ -200,7 +201,7 @@ const UploadPendingListModule = props => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {selectTransactionsRaisedByMe.length > 0 ? <ReportDefulterTable GetAllInvoicedata={selectTransactionsRaisedByMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
+                                {selectTransactionsRaisedByMe.length > 0 ? <ReportDefulterTable GetUploadPendingList={selectTransactionsRaisedByMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
                             </tbody>
                         </table>
 
@@ -232,7 +233,7 @@ const UploadPendingListModule = props => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {selectTransactionsSentToMe.length > 0 ? <ReportDefulterTable GetAllInvoicedata={selectTransactionsSentToMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
+                                {selectTransactionsSentToMe.length > 0 ? <ReportDefulterTable GetUploadPendingList={selectTransactionsSentToMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
                             </tbody>
                         </table>
 
@@ -244,16 +245,14 @@ const UploadPendingListModule = props => {
     );
 }
 
-const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handleUploadFiles, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, handleViewDetail }) => {
+const ReportDefulterTable = ({ GetUploadPendingList, viewModel, requestEdit, handleUploadFiles, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, handleViewDetail }) => {
 
     return (
         <>
 
             {
-                GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
+                GetUploadPendingList != undefined ? GetUploadPendingList.map((item, index) => {
                     {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
-                    debugger
-
                     return <tr key={item}>
                         {/* {console.log("NEW TABLE ", item.remainingAmount)} */}
 
@@ -268,7 +267,8 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, requestEdit, handle
                             {item.defaulterEntry.debtor.address1} {item.defaulterEntry.debtor.address2}, {item.defaulterEntry.debtor.city}</td>
 
                         <td className="pt-4">
-                            <CurrencyFormat value={item.defaulterEntry.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+                            {numberFormat(item.defaulterEntry.totalAmount)}
+                            {/* <CurrencyFormat value={item.defaulterEntry.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
 
                         </td>
 

@@ -52,6 +52,7 @@ import { fetchCompanySearchStart } from "store/CompanySearch/CompanySearch.actio
 import { selectCompanySearchList, selectdashboardAdminDataMap } from "store/CompanySearch/CompanySearch.selecter";
 import { fetchCompanySearchViewDatatlStart } from "store/CompanySearchView/CompanySearchView.action";
 import { selectCompanySearchVeiwDatilsList } from "store/CompanySearchView/CompanySearchView.selecter";
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 
 
 const CompanySearch = props => {
@@ -59,6 +60,7 @@ const CompanySearch = props => {
 
   const { toggleMenuItems } = useMenu();
   const [filteredData, setFilteredData] = useState([]);
+  const [currenViewList, setCurrenViewList] = useState([])
   const [modal1, setModal1] = useState(false);
   const [selected, setSelected] = useState('')
   const [showMenuItems, setShowMenuItems] = useState(true);
@@ -72,6 +74,7 @@ const CompanySearch = props => {
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
+  console.log('currentUserViewDetails', currentUserViewDetails);
 
   const viewModel = (value) => {
     console.log("VALUE", value)
@@ -88,6 +91,7 @@ const CompanySearch = props => {
 
   useEffect(() => {
     dispatch(fetchCompanySearchStart())
+    setCurrenViewList(currentUserViewDetails)
   }, [])
 
 
@@ -210,7 +214,7 @@ const CompanySearch = props => {
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
-      <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} />
+      <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currenViewList} />
       {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/> */}
 
       <InlineFilterForm onFilter={handleFilter} />

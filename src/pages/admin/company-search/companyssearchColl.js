@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import * as moment from "moment";
 import { Badge } from 'reactstrap';
+import { numberFormat } from '../uploadPendingDoucument/uploadPendingDoc';
 
 
 
@@ -21,7 +22,7 @@ const CheckBox = (cell) => {
 };
 
 const DueAmount = (cell) => {
-    return cell.value ? cell.value : '';
+    return cell.value ? numberFormat(cell.value) : '';
 };
 
 const SrNo = (cell) => {

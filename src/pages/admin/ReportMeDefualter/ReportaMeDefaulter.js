@@ -23,6 +23,7 @@ import CurrencyFormat from "react-currency-format"
 import moment from 'moment'
 import { ToastContainer, toast } from 'react-toastify';
 import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultModal"
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
 
 const ReportMedefulterComponent = props => {
   const [modal1, setModal1] = useState(false);
@@ -41,7 +42,7 @@ const ReportMedefulterComponent = props => {
   const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
-console.log("isClickedToReported",props.isClickedToReported)
+  console.log("isClickedToReported", props.isClickedToReported)
   const isViewDetailModal = useSelector(isViewDetailMOdalOpenSelector);
   const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
 
@@ -170,16 +171,16 @@ console.log("isClickedToReported",props.isClickedToReported)
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
-      { props.isClickedToReported != undefined && props.isClickedToReported != false ?
+          {props.isClickedToReported != undefined && props.isClickedToReported != false ?
 
 
-<div>
-<br />
-  <br />
-  <br />
-  </div>
-  :""
-      } 
+            <div>
+              <br />
+              <br />
+              <br />
+            </div>
+            : ""
+          }
           <Row>
             <Col md={10} className="pl-3">
               <h5 className="m-1">Reported Me As a Defaulter</h5>
@@ -227,7 +228,9 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
             {item.debtor.address1}<br />{item.debtor.address2}
           </td>
           <td className="pt-4">
-            <CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /></td>
+            {numberFormat(item.totalAmount)}
+            {/* <CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
+          </td>
           <td>
             <div className="" style={{ padding: "2px 15px" }}>
 

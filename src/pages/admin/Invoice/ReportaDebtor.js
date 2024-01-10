@@ -42,7 +42,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
 import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector , isViewDetailMOdalOpenSelector} from "store/debtors/debtors.selecter"
+import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector } from "store/debtors/debtors.selecter"
 import UploadPendingFiles from "./uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
@@ -54,6 +54,7 @@ import fileImg from '../../../assets/images/newImg/file (1).png'
 import fileImg2 from '../../../assets/images/newImg/file.png'
 import ReqEdit from '../../../assets/images/newImg/edit.png'
 import profileimg from '../../../assets/images/newImg/profile.png'
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
 
 import './style.css'
 // import { ToastContainer } from "react-toastify"
@@ -116,7 +117,7 @@ const ReportDebtor = props => {
 
 
   const handleViewDetail = (item) => {
-    
+
     // window.location.href = "/ReportDefaulter"
     //setModal4(true)
     setViewModalData(item)
@@ -176,7 +177,7 @@ setisRequestedEdit(true)
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
-      <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData}/>
+      <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
@@ -255,11 +256,12 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,req
 
             <td className="pt-4 d-flex text-capitalize reportDebAdd">{item.debtor.companyName}
               <br />
-              {item.debtor.address1} <br/>{item.debtor.address2},  <br />{item.debtor.city}</td>
+              {item.debtor.address1} <br />{item.debtor.address2},  <br />{item.debtor.city}</td>
 
 
             <td className="pt-4">
-              <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+              {numberFormat(item.invoices[0].remainingAmount)}
+              {/*           <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
 
             </td>
             <td className="pt-4  text-capitalize">{item.status}</td>
@@ -399,7 +401,7 @@ Upload Document
           </tr>
         }) : ''
       }
-      <ToastContainer/>
+      <ToastContainer />
     </>
   )
 
