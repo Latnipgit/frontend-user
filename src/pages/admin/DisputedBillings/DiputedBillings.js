@@ -133,7 +133,8 @@ const DiputedBillings = props => {
 
   const getDays = () => {
     GetAllInvoice.length != undefined ? GetAllInvoice.map((item) => {
-      const a = moment(item.dueDate).format("YYYY-MM-DD")
+      debugger
+      const a = moment(item.debtor.createdAt).format("YYYY-MM-DD")
       const today = new Date();
       const newDate = a.split("-").reverse().join("-");
       const currentDate = new Date(a);
