@@ -111,7 +111,7 @@ const CompnayViewDetails = props => {
                                 </CardBody>
                             </Card>
                         </Col> */}
-                        <Col md="15" className="mt-4">
+                        <Col md="6" className="mt-4">
 
                             <Card className="mb-3">
                                 <CardBody className="buyer-card-body">
@@ -132,26 +132,25 @@ const CompnayViewDetails = props => {
                                 </CardBody>
                             </Card>
                         </Col>
-                        {/*                      <Col md="6" className="mt-4">
-                            <h4>Buyer Information</h4>
+                        <Col md="6" className="mt-4">
                             <Card className="mb-3">
                                 <CardBody className="seller-card-body">
-
-                                <p className="mb-2">
-                                        Billing Name: <span className="text-primary">{selected!= ""? selected.CompanyName:''}</span>
+                                    <h4>Key Points</h4>
+                                    <p className="mb-2">
+                                        1. Approved: <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
                                     </p>
                                     <p className="mb-2">
-                                        Company name : <span className="text-primary">{selected!= ""? selected.CompanyName:''}</span>
+                                        2. InProcess : <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
                                     </p>
                                     <p className="mb-2">
-                                        GST Number : <span className="text-primary">{selected!= ""? selected.GST:''}</span>
+                                        3. Disputed : <span className="text-primary">{selected != "" ? selected.GST : ''}</span>
                                     </p>
                                     <p className="mb-2">
-                                        Contact Number : <span className="text-primary">{selected!= ""? selected.PANCARD:''}</span>
+                                        4. Reating : <span className="text-primary">{selected != "" ? selected.PANCARD : ''}</span>
                                     </p>
                                 </CardBody>
                             </Card>
-                        </Col> */}
+                        </Col>
                     </Row>
                     <Card className="mb-3 mt-4">
                         <CardBody className="invoice-items-card-body">
