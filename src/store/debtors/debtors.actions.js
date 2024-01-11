@@ -35,7 +35,10 @@ import {
   UPDATE_PENDING_DOCUMENT,
   UPDATE_PENDING_DOCUMENT_FAIL,
   UPDATE_PENDING_DOCUMENT_SUCCESS,
-  View_DETAIL_MODAL_OPEN
+  View_DETAIL_MODAL_OPEN,
+  GET_FEEDBACKQUESTION,
+  GET_FEEDBACKQUESTION_FAIL,
+  GET_FEEDBACKQUESTION_SUCCESS
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -51,6 +54,14 @@ export const getAllInvoice = () => createAction(GET_INVOICE_LIST)
 export const getAllInvoiceSuccess = (data) => createAction(GET_INVOICE_LIST_SUCCESS, data)
 
 export const getAllInvoiceFail = (error) => createAction(GET_INVOICE_LIST_FAIL, error)
+
+
+export const getFeebBackQuestionList = () => createAction(GET_FEEDBACKQUESTION)
+
+export const getFeebBackQuestionListSuccess = (data) => createAction(GET_FEEDBACKQUESTION_SUCCESS, data)
+
+export const getFeebBackQuestionListFail = (error) => createAction(GET_FEEDBACKQUESTION, error)
+ 
  
 
 

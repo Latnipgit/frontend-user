@@ -48,11 +48,11 @@ import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
 import { ToastContainer, toast } from 'react-toastify';
 import ViewDetailsReportDefaultModal from './viewDetailsReportDefaultModal'
-import CaImg from '../../../assets/images/newImg/ca.png'
+// import CaImg from '../../../assets/images/newImg/ca.png'
 import RecordPayImg from '../../../assets/images/newImg/credit-card.png'
 import fileImg from '../../../assets/images/newImg/file (1).png'
 import fileImg2 from '../../../assets/images/newImg/file.png'
-import ReqEdit from '../../../assets/images/newImg/edit.png'
+import CaImg from '../../../assets/images/newImg/CA-BG_Remove.png'
 import profileimg from '../../../assets/images/newImg/profile.png'
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
 
@@ -191,6 +191,7 @@ setisRequestedEdit(true)
               <h5 className="m-1">Report a Defaulter</h5>
             </Col>
             <Col md={2}>
+              {console.log("GetAllInvoiceGetAllInvoiceGetAllInvoice",GetAllInvoice)}
               <Button className="btn btn-md btn-info" onClick={() => handleReportDefaulter()}>Report a Defaulter</Button>
               {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
 <ReactTooltip id="toolTip1" /> */}
@@ -206,6 +207,7 @@ setisRequestedEdit(true)
               showPagination={true}
               defaultPageSize={5}
             /> */}
+              <h5 className="m-1">List of My Defaulters</h5>
 
             <table className="table table-bordered">
               <thead>
@@ -300,7 +302,7 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,req
                 target='_blank'  onClick={() => viewModel(item)
                   
 }>
-   <i className='bx bx-wallet-alt textsizing' ></i>
+   <i className='bx bx-rupee textsizing' ></i> 
    {/* <img src={RecordPayImg} className="iconsImage"/> */}
 
    </button>
@@ -368,8 +370,8 @@ disabled={ isRequestedEdit == true}
                 }
 
                 }>
-                  <i className='bx bx-file textsizing' ></i>
-                  {/* <img src={CaImg} className="iconsImage"/> */}
+                  {/* <i className='bx bx-file textsizing' ></i> */}
+                  <img src={CaImg} className="" style={{ height:"22.5px"}}/>
    </button>
 &nbsp;
    <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
@@ -377,7 +379,8 @@ disabled={ isRequestedEdit == true}
                 target='_blank' 
                 
                 onClick={()=> handleViewDetail(item)}>
-<i className='bx bxs-user-detail textsizing' ></i>  
+<i className='fa fa-eye textsizing'  style={{ fontSize:"19.5px"}}></i>  
+
 {/* <img src={profileimg} className="iconsImage"/> */}
 
 

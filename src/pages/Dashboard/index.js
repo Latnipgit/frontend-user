@@ -196,11 +196,12 @@ const Dashboard = props => {
         <th scope="col">Company Name</th>
         {/* <th scope="col">Refrence Number</th> */}
         <th scope="col">Invoice Number</th>
-        {/* <th scope="col">Status</th> */}
         <th scope="col">Address</th>
+
         <th scope="col">Due Amount</th>
+
         <th scope="col">Due From</th>
-        <th scope="col">Action</th>
+        <th scope="col">Status</th>
         {/* <th scope="col">Upload Document</th> */}
       </tr>
     </thead>
@@ -238,10 +239,11 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
             {item.debtor.address1}, {item.debtor.address2}
           </td>
           <td className="pt-4"><CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /></td>
+       
           <td>
             <div className="" style={{ padding: "2px 15px" }}>
 
-              <div className=" text-center bg-success rounded text-light">
+              <div className=" text-center bg-danger   rounded text-light">
                 <div className="text-capitalize">
 
                   {getDaysArray[index]}  &nbsp;
