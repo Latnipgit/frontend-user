@@ -134,15 +134,7 @@ const UploadPendingListModule = props => {
     const getDays = () => {
         debugger
         selectTransactionsRaisedByMe.length > 0 ? selectTransactionsRaisedByMe.map((item) => {
-            /*      const a = moment(item.dueDate);
-                 const b = moment()
-                 const c = moment(b).diff(a)
-                 const d = moment.duration(c)
-                 if (getDaysArray.length != GetAllInvoice.length) {
-                     getDaysArray.push(d.days())
-     
-                 } */
-            const a = moment(item.dueDate).format("YYYY-MM-DD")
+            const a = moment(item.defaulterEntry.debtor.createdAt).format("YYYY-MM-DD")
             const today = new Date();
             const newDate = a.split("-").reverse().join("-");
             const currentDate = new Date(a);
@@ -152,7 +144,7 @@ const UploadPendingListModule = props => {
         }) : []
 
         selectTransactionsSentToMe.length > 0 ? selectTransactionsSentToMe.map((item) => {
-            const a = moment(item.dueDate).format("YYYY-MM-DD")
+            const a = moment(item.defaulterEntry.debtor.createdAt).format("YYYY-MM-DD")
             const today = new Date();
             const newDate = a.split("-").reverse().join("-");
             const currentDate = new Date(a);
