@@ -41,8 +41,8 @@ import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
-import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen,setRequestEditModalOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector,requestModelSelector } from "store/debtors/debtors.selecter"
+import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen, setRequestEditModalOpen } from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector, requestModelSelector } from "store/debtors/debtors.selecter"
 import UploadPendingFiles from "./uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
@@ -84,7 +84,7 @@ const ReportDebtor = props => {
   const toggleViewModal3 = () => dispatch(setIsReportDefOpen(!isReportDefOpen));
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
   const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
-  const toggleReqEdit =()=>dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
+  const toggleReqEdit = () => dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
   const [isRequestedEdit, setisRequestedEdit] = useState(false)
 
 
@@ -136,19 +136,20 @@ const ReportDebtor = props => {
   }
   const getDays = () => {
     GetAllInvoice != undefined ? GetAllInvoice.map((item) => {
-      const a = moment(item.dueDate);
+      const a = moment(item.invoices[0].dueDate);
       const b = moment()
       const c = moment(b).diff(a)
       const d = moment.duration(c)
+      // console.log("ABABABABABAB", getDaysArray,item.invoices)
+
       if (getDaysArray.length != GetAllInvoice.length) {
         getDaysArray.push(d.days())
 
       }
     }) : []
-    // console.log("ABABABABABAB", getDaysArray)
   }
-const RequestEditData = useSelector(requestEditSelector)
-console.log("ABABABABABAB 2", RequestEditData)
+  const RequestEditData = useSelector(requestEditSelector)
+  console.log("ABABABABABAB 2", RequestEditData)
   const requestEdit = (item) => {
     dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
 
@@ -157,7 +158,7 @@ console.log("ABABABABABAB 2", RequestEditData)
       "invoiceId": item.invoices[0].invoiceNumber
     }
 
-setisRequestedEdit(true)
+    setisRequestedEdit(true)
 
 
     dispatch(requestInvoiceDefEdit(payload))
@@ -184,7 +185,7 @@ setisRequestedEdit(true)
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
-      <RequestEditMessageModal isOpen={isRequestEditModalOpen} toggle={toggleReqEdit}/>
+      <RequestEditMessageModal isOpen={isRequestEditModalOpen} toggle={toggleReqEdit} />
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
@@ -198,7 +199,7 @@ setisRequestedEdit(true)
               <h5 className="m-1">Report a Defaulter</h5>
             </Col>
             <Col md={2}>
-              {console.log("GetAllInvoiceGetAllInvoiceGetAllInvoice",GetAllInvoice)}
+              {console.log("GetAllInvoiceGetAllInvoiceGetAllInvoice", GetAllInvoice)}
               <Button className="btn btn-md btn-info" onClick={() => handleReportDefaulter()}>Report a Defaulter</Button>
               {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
 <ReactTooltip id="toolTip1" /> */}
@@ -214,7 +215,7 @@ setisRequestedEdit(true)
               showPagination={true}
               defaultPageSize={5}
             /> */}
-              <h5 className="m-1">List of My Defaulters</h5>
+            <h5 className="m-1">List of My Defaulters</h5>
 
             <table className="table table-bordered">
               <thead>
@@ -246,7 +247,7 @@ setisRequestedEdit(true)
   );
 }
 
-const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,requestEdit, handleUploadFiles, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, handleViewDetail }) => {
+const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit, requestEdit, handleUploadFiles, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, handleViewDetail }) => {
 
   return (
     <>
@@ -305,16 +306,18 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,req
                
                 </Button> */}
 
-                
-                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
-                 title="Record Payment" href={item.url} rel='noreferrer' 
-                target='_blank'  onClick={() => viewModel(item)
-                  
-}>
-   <i className='bx bx-rupee textsizing' ></i> 
-   {/* <img src={RecordPayImg} className="iconsImage"/> */}
 
-   </button>
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
+                  title="Record Payment" href={item.url} rel='noreferrer'
+                  target='_blank' onClick={() => viewModel(item)
+
+                  }>
+                  <i className='bx bx-wallet-alt textsizing' ></i>
+
+
+                  {/* <img src={RecordPayImg} className="iconsImage"/> */}
+
+                </button>
 
                 &nbsp;
 
@@ -327,17 +330,17 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,req
                 </Button> */}
 
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
-                 title="Request Edit" href={item.url} rel='noreferrer' 
-                target='_blank'  onClick={() => requestEdit(item)
-                
+                  title="Request Edit" href={item.url} rel='noreferrer'
+                  target='_blank' onClick={() => requestEdit(item)
 
-}
-disabled={ isRequestedEdit == true}
->
+
+                  }
+                  disabled={isRequestedEdit == true}
+                >
                   <i className='bx bx-edit textsizing' ></i>
                   {/* <img src={ReqEdit} className="iconsImage"/> */}
 
-   </button>
+                </button>
 
                 &nbsp;
 
@@ -351,14 +354,14 @@ disabled={ isRequestedEdit == true}
 
                 </Button> */}
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
-                 title="Upload Pending Files" href={item.url} rel='noreferrer' 
-                target='_blank'  onClick={() => handleUploadFiles(item)
+                  title="Upload Pending Files" href={item.url} rel='noreferrer'
+                  target='_blank' onClick={() => handleUploadFiles(item)
 
-}>
+                  }>
                   <i className='bx bx-cloud-upload textsizing' ></i>
                   {/* <img src={fileImg} className="iconsImage"/> */}
 
-   </button>
+                </button>
 
                 &nbsp;
                 {/* <Button className="btn btn-info btn-sm"
@@ -372,28 +375,28 @@ disabled={ isRequestedEdit == true}
                   <i className='bx bx-file textsizing' ></i>
                 </Button> */}
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
-                 title="Upload CA Certificate" href={item.url} rel='noreferrer' 
-                target='_blank'   onClick={() => {
-                  toggleViewModal2()
-                  setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                }
+                  title="Upload CA Certificate" href={item.url} rel='noreferrer'
+                  target='_blank' onClick={() => {
+                    toggleViewModal2()
+                    setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
+                  }
 
-                }>
+                  }>
                   {/* <i className='bx bx-file textsizing' ></i> */}
-                  <img src={CaImg} className="" style={{ height:"22.5px"}}/>
-   </button>
-&nbsp;
-   <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                 title="View Details" href={item.url} rel='noreferrer' 
-                target='_blank' 
-                
-                onClick={()=> handleViewDetail(item)}>
-<i className='fa fa-eye textsizing'  style={{ fontSize:"19.5px"}}></i>  
+                  <img src={CaImg} className="" style={{ height: "22.5px" }} />
+                </button>
+                &nbsp;
+                <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                  title="View Details" href={item.url} rel='noreferrer'
+                  target='_blank'
 
-{/* <img src={profileimg} className="iconsImage"/> */}
+                  onClick={() => handleViewDetail(item)}>
+                  <i className='fa fa-eye textsizing' style={{ fontSize: "19.5px" }}></i>
+
+                  {/* <img src={profileimg} className="iconsImage"/> */}
 
 
- </Button>
+                </Button>
 
 
               </div>

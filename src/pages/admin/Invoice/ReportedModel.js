@@ -27,7 +27,7 @@ const ReportedDebtorsModel = props => {
   const [responsivestarRating, setresponsivestarRating] = useState(0)
   const [Integrity, setIntegrity] = useState(0)
   const { isOpen, toggle, filteredCustomerDetail,allInvoiceList } = props
-
+console.log("HARSJH allInvoiceList",allInvoiceList)
   const colourStyles = {
     menuList: styles => ({
       ...styles,
