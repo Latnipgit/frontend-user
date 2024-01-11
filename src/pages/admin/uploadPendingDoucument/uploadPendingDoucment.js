@@ -60,6 +60,7 @@ import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultMo
 const UploadPendingListModule = props => {
     const [modal1, setModal1] = useState(false);
     const [getDaysArray, setgetDaysArray] = useState([]);
+    const [getDaysArrySecond, setgetDaysArrySecond] = useState([])
     const [modal2, setModal2] = useState(false);
     const [modal3, setModal3] = useState(false);
     const [selected, setSelected] = useState('');
@@ -131,15 +132,33 @@ const UploadPendingListModule = props => {
         dispatch(setUploadFilesOpen(!uploadFilesModalShow))
     }
     const getDays = () => {
-        GetAllInvoice != undefined ? GetAllInvoice.map((item) => {
-            const a = moment(item.dueDate);
-            const b = moment()
-            const c = moment(b).diff(a)
-            const d = moment.duration(c)
-            if (getDaysArray.length != GetAllInvoice.length) {
-                getDaysArray.push(d.days())
+        debugger
+        selectTransactionsRaisedByMe.length > 0 ? selectTransactionsRaisedByMe.map((item) => {
+            /*      const a = moment(item.dueDate);
+                 const b = moment()
+                 const c = moment(b).diff(a)
+                 const d = moment.duration(c)
+                 if (getDaysArray.length != GetAllInvoice.length) {
+                     getDaysArray.push(d.days())
+     
+                 } */
+            const a = moment(item.dueDate).format("YYYY-MM-DD")
+            const today = new Date();
+            const newDate = a.split("-").reverse().join("-");
+            const currentDate = new Date(a);
+            const differenceInMilliseconds = today - currentDate;
+            const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+            setgetDaysArray(items => [...items, differenceInDays])
+        }) : []
 
-            }
+        selectTransactionsSentToMe.length > 0 ? selectTransactionsSentToMe.map((item) => {
+            const a = moment(item.dueDate).format("YYYY-MM-DD")
+            const today = new Date();
+            const newDate = a.split("-").reverse().join("-");
+            const currentDate = new Date(a);
+            const differenceInMilliseconds = today - currentDate;
+            const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+            setgetDaysArrySecond(items => [...items, differenceInDays])
         }) : []
         console.log("ABABABABABAB", getDaysArray)
     }
@@ -233,7 +252,7 @@ const UploadPendingListModule = props => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {selectTransactionsSentToMe.length > 0 ? <ReportDefulterTable GetUploadPendingList={selectTransactionsSentToMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
+                                {selectTransactionsSentToMe.length > 0 ? <ReportDefulterTable GetUploadPendingList={selectTransactionsSentToMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArrySecond} /> : ''}
                             </tbody>
                         </table>
 
