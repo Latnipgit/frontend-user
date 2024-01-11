@@ -38,7 +38,8 @@ import {
   View_DETAIL_MODAL_OPEN,
   GET_FEEDBACKQUESTION,
   GET_FEEDBACKQUESTION_FAIL,
-  GET_FEEDBACKQUESTION_SUCCESS
+  GET_FEEDBACKQUESTION_SUCCESS,
+  REQUEST_EDIT_MODAL_OPEN
   
 } from "./debtors.actiontype"
 
@@ -78,7 +79,8 @@ const INIT_STATE = {
   updatePendingDocssuccess:[],
   getFeedbackQuestionListReducer:[],
   getFeedbackQuestionListReducerSueccess:[],
-  getFeedbackQuestionListReducerFail:false
+  getFeedbackQuestionListReducerFail:false,
+  isrequestEditModalReducerOpen: false,
 
 
 }
@@ -96,6 +98,8 @@ export const DebtorsReducer = (state = INIT_STATE, action) => {
       return { ...state, error: payload, }
     case GET_REPORT_DEF_OPEN:
       return { ...state, isReportDefOpen: payload, }
+      case REQUEST_EDIT_MODAL_OPEN:
+      return { ...state, isrequestEditModalReducerOpen: payload, }
     case GET_CUSTOMER_FEEDBACK_MODAL_OPEN:
       return { ...state, isCustomerFeedbackModalOpen: payload, }
     case CONFIRM_REPORT_DEFAULT_MODAL:

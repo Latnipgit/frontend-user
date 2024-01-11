@@ -41,8 +41,8 @@ import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
-import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector } from "store/debtors/debtors.selecter"
+import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen,setRequestEditModalOpen } from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector,requestModelSelector } from "store/debtors/debtors.selecter"
 import UploadPendingFiles from "./uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
@@ -55,7 +55,7 @@ import fileImg2 from '../../../assets/images/newImg/file.png'
 import CaImg from '../../../assets/images/newImg/CA-BG_Remove.png'
 import profileimg from '../../../assets/images/newImg/profile.png'
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
-
+import RequestEditMessageModal from "./RequestEditMessageModal"
 import './style.css'
 // import { ToastContainer } from "react-toastify"
 
@@ -75,6 +75,7 @@ const ReportDebtor = props => {
   const [viewModalData, setViewModalData] = useState('');
 
   const isViewDetailModal = useSelector(isViewDetailMOdalOpenSelector);
+  const isRequestEditModalOpen = useSelector(requestModelSelector);
   const isReportDefOpen = useSelector(selectReportDefOpen);
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const selectCACertificate = useSelector(selectCACertificateOpen);
@@ -83,6 +84,7 @@ const ReportDebtor = props => {
   const toggleViewModal3 = () => dispatch(setIsReportDefOpen(!isReportDefOpen));
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
   const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
+  const toggleReqEdit =()=>dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
   const [isRequestedEdit, setisRequestedEdit] = useState(false)
 
 
@@ -90,10 +92,11 @@ const ReportDebtor = props => {
   useEffect(() => {
     dispatch(getAllInvoice());
     dispatch(setIsViewDetailModalOpen())
+    dispatch(setRequestEditModalOpen())
 
     getDays()
 
-  }, [isRequestedEdit])
+  }, [])
 
   const viewModel = (value) => {
     setSelected(value)
@@ -124,6 +127,7 @@ const ReportDebtor = props => {
     dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
 
   }
+
   const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
 
   const handleUploadFiles = (item) => {
@@ -146,6 +150,7 @@ const ReportDebtor = props => {
 const RequestEditData = useSelector(requestEditSelector)
 console.log("ABABABABABAB 2", RequestEditData)
   const requestEdit = (item) => {
+    dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
 
     console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
     const payload = {
@@ -153,8 +158,9 @@ console.log("ABABABABABAB 2", RequestEditData)
     }
 
 setisRequestedEdit(true)
+
+
     dispatch(requestInvoiceDefEdit(payload))
-    toast.success("You will be notified when you are given access to edit the documents by email. For any queries please reach out to us on... email id .Please note the access will be available to you only for a period of 7 days during which your post status will be under process")
   }
 
   const handleFilterdata = (filters) => {
@@ -178,6 +184,7 @@ setisRequestedEdit(true)
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
+      <RequestEditMessageModal isOpen={isRequestEditModalOpen} toggle={toggleReqEdit}/>
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>

@@ -117,3 +117,9 @@ export const getFeebBackQuestionListSelector = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.getFeedbackQuestionListReducer,
 )
+// 
+
+export const requestModelSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.isrequestEditModalReducerOpen
+)

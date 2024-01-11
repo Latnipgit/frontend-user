@@ -38,7 +38,8 @@ import {
   View_DETAIL_MODAL_OPEN,
   GET_FEEDBACKQUESTION,
   GET_FEEDBACKQUESTION_FAIL,
-  GET_FEEDBACKQUESTION_SUCCESS
+  GET_FEEDBACKQUESTION_SUCCESS,
+  REQUEST_EDIT_MODAL_OPEN
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -67,6 +68,7 @@ export const getFeebBackQuestionListFail = (error) => createAction(GET_FEEDBACKQ
 
 
 export const setIsReportDefOpen = (boolean) => createAction(GET_REPORT_DEF_OPEN, boolean);
+export const setRequestEditModalOpen = (boolean) => createAction(REQUEST_EDIT_MODAL_OPEN, boolean);
 export const setIsViewDetailModalOpen = (boolean) => createAction(View_DETAIL_MODAL_OPEN, boolean);
 export const setConfirmReportDefaultModal = (boolean) => createAction(CONFIRM_REPORT_DEFAULT_MODAL, boolean);
 export const setPreviewModalOpen = (boolean) => createAction(GET_REPORT_DEF_PREVIEW, boolean);
