@@ -224,7 +224,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
           <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-          <td style={{ width:"220px"}}> 
+          <td style={{ width: "220px" }}>
             {item.debtor.address1}<br />{item.debtor.address2}
           </td>
           <td className="pt-4">
@@ -234,7 +234,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
           <td>
             <div className="" style={{ padding: "2px 15px" }}>
 
-              <div className=" text-center bg-success rounded text-light">
+              <div className=" text-center bg-danger rounded text-light">
                 <div className="text-capitalize">
 
                   {getDaysArray[index]}  &nbsp;
