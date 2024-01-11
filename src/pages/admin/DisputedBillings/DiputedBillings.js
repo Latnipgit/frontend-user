@@ -132,15 +132,14 @@ const DiputedBillings = props => {
   const [modal1, setModal1] = useState(false);
 
   const getDays = () => {
-    GetAllInvoice != undefined ? GetAllInvoice.map((item) => {
-      const a = moment(item.dueDate);
-      const b = moment()
-      const c = moment(b).diff(a)
-      const d = moment.duration(c)
-      if (getDaysArray.length != GetAllInvoice.length) {
-        getDaysArray.push(d.days())
-
-      }
+    GetAllInvoice.length != undefined ? GetAllInvoice.map((item) => {
+      const a = moment(item.dueDate).format("YYYY-MM-DD")
+      const today = new Date();
+      const newDate = a.split("-").reverse().join("-");
+      const currentDate = new Date(a);
+      const differenceInMilliseconds = today - currentDate;
+      const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+      setgetDaysArray(items => [...items, differenceInDays])
     }) : []
     console.log("ABABABABABAB", getDaysArray)
   }
@@ -262,7 +261,7 @@ const DiputedBillings = props => {
 
 
 const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, requestEdit }) => {
-  
+
   return (
     <>
       {GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
@@ -290,7 +289,7 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
 
             <div className="" style={{ padding: "2px 15px" }}>
 
-              <div className=" text-center bg-success rounded text-light">
+              <div className=" text-center bg-danger rounded text-light">
                 <div className="text-capitalize">
 
                   {getDaysArray[index]}  &nbsp;
