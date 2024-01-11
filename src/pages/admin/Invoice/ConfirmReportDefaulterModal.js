@@ -39,10 +39,10 @@ const confirmReportModal = props => {
   padding: '5px', // Optional: Add padding to the checkbox
   marginRight: '5px', // Optional: Add some spacing between the checkbox and label
 };
-const [isCheck, setisCheck] = useState(false);
-const handleChecked =()=>{
-  setisCheck(true)
-}
+const [isChecked, setIsChecked] = useState(false);
+const handleCheckboxChange = () => {
+  setIsChecked(!isChecked);
+};
 const addInvoiceReportDefaulter = useSelector(addInvoiceReportDefaulterSelector)
 const dispatch = useDispatch()
 
@@ -134,7 +134,7 @@ dispatch(addInvoiceReportDefaulterInvoice(payload))
 
   useEffect(()=>{
 
-  },[isCheck])
+  },[])
   return (
     <Modal
       isOpen={isOpen}
@@ -155,8 +155,14 @@ dispatch(addInvoiceReportDefaulterInvoice(payload))
 <br/>
 <p>Confirming the report of the mentioned customer as a defaulter requires accurate information. Any inaccuracies may lead to legal action against the reporting party, impacting their credibility as a rater. </p>
  <p className="text-center">
-   <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} onChange={()=>handleChecked()}/> 
- 
+   {/* <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} onChange={()=>handleChecked()}/>  */}
+   <Input
+          type="checkbox"
+          // checked={isChecked}
+          onChange={()=>handleCheckboxChange()}
+          className="checkForConfirm"
+          style={checkboxStyle} 
+        />
  &nbsp; &nbsp;By checking the checkbox, you accept full responsibility for consequences related to the rating and grant AnandRishi Technologies Pvt Ltd permission to post this information on social media on your behalf. You absolve AnandRishi Technologies Pvt Ltd from any legal or monetary consequences arising from such actions.</p>
 
  {/* <p className="text-center text-danger"> <i className='bx bx-error'></i> &nbsp; If found the provided information is wrong or incorrect legal action will be taken on the reporting party.</p> */}
@@ -169,8 +175,7 @@ dispatch(addInvoiceReportDefaulterInvoice(payload))
     </Col>
     <Col md={2}>
     <Button className="text-center btn btn-info" onClick={()=>handleSubmit()}
-    disable={isCheck}
-    >Submit</Button>
+disabled={!isChecked}    >Submit</Button>
 
     </Col>
     <Col md={3}></Col>

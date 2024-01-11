@@ -36,7 +36,7 @@ const ReportDefPreviewModals = props => {
       const Integrity =ratingValue.Integrity
       const responsivestarRating =ratingValue.responsivestarRating
       const timelystarRating =ratingValue.timelystarRating
-   
+   console.log("feedbackdataPaylod",feedbackdataPaylod)
   const dispatch = useDispatch()
   console.log("filteredCustomerDetail", filteredCustomerDetail)
   const isConfirmModalOpen = useSelector(confirReportDefaultModel)
@@ -191,8 +191,10 @@ console.log("PREVIEW PROPS ",props)
    
     <div className="mb-1">
 
-      <Row>
+    {item.questionType != "RATING"? <Row>
         <Col md={9}>
+       
+
           <span className="mb-2">
 
      {index+1}.  {item.questionDesc}   </span>
@@ -208,7 +210,7 @@ console.log("PREVIEW PROPS ",props)
 
         </Col>
       </Row>
-
+ :""}
 
     </div>
 

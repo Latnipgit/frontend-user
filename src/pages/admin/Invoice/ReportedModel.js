@@ -92,7 +92,7 @@ console.log("getFeebBackQuestiongetFeebBackQuestion",getFeebBackQuestion)
   }
 
   const handlePreviewShow = () => {
-
+console.log("feedbackdataPaylodfeedbackdataPaylod",feedbackdataPaylod)
     dispatch(addRatingToDebtor(feedbackdataPaylod))
     dispatch(setPreviewModalOpen(!isPreviewModalShow))
     setratingValue(
