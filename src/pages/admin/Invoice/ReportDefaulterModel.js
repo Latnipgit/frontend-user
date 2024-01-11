@@ -100,6 +100,7 @@ function uploadFile(formData) {
     .then((response) => {
  console.log("respo+++",response.data.response)
  setAttachment(response.data.response/documentId)
+ toast.success("File Upload Successfully")
     })
     .catch((error) => {
       console.log("Response", error)
@@ -122,6 +123,7 @@ const handleSubmit=()=>{
   ]
   console.log("payloadpayload",payload)
   dispatch(recoredPaymentReportDefault(payload[0]))
+  toast.success("Record Payment Successfully")
   toggle()
 }
 const handleDateChange = (value) => {

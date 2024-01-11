@@ -471,6 +471,7 @@ const ReportedDefaulterModel = props => {
     })
       .then((response) => {
         toast.success("file upload successfully")
+        setisDisabled(false)
         console.log("Response", response)
         if (response.data.response.fieldName == "uploadInvoice") {
           setuploadInvoiceId(response.data.response)
