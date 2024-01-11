@@ -31,9 +31,12 @@ import { selectDebtorsList } from "store/debtors/debtors.selecter"
 import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter"
 import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
+import { SelectAddCustomerList } from "store/actions"
 import moment from 'moment'
 
+
 const AddCustomer = props => {
+  debugger
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const dispatch = useDispatch();
@@ -41,13 +44,21 @@ const AddCustomer = props => {
   const isAddCustomerOpen = useSelector(SelectAddCustomer);
   const toggleAddCustomer = () => dispatch(setAddCustomerOpen(!isAddCustomerOpen));
 
-  const GetAllDebtors = useSelector(selectDebtorsList)
+  const selectGetAllDebtors = useSelector(selectDebtorsList)
+  const selectNewCustomerList = useSelector(SelectAddCustomerList)
+  let GetAllDebtors
+  if (selectNewCustomerList.length > 0) {
+    GetAllDebtors = [...selectGetAllDebtors, ...selectNewCustomerList]
+  } else {
+    GetAllDebtors = selectGetAllDebtors
+  }
+
   console.log(GetAllDebtors);
 
   useEffect(() => {
     dispatch(getAllDebtors());
     getDays()
-
+    setFilteredData(GetAllDebtors)
   }, [])
 
   const getDays = () => {
@@ -68,7 +79,6 @@ const AddCustomer = props => {
         setFilteredData(GetAllDebtors)
       } else {
         const filteredResults = GetAllDebtors.filter(item => {
-          debugger
           if (item.firstname === undefined) return
           const fullname = item.firstname + item.lastname.toLocaleLowerCase()
           return fullname.toLocaleLowerCase().includes(filters);
