@@ -163,7 +163,7 @@ const Register = props => {
             return () => clearInterval(intervals);
       }
       else{
-        debugger
+        
         toast.error('user already existes')
 
       }

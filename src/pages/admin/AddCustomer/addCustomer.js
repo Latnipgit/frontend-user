@@ -36,7 +36,7 @@ import moment from 'moment'
 
 
 const AddCustomer = props => {
-  debugger
+  
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const dispatch = useDispatch();

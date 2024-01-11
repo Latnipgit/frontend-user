@@ -213,12 +213,13 @@ setisRequestedEdit(true)
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Company Name</th>
+                  <th scope="col">Buyer Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
                   <th scope="col">Invoice Number</th>
                   <th scope="col" className="reportDebAdd">Address</th>
                   <th scope="col">Due Amount</th>
                   <th scope="col">status</th>
+                  {/* <th scope="col">Rating</th> */}
 
                   <th scope="col">Due From</th>
                   <th scope="col">Action</th>
@@ -266,7 +267,8 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit,req
               {/*           <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
 
             </td>
-            <td className="pt-4  text-capitalize">{item.status}</td>
+            <td className="pt-4  text-capitalize"><span className="text-danger">{item.status}</span></td>
+            {/* <td className="pt-4  text-capitalize">}</td> */}
 
             <td >
 

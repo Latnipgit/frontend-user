@@ -122,7 +122,7 @@ const ReportedDefaulterModel = props => {
       return errors
     },
     onSubmit: values => {
-      debugger
+      
       // Handle form submission here
     },
   })
@@ -308,17 +308,12 @@ const ReportedDefaulterModel = props => {
       "allInvoiceListForPreview": data
 
     }]
-    if (uploadInvoiceId != "" && data[0].amount != "" && data[0].itemDetail != "") {
+
+    if ( data[0].amount != "" && data[0].itemDetail != "") {
       setisDisabled(false)
-      setallInvoiceList(dummy)
       toast.success("Invoice Add Successfully")
-      // const val = { "InvoiceId": InvoiceAddData.debtorId }
-      //       const avilableInvoiceID = debtorIdArrayForPreview.some(x => x.InvoiceId === val)
-      //       if (val) {
-      //         if (!avilableInvoiceID) {
-      //           setdebtorIdArrayForPreview(myArr => [...myArr, val])
-      //         }
-      // }
+      setallInvoiceList(dummy)
+
     }
     else {
       toast.error("Please Fill All Required Fields")
@@ -513,7 +508,7 @@ const ReportedDefaulterModel = props => {
     let totleamount = 0
 
     newData.forEach((row, i) => {
-      debugger
+      
       if (row.amount !== "") {
         const amountValue = parseFloat(row.amount)
         console.log("amountValueamountValue", typeof (amountValue))
@@ -526,7 +521,7 @@ const ReportedDefaulterModel = props => {
     setTotal(totleamount)
 
   }
-  console.log("newDat4545a ", data)
+  console.log("newDat4545a ", allInvoiceList)
 
 
 

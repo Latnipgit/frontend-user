@@ -48,6 +48,7 @@ const ReportDefPreviewModals = props => {
  
   useEffect(() => {
     dispatch(fetchReportDefulterPreviewStart())
+    console.log("allInvoiceList Preview",allInvoiceList)
   }, [])
 
   const handleFeedbackModal = () => {

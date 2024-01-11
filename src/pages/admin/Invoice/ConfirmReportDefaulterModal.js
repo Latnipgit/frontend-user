@@ -30,9 +30,10 @@ const confirmReportModal = props => {
   handleSubmitInvoice()
   toast.success("Reported Defaulter successfully")
   toggle()
+  // window.location.reload()
 
  }
- console.log("CHECKPROPSATAAA",props)
+ console.log("CHECKPROPSATAAA",allInvoiceList)
  const checkboxStyle = {
   border: '2px solid #3498db', // Set the border color (change #3498db to your desired color)
   borderRadius: '4px', // Optional: Add rounded corners for a nicer look

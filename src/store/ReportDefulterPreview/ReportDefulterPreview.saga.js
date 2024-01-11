@@ -8,7 +8,7 @@ import { getAllInvoiceFolder } from "helpers/fakebackend_helper"
 
 
 export function* fetchReportDefulterPreviewAsync() {
-  debugger;
+  ;
   try {
     const ReportDefulterPreviewArray = yield call(getAllInvoiceFolder)
     yield put(fetchReportDefulterPreviewSuccess(ReportDefulterPreviewArray.data.response))

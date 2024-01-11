@@ -86,7 +86,7 @@ export async function getMethodResponse(url, data, config = {}) {
   return axiosApi
     .get(url,{ ...config, headers },data)
     .then((response) => {
-      debugger
+      
       return response
     })
     .catch((error) => {

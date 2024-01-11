@@ -138,8 +138,10 @@ console.log("feedbackdataPaylodfeedbackdataPaylod",feedbackdataPaylod)
 
 useEffect(()=>{
   dispatch(getFeebBackQuestionList())
+
 },[])
-  console.log("allInvoiceList",allInvoiceList)
+console.log("allInvoiceList REPORT",props)
+
   return (
     <Modal
       isOpen={isOpen}

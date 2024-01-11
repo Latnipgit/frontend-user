@@ -262,7 +262,7 @@ const DiputedBillings = props => {
 
 
 const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, requestEdit }) => {
-  debugger
+  
   return (
     <>
       {GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {

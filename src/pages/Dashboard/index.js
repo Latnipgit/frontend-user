@@ -143,15 +143,20 @@ const Dashboard = props => {
           
           </Row>
           <br />
+<div style={{ border:"1px solid gray"}} className="p-3">
 
-         <Row className="text-center">
+
+         <Row className="text-center" >
           <Col md={12}>
           <div className="btn-group" role="group" aria-label="Basic example">
-  <button type="button" className="btn btn-info "  style={{ background: isClickedToReported == false ? "#ff4d4d":"	 #050505", border:"none", width:"230px", marginRight:"10px"}} onClick={()=>setisClickedToReported(false)} >Reported Me as A Defaulter</button>
-  &nbsp;  
+  <button type="button" className="btn btn-info "  style={{ background: isClickedToReported == false ? "#ff4d4d":"	 #050505", border:"none", width:"230px"}} onClick={()=>setisClickedToReported(false)} >Reported Me as A Defaulter</button>
   <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#ff4d4d":"	 #050505" , border:"none", width:"230px"}} onClick={()=>setisClickedToReported(true)} >Reported Defaulter</button>
 </div>
+<br/>
+<div className="btn-group" role="group" aria-label="Basic example">
 
+
+</div>
           </Col>
        
 
@@ -193,7 +198,7 @@ const Dashboard = props => {
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Company Name</th>
+        <th scope="col">Buyer Name</th>
         {/* <th scope="col">Refrence Number</th> */}
         <th scope="col">Invoice Number</th>
         <th scope="col">Address</th>
@@ -216,6 +221,7 @@ const Dashboard = props => {
 </>
 
 }
+</div>
        
 
        
@@ -235,7 +241,7 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
           <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-          <td>
+          <td style={{ width:"220px"}}>
             {item.debtor.address1}, {item.debtor.address2}
           </td>
           <td className="pt-4"><CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /></td>

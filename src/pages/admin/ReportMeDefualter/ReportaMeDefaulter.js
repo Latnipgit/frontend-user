@@ -185,14 +185,14 @@ const ReportMedefulterComponent = props => {
             <Col md={10} className="pl-3">
               <h5 className="m-1">Reported Me As a Defaulter</h5>
             </Col>
-            {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
+            {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Seller"} /> : ""}
           </Row>
           <Row className="p-4  ml-5">
             <table className="table table-bordered">
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Company Name</th>
+                  <th scope="col">Seller Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
                   <th scope="col">Invoice Number</th>
                   {/* <th scope="col">Status</th> */}
@@ -224,7 +224,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
           <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-          <td>
+          <td style={{ width:"220px"}}> 
             {item.debtor.address1}<br />{item.debtor.address2}
           </td>
           <td className="pt-4">
