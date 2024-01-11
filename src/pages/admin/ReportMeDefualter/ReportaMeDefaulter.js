@@ -24,6 +24,7 @@ import moment from 'moment'
 import { ToastContainer, toast } from 'react-toastify';
 import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultModal"
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
+import CaImg from '../../../assets/images/newImg/CA-BG_Remove.png'
 
 const ReportMedefulterComponent = props => {
   const [modal1, setModal1] = useState(false);
@@ -321,7 +322,8 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
                 }
 
                 }>
-                <i className='bx bx-file textsizing' ></i>
+                {/* <i className='bx bx-file textsizing' ></i> */}
+                <img src={CaImg} className="" style={{ height: "22.5px" }} />
               </button>
               &nbsp;
               <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
@@ -329,7 +331,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
                 target='_blank'
 
                 onClick={() => handleViewDetail(item)}>
-                <i className='bx bxs-user-detail textsizing' ></i>   </Button>
+                <i className='fa fa-eye textsizing' style={{ fontSize: "19.5px" }}></i>   </Button>
 
 
             </div>

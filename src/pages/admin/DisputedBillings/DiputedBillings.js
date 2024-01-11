@@ -32,7 +32,7 @@ import {
   Input,
 
 } from "reactstrap";
-
+import CaImg from '../../../assets/images/newImg/CA-BG_Remove.png'
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 import TableContainer from "../../../components/Common/TableContainer";
 import DisputedViewModal from "./NewPaymentModel";
@@ -379,7 +379,8 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
                 }
 
                 }>
-                <i className='bx bx-file textsizing' ></i>
+                {/* <i className='bx bx-file textsizing' ></i> */}
+                <img src={CaImg} className="" style={{ height: "22.5px" }} />
               </button>
               &nbsp;
               {/*               <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
