@@ -32,8 +32,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ConfirmReportModal from "./ConfirmReportDefaulterModal";
 import { selectDebtorsList } from "store/debtors/debtors.selecter";
-import { getAllInvoice, setIsReportDefOpen, setIsCustomerFeedbackModalOpen, addInvoiceReportDebtor, addInvoiceArray } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, selectFeedbackModalOpen, addInvoiceReportDebtorSelector, addInvoiceIdtoArray } from "store/debtors/debtors.selecter"
+import { getAllInvoice, setIsReportDefOpen, setIsCustomerFeedbackModalOpen, addInvoiceReportDebtor, addInvoiceArray, } from "../../../store/debtors/debtors.actions"
+import { selectReportDefOpen, selectInvoiceList, selectFeedbackModalOpen, addInvoiceReportDebtorSelector, addInvoiceIdtoArray, } from "store/debtors/debtors.selecter"
 import { addInvoiceBill, addInvoiceBillSuccess } from '../../../store/actions'
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
@@ -470,7 +470,7 @@ const ReportedDefaulterModel = props => {
       headers: headers
     })
       .then((response) => {
-        // toast.success("file upload successfully")
+        toast.success("file upload successfully")
         console.log("Response", response)
         if (response.data.response.fieldName == "uploadInvoice") {
           setuploadInvoiceId(response.data.response)
@@ -501,6 +501,7 @@ const ReportedDefaulterModel = props => {
       })
       .catch((error) => {
         console.log("Response", error)
+        // toast.error({error})
 
       })
   }

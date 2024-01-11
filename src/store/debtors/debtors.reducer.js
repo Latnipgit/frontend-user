@@ -35,7 +35,10 @@ import {
   UPDATE_PENDING_DOCUMENT,
   UPDATE_PENDING_DOCUMENT_FAIL,
   UPDATE_PENDING_DOCUMENT_SUCCESS,
-  View_DETAIL_MODAL_OPEN
+  View_DETAIL_MODAL_OPEN,
+  GET_FEEDBACKQUESTION,
+  GET_FEEDBACKQUESTION_FAIL,
+  GET_FEEDBACKQUESTION_SUCCESS
   
 } from "./debtors.actiontype"
 
@@ -72,7 +75,11 @@ const INIT_STATE = {
   recordPaymentAddReportDefSuccess:[],
   recordPaymentAddReportDefFail:false,
   updatePendingDocs:[],
-  updatePendingDocssuccess:[]
+  updatePendingDocssuccess:[],
+  getFeedbackQuestionListReducer:[],
+  getFeedbackQuestionListReducerSueccess:[],
+  getFeedbackQuestionListReducerFail:false
+
 
 }
 
@@ -155,6 +162,13 @@ export const DebtorsReducer = (state = INIT_STATE, action) => {
             return { ...state, updatePendingDocssuccess: payload, }
           case UPDATE_PENDING_DOCUMENT_FAIL:
             return { ...state, error: payload, }
+            case GET_FEEDBACKQUESTION:
+              return { ...state, }
+            case GET_FEEDBACKQUESTION_SUCCESS:
+              return { ...state, getFeedbackQuestionListReducer: payload, }
+            case GET_FEEDBACKQUESTION_FAIL:
+              return { ...state, error: payload, }
+    
     default:
       return state
   }

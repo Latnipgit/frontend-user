@@ -19,7 +19,8 @@ ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
 RECORD_PAYMENT_REPORT_DEFAULT,
 RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
 RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS,
-UPDATE_PENDING_DOCUMENT
+UPDATE_PENDING_DOCUMENT,
+GET_FEEDBACKQUESTION
 } from "./debtors.actiontype";
 import {
 getAllDebtors,
@@ -49,14 +50,17 @@ recoredPaymentReportDefault,
 recoredPaymentReportDefaultFail,
 recoredPaymentReportDefaultSucccess,
 updatePendingDocumentssSucccess,
-updatePendingDocumentssFail
+updatePendingDocumentssFail,
+getFeebBackQuestionList,
+getFeebBackQuestionListFail,
+getFeebBackQuestionListSuccess
 
 } from "./debtors.actions";
 
 //Include Both Helper File with needed methods
 import { getAllDebtorsAPI } from "helpers/fakebackend_helper";
 import { getAllInvoiceList} from "helpers/fakebackend_helper";
-import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,updatePendingDocument,requestAEdit, addInVoiceDefaulter,recordPaymentAPIMethod} from "helpers/fakebackend_helper";
+import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,updatePendingDocument,requestAEdit, addInVoiceDefaulter,recordPaymentAPIMethod,getFeebBackQuestionListAPI} from "helpers/fakebackend_helper";
 
 
 function* fetchdebtors() {
@@ -147,6 +151,16 @@ function* updatePendingDocumentSaga(payload) {
     yield put(updatePendingDocumentssFail(error))
   }
 }
+
+function* getFeedbackQuestionSaga() {
+  try {
+    const response = yield call(getFeebBackQuestionListAPI)
+    console.log("responseresponseresponse",response)
+    yield put(getFeebBackQuestionListSuccess(response))
+  } catch (error) {
+    yield put(getFeebBackQuestionListFail(error))
+  }
+}
 function* debtorsSaga() {
   //  
   yield takeEvery(GET_DEBTORS, fetchdebtors)
@@ -159,6 +173,7 @@ function* debtorsSaga() {
   yield takeEvery(ADD_INVOICE_REPORT_DEFAULTER_ASYNC, addInvoiceReportDefSaga)
   yield takeEvery(RECORD_PAYMENT_REPORT_DEFAULT, recordPaymentSaga)
   yield takeEvery(UPDATE_PENDING_DOCUMENT, updatePendingDocumentSaga)
+  yield takeEvery(GET_FEEDBACKQUESTION, getFeedbackQuestionSaga)
 }
 
 export default debtorsSaga;

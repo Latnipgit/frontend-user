@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect';
+import { DebtorsReducer } from './debtors.reducer';
 
 const selectDebtorsReducer = (state) => state.DebtorsReducer;
 
 export const selectDebtorsList = createSelector(
     [selectDebtorsReducer],
-    (DebtorsReducer) => DebtorsReducer.debtors.response
+    (DebtorsReducer) => DebtorsReducer.debtors.response,
+    
 )
 
 export const selectInvoiceList = createSelector(
@@ -109,4 +111,9 @@ export const updatePendingDocsSelector = createSelector(
 export const isViewDetailMOdalOpenSelector = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.isViewDetailsModalOpen
+)
+
+export const getFeebBackQuestionListSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.getFeedbackQuestionListReducer,
 )

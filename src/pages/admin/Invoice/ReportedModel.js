@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 
 import {
@@ -17,8 +17,8 @@ import { useSelector, useDispatch } from "react-redux"
 import Select from "react-select"
 import { useFormik } from "formik"
 import ConfirmReportModal from './ConfirmReportDefaulterModal'
-import { setConfirmReportDefaultModal, setPreviewModalOpen, addRatingToDebtor } from "../../../store/debtors/debtors.actions"
-import { confirReportDefaultModel, ReportDefPreviewModal, addRatingofDebtor } from "store/debtors/debtors.selecter"
+import { setConfirmReportDefaultModal, setPreviewModalOpen, addRatingToDebtor,getFeebBackQuestionList } from "../../../store/debtors/debtors.actions"
+import { confirReportDefaultModel, ReportDefPreviewModal, addRatingofDebtor,getFeebBackQuestionListSelector } from "store/debtors/debtors.selecter"
 import ReportDefPreviewModals from './ReportDefaulterapreviewModal'
 import { options } from "toastr"
 
@@ -83,7 +83,8 @@ const ReportedDebtorsModel = props => {
 
   const toggleViewModal = () => dispatch(setConfirmReportDefaultModal(!confirReportDefaultModel));
   const togglePreviwModal = () => dispatch(setPreviewModalOpen(!isPreviewModalShow));
-
+  const getFeebBackQuestion= useSelector(getFeebBackQuestionListSelector)
+console.log("getFeebBackQuestiongetFeebBackQuestion",getFeebBackQuestion)
   const handleFeedbackModal = () => {
 
 
@@ -135,7 +136,9 @@ const ReportedDebtorsModel = props => {
   }
   const [ratingValue,setratingValue]=useState([])
 
-
+useEffect(()=>{
+  dispatch(getFeebBackQuestionList())
+},[])
   console.log("allInvoiceList",allInvoiceList)
   return (
     <Modal
