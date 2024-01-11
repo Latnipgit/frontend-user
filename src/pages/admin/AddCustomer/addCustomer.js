@@ -134,7 +134,7 @@ const AddCustomer = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <CustomerList GetAllDebtorsdata={filteredData} /> : <CustomerList GetAllDebtorsdata={GetAllDebtors} />}
+                <CustomerList GetAllDebtorsdata={filteredData} />
               </tbody>
             </table>
 

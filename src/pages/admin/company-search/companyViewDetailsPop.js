@@ -115,10 +115,10 @@ const CompnayViewDetails = props => {
 
                             <Card className="mb-3">
                                 <CardBody className="buyer-card-body">
-                                    <h4>Company Information</h4>
-                                    <p className="mb-2">
+                                    <h4>Seller Information</h4>
+                                    {/*                                 <p className="mb-2">
                                         Billing Name: <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
-                                    </p>
+                                    </p> */}
                                     <p className="mb-2">
                                         Company Name : <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
                                     </p>
@@ -134,27 +134,19 @@ const CompnayViewDetails = props => {
                         </Col>
                         <Col md="6" className="mt-4">
                             <Card className="mb-3">
-                                <CardBody className="seller-card-body">
-                                    <h4>Key Points</h4>
-                                    <p className="mb-2">
-                                        1. Approved: <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
-                                    </p>
-                                    <p className="mb-2">
-                                        2. InProcess : <span className="text-primary">{selected != "" ? selected.CompanyName : ''}</span>
-                                    </p>
-                                    <p className="mb-2">
-                                        3. Disputed : <span className="text-primary">{selected != "" ? selected.GST : ''}</span>
-                                    </p>
-                                    <p className="mb-2">
-                                        4. Reating : <span className="text-primary">{selected != "" ? selected.PANCARD : ''}</span>
-                                    </p>
+                                <CardBody className="seller-card-body" style={{ fontSize: "14px" }}>
+                                    <h4 className="mb-2">Key Points</h4>
+                                    <Row className="mb-2"><Col md={3}><h5>1.Approved :</h5></Col> <Col md={9}>From the information gathered thus far, it appears that the buyer may be in default.</Col></Row>
+                                    <Row className="mb-2"><Col md={3}><h5>2. InProcess :</h5></Col> <Col md={9}>The evaluation of the buyer's defaulter status is pending until their response is received or one week has passed from the complainant's date, whichever occurs first.</Col></Row>
+                                    <Row className="mb-2"><Col md={3}><h5>3. Disputed :</h5></Col> <Col md={9}>The presented evidence is insufficient to definitively establish that the buyer is in default</Col></Row>
+                                    <Row className="mb-2"><Col md={3}><h5>4. Reating :</h5></Col> <Col md={9}>The buyer's creditworthiness is depicted on a scale of 0 to 5, where zero signifies the lowest creditworthiness and five indicates the highest.</Col></Row>
                                 </CardBody>
                             </Card>
                         </Col>
                     </Row>
                     <Card className="mb-3 mt-4">
                         <CardBody className="invoice-items-card-body">
-                            <h4>Company Report List</h4>
+                            <h4>Buyer List</h4>
                             <div className="table-responsive">
                                 <Table className="table align-middle table-nowrap">
                                     <thead>
@@ -173,7 +165,7 @@ const CompnayViewDetails = props => {
                                                 <td>₹1000,00,00</td>
                                                 <td>12-12-2023</td>
                                                 <td>4.2</td>
-                                                <td style={{ color: "green" }}><FcCheckmark /> Approved </td>
+                                                <td style={{ color: "green" }}><b><FcCheckmark />Approved</b> </td>
                                             </tr>
                                         }) : ''}
 
