@@ -276,7 +276,7 @@ const ReportDefulterTable = ({ GetUploadPendingList, viewModel, requestEdit, han
 
                             <div className="" style={{ padding: "2px 15px" }}>
 
-                                <div className=" text-center bg-success rounded text-light">
+                                <div className=" text-center bg-danger rounded text-light">
                                     <div className="text-capitalize">
 
                                         {getDaysArray[index]}  &nbsp;
