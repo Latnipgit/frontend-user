@@ -338,7 +338,7 @@ const ReportedDefaulterModel = props => {
           "transportationDocument": data[findIdex].DeliveryDocument,
         }
       } else {
-        if (data[findIdex].amount != "" && data[findIdex].itemDetail != "") {
+        if (data[setvalu].amount != "" && data[setvalu].itemDetail != "") {
           setallInvoiceList((items) => [...items, dummy])
           setisDisabled(false)
           toast.success("Invoice Add Successfully")
@@ -351,7 +351,7 @@ const ReportedDefaulterModel = props => {
         }
       }
     } else {
-      if (data[findIdex].amount != "" && data[findIdex].itemDetail != "") {
+      if (data[setvalu].amount != "" && data[setvalu].itemDetail != "") {
         setallInvoiceList((items) => [...items, dummy])
         console.log("dummyCheck", dummy)
         setisDisabled(false)
@@ -510,7 +510,7 @@ const ReportedDefaulterModel = props => {
       headers: headers
     })
       .then((response) => {
-        toast.success("file upload successfully")
+        /* toast.success("file upload successfully") */
         setisDisabled(false)
         console.log("Response", response)
         if (response.data.response.fieldName == "uploadInvoice") {
