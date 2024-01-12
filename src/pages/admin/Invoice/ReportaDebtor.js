@@ -205,7 +205,7 @@ const ReportDebtor = props => {
 <ReactTooltip id="toolTip1" /> */}
             </Col>
           </Row>
-          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
+          {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Buyer"} /> : ""}
           <Row className="p-4  ml-5">
             {/* <br/> */}
 

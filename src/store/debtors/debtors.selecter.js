@@ -5,8 +5,7 @@ const selectDebtorsReducer = (state) => state.DebtorsReducer;
 
 export const selectDebtorsList = createSelector(
     [selectDebtorsReducer],
-    (DebtorsReducer) => DebtorsReducer.debtors.response,
-    
+    (DebtorsReducer) => DebtorsReducer.debtors != undefined ? DebtorsReducer.debtors.response : []
 )
 
 export const selectInvoiceList = createSelector(

@@ -130,101 +130,101 @@ const Dashboard = props => {
           <br />
           <Row>
             <Col md={8}>
-            <h5 className="m-1">Company Dashboard</h5>
+              <h5 className="m-1">Company Dashboard</h5>
             </Col>
             <Col md={4}>
-            <Button style={{ float: 'right', width:"180px" }} className="'btn btn-info p-2" onClick={() => {
-      window.location.href = companiesURL;
-    }}>
-      Back To Main Dashboard
-    </Button>
+              <Button style={{ float: 'right', width: "180px" }} className="'btn btn-info p-2" onClick={() => {
+                window.location.href = companiesURL;
+              }}>
+                Back To Main Dashboard
+              </Button>
             </Col>
-          
-          
+
+
           </Row>
           <br />
-<div style={{ border:"1px solid gray"}} className="p-3">
+          <div style={{ border: "1px solid gray" }} className="p-3">
 
 
-         <Row className="text-center" >
-          <Col md={12}>
-          <div className="btn-group" role="group" aria-label="Basic example">
-  <button type="button" className="btn btn-info "  style={{ background: isClickedToReported == false ? "#ff4d4d":"	 #050505", border:"none", width:"230px"}} onClick={()=>setisClickedToReported(false)} >Reported Me as A Defaulter</button>
-  <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#ff4d4d":"	 #050505" , border:"none", width:"230px"}} onClick={()=>setisClickedToReported(true)} >Reported Defaulter</button>
-</div>
-<br/>
-<div className="btn-group" role="group" aria-label="Basic example">
+            <Row className="text-center" >
+              <Col md={12}>
+                <div className="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" className="btn btn-info " style={{ background: isClickedToReported == false ? "#ff4d4d" : "	 #050505", border: "none", width: "230px" }} onClick={() => setisClickedToReported(false)} >Reported Me as A Defaulter</button>
+                  <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#ff4d4d" : "	 #050505", border: "none", width: "230px" }} onClick={() => setisClickedToReported(true)} >Reported Defaulter</button>
+                </div>
+                <br />
+                <div className="btn-group" role="group" aria-label="Basic example">
 
 
-</div>
-          </Col>
-       
+                </div>
+              </Col>
 
 
-         </Row>
-          <br/>
 
-{isClickedToReported != true ?
+            </Row>
+            <br />
 
-  <Row style={{ marginTop:'-20px'}}>
-  <ReportMedefulterComponent isClickedToReported={isClickedToReported}/>
+            {isClickedToReported != true ?
 
-  </Row>
-  :<> 
-   <Row>
-  <Col md={10} className="pl-3">
-    <h5 className="m-1">Reported Defaulter</h5>
-  </Col>
-  <Col md={2}>
-    {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}
-    {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
+              <Row style={{ marginTop: '-20px' }}>
+                <ReportMedefulterComponent isClickedToReported={isClickedToReported} />
+
+              </Row>
+              : <>
+                <Row>
+                  <Col md={10} className="pl-3">
+                    <h5 className="m-1">Reported Defaulter</h5>
+                  </Col>
+                  <Col md={2}>
+                    {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}
+                    {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
 <ReactTooltip id="toolTip1" /> */}
-  
-  </Col>
-</Row>
-{GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
 
-<Row className="p-4  ml-5">
-  {/* <br/> */}
+                  </Col>
+                </Row>
+                {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Buyer"} /> : ""}
 
-  {/* <ReactTable
+                <Row className="p-4  ml-5">
+                  {/* <br/> */}
+
+                  {/* <ReactTable
     data={GetAllInvoice != undefined ? GetAllInvoice : []}
     columns={columns}
     showPagination={true}
     defaultPageSize={5}
   /> */}
 
-  <table className="table table-bordered">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Buyer Name</th>
-        {/* <th scope="col">Refrence Number</th> */}
-        <th scope="col">Invoice Number</th>
-        <th scope="col">Address</th>
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Buyer Name</th>
+                        {/* <th scope="col">Refrence Number</th> */}
+                        <th scope="col">Invoice Number</th>
+                        <th scope="col">Address</th>
 
-        <th scope="col">Due Amount</th>
+                        <th scope="col">Due Amount</th>
 
-        <th scope="col">Due From</th>
-        <th scope="col">Status</th>
-        {/* <th scope="col">Upload Document</th> */}
-      </tr>
-    </thead>
-    <tbody>
-      {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
-      {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
-      {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} /> : <FilterData GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} />}
-    </tbody>
-  </table>
+                        <th scope="col">Due From</th>
+                        <th scope="col">Status</th>
+                        {/* <th scope="col">Upload Document</th> */}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
+                      {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
+                      {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} /> : <FilterData GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} />}
+                    </tbody>
+                  </table>
 
-</Row>
-</>
+                </Row>
+              </>
 
-}
-</div>
-       
+            }
+          </div>
 
-       
+
+
         </CardBody>
       </Card>
     </React.Fragment>
@@ -241,11 +241,11 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
           <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-          <td style={{ width:"220px"}}>
+          <td style={{ width: "220px" }}>
             {item.debtor.address1}, {item.debtor.address2}
           </td>
           <td className="pt-4"><CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /></td>
-       
+
           <td>
             <div className="" style={{ padding: "2px 15px" }}>
 
