@@ -312,7 +312,29 @@ const UploadPendingFiles = props => {
 
 
 
+<Row className="mt-3">
+  <h5>Upload Additional Documents</h5>
+  <Row>
+  <Col md={4}></Col>
+<Col md={4}>
 
+  <InputGroup className="text-capitalize">
+    <input
+      type="file"
+      className="form-control"
+      id="uploadInvoice"
+      accept=".pdf, .doc, .docx, .txt"
+      aria-describedby="fileUploadHelp"
+      onChange={e =>
+        handleFileChange(e, "generalDocumnet")
+      }
+    />
+  </InputGroup>
+
+</Col>
+<Col md={4}></Col>
+</Row>
+</Row>
 
 
         </ModalBody>
