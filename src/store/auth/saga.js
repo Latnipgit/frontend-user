@@ -21,7 +21,7 @@ function* loginUser({ payload: { user, history } }) {
         userName: user.email,
         password: user.password,
         });
-        console.log("responseRespo",response.data)
+        console.log("responseRespo",response)
         if(response!=undefined && response!=null){
           if(response.data.success){
             localStorage.setItem("authUser", JSON.stringify(response.data.response));
@@ -51,12 +51,14 @@ function* loginUser({ payload: { user, history } }) {
         }
         
       }else{
-        window.alert('Invalid Email / Password');
+        // window.alert('Invalid Email / Password');
       }
     }
     
   } catch (error) {
     yield put(apiError(error));
+
+    console.log("responseRespo err",error)
   }
 }
 

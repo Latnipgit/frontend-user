@@ -209,8 +209,8 @@ const ReportedDebtorsModel = props => {
                                 <Input
                                   id="gstNumber"
                                   name="gstNumber"
-                                  className="form-control"
-                                  placeholder={props.getCompanyList[0] != undefined ?props.getCompanyList[0].gstin:'Enter your GST Number'}
+                                  className="form-control text-uppercase"
+                                  placeholder='Enter your GST Number'
                                   type="text"
                                   onChange={(event) => setGSTNumber(event.target.value)}
                              
@@ -225,8 +225,8 @@ const ReportedDebtorsModel = props => {
                                 <input
                                   id="panNumber"
                                   name="panNumber"
-                                  className={`form-control ${panValidation.touched && panValidation.error ? 'is-invalid' : ''}`}
-                                  placeholder={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyPan:'Enter GST number'}
+                                  className={`form-control text-uppercase ${panValidation.touched && panValidation.error ? 'is-invalid' : ''}`}
+                                  placeholder='Enter PAN number'
                                   type="text"
                                   onChange={(event) => setPanNumber(event.target.value)}
                                

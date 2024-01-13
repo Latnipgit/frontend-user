@@ -36,13 +36,21 @@ const CompanyName = (cell) => {
     return cell.value ? cell.value : '';
 };
 const GST = (cell) => {
-    return cell.value ? cell.value : '';
+    const divStyle = {
+        textTransform: "uppercase"
+    };
+    return <div style={divStyle}>{cell.value}</div>
 };
 const AADHAR = (cell) => {
     return cell.value ? cell.value : '';
 };
 const PANCARD = (cell) => {
-    return cell.value ? cell.value : '';
+    // return cell.value ? cell.value : '';
+    const divStyle = {
+        textTransform: "uppercase"
+    };
+    return <div style={divStyle}>{cell.value}</div>
+    
 };
 const daysSinceReference = (cellValue, referenceDate) => {
     if (cellValue) {
