@@ -277,7 +277,7 @@ const ReportedDebtorsModel = props => {
               </Col>
             </Row>
           </div>
-          <div>
+          <div className="mb-1">
             <Row>
               <Col md={9}>
                 <span className="mb-2">
@@ -287,6 +287,28 @@ const ReportedDebtorsModel = props => {
                 <span>
                   <Input
 
+                    className={`form-control custom-content`}
+                    placeholder="Input in years"
+                    onChange={(e) => handlefinancialdifficult({
+                      "questionDesc": " How old your business relationship with this customer?",
+                      "questionType": "TEXT",
+                      "values": e.target.value
+                    })}
+                  />
+                </span>
+              </Col>
+            </Row>
+          </div>
+          <div className="mb-1">
+            <Row>
+              <Col md={9}>
+                <span className="mb-2">
+                  7. Write your Review  </span>
+              </Col>
+              <Col md={3}>
+                <span>
+                  <textarea
+                    rows={5}
                     className={`form-control custom-content`}
                     placeholder="Input in years"
                     onChange={(e) => handlefinancialdifficult({
