@@ -132,7 +132,7 @@ const UploadPendingListModule = props => {
         dispatch(setUploadFilesOpen(!uploadFilesModalShow))
     }
     const getDays = () => {
-        debugger
+
         selectTransactionsRaisedByMe.length > 0 ? selectTransactionsRaisedByMe.map((item) => {
             const a = moment(item.defaulterEntry.debtor.createdAt).format("YYYY-MM-DD")
             const today = new Date();

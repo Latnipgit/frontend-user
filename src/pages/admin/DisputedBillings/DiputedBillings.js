@@ -133,7 +133,7 @@ const DiputedBillings = props => {
 
   const getDays = () => {
     GetAllInvoice.length != undefined ? GetAllInvoice.map((item) => {
-      debugger
+
       const a = moment(item.debtor.createdAt).format("YYYY-MM-DD")
       const today = new Date();
       const newDate = a.split("-").reverse().join("-");
@@ -240,7 +240,7 @@ const DiputedBillings = props => {
                   <th scope="col">Company Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
                   <th scope="col">Invoice Number</th>
-                  <th scope="col"  style={{ width:"300px"}}>Address</th>
+                  <th scope="col" style={{ width: "300px" }}>Address</th>
                   <th scope="col">Due Amount</th>
                   <th scope="col">Due From</th>
                   <th scope="col">Action</th>
@@ -276,7 +276,7 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
             return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
           })}</td>
 
-          <td className="pt-4 d-flex text-capitalize" style={{ width:"300px"}}>{item.debtor.companyName}
+          <td className="pt-4 d-flex text-capitalize" style={{ width: "300px" }}>{item.debtor.companyName}
             <br />
             {item.debtor.address1}  <br />{item.debtor.address2}, {item.debtor.city}</td>
 

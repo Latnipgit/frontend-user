@@ -196,16 +196,15 @@ const CompanySearch = props => {
     []
   );
   const handleFilter = (filters) => {
+    const filtereCompany = selectCompanySearchListMap.filter(item => item.CompanyName.toLocaleLowerCase().includes(filters.company));
 
-    const filteredResults = selectCompanySearchListMap.filter(item => {
-      const CompanyNameMatch = item.CompanyName === filters.company.trim();
-      const panMatch = item.PANCARD === filters.pan.trim();
-      const gstMatch = item.GST === filters.gst.trim();
-      return CompanyNameMatch || panMatch || gstMatch;
-    });
-    console.log("filteredResults", filteredResults)
+    const filteredgstMatch = filtereCompany.filter(item => item.GST.includes(filters.gst));
 
-    setFilteredData(filteredResults);
+    const filterePANCARD = filteredgstMatch.filter(item => item.PANCARD.includes(filters.pan));
+
+    console.log("filteredResults", filterePANCARD)
+
+    setFilteredData(filterePANCARD);
   };
   const { getCompanyList } = useSelector(state => ({
     getCompanyList: state.getCompanyList,

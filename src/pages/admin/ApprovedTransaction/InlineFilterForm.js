@@ -29,15 +29,20 @@ const InlineFilterForm = ({ onFilter }) => {
     onFilter(filters);
   };
 
-  const handleReset = (event)=>{
+  const handleReset = (event) => {
+    debugger
     event.preventDefault();
 
-    const resetAray ={
+    const resetAray = {
       company: '',
       pan: '',
       gst: '',
     }
-    onFilter(resetAray)
+    setFilters({
+      company: '',
+      pan: '',
+      gst: '',
+    })
   }
   const validateAadhar = () => {
     const aadharPattern = /^\d{12}$/;
@@ -105,17 +110,17 @@ const InlineFilterForm = ({ onFilter }) => {
           <Card className="mt-5">
             <CardBody>
               <CardTitle className="h5 mb-4">Company Search
-             
+
               </CardTitle>
-<Row>
-<p style={{ fontWeight:'500',fontSize:'12px' }}>
-                    Search using any one below details
-                  </p>
-</Row>
+              <Row>
+                <p style={{ fontWeight: '500', fontSize: '12px' }}>
+                  Search using any one below details
+                </p>
+              </Row>
               <Form className="row row-cols-lg-auto g-3 align-items-center">
 
                 <Col xs={12} md={12}>
-                 
+
                   <label className="visually-hidden" htmlFor="nameFilter">Company Name</label>
                   <InputGroup>
                     {/* <div className="input-group-text">
@@ -139,7 +144,7 @@ const InlineFilterForm = ({ onFilter }) => {
                     GST Number
                   </label>
                   <InputGroup>
-                  
+
                     <input
                       style={{ width: '15rem' }}
 
@@ -160,7 +165,7 @@ const InlineFilterForm = ({ onFilter }) => {
                     PAN Card Number
                   </label>
                   <InputGroup>
-                 
+
                     <input
                       style={{ width: '15rem' }}
 
@@ -170,22 +175,22 @@ const InlineFilterForm = ({ onFilter }) => {
                       placeholder="PAN Card Number"
                       value={filters.pan}
                       onChange={handlePanChange}
-                      // onBlur={validatePAN}
+                    // onBlur={validatePAN}
                     />
                   </InputGroup>
                   {/* {panError && <div className="invalid-feedback">{panError}</div>} */}
                 </Col>
-               
+
 
                 <Col xs={12} className=''>
-              
-                 
-                  <button type="submit" className="btn btn-primary w-md ml-2" onClick={handleSubmit}>
+
+
+                  <button type="submit" className="btn btn-primary w-md ml-2" onClick={(e) => handleSubmit(e)}>
                     Search
                   </button>
                   &nbsp;
                   &nbsp;
-                  <button type="submit" className="btn btn-secondary w-md mr-2" onClick={handleReset}>
+                  <button type="submit" className="btn btn-secondary w-md mr-2" onClick={(e) => handleReset(e)}>
                     Reset
                   </button>
                 </Col>

@@ -11,7 +11,7 @@ export const selectdashboardAdminDataMap = createSelector(
   [selectCompanySearchList],
   (reportMeDefulter) => {
     return reportMeDefulter.map((list, i) => {
-      debugger
+
       const { createdAt, id } = list
       let DueSince = moment.utc(createdAt).format("DD-MM-YYYY");
       let SrNo = i + 1
