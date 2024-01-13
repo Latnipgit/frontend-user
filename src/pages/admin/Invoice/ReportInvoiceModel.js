@@ -261,7 +261,8 @@ const ReportedDefaulterModel = props => {
       invoiceDocument: "",
       DispatchDocument: "",
       DeliveryDocument: "",
-      purchaseOrderDocument: ""
+      generalDocuments: "",
+      GSTDocument: ""
 
     },
   ])
@@ -279,7 +280,7 @@ const ReportedDefaulterModel = props => {
   const [total, setTotal] = useState(0)
 
   const invoiceStateValue = allInvoiceList
-
+  console.log('allInvoiceList', allInvoiceList);
   console.log('invoiceStateValue', invoiceStateValue);
   const submitInvoice = (setvalu) => {
     calculateSubtotal(data)
@@ -537,6 +538,18 @@ const ReportedDefaulterModel = props => {
           // setuploadTransportId(response.data.response)
           const newData = [...data]
           newData[index].DeliveryDocument = response.data.response
+          setData(newData)
+        }
+        if (response.data.response.fieldName == "generalDocuments") {
+          // setuploadTransportId(response.data.response)
+          const newData = [...data]
+          newData[index].generalDocuments = response.data.response
+          setData(newData)
+        }
+        if (response.data.response.fieldName == "GSTDocument") {
+          // setuploadTransportId(response.data.response)
+          const newData = [...data]
+          newData[index].GSTDocument = response.data.response
           setData(newData)
         }
       })
@@ -1224,7 +1237,40 @@ const ReportedDefaulterModel = props => {
                               />
                             </InputGroup>
                           </Col>
+                          <Col md={4} className="p-2">
+                            <Label><strong>GST Document</strong></Label>
+                            <InputGroup className="text-capitalize">
+                              <input
+                                type="file"
+                                className="form-control"
+                                id="GSTDocument"
+                                accept=".pdf, .doc, .docx, .txt"
+                                aria-describedby="fileUploadHelp"
+                                onChange={e =>
+                                  handleFileChange(e, "GSTDocument", index)
+                                }
+                              />
+                            </InputGroup>
+                          </Col>
+                          <Col md={4} className="p-2">
+                            <Label><strong>General Documents</strong></Label>
+                            <InputGroup className="text-capitalize">
+                              <input
+                                type="file"
+                                className="form-control"
+                                id="generalDocuments"
+                                accept=".pdf, .doc, .docx, .txt"
+                                aria-describedby="fileUploadHelp"
+                                onChange={e =>
+                                  handleFileChange(e, "generalDocuments", index)
+                                }
+                              />
+                            </InputGroup>
+                          </Col>
 
+                          <Col md={4} className="p-2">
+
+                          </Col>
 
                           <Col md={4} className="p-2">
 
