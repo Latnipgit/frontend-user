@@ -276,13 +276,13 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
                   <i className='bx bx-edit textsizing' ></i>
                 </Button> */}
 
-              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+              {/* <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Request Edit" href={item.url} rel='noreferrer'
                 target='_blank' onClick={() => requestEdit(item)
 
                 }>
                 <i className='bx bx-edit textsizing' ></i>
-              </button>
+              </button> */}
 
               &nbsp;
 

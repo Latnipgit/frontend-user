@@ -41,6 +41,7 @@ const GST = (cell) => {
     };
     return <div style={divStyle}>{cell.value}
     
+    
     </div>
 };
 const AADHAR = (cell) => {
