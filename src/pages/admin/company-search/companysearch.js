@@ -219,7 +219,7 @@ const CompanySearch = props => {
       <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currentUserViewDetails} />
       {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/> */}
 
-      <InlineFilterForm onFilter={handleFilter} />
+      <InlineFilterForm onFilter={handleFilter} handleFilter={handleFilter} />
       <Card >
         <CardBody>
 
@@ -246,7 +246,7 @@ const CompanySearch = props => {
 
           <TableContainer
             columns={columns}
-            data={filteredData.length > 0 ? filteredData : selectCompanySearchListMap}
+            data={filteredData.length > 0 ? filteredData.reverse() : selectCompanySearchListMap}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}

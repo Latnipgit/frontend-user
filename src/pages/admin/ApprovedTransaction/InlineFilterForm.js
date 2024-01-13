@@ -13,7 +13,7 @@ import {
   InputGroup,
 } from "reactstrap";
 
-const InlineFilterForm = ({ onFilter }) => {
+const InlineFilterForm = ({ onFilter, handleFilter }) => {
   const [filters, setFilters] = useState({
     company: '',
     pan: '',
@@ -43,6 +43,7 @@ const InlineFilterForm = ({ onFilter }) => {
       pan: '',
       gst: '',
     })
+    handleFilter(filters)
   }
   const validateAadhar = () => {
     const aadharPattern = /^\d{12}$/;
