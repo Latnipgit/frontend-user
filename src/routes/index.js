@@ -211,14 +211,14 @@ const authProtectedRoutes = [
   { path: "/debtors", component: <DebtorsList /> },
   { path: "/creditors", component: <CrediotorList /> },
   { path: "/send-bill-transaction", component: <SendBillTransaction /> },
-  { path: "/recieved-payment", component: <DiputedBillings /> },
+  { path: "/Recieved-Payment", component: <DiputedBillings /> },
   { path: "/employee", component: <Employee /> },
   { path: "/ReportDefaulter", component: <ReporteDefaulter /> },
   { path: "/EmployeeList", component: <EmployeeList /> },
   { path: "/Invoice", component: <Invoice /> },
   { path: "/Report-defaulter", component: <ReportDebtor /> },
   { path: "/Report-me-defaulter", component: <ReportMedefulterComponent /> },
-  { path: "/Add-customer", component: <AddCustomer /> },
+  { path: "/Customer-list", component: <AddCustomer /> },
   { path: "/upload-pending-documents", component: <UploadPendingListModule /> },
 
 

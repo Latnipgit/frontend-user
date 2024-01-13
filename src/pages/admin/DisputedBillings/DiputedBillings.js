@@ -219,7 +219,7 @@ const DiputedBillings = props => {
 
           <Row>
             <Col md={10} className="pl-3">
-              <h5 className="m-1">Recieved Payment</h5>
+              <h5 className="m-1">Record Payment</h5>
             </Col>
           </Row>
           {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Company"} /> : ""}
@@ -240,7 +240,7 @@ const DiputedBillings = props => {
                   <th scope="col">Company Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
                   <th scope="col">Invoice Number</th>
-                  <th scope="col">Address</th>
+                  <th scope="col"  style={{ width:"300px"}}>Address</th>
                   <th scope="col">Due Amount</th>
                   <th scope="col">Due From</th>
                   <th scope="col">Action</th>
@@ -276,11 +276,11 @@ const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleV
             return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
           })}</td>
 
-          <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+          <td className="pt-4 d-flex text-capitalize" style={{ width:"300px"}}>{item.debtor.companyName}
             <br />
-            {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
+            {item.debtor.address1}  <br />{item.debtor.address2}, {item.debtor.city}</td>
 
-          <td className="pt-4">
+          <td className="pt-4" >
             {numberFormat(item.invoices[0].remainingAmount)}
             {/*             <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
 

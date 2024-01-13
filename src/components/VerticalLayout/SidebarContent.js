@@ -189,7 +189,7 @@ const SidebarContent = props => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/Add-customer">
+                  <Link to="/Customer-list">
                     <i className="bx bxs-user"></i>
                     {props.t("Customer")}
                   </Link>
@@ -302,7 +302,7 @@ const SidebarContent = props => {
 
 
                 <li>
-                  <Link to="/recieved-payment">
+                  <Link to="/Recieved-Payment">
                     <i className="bx bx-wallet"></i>
                     {props.t("Record Payment")}
                   </Link>
