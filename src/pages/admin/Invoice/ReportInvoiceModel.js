@@ -122,7 +122,7 @@ const ReportedDefaulterModel = props => {
       return errors
     },
     onSubmit: values => {
-      
+
       // Handle form submission here
     },
   })
@@ -278,49 +278,94 @@ const ReportedDefaulterModel = props => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [total, setTotal] = useState(0)
 
+  const invoiceStateValue = allInvoiceList
 
-  const submitInvoice = () => {
+  console.log('invoiceStateValue', invoiceStateValue);
+  const submitInvoice = (setvalu) => {
     calculateSubtotal(data)
-
     const date = moment()
-    const dummy = [{
-      "debtorId": selectedOption.value,
-      "billDate": data[0].date === "" ? date.format("YYYY-MM-DD") : moment(data[0].date).format("YYYY-MM-DD"),
-      "billDescription": "",
+    const dummy =
+    {
+      "billDate": data[setvalu].date === "" ? date.format("YYYY-MM-DD") : moment(data[setvalu].date).format("YYYY-MM-DD"),
+      "billDescription": "Bill for things",
       "billNumber": "",
-      "creditAmount": data[0].amount,
+      "creditAmount": total.toFixed(1),
       "remainingAmount": total.toFixed(1),
-      "status": "",
+      "status": "OPEN",
       "interestRate": "",
       "creditLimitDays": "",
       "remark": "",
       "items": [],
-      "subTotal": data[0].amount,
-      "tax": '',
-      "referenceNumber": selectedOption.value != null ? "BAF" + "-" + selectedOption.value.slice(-6).toUpperCase() : '',
-      "invoiceNumber": "BAF" + "-" + data[0].itemDetail,
-      "dueDate": moment(data[0].date).format("YYYY-MM-DD"),
+      "subTotal": data[setvalu].amount,
+      "tax": "",
+
+      "referenceNumber": '',
+      "invoiceNumber": data[setvalu].itemDetail,
+      "dueDate": moment(data[setvalu].date).format("YYYY-MM-DD"),
       "percentage": "",
-      "purchaseOrderDocument": "6595ca1d2f9f01a03ae5ab76",
-      "challanDocument": "6595ca1d2f9f01a03ae5ab76",
-      "invoiceDocument": "6595ca1d2f9f01a03ae5ab76",
-      "transportationDocument": "6595ca1d2f9f01a03ae5ab76",
-      "allInvoiceListForPreview": data
 
-    }]
-
-    if ( data[0].amount != "" && data[0].itemDetail != "") {
-      setisDisabled(false)
-      toast.success("Invoice Add Successfully")
-      setallInvoiceList(dummy)
-
+      "purchaseOrderDocument": data[setvalu].purchaseOrderDocument,
+      "challanDocument": data[setvalu].DispatchDocument,
+      "invoiceDocument": data[setvalu].invoiceDocument,
+      "transportationDocument": data[setvalu].DeliveryDocument,
     }
-    else {
-      toast.error("Please Fill All Required Fields")
 
-      // dispatch(addInvoiceReportDebtor(dummy))
+    if (allInvoiceList.length > 0) {
+      let findIdex = allInvoiceList.findIndex((x, i) => x.invoiceNumber == data[setvalu].itemDetail)
+      if (findIdex != -1) {
+        allInvoiceList[findIdex] = {
+          "billDate": data[findIdex].date === "" ? date.format("YYYY-MM-DD") : moment(data[findIdex].date).format("YYYY-MM-DD"),
+          "billDescription": "Bill for things",
+          "billNumber": "",
+          "creditAmount": total.toFixed(1),
+          "remainingAmount": total.toFixed(1),
+          "status": "OPEN",
+          "interestRate": "",
+          "creditLimitDays": "",
+          "remark": "",
+          "items": [],
+          "subTotal": data[findIdex].amount,
+          "tax": "",
 
+          "referenceNumber": '',
+          "invoiceNumber": data[findIdex].itemDetail,
+          "dueDate": moment(data[findIdex].date).format("YYYY-MM-DD"),
+          "percentage": "",
+
+          "purchaseOrderDocument": data[findIdex].purchaseOrderDocument,
+          "challanDocument": data[findIdex].DispatchDocument,
+          "invoiceDocument": data[findIdex].invoiceDocument,
+          "transportationDocument": data[findIdex].DeliveryDocument,
+        }
+      } else {
+        if (data[setvalu].amount != "" && data[setvalu].itemDetail != "") {
+          setallInvoiceList((items) => [...items, dummy])
+          setisDisabled(false)
+          toast.success("Invoice Add Successfully")
+        }
+        else {
+          toast.error("Please Fill All Required Fields")
+
+          // dispatch(addInvoiceReportDebtor(dummy))
+
+        }
+      }
+    } else {
+      if (data[setvalu].amount != "" && data[setvalu].itemDetail != "") {
+        setallInvoiceList((items) => [...items, dummy])
+        console.log("dummyCheck", dummy)
+        setisDisabled(false)
+        toast.success("Invoice Add Successfully")
+      }
+      else {
+        toast.error("Please Fill All Required Fields")
+
+        // dispatch(addInvoiceReportDebtor(dummy))
+
+      }
     }
+
+
 
   }
 
@@ -399,7 +444,7 @@ const ReportedDefaulterModel = props => {
     ) {
       setTimeout(() => {
       }, 3000)
-      return // Exit without adding a new row
+      // Exit without adding a new row
     }
 
 
@@ -465,7 +510,7 @@ const ReportedDefaulterModel = props => {
       headers: headers
     })
       .then((response) => {
-        toast.success("file upload successfully")
+        /* toast.success("file upload successfully") */
         setisDisabled(false)
         console.log("Response", response)
         if (response.data.response.fieldName == "uploadInvoice") {
@@ -508,7 +553,7 @@ const ReportedDefaulterModel = props => {
     let totleamount = 0
 
     newData.forEach((row, i) => {
-      
+
       if (row.amount !== "") {
         const amountValue = parseFloat(row.amount)
         console.log("amountValueamountValue", typeof (amountValue))
@@ -1186,7 +1231,7 @@ const ReportedDefaulterModel = props => {
                           </Col>
                           <Col md={4} className="p-2 text-end pt-4">
 
-                            <Button className="btn btn-info mt-2" onClick={() => submitInvoice()}>
+                            <Button className="btn btn-info mt-2" onClick={() => submitInvoice(index)}>
                               Submit
                             </Button></Col>
 
