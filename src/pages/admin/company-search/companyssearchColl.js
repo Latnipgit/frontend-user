@@ -39,7 +39,9 @@ const GST = (cell) => {
     const divStyle = {
         textTransform: "uppercase"
     };
-    return <div style={divStyle}>{cell.value}</div>
+    return <div style={divStyle}>{cell.value}
+    
+    </div>
 };
 const AADHAR = (cell) => {
     return cell.value ? cell.value : '';
