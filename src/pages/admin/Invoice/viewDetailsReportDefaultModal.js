@@ -68,8 +68,16 @@ const allInvoiceListForPreview = viewModalData.invoices
             </Row>
            
 
+<Row>
+  <Col md={10}>
+  <div className="mb-3 mt-3"><b className="">Invoice Detail</b></div>
 
-            <div className="mb-3 mt-3"><b className="">Invoice Detail</b></div>
+  </Col>
+  <Col md={2} className="text-end">
+
+    <Button className="btn btn-info">Edit Invoice</Button>
+  </Col>
+</Row>
 
 {viewModalData != undefined ? viewModalData.invoices.map((item)=>{
  return  <Row className="bg-light p-3 mt-1" key={item}>
