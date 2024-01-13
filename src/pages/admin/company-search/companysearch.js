@@ -76,6 +76,8 @@ const CompanySearch = props => {
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
   console.log('currentUserViewDetails', currentUserViewDetails);
+  console.log('selectCompanySearchLists', selectCompanySearchLists);
+  console.log('selectCompanySearchListMap', selectCompanySearchListMap);
 
   const viewModel = (value) => {
     console.log("VALUE", value)
