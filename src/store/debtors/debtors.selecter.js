@@ -118,7 +118,7 @@ export const isViewDetailMOdalOpenSelector = createSelector(
 
 export const getFeebBackQuestionListSelector = createSelector(
     [selectDebtorsReducer],
-    (DebtorsReducer) => DebtorsReducer.getFeedbackQuestionListReducer,
+    (DebtorsReducer) => DebtorsReducer.getFeedbackQuestionListReducer != undefined ? DebtorsReducer.getFeedbackQuestionListReducer : []
 )
 // 
 
