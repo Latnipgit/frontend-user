@@ -149,16 +149,16 @@ const Dashboard = props => {
             <Row className="text-center" >
               <Col md={12}>
                 <div className="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" className="btn btn-info " style={{ background: isClickedToReported == false ? " #555966" : "	 #2a3042", border: "none", width: "230px" }} onClick={() => setisClickedToReported(false)} >Reported Me as A Defaulter</button>
-                  <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#555966" : "	 #2a3042", border: "none", width: "230px" }} onClick={() => setisClickedToReported(true)} >Reported Defaulter</button>
+                  <button type="button" className="btn btn-info " style={{ background: isClickedToReported == false ? " #50a5f1" : "	 #707274", border: "none", width: "230px" }} onClick={() => setisClickedToReported(false)} >Reported Me as A Defaulter</button>
+                  <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#50a5f1" : "	 #707274", border: "none", width: "230px" }} onClick={() => setisClickedToReported(true)} >Reported Defaulter</button>
                 </div>
               
 
               </Col>
               <Col md={12} className="">
               <div className="btn-group" role="group" aria-label="Basic example">
-                 <span style={{ width:'100px', height:"5px", background: isClickedToReported == false ? " #555966" : "" , marginRight:"100px"}}></span>
-                 <span style={{ width:'100px', height:"5px", background: isClickedToReported != false ? " #555966" : "",}}></span>
+                 <span style={{ width:'100px', height:"5px", background: isClickedToReported == false ? " #50a5f1" : "" , marginRight:"110px"}}></span>
+                 <span style={{ width:'100px', height:"5px", background: isClickedToReported != false ? " #50a5f1" : "",}}></span>
                 </div>
                 <br />
                
