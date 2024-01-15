@@ -15,7 +15,7 @@ import {
   CardBody,
 
   Table,
-  Row,Col
+  Row, Col
 } from "reactstrap"
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from "react";
@@ -25,117 +25,64 @@ import moment from "moment";
 import { addInvoiceReportDefaulterInvoice } from "../../../store/debtors/debtors.actions"
 import { addInvoiceReportDefaulterSelector } from "store/debtors/debtors.selecter"
 const confirmReportModal = props => {
-  const { isOpen, toggle ,filteredCustomerDetail,feedbackdataPaylod,allInvoiceList,ratingValue  } = props
- const handleSubmit =()=>{
-  handleSubmitInvoice()
-  toast.success("Reported Defaulter successfully")
-  toggle()
-  // window.location.reload()
+  const { isOpen, toggle, filteredCustomerDetail, feedbackdataPaylod, allInvoiceLists, ratingValue } = props
+  const handleSubmit = () => {
+    handleSubmitInvoice()
+    toast.success("Reported Defaulter successfully")
+    toggle()
+    // window.location.reload()
 
- }
- console.log("CHECKPROPSATAAA",allInvoiceList)
- const checkboxStyle = {
-  border: '2px solid #3498db', // Set the border color (change #3498db to your desired color)
-  borderRadius: '4px', // Optional: Add rounded corners for a nicer look
-  padding: '5px', // Optional: Add padding to the checkbox
-  marginRight: '5px', // Optional: Add some spacing between the checkbox and label
-};
-const [isChecked, setIsChecked] = useState(false);
-const handleCheckboxChange = () => {
-  setIsChecked(!isChecked);
-};
-const addInvoiceReportDefaulter = useSelector(addInvoiceReportDefaulterSelector)
-const dispatch = useDispatch()
-
-
-const handleSubmitInvoice=()=>{
-
-  const payload =
-  
-  {
-    "invoicesList": [
-{
-  "debtorId": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].debtorId:'',
-  "billDate": allInvoiceList[0].debtorId != undefined ? moment(allInvoiceList[0].billDate).format("YYYY-MM-DD"):'',
-  "billDescription": "Bill for things",
-  "billNumber": "112233",
-  "creditAmount": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].remainingAmount:'',
-  "remainingAmount": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].remainingAmount:'', 
-  "interestRate": "1",
-  "creditLimitDays": "20",
-  "remark": "remarks",
-  "items": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].allInvoiceListForPreview:[],
-  "subTotal": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].subTotal:'',
-  "tax": "5",
-
-  "referenceNumber": "12",
-  "invoiceNumber": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].allInvoiceListForPreview[0].itemDetail:'',
-  "dueDate": allInvoiceList[0].debtorId != undefined ?moment(allInvoiceList[0].allInvoiceListForPreview[0].date).format("YYYY-MM-DD"):'',
-  "percentage": "4",
-
-  "purchaseOrderDocument": "6595ca1d2f9f01a03ae5ab76",
-  "challanDocument": "6595ca1d2f9f01a03ae5ab76",
-  "invoiceDocument": "6595ca1d2f9f01a03ae5ab76",
-  "transportationDocument": "6595ca1d2f9f01a03ae5ab76"
-}
-
-                    ],
-    "status": "PENDING"
-}
+  }
+  console.log("CHECKPROPSATAAA", allInvoiceLists)
+  const checkboxStyle = {
+    border: '2px solid #3498db', // Set the border color (change #3498db to your desired color)
+    borderRadius: '4px', // Optional: Add rounded corners for a nicer look
+    padding: '5px', // Optional: Add padding to the checkbox
+    marginRight: '5px', // Optional: Add some spacing between the checkbox and label
+  };
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+  const addInvoiceReportDefaulter = useSelector(addInvoiceReportDefaulterSelector)
+  const dispatch = useDispatch()
 
 
-dispatch(addInvoiceReportDefaulterInvoice(payload))
+  const handleSubmitInvoice = () => {
+    const payload =
 
-}
+    {
+      "invoicesList": allInvoiceLists != undefined ? allInvoiceLists : [],
+      "status": "PENDING"
+    }
+
+
+    dispatch(addInvoiceReportDefaulterInvoice(payload))
+
+  }
 
 
 
-const handleDraftInvoice=()=>{
-  
+  const handleDraftInvoice = () => {
 
 
-  const payload =
-  
-  {
-    "invoicesList": [
-{
-  "debtorId": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].debtorId:'',
-  "billDate": allInvoiceList[0].debtorId != undefined ? moment(allInvoiceList[0].billDate).format("YYYY-MM-DD"):'',
-  "billDescription": "Bill for things",
-  "billNumber": "112233",
-  "creditAmount": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].remainingAmount:'',
-  "remainingAmount": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].remainingAmount:'', 
-  "interestRate": "1",
-  "creditLimitDays": "20",
-  "remark": "remarks",
-  "items": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].allInvoiceListForPreview:[],
-  "subTotal": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].subTotal:'',
-  "tax": "5",
 
-  "referenceNumber": "12",
-  "invoiceNumber": allInvoiceList[0].debtorId != undefined ? allInvoiceList[0].allInvoiceListForPreview[0].itemDetail:'',
-  "dueDate": allInvoiceList[0].debtorId != undefined ?moment(allInvoiceList[0].allInvoiceListForPreview[0].date).format("YYYY-MM-DD"):'',
-  "percentage": "4",
+    const payload =
 
-  "purchaseOrderDocument": "6595ca1d2f9f01a03ae5ab76",
-  "challanDocument": "6595ca1d2f9f01a03ae5ab76",
-  "invoiceDocument": "6595ca1d2f9f01a03ae5ab76",
-  "transportationDocument": "6595ca1d2f9f01a03ae5ab76"
-}
-
-                    ],
-    "status": "DRAFT"
-}
+    {
+      "invoicesList": allInvoiceLists != undefined ? allInvoiceLists : [],
+      "status": "DRAFT"
+    }
 
 
-dispatch(addInvoiceReportDefaulterInvoice(payload))
+    dispatch(addInvoiceReportDefaulterInvoice(payload))
 
 
-}
+  }
 
-  useEffect(()=>{
+  useEffect(() => {
 
-  },[])
+  }, [])
   return (
     <Modal
       isOpen={isOpen}
@@ -145,43 +92,43 @@ dispatch(addInvoiceReportDefaulterInvoice(payload))
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle} 
+      toggle={toggle}
     >
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Confirm Report Defaulter</ModalHeader>
-      
-      <ModalBody className="bg-light">
- 
-<h5 className="text-center">Are You sure you want to Report Following Customer As a Defaulter ? </h5>
-<br/>
-<p>Confirming the report of the mentioned customer as a defaulter requires accurate information. Any inaccuracies may lead to legal action against the reporting party, impacting their credibility as a rater. </p>
- <p className="text-center">
-   {/* <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} onChange={()=>handleChecked()}/>  */}
-   <Input
-          type="checkbox"
-          // checked={isChecked}
-          onChange={()=>handleCheckboxChange()}
-          className="checkForConfirm"
-          style={checkboxStyle} 
-        />
- &nbsp; &nbsp;By checking the checkbox, you accept full responsibility for consequences related to the rating and grant AnandRishi Technologies Pvt Ltd permission to post this information on social media on your behalf. You absolve AnandRishi Technologies Pvt Ltd from any legal or monetary consequences arising from such actions.</p>
 
- {/* <p className="text-center text-danger"> <i className='bx bx-error'></i> &nbsp; If found the provided information is wrong or incorrect legal action will be taken on the reporting party.</p> */}
-      </ModalBody>
+        <ModalBody className="bg-light">
+
+          <h5 className="text-center">Are You sure you want to Report Following Customer As a Defaulter ? </h5>
+          <br />
+          <p>Confirming the report of the mentioned customer as a defaulter requires accurate information. Any inaccuracies may lead to legal action against the reporting party, impacting their credibility as a rater. </p>
+          <p className="text-center">
+            {/* <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} onChange={()=>handleChecked()}/>  */}
+            <Input
+              type="checkbox"
+              // checked={isChecked}
+              onChange={() => handleCheckboxChange()}
+              className="checkForConfirm"
+              style={checkboxStyle}
+            />
+            &nbsp; &nbsp;By checking the checkbox, you accept full responsibility for consequences related to the rating and grant AnandRishi Technologies Pvt Ltd permission to post this information on social media on your behalf. You absolve AnandRishi Technologies Pvt Ltd from any legal or monetary consequences arising from such actions.</p>
+
+          {/* <p className="text-center text-danger"> <i className='bx bx-error'></i> &nbsp; If found the provided information is wrong or incorrect legal action will be taken on the reporting party.</p> */}
+        </ModalBody>
         <ModalFooter>
-        <Row>
-    <Col md={7}>
-    <Button className="text-center btn btn-secondary" onClick={()=>handleDraftInvoice()}>Save as Draft</Button>
+          <Row>
+            <Col md={7}>
+              <Button className="text-center btn btn-secondary" onClick={() => handleDraftInvoice()}>Save as Draft</Button>
 
-    </Col>
-    <Col md={2}>
-    <Button className="text-center btn btn-info" onClick={()=>handleSubmit()}
-disabled={!isChecked}    >Submit</Button>
+            </Col>
+            <Col md={2}>
+              <Button className="text-center btn btn-info" onClick={() => handleSubmit()}
+                disabled={!isChecked}    >Submit</Button>
 
-    </Col>
-    <Col md={3}></Col>
+            </Col>
+            <Col md={3}></Col>
 
- </Row>
+          </Row>
         </ModalFooter>
       </div>
       <ToastContainer />

@@ -262,6 +262,7 @@ const ReportedDefaulterModel = props => {
       DispatchDocument: "",
       DeliveryDocument: "",
       generalDocuments: "",
+      purchaseOrderDocument: "",
       GSTDocument: ""
 
     },
@@ -280,14 +281,15 @@ const ReportedDefaulterModel = props => {
   const [total, setTotal] = useState(0)
 
   const invoiceStateValue = allInvoiceList
-  console.log('allInvoiceList', allInvoiceList);
+  console.log('allInvoiceList......', allInvoiceList);
   console.log('invoiceStateValue', invoiceStateValue);
   const submitInvoice = (setvalu) => {
     calculateSubtotal(data)
     const date = moment()
     const dummy =
     {
-      "billDate": data[setvalu].date === "" ? date.format("YYYY-MM-DD") : moment(data[setvalu].date).format("YYYY-MM-DD"),
+      "debtorId": selectedOption.value,
+      "billDate": date.format("YYYY-MM-DD"),
       "billDescription": "Bill for things",
       "billNumber": "",
       "creditAmount": total.toFixed(1),
@@ -302,20 +304,21 @@ const ReportedDefaulterModel = props => {
 
       "referenceNumber": '',
       "invoiceNumber": data[setvalu].itemDetail,
-      "dueDate": moment(data[setvalu].date).format("YYYY-MM-DD"),
+      "dueDate": data[setvalu].date === "" ? date.format("YYYY-MM-DD") : moment(data[setvalu].date).format("YYYY-MM-DD"),
       "percentage": "",
 
-      "purchaseOrderDocument": data[setvalu].purchaseOrderDocument,
-      "challanDocument": data[setvalu].DispatchDocument,
-      "invoiceDocument": data[setvalu].invoiceDocument,
-      "transportationDocument": data[setvalu].DeliveryDocument,
+      "purchaseOrderDocument": data[setvalu].purchaseOrderDocument != '' ? data[setvalu].purchaseOrderDocument.documentId : '',
+      "challanDocument": data[setvalu].DispatchDocument != '' ? data[setvalu].DispatchDocument.documentId : '',
+      "invoiceDocument": data[setvalu].invoiceDocument != '' ? data[setvalu].invoiceDocument.documentId : '',
+      "transportationDocument": data[setvalu].DeliveryDocument != '' ? data[setvalu].DeliveryDocument.documentId : '',
     }
 
     if (allInvoiceList.length > 0) {
       let findIdex = allInvoiceList.findIndex((x, i) => x.invoiceNumber == data[setvalu].itemDetail)
       if (findIdex != -1) {
         allInvoiceList[findIdex] = {
-          "billDate": data[findIdex].date === "" ? date.format("YYYY-MM-DD") : moment(data[findIdex].date).format("YYYY-MM-DD"),
+          "debtorId": selectedOption.value,
+          "billDate": date.format("YYYY-MM-DD"),
           "billDescription": "Bill for things",
           "billNumber": "",
           "creditAmount": total.toFixed(1),
@@ -330,13 +333,13 @@ const ReportedDefaulterModel = props => {
 
           "referenceNumber": '',
           "invoiceNumber": data[findIdex].itemDetail,
-          "dueDate": moment(data[findIdex].date).format("YYYY-MM-DD"),
+          "dueDate": data[setvalu].date === "" ? date.format("YYYY-MM-DD") : moment(data[setvalu].date).format("YYYY-MM-DD"),
           "percentage": "",
 
-          "purchaseOrderDocument": data[findIdex].purchaseOrderDocument,
-          "challanDocument": data[findIdex].DispatchDocument,
-          "invoiceDocument": data[findIdex].invoiceDocument,
-          "transportationDocument": data[findIdex].DeliveryDocument,
+          "purchaseOrderDocument": data[findIdex].purchaseOrderDocument != '' ? data[findIdex].purchaseOrderDocument.documentId : '',
+          "challanDocument": data[findIdex].DispatchDocument != '' ? data[findIdex].DispatchDocument.documentId : '',
+          "invoiceDocument": data[findIdex].invoiceDocument != '' ? data[findIdex].invoiceDocument.documentId : '',
+          "transportationDocument": data[findIdex].DeliveryDocument != '' ? data[findIdex].DeliveryDocument.documentId : '',
         }
       } else {
         if (data[setvalu].amount != "" && data[setvalu].itemDetail != "") {
@@ -1131,8 +1134,9 @@ const ReportedDefaulterModel = props => {
                           </Col>
                           <Col md={4} className="p-2">
                             <DatePicker
-                              selected={selectedDate || new Date()}
-                              // value={row.date}
+                              /*  selected={new Date()} */
+                              value={data[index].date}
+                              placeholder="Select your date"
 
                               onChange={(date) =>
                                 handleDateChange(date, index)
