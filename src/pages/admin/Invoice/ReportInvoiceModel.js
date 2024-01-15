@@ -35,6 +35,7 @@ import { selectDebtorsList } from "store/debtors/debtors.selecter";
 import { getAllInvoice, setIsReportDefOpen, setIsCustomerFeedbackModalOpen, addInvoiceReportDebtor, addInvoiceArray, } from "../../../store/debtors/debtors.actions"
 import { selectReportDefOpen, selectInvoiceList, selectFeedbackModalOpen, addInvoiceReportDebtorSelector, addInvoiceIdtoArray, } from "store/debtors/debtors.selecter"
 import { addInvoiceBill, addInvoiceBillSuccess } from '../../../store/actions'
+import index from "pages/Dashboard-Blog";
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
 const ReportedDefaulterModel = props => {
@@ -236,7 +237,7 @@ const ReportedDefaulterModel = props => {
         "salutation": selectedOption.value,
         "firstname": item.firstname,
         "lastname": item.lastname,
-        "customerEmail": item.customerEmail,
+        "customerEmail": item.customerEmail.toLowerCase(),
         "customerMobile": item.customerPhone,
         "address1": item.address1,
         "address2": item.address2,
@@ -841,26 +842,7 @@ const ReportedDefaulterModel = props => {
                                 value={formikModal.values.customerPhone}
                                 onChange={formikModal.handleChange}
                                 onBlur={formikModal.handleBlur}
-                                placeholder="Work Phone"
-                              />
-                              {formikModal.touched.customerPhone &&
-                                formikModal.errors.customerPhone && (
-                                  <div className="text-danger">
-                                    {formikModal.errors.customerPhone}
-                                  </div>
-                                )}
-                            </FormGroup>
-                          </Col>
-                          <Col xs={12} md={3}>
-                            <FormGroup>
-                              <Input
-                                type="text"
-                                id="customerPhone"
-                                name="customerPhone"
-                                value={formikModal.values.customerPhone}
-                                onChange={formikModal.handleChange}
-                                onBlur={formikModal.handleBlur}
-                                placeholder="Mobile"
+                                placeholder="Mobile Number"
                               />
                               {formikModal.touched.customerPhone &&
                                 formikModal.errors.customerPhone && (
