@@ -4,5 +4,5 @@ const selectDocumentReducer = (state) => state.documentsReducer;
 
 export const getGeneralDocumentsSelector = createSelector(
     [selectDocumentReducer],
-    (DocumentsReducer) => DocumentsReducer.generalDocuments.response
+    (DocumentsReducer) => DocumentsReducer.generalDocuments != undefined ? DocumentsReducer.generalDocuments.response : []
 )

@@ -72,7 +72,7 @@ const ReportDefPreviewModals = props => {
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Report Defaulter Preview</ModalHeader>
         <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceLists={allInvoiceList} ratingValue={ratingValue} />
-
+        {console.log('filteredCustomerDetail', filteredCustomerDetail)}
         <ModalBody className="bg-light">
           <Row className="p-3">
             <Row className="">
@@ -81,7 +81,7 @@ const ReportDefPreviewModals = props => {
               <Label className="text-capitalize">
                 Name - {filteredCustomerDetail.companyName}
               </Label>
-              <Label className="text-capitalize">
+              <Label /* className="text-capitalize" */>
                 Email - {filteredCustomerDetail.customerEmail}
               </Label>
               <Label className="text-capitalize">
