@@ -167,160 +167,78 @@ const ReportedDebtorsModel = props => {
               </Col>
             </Row>
           </div>
-          <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  1. Is the customer facing financial difficulty?    </span>
-              </Col>
-              <Col md={3}>
-                <Select
-                  id="primaryContact"
-                  className="custom-content"
-                  options={options}
-                  styles={colourStyles}
-                  placeholder="Yes/No"
-                  onChange={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Is the customer facing financial difficulty",
-                    "questionType": "DROP-DOWN",
-                    "values": selected.value
-                  })}
-                />
-              </Col>
-            </Row>
-          </div>
-          <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  2. Does the customer have intention to pay?   </span>
-              </Col>
-              <Col md={3}>
-                <Select
-                  id="primaryContact"
-                  className="custom-content"
-                  options={options}
-                  styles={colourStyles}
-                  placeholder="Yes/No"
-                  onChange={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Does the customer have intention to pay",
-                    "questionType": "DROP-DOWN",
-                    "values": selected.value
-                  })}
-                />
-              </Col>
-            </Row>
-          </div>
-          <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  3. Does the customer currently buy the same product from your competitors? </span>
-              </Col>
-              <Col md={3}>
-                <Select
-                  id="primaryContact"
-                  className="custom-content"
-                  options={options}
-                  styles={colourStyles}
-                  placeholder="Yes/No"
-                  onChange={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Does the customer currently buy the same product from your competitors?",
-                    "questionType": "DROP-DOWN",
-                    "values": selected.value
-                  })}
-                />
-              </Col>
-            </Row>
-          </div>
-          <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  4. Does the customer operate from Own premises or rented premises?   </span>
-              </Col>
-              <Col md={3}>
-                <Select
-                  id="primaryContact"
-                  className="custom-content"
-                  options={optionsRentedOwn}
-                  styles={colourStyles}
-                  placeholder="Owned/Rented"
-                  onChange={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Does the customer operate from OWn premises or rented premises?",
-                    "questionType": "DROP-DOWN",
-                    "values": selected.value
-                  })}
-                />
-              </Col>
-            </Row>
-          </div>
-          <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  5. Has the customer changed his place of business since buying the goods from you?   </span>
-              </Col>
-              <Col md={3}>
-                <Select
-                  id="primaryContact"
-                  className="custom-content"
-                  options={options}
-                  styles={colourStyles}
-                  placeholder="Yes/No"
-                  onChange={(selected) => handlefinancialdifficult({
-                    "questionDesc": "Has the customer changed his place of business since buying the goods from you? ",
-                    "questionType": "DROP-DOWN",
-                    "values": selected.value
-                  })}
-                />
-              </Col>
-            </Row>
-          </div>
-          <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  6. How old your business relationship with this customer?  </span>
-              </Col>
-              <Col md={3}>
-                <span>
-                  <Input
+          {getFeebBackQuestion.length > 0 ? getFeebBackQuestion.map((item, index) => {
+            const opations = item.values != null && item.values.length > 0 ? item.values.map((x) => {
+              return { label: x, value: x }
+            }) : ''
+            return (item.questionType === "DROP-DOWN" ? (
+              <div className="mb-1" key={index}>
+                <Row>
+                  <Col md={9}>
+                    <span className="mb-2">
+                      {`${index + 1}. ${item.questionDesc} ?`} </span>
+                  </Col>
+                  <Col md={3}>
+                    <Select
+                      id="primaryContact"
+                      className="custom-content"
+                      options={opations}
+                      styles={colourStyles}
+                      placeholder={item.values.join("/")}
+                      onChange={(selected) => handlefinancialdifficult({
+                        "questionDesc": item.questionDesc,
+                        "questionType": item.questionType,
+                        "values": selected.value
+                      })}
+                    />
+                  </Col>
+                </Row>
+              </div>
+            ) : item.questionType === "TEXT" ? (<div className="mb-1">
+              <Row>
+                <Col md={9}>
+                  <span className="mb-2">
+                    {`${index + 1}. ${item.questionDesc} ?`}</span>
+                </Col>
+                <Col md={3}>
+                  <span>
+                    <Input
+                      className={`form-control custom-content`}
+                      placeholder="Input in years"
+                      onChange={(e) => handlefinancialdifficult({
+                        "questionDesc": item.questionDesc,
+                        "questionType": item.questionType,
+                        "values": e.target.value
+                      })}
+                    />
+                  </span>
+                </Col>
+              </Row>
+            </div>) : item.questionType === "textarea" ? (<div className="mb-1">
+              <Row>
+                <Row md={9}>
+                  <span className="mb-2">
+                    {`${index + 1}. ${item.questionDesc} ?`} </span>
+                </Row>
+                <Row md={12}>
+                  <span>
+                    <textarea
+                      rows={5}
+                      className={`form-control custom-content`}
+                      placeholder="Write you Review"
+                      onChange={(e) => handlefinancialdifficult({
+                        "questionDesc": item.questionDesc,
+                        "questionType": item.questionType,
+                        "values": e.target.value
+                      })}
+                    />
+                  </span>
+                </Row>
+              </Row>
+            </div>) : ''
+            )
+          }) : ""}
 
-                    className={`form-control custom-content`}
-                    placeholder="Input in years"
-                    onChange={(e) => handlefinancialdifficult({
-                      "questionDesc": " How old your business relationship with this customer?",
-                      "questionType": "TEXT",
-                      "values": e.target.value
-                    })}
-                  />
-                </span>
-              </Col>
-            </Row>
-          </div>
-          <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  7. Write you Review  </span>
-              </Col>
-              <Col md={3}>
-                <span>
-                  <textarea
-                    rows={5}
-                    className={`form-control custom-content`}
-                    placeholder="Write you Review"
-                    onChange={(e) => handlefinancialdifficult({
-                      "questionDesc": " How old your business relationship with this customer?",
-                      "questionType": "TEXT",
-                      "values": e.target.value
-                    })}
-                  />
-                </span>
-              </Col>
-            </Row>
-          </div>
           <div className="mt-3 mb-3">
             <Row>
               <Col md={9}>
@@ -331,85 +249,89 @@ const ReportedDebtorsModel = props => {
               </Col>
             </Row>
           </div>
-          <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  1. Integrity</span>
-              </Col>
-              <Col md={3}>
-                <span>
-                  <i className='bx bxs-star'
-                    //   onClick={()=>{
-                    //     setIntegrity(1)
-                    //  }} 
-                    onClick={(selected) => {
-                      handlefinancialdifficult({
-                        "questionDesc": "Integrity",
-                        "questionType": "RATING",
-                        "values": 1
-                      })
-                      setIntegrity(1)
-                    }
-                    }
-                    style={{ color: Integrity != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star'
-                    onClick={(selected) => {
-                      handlefinancialdifficult({
-                        "questionDesc": "Integrity",
-                        "questionType": "RATING",
-                        "values": 2
-                      })
-                      setIntegrity(2)
-                    }
-                    }
-                    style={{ color: Integrity != 0 && Integrity > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star'
-                    onClick={(selected) => {
-                      handlefinancialdifficult({
-                        "questionDesc": "Integrity",
-                        "questionType": "RATING",
-                        "values": 3
-                      })
-                      setIntegrity(3)
-                    }
-                    }
-                    style={{ color: Integrity != 0 && Integrity > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star'
-                    onClick={(selected) => {
-                      handlefinancialdifficult({
-                        "questionDesc": "Integrity",
-                        "questionType": "RATING",
-                        "values": 4
-                      })
-                      setIntegrity(4)
-                    }
-                    }
-                    style={{ color: Integrity != 0 && Integrity > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star'
-                    onClick={(selected) => {
-                      handlefinancialdifficult({
-                        "questionDesc": "Integrity",
-                        "questionType": "RATING",
-                        "values": 5
-                      })
-                      setIntegrity(5)
-                    }
-                    }
-                    style={{ color: Integrity != 0 && Integrity > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-              </Col>
-            </Row>
-          </div>
-          <div className="mb-1">
+
+          {getFeebBackQuestion.length > 0 ? getFeebBackQuestion.map((item, indx) => {
+            let x = 1
+            return (item.questionType === "RATING" ? (<div className="mb-1">
+              <Row key={indx}>
+                <Col md={9}>
+                  <span className="mb-2">
+                    {`${x++}. ${item.questionDesc} ?`}</span>
+                </Col>
+                <Col md={3}>
+                  <span>
+                    <i className='bx bxs-star'
+                      //   onClick={()=>{
+                      //     setIntegrity(1)
+                      //  }} 
+                      onClick={(selected) => {
+                        handlefinancialdifficult({
+                          "questionDesc": item.questionDesc,
+                          "questionType": item.questionType,
+                          "values": 1
+                        })
+                        setIntegrity(1)
+                      }
+                      }
+                      style={{ color: Integrity != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                    ></i></span>
+                  <span>
+                    <i className='bx bxs-star'
+                      onClick={(selected) => {
+                        handlefinancialdifficult({
+                          "questionDesc": item.questionDesc,
+                          "questionType": item.questionType,
+                          "values": 2
+                        })
+                        setIntegrity(2)
+                      }
+                      }
+                      style={{ color: Integrity != 0 && Integrity > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                    ></i></span>
+                  <span>
+                    <i className='bx bxs-star'
+                      onClick={(selected) => {
+                        handlefinancialdifficult({
+                          "questionDesc": item.questionDesc,
+                          "questionType": item.questionType,
+                          "values": 3
+                        })
+                        setIntegrity(3)
+                      }
+                      }
+                      style={{ color: Integrity != 0 && Integrity > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                    ></i></span>
+                  <span>
+                    <i className='bx bxs-star'
+                      onClick={(selected) => {
+                        handlefinancialdifficult({
+                          "questionDesc": item.questionDesc,
+                          "questionType": item.questionType,
+                          "values": 4
+                        })
+                        setIntegrity(4)
+                      }
+                      }
+                      style={{ color: Integrity != 0 && Integrity > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                    ></i></span>
+                  <span>
+                    <i className='bx bxs-star'
+                      onClick={(selected) => {
+                        handlefinancialdifficult({
+                          "questionDesc": item.questionDesc,
+                          "questionType": item.questionType,
+                          "values": 5
+                        })
+                        setIntegrity(5)
+                      }
+                      }
+                      style={{ color: Integrity != 0 && Integrity > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                    ></i></span>
+                </Col>
+              </Row>
+            </div>) : "")
+          }) : ''}
+          {/*           <div className="mb-1">
             <Row>
               <Col md={9}>
                 <span className="mb-2">
@@ -549,7 +471,7 @@ const ReportedDebtorsModel = props => {
                   ></i></span>
               </Col>
             </Row>
-          </div>
+          </div> */}
         </ModalBody>
         <ModalFooter>
           <Button type="button" color="secondary" onClick={toggle}>
@@ -559,8 +481,8 @@ const ReportedDebtorsModel = props => {
             Process
           </Button>
         </ModalFooter>
-      </div>
-    </Modal>
+      </div >
+    </Modal >
   )
 }
 

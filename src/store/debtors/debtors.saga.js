@@ -1,66 +1,67 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 
 // Crypto Redux States
-import { GET_DEBTORS,
-GET_DEBTORS_FAIL,
-GET_DEBTORS_SUCCESS
-,GET_INVOICE_LIST,
-GET_INVOICE_LIST_FAIL,GET_INVOICE_LIST_SUCCESS,
-ADD_iNVOICE_REPORT_DEBTOR,
-ADD_iNVOICE_REPORT_DEBTOR_FAIL,
-ADD_iNVOICE_REPORT_DEBTOR_SUCCESS,
-ADD_iNVOICE_ARRAY_DEBTORID,
-ADD_RATING_TO_DEBTOR,
-UPLOAD_CA_CERTIFICATE_ID,
-UPLOAD_CA_CERTIFICATE_ID_FAIL,
-UPLOAD_CA_CERTIFICATE_ID_SUCCESS,
-REQUEST_INVOICE_DEF_EDIT,
-ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
-RECORD_PAYMENT_REPORT_DEFAULT,
-RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
-RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS,
-UPDATE_PENDING_DOCUMENT,
-GET_FEEDBACKQUESTION
+import {
+  GET_DEBTORS,
+  GET_DEBTORS_FAIL,
+  GET_DEBTORS_SUCCESS
+  , GET_INVOICE_LIST,
+  GET_INVOICE_LIST_FAIL, GET_INVOICE_LIST_SUCCESS,
+  ADD_iNVOICE_REPORT_DEBTOR,
+  ADD_iNVOICE_REPORT_DEBTOR_FAIL,
+  ADD_iNVOICE_REPORT_DEBTOR_SUCCESS,
+  ADD_iNVOICE_ARRAY_DEBTORID,
+  ADD_RATING_TO_DEBTOR,
+  UPLOAD_CA_CERTIFICATE_ID,
+  UPLOAD_CA_CERTIFICATE_ID_FAIL,
+  UPLOAD_CA_CERTIFICATE_ID_SUCCESS,
+  REQUEST_INVOICE_DEF_EDIT,
+  ADD_INVOICE_REPORT_DEFAULTER_ASYNC,
+  RECORD_PAYMENT_REPORT_DEFAULT,
+  RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
+  RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS,
+  UPDATE_PENDING_DOCUMENT,
+  GET_FEEDBACKQUESTION
 } from "./debtors.actiontype";
 import {
-getAllDebtors,
-getAllDebtorsFail,
-getAllDebtorsSuccess,
-getAllInvoice,
-getAllInvoiceFail,
-getAllInvoiceSuccess,
-addInvoiceReportDebtor,
-addInvoiceReportDebtorSuccess,
-addInvoiceReportDebtorFail,
-addInvoiceArray,
-addInvoiceArrayFail,
-addInvoiceArraySuccess,
-addRatingToDebtorFail,
-addRatingToDebtorSuccess,
-uploadCACertificateID,
-uploadCACertificateIDSuccess,
-uploadCACertificateIDFail,
-requestInvoiceDefEdit,
-requestInvoiceDefEditFail,
-requestInvoiceDefEditSuccess,
-addInvoiceReportDefaulterInvoice,
-addInvoiceReportDefaulterInvoiceFail,
-addInvoiceReportDefaulterInvoiceSuccess,
-recoredPaymentReportDefault,
-recoredPaymentReportDefaultFail,
-recoredPaymentReportDefaultSucccess,
-updatePendingDocumentssSucccess,
-updatePendingDocumentssFail,
-getFeebBackQuestionList,
-getFeebBackQuestionListFail,
-getFeebBackQuestionListSuccess
+  getAllDebtors,
+  getAllDebtorsFail,
+  getAllDebtorsSuccess,
+  getAllInvoice,
+  getAllInvoiceFail,
+  getAllInvoiceSuccess,
+  addInvoiceReportDebtor,
+  addInvoiceReportDebtorSuccess,
+  addInvoiceReportDebtorFail,
+  addInvoiceArray,
+  addInvoiceArrayFail,
+  addInvoiceArraySuccess,
+  addRatingToDebtorFail,
+  addRatingToDebtorSuccess,
+  uploadCACertificateID,
+  uploadCACertificateIDSuccess,
+  uploadCACertificateIDFail,
+  requestInvoiceDefEdit,
+  requestInvoiceDefEditFail,
+  requestInvoiceDefEditSuccess,
+  addInvoiceReportDefaulterInvoice,
+  addInvoiceReportDefaulterInvoiceFail,
+  addInvoiceReportDefaulterInvoiceSuccess,
+  recoredPaymentReportDefault,
+  recoredPaymentReportDefaultFail,
+  recoredPaymentReportDefaultSucccess,
+  updatePendingDocumentssSucccess,
+  updatePendingDocumentssFail,
+  getFeebBackQuestionList,
+  getFeebBackQuestionListFail,
+  getFeebBackQuestionListSuccess
 
 } from "./debtors.actions";
 
 //Include Both Helper File with needed methods
 import { getAllDebtorsAPI } from "helpers/fakebackend_helper";
-import { getAllInvoiceList} from "helpers/fakebackend_helper";
-import { addInvoiceApi,addDebtorIdToarrayForPreviewAPI,addRatingofdebtor,uploadCACertificateAPIMethod ,updatePendingDocument,requestAEdit, addInVoiceDefaulter,recordPaymentAPIMethod,getFeebBackQuestionListAPI} from "helpers/fakebackend_helper";
+import { getAllInvoiceList } from "helpers/fakebackend_helper";
+import { addInvoiceApi, addDebtorIdToarrayForPreviewAPI, addRatingofdebtor, uploadCACertificateAPIMethod, updatePendingDocument, requestAEdit, addInVoiceDefaulter, recordPaymentAPIMethod, getFeebBackQuestionListAPI } from "helpers/fakebackend_helper";
 
 
 function* fetchdebtors() {
@@ -155,8 +156,8 @@ function* updatePendingDocumentSaga(payload) {
 function* getFeedbackQuestionSaga() {
   try {
     const response = yield call(getFeebBackQuestionListAPI)
-    console.log("responseresponseresponse",response)
-    yield put(getFeebBackQuestionListSuccess(response))
+    console.log("responseresponseresponse", response)
+    yield put(getFeebBackQuestionListSuccess(response.response))
   } catch (error) {
     yield put(getFeebBackQuestionListFail(error))
   }
