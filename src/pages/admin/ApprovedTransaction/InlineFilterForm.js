@@ -30,7 +30,7 @@ const InlineFilterForm = ({ onFilter, handleFilter }) => {
   };
 
   const handleReset = (event) => {
-    debugger
+  
     event.preventDefault();
 
     const resetAray = {

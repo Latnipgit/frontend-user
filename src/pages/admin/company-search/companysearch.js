@@ -196,13 +196,13 @@ const CompanySearch = props => {
     []
   );
   const handleFilter = (filters) => {
-    const filtereCompany = selectCompanySearchListMap.filter(item => item.CompanyName.toLocaleLowerCase().includes(filters.company));
+    const filtereCompany = selectCompanySearchListMap.filter(item => item.CompanyName.toLocaleLowerCase().includes(filters.company.toLocaleLowerCase()));
 
     const filteredgstMatch = filtereCompany.filter(item => item.GST.includes(filters.gst));
 
     const filterePANCARD = filteredgstMatch.filter(item => item.PANCARD.includes(filters.pan));
 
-    console.log("filteredResults", filterePANCARD)
+    console.log("filteredResults", filters,filtereCompany )
 
     setFilteredData(filterePANCARD);
   };
