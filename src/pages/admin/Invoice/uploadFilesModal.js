@@ -142,7 +142,7 @@ const UploadPendingFiles = props => {
 
               <Row className="mt-4">
                 {
-                  item.invoiceDocument == "" ? <Col md={3}>
+                  item.invoiceDocument == null ? <Col md={3}>
                     <Row>
 
                       <Col md={12}>
@@ -168,7 +168,7 @@ const UploadPendingFiles = props => {
                     :
                     <Col md={3} className="text-center">
                       {console.log("item.invoiceDocument",item)}
-                      <a href={item.invoiceDocument.url} rel='noreferrer' target='_blank'>
+                      <a href={item.invoiceDocument != null ? item.invoiceDocument.url:''} rel='noreferrer' target='_blank'>
                         {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                         <img src={fileImg1} className="iconsImage"/>
 
@@ -180,11 +180,11 @@ const UploadPendingFiles = props => {
                 }
 
 
-                {item.challanDocument == "" ?
+                {item.challanDocument == null ?
                   <Col md={3}>
                     <Row>
 
-                      <Col md={12} className="pt-4">
+                      <Col md={12} className="">
 
                         <InputGroup className="text-capitalize">
                           <input
@@ -209,7 +209,7 @@ const UploadPendingFiles = props => {
                   :
 
                   <Col md={3} className="text-center">
-                    <a href={item.challanDocument.url} rel='noreferrer' target='_blank' className="">
+                    <a href={item.challanDocument != null ? item.challanDocument.url:""} rel='noreferrer' target='_blank' className="">
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                       <img src={fileImg2} className="iconsImage shadow"/>
 
@@ -220,7 +220,7 @@ const UploadPendingFiles = props => {
                   </Col>
                 }
 
-                {item.transportationDocument == "" ?
+                {item.transportationDocument == null ?
 
 
                   <Col md={3}>
@@ -246,7 +246,7 @@ const UploadPendingFiles = props => {
                   </Col>
                   :
                   <Col md={3} className="text-center">
-                    <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
+                    <a href={ item.transportationDocument != null ?item.transportationDocument.url :''} rel='noreferrer' target='_blank'>
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                       <img src={fileImg2} className="iconsImage shadow"/>
 
@@ -258,7 +258,7 @@ const UploadPendingFiles = props => {
 
                 }
 
-                {item.purchaseOrderDocument == "" ?
+                {item.purchaseOrderDocument == null ?
 
 
                   <Col md={3}>
@@ -284,7 +284,7 @@ const UploadPendingFiles = props => {
                   </Col>
                   :
                   <Col md={3} className="text-center">
-                    <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
+                    <a href={ item.purchaseOrderDocument != null ? item.purchaseOrderDocument.url:''} rel='noreferrer' target='_blank'>
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                       <img src={fileImg2} className="iconsImage shadow"/>
 

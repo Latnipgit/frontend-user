@@ -97,8 +97,8 @@ const allInvoiceListForPreview = viewModalData.invoices
                   <Col md={8} className="pt-4">
                     <strong>Invoice Document</strong>
                   </Col>
-                  <Col md={4}>
-                 {item.invoiceDocument != ""  ?
+                  <Col md={4} className="mt-2">
+                 {item.invoiceDocument != null  ?
                   <a href={item.invoiceDocument.url} rel='noreferrer' target='_blank'>
                       {/* <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
                       <img src={jpgImg} className="iconsImage shadow"/>
@@ -120,8 +120,8 @@ const allInvoiceListForPreview = viewModalData.invoices
                   <Col md={8} className="pt-4">
                     <strong>Dispatch Document</strong>
                   </Col>
-                  <Col md={4}>
-                  {item.challanDocument != ""  ?  <a href={item.challanDocument.url} rel='noreferrer' target='_blank'>
+                  <Col md={4} className="mt-2">
+                  {item.challanDocument != null  ?  <a href={item.challanDocument.url} rel='noreferrer' target='_blank'>
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                       <img src={jpgImg} className="iconsImage shadow"/>
 
@@ -137,11 +137,11 @@ const allInvoiceListForPreview = viewModalData.invoices
               </Col>
               <Col md={3}>
                 <Row>
-                  <Col md={8} className="pt-4">
+                  <Col md={10} className="pt-4">
                     <strong>Transportation Document</strong>
                   </Col>
-                  <Col md={4}>
-                  {item.transportationDocument != ""  ?  <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
+                  <Col md={2} className="mt-2">
+                  {item.transportationDocument != null  ?  <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                       <img src={pdfImg} className="iconsImage shadow"/>
 
@@ -161,8 +161,8 @@ const allInvoiceListForPreview = viewModalData.invoices
                   <Col md={8} className="pt-4">
                     <strong>Purchase Document</strong>
                   </Col>
-                  <Col md={4}>
-                  {item.purchaseOrderDocument != ""  ?   <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
+                  <Col md={4} className="mt-2">
+                  {item.purchaseOrderDocument != null  ?   <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                       <img src={pdfImg} className="iconsImage shadow"/>
 
