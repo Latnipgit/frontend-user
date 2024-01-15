@@ -26,7 +26,7 @@ const ReportedDebtorsModel = props => {
   const [timelystarRating, settimelyStarRating] = useState(0)
   const [responsivestarRating, setresponsivestarRating] = useState(0)
   const [Integrity, setIntegrity] = useState(0)
-  const { isOpen, toggle, filteredCustomerDetail, allInvoiceList } = props
+  const { isOpen, toggle, filteredCustomerDetail, allInvoiceList, dataForPreview } = props
   console.log("HARSJH allInvoiceList", allInvoiceList)
   const colourStyles = {
     menuList: styles => ({
@@ -156,7 +156,7 @@ const ReportedDebtorsModel = props => {
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Customer Feedback </ModalHeader>
         <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} />
-        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue} />
+        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue} dataForPreview={dataForPreview}/>
         <ModalBody>
           <div className="mt-3 mb-3">
             <Row>
