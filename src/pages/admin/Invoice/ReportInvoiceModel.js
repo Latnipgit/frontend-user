@@ -600,7 +600,7 @@ const ReportedDefaulterModel = props => {
     >
       <div className="modal-contents">
         <ModalHeader toggle={toggle}>Report A Defaulter</ModalHeader>
-        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1} filteredCustomerDetail={filteredCustomerDetail} allInvoiceList={allInvoiceList} />
+        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1} filteredCustomerDetail={filteredCustomerDetail} allInvoiceList={allInvoiceList} dataForPreview={data} />
 
 
         <ModalBody className="" >

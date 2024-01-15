@@ -31,7 +31,7 @@ import { fetchReportDefulterPreviewStart } from "store/ReportDefulterPreview/Rep
 
 
 const ReportDefPreviewModals = props => {
-  const { isOpen, toggle, selected, filteredCustomerDetail, feedbackdataPaylod, allInvoiceList, ratingValue } = props
+  const { isOpen, toggle, selected, filteredCustomerDetail, feedbackdataPaylod, allInvoiceList, ratingValue ,dataForPreview} = props
   const allInvoiceListForPreview = allInvoiceList[0] != undefined ? allInvoiceList[0].allInvoiceListForPreview : []
   const Integrity = ratingValue.Integrity
   const responsivestarRating = ratingValue.responsivestarRating
@@ -48,7 +48,7 @@ const ReportDefPreviewModals = props => {
 
   useEffect(() => {
     dispatch(fetchReportDefulterPreviewStart())
-    console.log("allInvoiceList Preview", allInvoiceList)
+    console.log("allInvoiceList Preview", dataForPreview)
   }, [])
 
   const handleFeedbackModal = () => {
@@ -100,7 +100,7 @@ const ReportDefPreviewModals = props => {
             </Row>
             <div className="mb-3 mt-3"><b className="">Invoice Detail</b></div>
 
-            {allInvoiceListForPreview != undefined ? allInvoiceListForPreview.map((item) => {
+            {dataForPreview != undefined ? dataForPreview.map((item) => {
               return <Row className="bg-white p-3" key={item}>
                 <Row>
                   <Col md={3}><strong>Invoice Number - {item.itemDetail}</strong></Col>
@@ -163,6 +163,44 @@ const ReportDefPreviewModals = props => {
 
                         </a>              </Col>
                     </Row>
+
+                  </Col>
+                </Row>
+
+                <Row className="mt-2">
+                  <Col md={3}>
+                    <Row>
+                      <Col md={8} className="pt-4">
+                        <strong>General Document</strong>
+                      </Col>
+                      <Col md={4}>
+                        <a href={item.generalDocuments.fileUrl} rel='noreferrer' target='_blank'>
+                          <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
+
+                        </a>
+                      </Col>
+                    </Row>
+
+                  </Col>
+                  <Col md={3}>
+                    <Row>
+                      <Col md={8} className="pt-4">
+                        <strong>GST Document</strong>
+                      </Col>
+                      <Col md={4}>
+                        <a href={item.GSTDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          <i className='bx bxs-file mt-2 fileSizing'></i>
+
+                        </a>              </Col>
+                    </Row>
+
+                  </Col>
+                  <Col md={3}>
+                   
+
+                  </Col>
+                  <Col md={3}>
+                   
 
                   </Col>
                 </Row>
