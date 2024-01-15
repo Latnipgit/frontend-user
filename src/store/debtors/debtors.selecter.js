@@ -57,6 +57,10 @@ export const confirReportDefaultModel = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.isConfirmReportDefaultModal
 )
+export const markAsDisputedModalOpenSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.isMarkAsDisputedOpen
+)
 
 export const ReportDefPreviewModal = createSelector(
     [selectDebtorsReducer],

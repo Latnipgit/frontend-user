@@ -42,8 +42,8 @@ const Login = props => {
     enableReinitialize: true,
 
     initialValues: {
-      email: "admin@themesbrand.com" || '',
-      password: "123456" || '',
+      email: "" || '',
+      password: "" || '',
     },
     validationSchema: Yup.object({
       email: Yup.string().required("Please Enter Your Email"),
@@ -55,6 +55,7 @@ const Login = props => {
         dispatch(loginUser(values, props.router.navigate));
       } catch (error) {
         console.error('API Error:', error);
+        toast.error("error")
       } finally {
         setIsLoading(false);
       }

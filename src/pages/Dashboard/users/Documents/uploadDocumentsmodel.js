@@ -104,9 +104,9 @@ const uploadDocumentsModel = props => {
             toggle={toggle}
         >
             <div className="modal-content">
-                <ModalHeader toggle={toggle}>Company Details</ModalHeader>
-                <ModalBody>toggle
-                    <h6 className="card-title">Upload Document</h6>
+                <ModalHeader toggle={toggle}>Upload Document</ModalHeader>
+                <ModalBody>
+                    {/* <h6 className="card-title"></h6> */}
                     
                    
                   

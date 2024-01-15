@@ -157,8 +157,8 @@ const Dashboard = props => {
               </Col>
               <Col md={12} className="">
               <div className="btn-group" role="group" aria-label="Basic example">
-                 <span style={{ width:'100px', height:"5px", background: isClickedToReported == false ? " #555966" : "	 #2a3042" , marginRight:"100px"}}></span>
-                 <span style={{ width:'100px', height:"5px", background: isClickedToReported != false ? " #555966" : "	 #2a3042",}}></span>
+                 <span style={{ width:'100px', height:"5px", background: isClickedToReported == false ? " #555966" : "" , marginRight:"100px"}}></span>
+                 <span style={{ width:'100px', height:"5px", background: isClickedToReported != false ? " #555966" : "",}}></span>
                 </div>
                 <br />
                

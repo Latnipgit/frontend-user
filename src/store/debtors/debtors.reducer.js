@@ -39,7 +39,8 @@ import {
   GET_FEEDBACKQUESTION,
   GET_FEEDBACKQUESTION_FAIL,
   GET_FEEDBACKQUESTION_SUCCESS,
-  REQUEST_EDIT_MODAL_OPEN
+  REQUEST_EDIT_MODAL_OPEN,
+  MARK_AS_DISPUED_MODAL_OPEN
   
 } from "./debtors.actiontype"
 
@@ -47,6 +48,7 @@ import {
 
 const INIT_STATE = {
   isReportDefOpen: false,
+  isMarkAsDisputedOpen: false,
   isViewDetailsModalOpen: false,
   isConfirmReportDefaultModal: false,
   isCustomerFeedbackModalOpen: false,
@@ -100,6 +102,8 @@ export const DebtorsReducer = (state = INIT_STATE, action) => {
       return { ...state, isReportDefOpen: payload, }
       case REQUEST_EDIT_MODAL_OPEN:
       return { ...state, isrequestEditModalReducerOpen: payload, }
+      case MARK_AS_DISPUED_MODAL_OPEN:
+        return { ...state, isMarkAsDisputedOpen: payload, }
     case GET_CUSTOMER_FEEDBACK_MODAL_OPEN:
       return { ...state, isCustomerFeedbackModalOpen: payload, }
     case CONFIRM_REPORT_DEFAULT_MODAL:

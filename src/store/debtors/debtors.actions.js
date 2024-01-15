@@ -39,7 +39,8 @@ import {
   GET_FEEDBACKQUESTION,
   GET_FEEDBACKQUESTION_FAIL,
   GET_FEEDBACKQUESTION_SUCCESS,
-  REQUEST_EDIT_MODAL_OPEN
+  REQUEST_EDIT_MODAL_OPEN,
+  MARK_AS_DISPUED_MODAL_OPEN
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -75,6 +76,7 @@ export const setPreviewModalOpen = (boolean) => createAction(GET_REPORT_DEF_PREV
 export const setIsCustomerFeedbackModalOpen = (boolean) => createAction(GET_CUSTOMER_FEEDBACK_MODAL_OPEN, boolean);
 export const setUploadFilesOpen = (boolean) => createAction(UPLOAD_PENDING_FILES, boolean);
 export const setCACertificateOpen = (boolean) => createAction(GET_CA_CERTIFICATE_FILE, boolean);
+export const markAsDisputedModalOpenAction = (boolean) => createAction(MARK_AS_DISPUED_MODAL_OPEN, boolean);
 
 
 export const addInvoiceReportDebtor = (data) => createAction(ADD_iNVOICE_REPORT_DEBTOR, data[0])

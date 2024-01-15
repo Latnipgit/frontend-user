@@ -73,7 +73,7 @@ useEffect(()=>{
             <Col md="10"></Col>
             <Col md="2">
               <Button onClick={() => setModal1(true)} className="btn btn-info" style={{ fontSize:'12px', display:'flex', padding:'10px'}}>
-               + Upload documents
+               + Upload Documents
               </Button>
             </Col>
           </Row>

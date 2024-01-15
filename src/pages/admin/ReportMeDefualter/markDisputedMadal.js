@@ -29,7 +29,7 @@ import { recoredPaymentReportDefault } from "../../../store/debtors/debtors.acti
 import { recordPaymentReportDefaulter} from "store/debtors/debtors.selecter"
 
 
-const ReportedDefaulterModel = props => {
+const MarkDisputedMadal = props => {
   const [selectedOption, setSelectedOption] = useState("")
 
     const [isProceed, setisProceed] = useState(false)
@@ -117,7 +117,7 @@ const handleSubmit=()=>{
       "paymentDate": date,
       "paymentMode": payentMode,
       "attachments": attachment.documentId,
-      "isDispute": false // make this flag as true whenever recording payment for a disputed transaction
+      "isDispute": true // make this flag as true whenever recording payment for a disputed transaction
   }
 
   ]
@@ -143,7 +143,7 @@ console.log("attachmentattachment",attachment)
       toggle={toggle} 
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>Record A Payment</ModalHeader>
+        <ModalHeader toggle={toggle}>Mark As A Disputed Transaction</ModalHeader>
       
       <ModalBody>
    
@@ -320,8 +320,6 @@ console.log("attachmentattachment",attachment)
        </Col>
 
      </Row>
-
-
      <Row className="selectionListss">
        <Col  md={3}>
          <div className="mb-2"><b className="mt-2">Notes</b></div>
@@ -345,6 +343,7 @@ console.log("attachmentattachment",attachment)
        </Col>
 
      </Row>
+
    </form>
        
      
@@ -366,9 +365,9 @@ console.log("attachmentattachment",attachment)
   )
 }
 
-ReportedDefaulterModel.propTypes = {
+MarkDisputedMadal.propTypes = {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
 }
 
-export default ReportedDefaulterModel
+export default MarkDisputedMadal

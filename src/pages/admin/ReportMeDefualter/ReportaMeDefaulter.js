@@ -13,8 +13,8 @@ import {
   CardBody,
 } from "reactstrap"
 import { useDispatch, useSelector } from "react-redux";
-import { setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen } from "../../../store/debtors/debtors.actions"
-import { uploadFilesModalOpen, selectCACertificateOpen, isViewDetailMOdalOpenSelector } from "store/debtors/debtors.selecter"
+import { setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen ,markAsDisputedModalOpenAction} from "../../../store/debtors/debtors.actions"
+import { uploadFilesModalOpen, selectCACertificateOpen, isViewDetailMOdalOpenSelector ,markAsDisputedModalOpenSelector} from "store/debtors/debtors.selecter"
 import { selectReportMeDefData } from "store/ReportMeDefulter/ReportMeDefulter.selecter"
 import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
@@ -25,6 +25,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultModal"
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
 import CaImg from '../../../assets/images/newImg/CA-BG_Remove.png'
+import MarkDisputedMadal from "./markDisputedMadal"
 
 const ReportMedefulterComponent = props => {
   const [modal1, setModal1] = useState(false);
@@ -41,19 +42,22 @@ const ReportMedefulterComponent = props => {
   const dispatch = useDispatch();
   const selectCACertificate = useSelector(selectCACertificateOpen);
   const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
+
+  const markAsDisputed = useSelector(markAsDisputedModalOpenSelector);
+  const toggleMarkAsDisputed = () => dispatch(markAsDisputedModalOpenAction(!markAsDisputed));
+
+
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
   console.log("isClickedToReported", props.isClickedToReported)
   const isViewDetailModal = useSelector(isViewDetailMOdalOpenSelector);
   const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
-
-
   const selectReportMeDeflist = useSelector(selectReportMeDefData)
-  console.log("reportMeDefulter", selectReportMeDeflist);
 
   useEffect(() => {
     dispatch(fetchReportMeDefulterStart())
     dispatch(setIsViewDetailModalOpen())
+    dispatch(markAsDisputedModalOpenAction())
     getDays()
   }, [])
 
@@ -62,54 +66,8 @@ const ReportMedefulterComponent = props => {
     setModal2(true)
   }
 
-  const viewModels = (value) => {
-    setModal3(true)
-  }
+ 
 
-
-
-  const dummyData = [{
-    "companyName": "Latnip",
-    "InvoiceNUmber": "BAF-65650",
-    "Address": "Jodhpur",
-    "amount": "90000",
-    "DueFrom": "12-05-2003",
-    "debtor":
-    {
-      "firstname": "Harshit",
-      "lastname": "sharma"
-    }
-
-
-  },
-  {
-    "companyName": "TATA",
-    "InvoiceNUmber": "BAF-69850",
-    "Address": "Jaiour",
-    "amount": "98000",
-    "DueFrom": "13-05-2012",
-    "debtor":
-    {
-      "firstname": "Harshit",
-      "lastname": "sharma"
-    }
-
-
-  },
-  {
-    "companyName": "Jio",
-    "InvoiceNUmber": "BAF-65980",
-    "Address": "Pali",
-    "amount": "65000",
-    "DueFrom": "24-09-2020",
-    "debtor":
-    {
-      "firstname": "Harshit",
-      "lastname": "sharma"
-    }
-
-
-  }]
 
   const handleUploadFiles = (item) => {
     setuploadFilesModelDataForUpload(item)
@@ -153,6 +111,16 @@ const ReportMedefulterComponent = props => {
     toast.success("Edit Request Sent Successfully")
   }
 
+  const markedDisputed = (item) => {
+
+    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
+    const payload = {
+      "invoiceId": item.invoices[0].invoiceNumber
+    }
+
+    dispatch(markAsDisputedModalOpenAction(payload))
+  }
+
   const handleViewDetail = (item) => {
 
     // window.location.href = "/ReportDefaulter"
@@ -168,6 +136,7 @@ const ReportMedefulterComponent = props => {
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       {/* <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
+<MarkDisputedMadal isOpen={markAsDisputed} toggle={toggleMarkAsDisputed} selected={selected}/>
 
       <Card>
         <CardBody>
@@ -205,7 +174,7 @@ const ReportMedefulterComponent = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} handleViewDetail={handleViewDetail} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} handleViewDetail={handleViewDetail} />}
+                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} />}
               </tbody>
             </table>
 
@@ -216,7 +185,7 @@ const ReportMedefulterComponent = props => {
   );
 }
 
-const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, handleViewDetail }) => {
+const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit,markedDisputed, handleViewDetail }) => {
   return (
     <>
       {selectReportMeDeflistData != undefined ? selectReportMeDeflistData.map((item, index) => {
@@ -277,11 +246,13 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
                 </Button> */}
 
               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                title="Request Edit" href={item.url} rel='noreferrer'
-                target='_blank' onClick={() => requestEdit(item)
+                title="Disputed Transaction" href={item.url} rel='noreferrer'
+                target='_blank' onClick={() => markedDisputed(item)
+                  
 
                 }>
-                <i className='bx bx-edit textsizing' ></i>
+                {/* <i className='bx bx-edit textsizing' ></i> */}
+                <i className='bx bx-window-close textsizing'></i>
               </button>
 
               &nbsp;
