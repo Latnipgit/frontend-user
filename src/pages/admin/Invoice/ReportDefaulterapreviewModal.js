@@ -28,6 +28,9 @@ import { confirReportDefaultModel, ReportDefPreviewModal } from "store/debtors/d
 import ConfirmReportModal from './ConfirmReportDefaulterModal'
 import { selectReportDefPreviwData } from "store/ReportDefulterPreview/ReportDefulterPreview.selecter";
 import { fetchReportDefulterPreviewStart } from "store/ReportDefulterPreview/ReportDefulterPreview.action";
+import noFile from '../../../assets/images/newImg/no-document.png'
+import pdfImg from '../../../assets/images/newImg/pdf.png'
+import jpgImg from '../../../assets/images/newImg/png-file-.png'
 
 
 const ReportDefPreviewModals = props => {
@@ -109,10 +112,11 @@ const ReportDefPreviewModals = props => {
                         <strong>Invoice Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.invoiceDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
-
-                        </a>
+                        {item.invoiceDocument != '' ? <a href={item.invoiceDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
                       </Col>
                     </Row>
 
@@ -123,23 +127,27 @@ const ReportDefPreviewModals = props => {
                         <strong>Dispatch Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.DispatchDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file mt-2 fileSizing'></i>
-
-                        </a>              </Col>
+                        {item.DispatchDocument != '' ? <a href={item.DispatchDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
+                      </Col>
                     </Row>
 
                   </Col>
                   <Col md={3}>
                     <Row>
-                      <Col md={8} className="pt-4">
-                        <strong>Transportation Document</strong>
+                      <Col md={7} className="pt-2">
+                        <strong className="">Transportation Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.DeliveryDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file mt-2 fileSizing'></i>
-
-                        </a>              </Col>
+                        {item.DeliveryDocument != '' ? <a href={item.DeliveryDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
+                      </Col>
                     </Row>
 
                   </Col>
@@ -149,10 +157,12 @@ const ReportDefPreviewModals = props => {
                         <strong>Purchase Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.purchaseOrderDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file mt-2 fileSizing'></i>
-
-                        </a>              </Col>
+                        {item.purchaseOrderDocument != '' ? <a href={item.purchaseOrderDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
+                      </Col>
                     </Row>
 
                   </Col>
@@ -165,10 +175,11 @@ const ReportDefPreviewModals = props => {
                         <strong>General Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.generalDocuments.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
-
-                        </a>
+                        {item.generalDocuments != '' ? <a href={item.generalDocuments.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
                       </Col>
                     </Row>
 
@@ -179,10 +190,12 @@ const ReportDefPreviewModals = props => {
                         <strong>GST Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.GSTDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file mt-2 fileSizing'></i>
-
-                        </a>              </Col>
+                        {item.GSTDocument != '' ? <a href={item.GSTDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
+                      </Col>
                     </Row>
 
                   </Col>
