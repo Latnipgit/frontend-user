@@ -337,80 +337,89 @@ const ReportDefPreviewModals = props => {
 
 
             <div className="mb-3 mt-3"><b className="">Rating</b></div>
+            {feedbackdataPaylod != undefined ?
+              feedbackdataPaylod.map((item, index) => {
+                let x = 1
+                return (
+                  <>
+                    {item.questionType === "RATING" && (<div className="mb-1">
+                      <Row>
+                        <Col md={9}>
+                          <span className="mb-2">
+                            {x++}.  {item.questionDesc} ?</span>
+                        </Col>
+                        <Col md={3}>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={() => {
+                              }}
+                              // onClick={(selected) => {
+                              //   handlefinancialdifficult({
+                              //     "questionDesc": "Integrity",
+                              //     "questionType": "RATING",
+                              //     "values": 1
+                              //   })
+                              //   setIntegrity(1)
+                              // }
+                              //  }
+                              style={{ color: Integrity != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={(selected) => {
+                                // handlefinancialdifficult({
+                                //   "questionDesc": "Integrity",
+                                //   "questionType": "RATING",
+                                //   "values": 2
+                                // })
+                              }
+                              }
+                              style={{ color: Integrity != 0 && Integrity > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={(selected) => {
+                                // handlefinancialdifficult({
+                                //   "questionDesc": "Integrity",
+                                //   "questionType": "RATING",
+                                //   "values": 3
+                                // })
+                              }
+                              }
+                              style={{ color: Integrity != 0 && Integrity > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={(selected) => {
+                                // handlefinancialdifficult({
+                                //   "questionDesc": "Integrity",
+                                //   "questionType": "RATING",
+                                //   "values": 4
+                                // })
+                              }
+                              }
+                              style={{ color: Integrity != 0 && Integrity > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={(selected) => {
+                                // handlefinancialdifficult({
+                                //   "questionDesc": "Integrity",
+                                //   "questionType": "RATING",
+                                //   "values": 5
+                                // })
+                              }
+                              }
+                              style={{ color: Integrity != 0 && Integrity > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                        </Col>
+                      </Row>
+                    </div>)}
 
-            <div className="mb-1">
-              <Row>
-                <Col md={9}>
-                  <span className="mb-2">
-                    1. Integrity</span>
-                </Col>
-                <Col md={3}>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={() => {
-                      }}
-                      // onClick={(selected) => {
-                      //   handlefinancialdifficult({
-                      //     "questionDesc": "Integrity",
-                      //     "questionType": "RATING",
-                      //     "values": 1
-                      //   })
-                      //   setIntegrity(1)
-                      // }
-                      //  }
-                      style={{ color: Integrity != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={(selected) => {
-                        // handlefinancialdifficult({
-                        //   "questionDesc": "Integrity",
-                        //   "questionType": "RATING",
-                        //   "values": 2
-                        // })
-                      }
-                      }
-                      style={{ color: Integrity != 0 && Integrity > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={(selected) => {
-                        // handlefinancialdifficult({
-                        //   "questionDesc": "Integrity",
-                        //   "questionType": "RATING",
-                        //   "values": 3
-                        // })
-                      }
-                      }
-                      style={{ color: Integrity != 0 && Integrity > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={(selected) => {
-                        // handlefinancialdifficult({
-                        //   "questionDesc": "Integrity",
-                        //   "questionType": "RATING",
-                        //   "values": 4
-                        // })
-                      }
-                      }
-                      style={{ color: Integrity != 0 && Integrity > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={(selected) => {
-                        // handlefinancialdifficult({
-                        //   "questionDesc": "Integrity",
-                        //   "questionType": "RATING",
-                        //   "values": 5
-                        // })
-                      }
-                      }
-                      style={{ color: Integrity != 0 && Integrity > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                </Col>
-              </Row>
-            </div>
+                  </>
+                )
+              }) : ""}
+            {/* 
             <div className="mb-1">
               <Row>
                 <Col md={9}>
@@ -541,7 +550,7 @@ const ReportDefPreviewModals = props => {
                     ></i></span>
                 </Col>
               </Row>
-            </div>
+            </div> */}
 
 
             <Row>
