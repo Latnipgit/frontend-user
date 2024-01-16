@@ -119,7 +119,7 @@ const ViewDetailsReportDefaultModal = props => {
                         <strong>Dispatch Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.challanDocument != "" ? <a href={item.challanDocument.url} rel='noreferrer' target='_blank'>
+                        {item.challanDocument != null ? <a href={item.challanDocument.url} rel='noreferrer' target='_blank'>
                           {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                           <img src={jpgImg} className="iconsImage shadow" />
 
@@ -139,7 +139,7 @@ const ViewDetailsReportDefaultModal = props => {
                         <strong>Transportation Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.transportationDocument != "" ? <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
+                        {item.transportationDocument != null ? <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
                           {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
 
@@ -160,7 +160,7 @@ const ViewDetailsReportDefaultModal = props => {
                         <strong>Purchase Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.purchaseOrderDocument != "" ? <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
+                        {item.purchaseOrderDocument != null ? <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
                           {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
 
