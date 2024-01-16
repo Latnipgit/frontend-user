@@ -36,7 +36,6 @@ const ForgetPasswordPage = props => {
       email: Yup.string().required("Please Enter Your Email"),
     }),
     onSubmit: (values) => {
-      console.log("VALUEE", values)
       dispatch(userForgetPassword(values));
     }
   });

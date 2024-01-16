@@ -16,18 +16,14 @@ const fireBaseBackend = getFirebaseBackend()
 
 //If user is send successfully send mail link then dispatch redux action's are directly from here.
 
-function* forgetUser( user ) {
-  console.log("USERRR", user.payload.user)
+function* forgetUser(user) {
   const users = user.payload.user
   try {
-   if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-     
+    if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
       const response = yield call(forgetPassword, users.email)
-      console.log("RESPONSE", response)
       yield put(userForgetPasswordSuccess(response))
-    } 
+    }
   } catch (error) {
-    console.log("There was an error registering: ", error)
     yield put(userForgetPasswordError(error))
   }
 }

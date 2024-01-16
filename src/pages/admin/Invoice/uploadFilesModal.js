@@ -28,13 +28,11 @@ const UploadPendingFiles = props => {
   const [uploadpurchaseId, setuploadpurchaseId] = useState('')
   const [uploadInvoiceId, setuploadInvoiceId] = useState('')
   const [uploadChallanId, setuploadChallanId] = useState('')
-  console.log("uploadFilesModelDataForUpload", uploadFilesModelDataForUpload)
   const updatePendingDocs = useSelector(updatePendingDocsSelector)
 
 
   const handleFileChange = (event, fieldName, index) => {
     const files = event.target.files
-    console.log("FILEEE", event.target.files, fieldName, index)
 
     const formData = new FormData();
 
@@ -54,7 +52,6 @@ const UploadPendingFiles = props => {
 
 
   function uploadFile(formData, index) {
-    console.log("UPLOAD FILE", formData)
     const token = localStorage.getItem("tokenemployeeRegister")
     const headers = {
       'x-access-token': token != null ? token : '',
@@ -66,7 +63,6 @@ const UploadPendingFiles = props => {
     })
       .then((response) => {
         // toast.success("file upload successfully")
-        console.log("Response", response)
         if (response.data.response.fieldName == "uploadInvoice") {
           setuploadInvoiceId(response.data.response)
 
@@ -87,7 +83,6 @@ const UploadPendingFiles = props => {
         }
       })
       .catch((error) => {
-        console.log("Response", error)
 
       })
   }
@@ -95,7 +90,6 @@ const UploadPendingFiles = props => {
   const dispatch = useDispatch()
 
   const handleSubmit = (item) => {
-    // console.log("itemitemitemitem",item)
 
     const payload = {
       "invoiceId": item.invoiceNumber,
@@ -104,7 +98,6 @@ const UploadPendingFiles = props => {
       "invoiceDocument": uploadInvoiceId == "" ? uploadInvoiceId : item.invoiceDocument._id,
       "transportationDocument": uploadTransportId == "" ? uploadTransportId : item.transportationDocument._id
     }
-    console.log("itemitemitemitem", payload)
 
     dispatch(updatePendingDocumentss(payload))
   }
@@ -167,10 +160,9 @@ const UploadPendingFiles = props => {
                   </Col>
                     :
                     <Col md={3} className="text-center">
-                      {console.log("item.invoiceDocument",item)}
                       <a href={item.invoiceDocument.url} rel='noreferrer' target='_blank'>
                         {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                        <img src={fileImg1} className="iconsImage"/>
+                        <img src={fileImg1} className="iconsImage" />
 
 
                       </a>
@@ -211,7 +203,7 @@ const UploadPendingFiles = props => {
                   <Col md={3} className="text-center">
                     <a href={item.challanDocument.url} rel='noreferrer' target='_blank' className="">
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={fileImg2} className="iconsImage shadow"/>
+                      <img src={fileImg2} className="iconsImage shadow" />
 
 
                     </a>
@@ -248,7 +240,7 @@ const UploadPendingFiles = props => {
                   <Col md={3} className="text-center">
                     <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={fileImg2} className="iconsImage shadow"/>
+                      <img src={fileImg2} className="iconsImage shadow" />
 
 
                     </a>
@@ -286,7 +278,7 @@ const UploadPendingFiles = props => {
                   <Col md={3} className="text-center">
                     <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
                       {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={fileImg2} className="iconsImage shadow"/>
+                      <img src={fileImg2} className="iconsImage shadow" />
 
 
                     </a>
@@ -312,29 +304,29 @@ const UploadPendingFiles = props => {
 
 
 
-<Row className="mt-3">
-  <h5>Upload Additional Documents</h5>
-  <Row>
-  <Col md={4}></Col>
-<Col md={4}>
+          <Row className="mt-3">
+            <h5>Upload Additional Documents</h5>
+            <Row>
+              <Col md={4}></Col>
+              <Col md={4}>
 
-  <InputGroup className="text-capitalize">
-    <input
-      type="file"
-      className="form-control"
-      id="uploadInvoice"
-      accept=".pdf, .doc, .docx, .txt"
-      aria-describedby="fileUploadHelp"
-      onChange={e =>
-        handleFileChange(e, "generalDocumnet")
-      }
-    />
-  </InputGroup>
+                <InputGroup className="text-capitalize">
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="uploadInvoice"
+                    accept=".pdf, .doc, .docx, .txt"
+                    aria-describedby="fileUploadHelp"
+                    onChange={e =>
+                      handleFileChange(e, "generalDocumnet")
+                    }
+                  />
+                </InputGroup>
 
-</Col>
-<Col md={4}></Col>
-</Row>
-</Row>
+              </Col>
+              <Col md={4}></Col>
+            </Row>
+          </Row>
 
 
         </ModalBody>

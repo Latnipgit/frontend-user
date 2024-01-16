@@ -26,13 +26,11 @@ const UploadPendingDocModel = props => {
   const dispatch = useDispatch();
   const selectUploadDocOpen = useSelector(selectUploadPendigDocOpen);
   const uploadPendingDoccument = useSelector(uploadPendigDocSelector);
-  console.log("invoiceIdinvoiceId", invoiceId)
   const toggleViewModal2 = () => dispatch(setUploadPednigDocOpen(!selectUploadDocOpen));
   const [uploadedCertificate, setuploadedCertificate] = useState('')
 
   const handleFileChange = (event) => {
     const files = event.target.files
-    console.log("FILEEE", event.target.files)
 
     const formData = new FormData();
 
@@ -52,7 +50,6 @@ const UploadPendingDocModel = props => {
 
 
   function uploadFile(formData) {
-    console.log("UPLOAD FILE", formData)
     const token = localStorage.getItem("tokenemployeeRegister")
     const headers = {
       'x-access-token': token != null ? token : '',
@@ -63,11 +60,9 @@ const UploadPendingDocModel = props => {
       headers: headers
     })
       .then((response) => {
-        console.log("respo+++", response.data.response)
         setuploadedCertificate(response.data.response)
       })
       .catch((error) => {
-        console.log("Response", error)
 
       })
   }

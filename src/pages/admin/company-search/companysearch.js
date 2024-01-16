@@ -65,7 +65,6 @@ const CompanySearch = props => {
   const [modal1, setModal1] = useState(false);
   const [selected, setSelected] = useState('')
   const [showMenuItems, setShowMenuItems] = useState(true);
-  console.log('showMenuItems:', showMenuItems);
   const toggleViewModal = () => setModal1(!modal1);
   const handleEyeIconClick = () => {
     const newPageUrl = '/company-dashboard';
@@ -75,12 +74,8 @@ const CompanySearch = props => {
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
-  console.log('currentUserViewDetails', currentUserViewDetails);
-  console.log('selectCompanySearchLists', selectCompanySearchLists);
-  console.log('selectCompanySearchListMap', selectCompanySearchListMap);
 
   const viewModel = (value) => {
-    console.log("VALUE", value)
     const valueDate = value.cell.row.original
     dispatch(fetchCompanySearchViewDatatlStart({ "debtorId": `${valueDate.id}` }))
     openViewModule(valueDate)
@@ -202,8 +197,6 @@ const CompanySearch = props => {
 
     const filterePANCARD = filteredgstMatch.filter(item => item.PANCARD.includes(filters.pan));
 
-    console.log("filteredResults", filters,filtereCompany )
-
     setFilteredData(filterePANCARD);
   };
   const { getCompanyList } = useSelector(state => ({
@@ -211,7 +204,6 @@ const CompanySearch = props => {
   }));
   useEffect(() => {
     dispatch(ongetCompanyList());
-    console.log("HDHDHDHD", getCompanyList)
   }, [getCompanyList])
   const additionalValue = "Hello from additional prop!";
   return (

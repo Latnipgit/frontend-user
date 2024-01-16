@@ -13,7 +13,7 @@ import CarouselPage from "./CarouselPage";
 const ForgetPassword2 = () => {
 
   //meta title
-  document.title="Forget Password 2 | Skote - React Admin & Dashboard Template";
+  document.title = "Forget Password 2 | Skote - React Admin & Dashboard Template";
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -26,7 +26,6 @@ const ForgetPassword2 = () => {
       email: Yup.string().required("Please Enter Your Email"),
     }),
     onSubmit: (values) => {
-      console.log(values);
     }
   });
   return (

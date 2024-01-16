@@ -285,7 +285,7 @@ const Invoice = () => {
   }
   const viewModel = (value) => {
 
-    console.log("HARSHIT", value)
+
 
     setSelectedInvoice(value)
     setShowModelInvoice(true)
@@ -298,7 +298,7 @@ const Invoice = () => {
     {
       Header: "Customer Name",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-      style:{padding:"15px"},
+      style: { padding: "15px" },
 
       accessor: "",
       filterable: false,
@@ -312,7 +312,7 @@ const Invoice = () => {
     {
       Header: "Refrence #",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-      style:{padding:"15px"},
+      style: { padding: "15px" },
 
       accessor: "referenceNumber",
       disableFilters: true,
@@ -321,17 +321,17 @@ const Invoice = () => {
     {
       Header: "Invoice #",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-      style:{padding:"15px"},
+      style: { padding: "15px" },
 
       accessor: "invoiceNumber",
       disableFilters: true,
       filterable: false,
     },
-  
+
     {
       Header: "Status",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-      style:{padding:"15px"},
+      style: { padding: "15px" },
 
       accessor: "status",
       disableFilters: true,
@@ -340,7 +340,7 @@ const Invoice = () => {
     {
       Header: "Due Date",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-      style:{padding:"15px"},
+      style: { padding: "15px" },
 
       accessor: "billDate",
       disableFilters: true,
@@ -349,7 +349,7 @@ const Invoice = () => {
     {
       Header: "Amount",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600', },
-      style:{padding:"15px"},
+      style: { padding: "15px" },
 
       accessor: "creditAmount",
       disableFilters: true,
@@ -358,7 +358,7 @@ const Invoice = () => {
     {
       Header: "Due Balance",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-      style:{padding:"15px"},
+      style: { padding: "15px" },
 
       accessor: "remainingAmount",
       disableFilters: true,
@@ -370,7 +370,7 @@ const Invoice = () => {
     {
       Header: "Action",
       headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-style:{padding:"15px"},
+      style: { padding: "15px" },
       accessor: "",
       disableFilters: true,
       filterable: false,
@@ -390,7 +390,7 @@ style:{padding:"15px"},
 
   ]
   )
-console.log("GetAllInvoice",GetAllInvoice)
+
   return (
     <Container fluid className="mt-5 mb-5">
 
@@ -410,7 +410,7 @@ console.log("GetAllInvoice",GetAllInvoice)
             <Row className="p-4  ml-5">
 
               <ReactTable
-                data={GetAllInvoice != undefined ? GetAllInvoice:[]}
+                data={GetAllInvoice != undefined ? GetAllInvoice : []}
                 columns={columns}
                 showPagination={true}
                 showPaginationTop={false}

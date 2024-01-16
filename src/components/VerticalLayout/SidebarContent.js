@@ -17,7 +17,6 @@ const SidebarContent = props => {
 
   useEffect(() => {
     setCurrentpath(window.location.pathname)
-    console.log("currentPathcurrentPath 11", currentPath)
     if (
       currentPath == "/companies" ||
       currentPath == "/documents" ||
@@ -30,7 +29,6 @@ const SidebarContent = props => {
 
     }
   }, [currentPath, showMenuItems])
-  console.log("currentPathcurrentPath", currentPath, showMenuItems)
   const ref = useRef()
   const activateParentDropdown = useCallback(item => {
     item.classList.add("active")

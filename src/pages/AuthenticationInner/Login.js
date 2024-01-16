@@ -34,11 +34,10 @@ const Login = () => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      console.log("values", values);
     }
   });
   return (
-    <React.Fragment>      
+    <React.Fragment>
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row className="justify-content-center">

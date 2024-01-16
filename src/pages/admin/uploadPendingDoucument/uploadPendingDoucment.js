@@ -85,9 +85,6 @@ const UploadPendingListModule = props => {
     const uploadpendingFilelist = useSelector(selectUploadingPendingListData);
     const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeData);
     const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeData);
-    console.log('uploadpendingFilelist', uploadpendingFilelist);
-    console.log('selectTransactionsRaisedByMe', selectTransactionsRaisedByMe);
-    console.log('selectTransactionsSentToMe', selectTransactionsSentToMe);
     useEffect(() => {
         dispatch(getAllInvoice());
         dispatch(setIsViewDetailModalOpen())
@@ -152,13 +149,10 @@ const UploadPendingListModule = props => {
             const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
             setgetDaysArrySecond(items => [...items, differenceInDays])
         }) : []
-        console.log("ABABABABABAB", getDaysArray)
     }
-    console.log("ABABABABABAB 2", getDaysArray)
 
     const requestEdit = (item) => {
 
-        console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
         const payload = {
             "invoiceId": item.invoices[0].invoiceNumber
         }
@@ -265,7 +259,6 @@ const ReportDefulterTable = ({ GetUploadPendingList, viewModel, requestEdit, han
                 GetUploadPendingList != undefined ? GetUploadPendingList.map((item, index) => {
                     {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
                     return <tr key={item}>
-                        {/* {console.log("NEW TABLE ", item.remainingAmount)} */}
 
                         <th scope="row" className="pt-4">{index + 1}</th>
                         <td className="pt-4 text-capitalize">{item.defaulterEntry.debtor.companyName}</td>

@@ -12,7 +12,7 @@ import { addNewCompany } from "../../../store/actions";
 import { ToastContainer, toast } from 'react-toastify';
 
 //redux
-import {  useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   Modal,
   ModalBody,
@@ -44,7 +44,7 @@ const ReportedDebtorsModel = props => {
     error: ''
   });
 
- 
+
 
 
 
@@ -52,17 +52,17 @@ const ReportedDebtorsModel = props => {
   useEffect(() => {
     setName(logindata.name)
 
-  },[logindata])
+  }, [logindata])
 
   const formSubmit = () => {
     const payload = {
       "companyName": companyName != '' ? companyName : props.getCompanyList[0].companyName,
       "gstin": gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
       "companyPan": panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
-}
+    }
     dispatch(addNewCompany(payload));
     toast.success("Registration successfully")
-     window.location.reload()
+    window.location.reload()
 
   }
 
@@ -122,11 +122,9 @@ const ReportedDebtorsModel = props => {
                       <div className="p-2">
                         <Form
                           className="form-horizontal"
-                        
+
 
                         >
-
-                          {console.log("logindatalogindata", logindata)}
                           <Row>
                             <Col md={6}>
                               <div className="mb-3">
@@ -140,7 +138,7 @@ const ReportedDebtorsModel = props => {
                                   value={logindata != undefined ? logindata.name : ''}
                                   disabled
                                 />
-                               
+
                               </div>
                             </Col>
                             <Col md={6}>
@@ -150,17 +148,17 @@ const ReportedDebtorsModel = props => {
                                   name="companyName"
                                   type="text"
                                   className="form-control"
-                                  placeholder={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyName:'Enter Company Name'}
+                                  placeholder={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyName : 'Enter Company Name'}
                                   onChange={(event) => setcompanyName(event.target.value)}
-                         
+
                                 />
-                               
+
                               </div>
                             </Col>
                           </Row>
 
                           <Row>
-                     
+
                             <Col md={6}>
                               <div className="mb-3">
                                 <Label className="form-label">Mobile Number (Indian)</Label>
@@ -171,15 +169,15 @@ const ReportedDebtorsModel = props => {
                                   <input
                                     name="mobileNumber"
                                     type="number"
-                                  
+
                                     className="form-control"
                                     placeholder="Enter 10-digit mobile number"
                                     onChange={(e) => setMobile(e.target.value)}
-                                 
+
                                     pattern="[6-9]\d{9}" // Allow only 10 digits starting with 6, 7, 8, or 9
                                     maxLength="10" // Restrict input to 10 characters
                                   />
-                                 
+
                                 </div>
                               </div>
                             </Col>
@@ -197,7 +195,7 @@ const ReportedDebtorsModel = props => {
                                   disabled
 
                                 />
-                              
+
                               </div>
                             </Col>
                           </Row>
@@ -213,9 +211,9 @@ const ReportedDebtorsModel = props => {
                                   placeholder='Enter your GST Number'
                                   type="text"
                                   onChange={(event) => setGSTNumber(event.target.value)}
-                             
+
                                 />
-                             
+
                               </div>
                             </Col>
                             <Col>
@@ -229,17 +227,17 @@ const ReportedDebtorsModel = props => {
                                   placeholder='Enter PAN number'
                                   type="text"
                                   onChange={(event) => setPanNumber(event.target.value)}
-                               
+
                                 />
-                            
+
                               </div>
                             </Col>
                           </Row>
                           <Row>
-                           
+
 
                             <Col md={6}>
-                           
+
                             </Col>
                           </Row>
                           <div>
@@ -268,7 +266,7 @@ const ReportedDebtorsModel = props => {
 
                 </Col>
               </Row>
-              <ToastContainer/>
+              <ToastContainer />
             </Container>
           </div>
         </ModalBody>
@@ -277,7 +275,7 @@ const ReportedDebtorsModel = props => {
   )
 }
 
-ReportedDebtorsModel.propTypes = 
+ReportedDebtorsModel.propTypes =
 {
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,

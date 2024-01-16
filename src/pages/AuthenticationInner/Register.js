@@ -16,7 +16,7 @@ import lightlogo from "../../assets/images/logo-light.svg";
 const Register = () => {
 
   //meta title
-  document.title="Register | Bafana - User & Dashboard";
+  document.title = "Register | Bafana - User & Dashboard";
 
   //form validation
   const validation = useFormik({
@@ -34,11 +34,10 @@ const Register = () => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      console.log(values);
     }
   });
   return (
-    <React.Fragment>      
+    <React.Fragment>
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row className="justify-content-center">
@@ -59,32 +58,32 @@ const Register = () => {
                 </div>
                 <CardBody className="pt-0">
                   <div>
-                  <div className="auth-logo">
-                    <Link to="/" className="auth-logo-light">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={lightlogo}
-                            alt=""
-                            className="rounded-circle"
-                            height="34"
-                          />
-                        </span>
-                      </div>
-                    </Link>
-                    <Link to="/" className="auth-logo-dark">
-                      <div className="avatar-md profile-user-wid mb-4">
-                        <span className="avatar-title rounded-circle bg-light">
-                          <img
-                            src={logoImg}
-                            alt=""
-                            className="rounded-circle"
-                            height="34"
-                          />
-                        </span>
-                      </div>
-                    </Link>
-                  </div>
+                    <div className="auth-logo">
+                      <Link to="/" className="auth-logo-light">
+                        <div className="avatar-md profile-user-wid mb-4">
+                          <span className="avatar-title rounded-circle bg-light">
+                            <img
+                              src={lightlogo}
+                              alt=""
+                              className="rounded-circle"
+                              height="34"
+                            />
+                          </span>
+                        </div>
+                      </Link>
+                      <Link to="/" className="auth-logo-dark">
+                        <div className="avatar-md profile-user-wid mb-4">
+                          <span className="avatar-title rounded-circle bg-light">
+                            <img
+                              src={logoImg}
+                              alt=""
+                              className="rounded-circle"
+                              height="34"
+                            />
+                          </span>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                   <div className="p-2">
                     <Form className="form-horizontal"

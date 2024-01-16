@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 const LockScreen = () => {
 
   //meta title
-  document.title="Lock Screen 2 | Bafana - User & Dashboard ";
+  document.title = "Lock Screen 2 | Bafana - User & Dashboard ";
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -29,11 +29,10 @@ const LockScreen = () => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      console.log(values);
     }
   });
   return (
-    <React.Fragment>     
+    <React.Fragment>
       <div className="account-pages my-5 pt-sm-5">
         <Container>
           <Row className="justify-content-center">

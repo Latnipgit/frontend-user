@@ -55,16 +55,15 @@ const Employee = () => {
     }),
     onSubmit: values => {
       if (validation.isValid && isAtLeastOneCheckboxSelected(values.access)) {
-        console.log("values", values);
         validation.resetForm();
-        
+
       } else {
         // If form is invalid or no checkbox is selected
         toggleAlert();
       }
-     
+
     },
-    
+
     validateOnChange: true,
     validateOnBlur: true,
     enableReinitialize: true,
@@ -85,79 +84,75 @@ const Employee = () => {
       }, 3000) // Hide the alert after 3 seconds
     }
   }
-  console.log("FULLACCESSs", fullAccess)
   const dispatch = useDispatch();
 
-const handleSubmit=()=>{
-  if(validator.isEmail(email)){
-  
-  
-  if(fullAccess == true ){
-    
-    setladger(true)
-    setcompanysearch(true)
-    setrecordPayment(true)
- 
-  const payload = [{
-    "name":name,
-    "emailId":email,
-    "mobile":'12321231',
-    "permissions": [
-      { "apiName": "companySearch", "allowed": companysearch == true ?'true ':'false'},
-      { "apiName": "invoicingLedger", "allowed": ladger == true ? 'true': ' false'},
-      { "apiName": "recordPayment", "allowed": recordPayment == true ? 'true':'false'}
-  ]
-  
-  }]
-  if(name != "" ){
-    if(email != "" ){
-console.log("nmmm", name , email)
+  const handleSubmit = () => {
+    if (validator.isEmail(email)) {
 
 
-  dispatch(addNewEmployeelist(payload));
+      if (fullAccess == true) {
+
+        setladger(true)
+        setcompanysearch(true)
+        setrecordPayment(true)
+
+        const payload = [{
+          "name": name,
+          "emailId": email,
+          "mobile": '12321231',
+          "permissions": [
+            { "apiName": "companySearch", "allowed": companysearch == true ? 'true ' : 'false' },
+            { "apiName": "invoicingLedger", "allowed": ladger == true ? 'true' : ' false' },
+            { "apiName": "recordPayment", "allowed": recordPayment == true ? 'true' : 'false' }
+          ]
+
+        }]
+        if (name != "") {
+          if (email != "") {
+
+
+            dispatch(addNewEmployeelist(payload));
+          }
+          else {
+            toast.error("Please enter email")
+
+          }
+        } else {
+          toast.error("Please enter name")
+        }
+
+      }
+      else {
+        const payload = [{
+          "name": name,
+          "emailId": email,
+          "mobile": '12321231',
+          "permissions": [
+            { "apiName": "companySearch", "allowed": companysearch == true ? 'true ' : 'false' },
+            { "apiName": "invoicingLedger", "allowed": ladger == true ? 'true' : ' false' },
+            { "apiName": "recordPayment", "allowed": recordPayment == true ? 'true' : 'false' }
+          ]
+
+        }]
+        if (name != "") {
+          if (email != "") {
+
+
+            dispatch(addNewEmployeelist(payload));
+          }
+          else {
+            toast.error("Please enter email")
+
+          }
+        } else {
+          toast.error("Please enter name")
+        }
+
+      }
+    } else {
+      toast.error("Please enter valid email")
     }
-    else{
-      toast.error("Please enter email")
-
-    }
-}else{
-  toast.error("Please enter name")
-}
-
-}
-else{
-  const payload = [{
-    "name":name,
-    "emailId":email,
-    "mobile":'12321231',
-    "permissions": [
-      { "apiName": "companySearch", "allowed": companysearch == true ?'true ':'false'},
-      { "apiName": "invoicingLedger", "allowed": ladger == true ? 'true': ' false'},
-      { "apiName": "recordPayment", "allowed": recordPayment == true ? 'true':'false'}
-  ]
-  
-  }]
-  console.log("PAYLOAD", payload)
-  if(name != "" ){
-    if(email != "" ){
-console.log("nmmm", name , email)
-
-
-  dispatch(addNewEmployeelist(payload));
-    }
-    else{
-      toast.error("Please enter email")
-
-    }
-}else{
-  toast.error("Please enter name")
-}
-
-}
-  }else{
-    toast.error("Please enter valid email")
   }
-}
   // React.useEffect(() => {
   //   setIsFormValid(validation.isValid);
   // }, [validation.isValid]);
@@ -171,12 +166,12 @@ console.log("nmmm", name , email)
                 <CardBody>
                   <h4 className="card-title">Employee Registration</h4>
                   <Form
-                    // onSubmit={e => {
-                    //   e.preventDefault()
-                    //   toggleAlert()
-                    //   validation.handleSubmit()
-                    //   return false
-                    // }}
+                  // onSubmit={e => {
+                  //   e.preventDefault()
+                  //   toggleAlert()
+                  //   validation.handleSubmit()
+                  //   return false
+                  // }}
                   >
                     <Row>
                       <Col lg={6}>
@@ -188,7 +183,7 @@ console.log("nmmm", name , email)
                             type="text"
                             className="form-control"
                             id="name"
-                            onChange={(event)=>setname(event.target.value)}
+                            onChange={(event) => setname(event.target.value)}
                             // onBlur={validation.handleBlur}
                             // value={validation.values.name || ""}
                             invalid={
@@ -215,19 +210,19 @@ console.log("nmmm", name , email)
                             className="form-control"
                             id="email"
                             // onChange={validation.handleChange}
-                            onChange={(event)=>setemail(event.target.value)}
+                            onChange={(event) => setemail(event.target.value)}
 
                             // onBlur={validation.handleBlur}
                             // value={validation.values.email || ""}
                             invalid={
                               validation.touched.email &&
-                              validation.errors.email
+                                validation.errors.email
                                 ? true
                                 : false
                             }
                           />
                           {validation.touched.email &&
-                          validation.errors.email ? (
+                            validation.errors.email ? (
                             <div className="text-danger">
                               {validation.errors.email}
                             </div>
@@ -304,10 +299,10 @@ console.log("nmmm", name , email)
                                 <Input
                                   type="checkbox"
                                   name="access.fullAccess"
-                                  onChange={()=> fullAccess == true ?setfulaccess(false):setfulaccess(true)}
-                                  // checked={validation.values.access.fullAccess}
-                                  // checked={setfulaccess(true)}   
-                                                     />{" "}
+                                  onChange={() => fullAccess == true ? setfulaccess(false) : setfulaccess(true)}
+                                // checked={validation.values.access.fullAccess}
+                                // checked={setfulaccess(true)}   
+                                />{" "}
                                 Full access
                               </Label>
                             </FormGroup>
@@ -318,16 +313,16 @@ console.log("nmmm", name , email)
                                   type="checkbox"
                                   name="access.companySearch"
                                   // onChange={validation.handleChange}
-                                  onChange={()=> companysearch == true ?setcompanysearch(false):setcompanysearch(true)}
+                                  onChange={() => companysearch == true ? setcompanysearch(false) : setcompanysearch(true)}
 
-                                  // checked={
-                                  //   validation.values.access.companySearch
-                                  // }
+                                // checked={
+                                //   validation.values.access.companySearch
+                                // }
                                 />{" "}
                                 Company search
                               </Label>
                             </FormGroup>
-                         
+
                           </div>
                         </FormGroup>
                       </Col>
@@ -335,18 +330,18 @@ console.log("nmmm", name , email)
                         <FormGroup className="mb-3">
                           <Label></Label>
                           <div>
-                        
+
                             <FormGroup check className="mb-2">
                               <Label check>
                                 <Input
                                   type="checkbox"
                                   name="access.invoicingLedger"
-                                  onChange={()=> ladger == true ?setladger(false):setladger(true)}
+                                  onChange={() => ladger == true ? setladger(false) : setladger(true)}
 
-                                  // onChange={validation.handleChange}
-                                  // checked={
-                                  //   validation.values.access.invoicingLedger
-                                  // }
+                                // onChange={validation.handleChange}
+                                // checked={
+                                //   validation.values.access.invoicingLedger
+                                // }
                                 />{" "}
                                 Invoicing + ledger
                               </Label>
@@ -357,11 +352,11 @@ console.log("nmmm", name , email)
                                   type="checkbox"
                                   name="access.recordPayment"
                                   // onChange={validation.handleChange}
-                                  onChange={()=> recordPayment == true ?setrecordPayment(false):setrecordPayment(true)}
+                                  onChange={() => recordPayment == true ? setrecordPayment(false) : setrecordPayment(true)}
 
-                                  // checked={
-                                  //   validation.values.access.recordPayment
-                                  // }
+                                // checked={
+                                //   validation.values.access.recordPayment
+                                // }
                                 />{" "}
                                 Record payment
                               </Label>
@@ -371,9 +366,9 @@ console.log("nmmm", name , email)
                       </Col>
                     </Row>
 
-                 
 
-                     {alertVisible && (
+
+                    {alertVisible && (
                       <div className="alert alert-danger mt-3">
                         {validation.isValid
                           ? "Please select at least one checkbox."
@@ -382,19 +377,19 @@ console.log("nmmm", name , email)
                     )}
                   </Form>
                   <Row>
-                      <Col lg={1}>
-                        {/* disabled={!isFormValid}  */}
-                        <Button
-                          className="mr-3"
-                          color="primary"
-                          type="submit"
-                          onClick={()=>handleSubmit()} // Show/hide alert before submission
-                        >
-                          Submit
-                        </Button>
-                      </Col>
-                      <Col lg={1}>
-                        {/* <Button
+                    <Col lg={1}>
+                      {/* disabled={!isFormValid}  */}
+                      <Button
+                        className="mr-3"
+                        color="primary"
+                        type="submit"
+                        onClick={() => handleSubmit()} // Show/hide alert before submission
+                      >
+                        Submit
+                      </Button>
+                    </Col>
+                    <Col lg={1}>
+                      {/* <Button
                           className="ml-3"
                           color="secondary"
                           type="button" // Use type="button" for Cancel button
@@ -402,11 +397,11 @@ console.log("nmmm", name , email)
                         >
                           Cancel
                         </Button> */}
-                      </Col>
-                    </Row>
+                    </Col>
+                  </Row>
                 </CardBody>
               </Card>
-            </Col>    
+            </Col>
           </Row>
         </Container>
         <ToastContainer />

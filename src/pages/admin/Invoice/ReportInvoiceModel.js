@@ -50,8 +50,6 @@ const ReportedDefaulterModel = props => {
   const { getInvoiceSuccessDetail } = useSelector(state => ({
     getInvoiceSuccessDetail: state.invoices.invoices != undefined && state.invoices.invoices.data != undefined ? state.invoices.invoices.data.response : [],
   }));
-  console.log("InvoiceAddDataInvoiceAddData", InvoiceAddData)
-  console.log("allinvoicelist", debtorIdArrayForPreview);
 
   const formikModal = useFormik({
     initialValues: {
@@ -185,7 +183,6 @@ const ReportedDefaulterModel = props => {
     // Add more styles as needed for other parts of the Select component
   };
 
-  console.log("PROPSS", GetAllInvoice)
   const GetAllDebtors = useSelector(selectDebtorsList)
   const dispatch = useDispatch()
   const handleInputChange = inputValue => {
@@ -282,8 +279,6 @@ const ReportedDefaulterModel = props => {
   const [total, setTotal] = useState(0)
 
   const invoiceStateValue = allInvoiceList
-  console.log('allInvoiceList......', allInvoiceList);
-  console.log('invoiceStateValue', invoiceStateValue);
   const submitInvoice = (setvalu) => {
     calculateSubtotal(data)
     const date = moment()
@@ -358,7 +353,6 @@ const ReportedDefaulterModel = props => {
     } else {
       if (data[setvalu].amount != "" && data[setvalu].itemDetail != "") {
         setallInvoiceList((items) => [...items, dummy])
-        console.log("dummyCheck", dummy)
         setisDisabled(false)
         toast.success("Invoice Add Successfully")
       }
@@ -385,7 +379,6 @@ const ReportedDefaulterModel = props => {
   const handleFilterInvoiceList = (item) => {
     var filteredArrays = []
     filteredArrays = GetAllInvoice.filter(value => value.debtorId == item.value)
-    console.log("filteredInvoiceList  KKKKK", filteredInvoiceList, filteredArrays[0])
     if (filteredArrays[0] != undefined) {
       setfilteredInvoiceList([filteredArrays[0]])
 
@@ -406,7 +399,6 @@ const ReportedDefaulterModel = props => {
 
     var filteredArray = []
     filteredArray = GetAllDebtors.filter((value) => value.id == item.value)
-    console.log("ITEM +", filteredArray)
     setfilteredCustomerDetail(filteredArray[0])
 
     handleFilterInvoiceList(item)
@@ -414,7 +406,6 @@ const ReportedDefaulterModel = props => {
 
 
   const handleItemDetailChange = (index, value) => {
-    console.log("HARSHIT hs", index, value, data)
     setCurrentIndex(index)
     const newData = [...data]
     newData[index].itemDetail = value
@@ -475,7 +466,6 @@ const ReportedDefaulterModel = props => {
     setFaqsRow(faqsRow - 1)
   }
   const handleDateChange = (value, index) => {
-    console.log("VALUEYE", moment(value).format("YYYY-MM-DD"))
     const newData = [...data]
     newData[index].date = moment(value).format("YYYY-MM-DD")
     setData(newData)
@@ -484,7 +474,6 @@ const ReportedDefaulterModel = props => {
 
   const handleFileChange = (event, fieldName, index) => {
     const files = event.target.files
-    console.log("FILEEE", event.target.files, fieldName, index)
 
     const formData = new FormData();
 
@@ -504,7 +493,6 @@ const ReportedDefaulterModel = props => {
 
 
   function uploadFile(formData, index) {
-    console.log("UPLOAD FILE", formData)
     const token = localStorage.getItem("tokenemployeeRegister")
     const headers = {
       'x-access-token': token != null ? token : '',
@@ -517,7 +505,6 @@ const ReportedDefaulterModel = props => {
       .then((response) => {
         /* toast.success("file upload successfully") */
         setisDisabled(false)
-        console.log("Response", response)
         if (response.data.response.fieldName == "uploadInvoice") {
           setuploadInvoiceId(response.data.response)
           const newData = [...data]
@@ -558,7 +545,6 @@ const ReportedDefaulterModel = props => {
         }
       })
       .catch((error) => {
-        console.log("Response", error)
         // toast.error({error})
 
       })
@@ -573,7 +559,6 @@ const ReportedDefaulterModel = props => {
 
       if (row.amount !== "") {
         const amountValue = parseFloat(row.amount)
-        console.log("amountValueamountValue", typeof (amountValue))
 
         totleamount += amountValue
       }
@@ -583,9 +568,6 @@ const ReportedDefaulterModel = props => {
     setTotal(totleamount)
 
   }
-  console.log("newDat4545a ", allInvoiceList)
-
-
 
   return (
     <Modal
@@ -1070,7 +1052,6 @@ const ReportedDefaulterModel = props => {
                 GST Number : {filteredCustomerDetail.gstin}
               </Label>
               <Label className="text-capitalize">
-                {console.log("filteredCustomerDetail.address1", filteredCustomerDetail.address1)}
                 Address : {filteredCustomerDetail.address1 != '' ? filteredCustomerDetail.address1 + "," : ''} {filteredCustomerDetail.address2 != '' ? filteredCustomerDetail.address2 + "," : ''} {filteredCustomerDetail.city != '' ? filteredCustomerDetail.city + "," : ''} {filteredCustomerDetail.zipcode}
               </Label>
               <Label className="text-uppercase">
@@ -1296,7 +1277,6 @@ const ReportedDefaulterModel = props => {
                 </Row>
                 <Row className="text-end mt-3">
                   <Col md={12}>
-                    {console.log("totaltotaltotal", total)}
                     <h5>  <CurrencyFormat value={total} displayType={'text'} thousandSeparator={true} renderText={value => <div> Total Amount = {value}</div>} />
                     </h5>
                   </Col>

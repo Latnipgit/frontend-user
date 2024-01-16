@@ -17,21 +17,20 @@ import {
 // Is user register successfull then direct plot user in redux.
 function* registerUser({ payload: { user } }) {
   try {
-   if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-     
-      const response = yield call(postJwtRegister, { 
+    if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+
+      const response = yield call(postJwtRegister, {
         name: user.name,
         password: user.password,
-        companyName:user.companyName,
-        gstin:user.gstNumber,
-        aadharCardNo:user.aadharNumber,
-        companyPan:user.panNumber,
-        emailId:user.email
-})
+        companyName: user.companyName,
+        gstin: user.gstNumber,
+        aadharCardNo: user.aadharNumber,
+        companyPan: user.panNumber,
+        emailId: user.email
+      })
       yield put(registerUserSuccessful(response))
-    } 
+    }
   } catch (error) {
-    console.log("There was an error registering: ", error)
     yield put(registerUserFailed(error))
   }
 }

@@ -10,7 +10,7 @@ import { addCustomerListAPI } from '../../helpers/fakebackend_helper'
 function* addCustomerListsaga(data) {
   try {
     const response = yield call(addCustomerListAPI, data.payload)
-    console.log("RESPONCE", response)
+
     yield put(addNewCustomerSuccess(response))
     window.location.reload()
   } catch (error) {

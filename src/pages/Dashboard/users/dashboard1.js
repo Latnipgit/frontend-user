@@ -20,7 +20,7 @@ import {
   Button,
   Card,
   CardBody,
- 
+
 } from "reactstrap"
 import TableContainer from "../../../components/Common/TableContainer";
 import { getInvoices as ongetInvoices } from '../../../store/actions'
@@ -44,11 +44,11 @@ const ReportDebtor = props => {
   const toggleViewModal1 = () => setModal2(!modal2);
   const toggleViewModal2 = () => setModal2(!modal3);
   //const [modal4, setModal4] = useState(false);
- /*  const toggleViewModal3 = () => setModal4(!modal4); */
+  /*  const toggleViewModal3 = () => setModal4(!modal4); */
   const dispatch = useDispatch();
 
   const isReportDefOpen = useSelector(selectReportDefOpen);
-  const toggleViewModal3 = () =>  dispatch(setIsReportDefOpen(!isReportDefOpen));
+  const toggleViewModal3 = () => dispatch(setIsReportDefOpen(!isReportDefOpen));
 
   const GetAllInvoice = useSelector(selectInvoiceList)
 
@@ -59,12 +59,12 @@ const ReportDebtor = props => {
 
   }, [])
 
-  const viewModel =(value)=>{
+  const viewModel = (value) => {
     setSelected(value)
     setModal2(true)
   }
 
-  const viewModels =(value)=>{
+  const viewModels = (value) => {
     setModal3(true)
   }
 
@@ -74,9 +74,9 @@ const ReportDebtor = props => {
       {
         Header: "#",
         filterable: false,
-        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600',  },
-        style:{padding:"15px"},
-          width: 50,
+        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600', },
+        style: { padding: "15px" },
+        width: 50,
 
         disableFilters: true,
         Cell: cellProps => {
@@ -88,38 +88,40 @@ const ReportDebtor = props => {
         Header: "Refrence Number",
         accessor: "referenceNumber",
         headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-        style:{padding:"15px"},
-    
+        style: { padding: "15px" },
+
 
       },
-          {
-            Header: "Customer Name",
-            accessor: "",
-            headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-            style:{padding:"15px"},
-           
-            Cell: cellProps => {
-              return ( <div className="text-capitalize" >{cellProps.original.debtor.firstname +" "+ cellProps.original.debtor.lastname}</div>
+      {
+        Header: "Customer Name",
+        accessor: "",
+        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
+        style: { padding: "15px" },
 
-      )}
-          },
-          {
-            Header: "Invoice Number",
-            accessor: "",
-            headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600', pointerEvent:"none",  },
-            style:{padding:"15px"},
-          
-            Cell: cellProps => {
-              return ( <div className="text-capitalize" >{cellProps.original.invoiceNumber}</div>
+        Cell: cellProps => {
+          return (<div className="text-capitalize" >{cellProps.original.debtor.firstname + " " + cellProps.original.debtor.lastname}</div>
 
-      )}
-          },
+          )
+        }
+      },
+      {
+        Header: "Invoice Number",
+        accessor: "",
+        headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600', pointerEvent: "none", },
+        style: { padding: "15px" },
+
+        Cell: cellProps => {
+          return (<div className="text-capitalize" >{cellProps.original.invoiceNumber}</div>
+
+          )
+        }
+      },
       {
         Header: "Due Amount",
         accessor: "remainingAmount",
         headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-        style:{padding:"15px"},
-     
+        style: { padding: "15px" },
+
 
       },
       {
@@ -132,13 +134,12 @@ const ReportDebtor = props => {
 
         Cell: cellProps => {
           const a = moment(cellProps.original.dueDate);
-          const b =moment()
+          const b = moment()
           const c = moment(b).diff(a)
           const d = moment.duration(c)
-          console.log("ABABAB",d.days())
           return (
 
-            <div className="" style={{ padding:"5px 35px"}}>
+            <div className="" style={{ padding: "5px 35px" }}>
               <div className=" text-center bg-success rounded text-light">
                 <div className="text-capitalize">
                   {
@@ -153,23 +154,23 @@ const ReportDebtor = props => {
       },
 
 
-     
+
       {
         Header: "Action",
         headerStyle: { textAlign: 'left', padding: "10px", fontWeight: '600' },
-  style:{padding:"15px"},
+        style: { padding: "15px" },
         accessor: "",
-     
+
         Cell: (cellProps) => (
           <div>
             <Button className="btn btn-info btn-sm"
               onClick={() => viewModel(cellProps.original)
-               
+
               }
             >
-           Report a Defaulter
+              Report a Defaulter
             </Button>
-  
+
           </div>
         )
       },
@@ -182,133 +183,130 @@ const ReportDebtor = props => {
 
   const additionalValue = "Hello from additional prop!";
 
-const handleReportDefaulter = ()=>{
-  // window.location.href = "/ReportDefaulter"
-  //setModal4(true)
-  dispatch(setIsReportDefOpen(!isReportDefOpen))
-}
-const getDays = ()=>{
-    GetAllInvoice != undefined ? GetAllInvoice.map((item)=>{
-   const a = moment(item.dueDate);
-    const b =moment()
-    const c = moment(b).diff(a)
-    const d = moment.duration(c)
-    if(getDaysArray.length != GetAllInvoice.length ){
-      getDaysArray.push(d.days())
+  const handleReportDefaulter = () => {
+    // window.location.href = "/ReportDefaulter"
+    //setModal4(true)
+    dispatch(setIsReportDefOpen(!isReportDefOpen))
+  }
+  const getDays = () => {
+    GetAllInvoice != undefined ? GetAllInvoice.map((item) => {
+      const a = moment(item.dueDate);
+      const b = moment()
+      const c = moment(b).diff(a)
+      const d = moment.duration(c)
+      if (getDaysArray.length != GetAllInvoice.length) {
+        getDaysArray.push(d.days())
 
-    }
-  }):[]
-  console.log("ABABABABABAB", getDaysArray)
-}
-console.log("ABABABABABAB 2", getDaysArray)
+      }
+    }) : []
+  }
 
   return (
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} selected={selected} />
       <UploadCACertificateModel isOpen={modal3} toggle={toggleViewModal2} />
-      <ReportIncoiceModel isOpen ={isReportDefOpen} toggle={toggleViewModal3}  GetAllInvoice={GetAllInvoice} />
-      
+      <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
+
 
       <Card>
         <CardBody>
- <div className="mb-4 h4 card-title"></div>
-          <br/>
-          <br/>
-          <br/>
-          
-        
-        <Row>
-          <Col md={10} className="pl-3">
-            <h5 className="m-1">Dashboard</h5>
-          </Col>
-          <Col md={2}>
-            <Button className="btn btn-md btn-info" onClick={()=>handleReportDefaulter()}>Report a Defaulter</Button>
-          </Col>
-        </Row>
+          <div className="mb-4 h4 card-title"></div>
+          <br />
+          <br />
+          <br />
+
+
+          <Row>
+            <Col md={10} className="pl-3">
+              <h5 className="m-1">Dashboard</h5>
+            </Col>
+            <Col md={2}>
+              <Button className="btn btn-md btn-info" onClick={() => handleReportDefaulter()}>Report a Defaulter</Button>
+            </Col>
+          </Row>
 
           <Row className="p-4  ml-5">
-          {/* <br/> */}
-          
+            {/* <br/> */}
+
             {/* <ReactTable
               data={GetAllInvoice != undefined ? GetAllInvoice : []}
               columns={columns}
               showPagination={true}
               defaultPageSize={5}
             /> */}
-       
-       <table className="table table-bordered">
-       <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Company Name</th>
-      {/* <th scope="col">Refrence Number</th> */}
-      <th scope="col">Invoice Number</th>
-      {/* <th scope="col">Status</th> */}
-      <th scope="col">Address</th>
-      <th scope="col">Due Amount</th>
-      <th scope="col">Due From</th>
-      <th scope="col">Action</th>
-      {/* <th scope="col">Upload Document</th> */}
-    </tr>
-  </thead>
-  <tbody>
-   {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{
-    return  <tr key={item}>
-      {console.log("NEW TABLE ", item)}
-      
-    <th scope="row" className="pt-4">{index + 1}</th>
-    {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
-    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-    {/* <td className="pt-4">{item.referenceNumber}</td> */}
-    <td className="pt-4">{item.invoiceNumber}</td>
-    <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
-    <br/>
-    {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
-    {/* <td className="pt-4">{item.status}</td> */}
-    <td className="pt-4 text-end">
-      <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
-    </td>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Company Name</th>
+                  {/* <th scope="col">Refrence Number</th> */}
+                  <th scope="col">Invoice Number</th>
+                  {/* <th scope="col">Status</th> */}
+                  <th scope="col">Address</th>
+                  <th scope="col">Due Amount</th>
+                  <th scope="col">Due From</th>
+                  <th scope="col">Action</th>
+                  {/* <th scope="col">Upload Document</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {GetAllInvoice != undefined ? GetAllInvoice.map((item, index) => {
+                  return <tr key={item}>
 
-    <td >
-   
-    <div className="" style={{ padding:"2px 15px"}}>
-      
-  <div className=" text-center bg-success rounded text-light">
-    <div className="text-capitalize">
-      
-       {getDaysArray[index]}  &nbsp;
+                    <th scope="row" className="pt-4">{index + 1}</th>
+                    {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
+                    <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
+                    {/* <td className="pt-4">{item.referenceNumber}</td> */}
+                    <td className="pt-4">{item.invoiceNumber}</td>
+                    <td className="pt-4 d-flex text-capitalize">{item.debtor.companyName}
+                      <br />
+                      {item.debtor.address1} {item.debtor.address2}, {item.debtor.city}</td>
+                    {/* <td className="pt-4">{item.status}</td> */}
+                    <td className="pt-4 text-end">
+                      <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+
+                    </td>
+
+                    <td >
+
+                      <div className="" style={{ padding: "2px 15px" }}>
+
+                        <div className=" text-center bg-success rounded text-light">
+                          <div className="text-capitalize">
+
+                            {getDaysArray[index]}  &nbsp;
 
 
-       <span className="ml-1">Days</span> </div>
-    <div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
-  </div>
-</div>
-           
-    </td>
-    <td>
-    <div className="pt-2">
-            <Button className="btn btn-info btn-sm"
-              onClick={() => viewModel(item)
-               
-              }
-            >
-           Record Payment
-            </Button>
-            &nbsp;
+                            <span className="ml-1">Days</span> </div>
+                          <div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
+                        </div>
+                      </div>
 
-            <Button className="btn btn-info btn-sm"
-              // onClick={() => viewModels()
-               
-              // }
-            >
-           Request Edit
-            </Button>
-  
-          </div>
-    </td>
-    {/* <td>
+                    </td>
+                    <td>
+                      <div className="pt-2">
+                        <Button className="btn btn-info btn-sm"
+                          onClick={() => viewModel(item)
+
+                          }
+                        >
+                          Record Payment
+                        </Button>
+                        &nbsp;
+
+                        <Button className="btn btn-info btn-sm"
+                        // onClick={() => viewModels()
+
+                        // }
+                        >
+                          Request Edit
+                        </Button>
+
+                      </div>
+                    </td>
+                    {/* <td>
     <div className="pt-2">
             <Button className="btn btn-info btn-sm"
               onClick={() => viewModels()
@@ -320,12 +318,12 @@ console.log("ABABABABABAB 2", getDaysArray)
   
           </div>
     </td> */}
-  </tr>
-   }):''} 
-   
-  
-  </tbody>
-       </table>
+                  </tr>
+                }) : ''}
+
+
+              </tbody>
+            </table>
 
           </Row>
         </CardBody>

@@ -21,9 +21,9 @@ const dateFormat = (date, format) => {
 };
 const toLowerCase1 = str => {
     return (
-      str === "" || str === undefined ? "" : str.toLowerCase()
+        str === "" || str === undefined ? "" : str.toLowerCase()
     );
-  };
+};
 
 const CheckBox = (cell) => {
     return cell.value ? cell.value : '';
@@ -49,7 +49,7 @@ const CompanyName = (cell) => {
 const daysSinceReference = (cellValue, referenceDate) => {
     if (cellValue) {
         const currentDate = new Date(cellValue);
-        const timeDifference = referenceDate-currentDate;
+        const timeDifference = referenceDate - currentDate;
         const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
         return daysDifference;
     }
@@ -57,13 +57,12 @@ const daysSinceReference = (cellValue, referenceDate) => {
 };
 
 const DueSince = (cell) => {
-          
+
     //const startDate = new Date('2019-10-07'); // October 7, 2019
     const today = new Date(); // Current date
-    
+
     const daysSince = daysSinceReference(cell.value, today);
-    console.log(daysSince);
-    
+
     let badgeClassName = "font-size-11 badge ";
     if (daysSince > 1 && daysSince < 800) {
         badgeClassName += "bg-success text-white";
@@ -89,30 +88,30 @@ const DueSince = (cell) => {
         </span>
     );
 };
-const DueAmount= (cell) => {
+const DueAmount = (cell) => {
     return cell.value ? cell.value : '';
 };
 const Status = (cell) => {
     return (
         <Badge
-          className={"font-size-11 badge-soft-" + 
-          (cell.value === "Active" ? "success" : "danger")}          
+            className={"font-size-11 badge-soft-" +
+                (cell.value === "Active" ? "success" : "danger")}
         >
-          {cell.value}
+            {cell.value}
         </Badge>
     )
 };
 const PaymentMethod = (cell) => {
     return (
         <span>
-        <i
-        className={
-          (cell.value === "Paypal" ? "fab fa-cc-paypal me-1" : "" || 
-          cell.value === "COD" ? "fab fas fa-money-bill-alt me-1" : "" ||
-          cell.value === "Mastercard" ? "fab fa-cc-mastercard me-1" : "" ||
-          cell.value === "Visa" ? "fab fa-cc-visa me-1" : ""
-          )}
-          />{" "}
+            <i
+                className={
+                    (cell.value === "Paypal" ? "fab fa-cc-paypal me-1" : "" ||
+                        cell.value === "COD" ? "fab fas fa-money-bill-alt me-1" : "" ||
+                            cell.value === "Mastercard" ? "fab fa-cc-mastercard me-1" : "" ||
+                                cell.value === "Visa" ? "fab fa-cc-visa me-1" : ""
+                    )}
+            />{" "}
             {cell.value}
         </span>
     )

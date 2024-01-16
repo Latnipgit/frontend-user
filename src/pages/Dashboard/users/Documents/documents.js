@@ -30,59 +30,54 @@ const Document = (props) => {
   const toggleViewModal = () => setModal1(!modal1);
 
   const handleAcceptedFiles = (acceptedFiles) => {
-  
+
     setSelectedFiles([...selectedFiles, ...acceptedFiles]);
   };
 
   const dispatch = useDispatch();
-    const GetDocument = useSelector(getGeneralDocumentsSelector);
+  const GetDocument = useSelector(getGeneralDocumentsSelector);
 
-    console.log("handle GetDocument", GetDocument)
   const removeFile = (index) => {
-    console.log("index9898", index)
     const newFiles = [...selectedFiles];
     newFiles.splice(index);
-    // console.log("INDEX", index, newFiles)
-    console.log("index9898 09", newFiles)
 
 
     setSelectedFiles(newFiles);
   };
-useEffect(()=>{
-  dispatch(getGeneralDoucments())
-  setgenralDocs(GetDocument)
- 
-},[])
+  useEffect(() => {
+    dispatch(getGeneralDoucments())
+    setgenralDocs(GetDocument)
+
+  }, [])
 
 
- 
 
- 
-  const reciveDocument=(item)=>{
-    console.log("IJIJIJI", item, selectedFiles)
+
+
+  const reciveDocument = (item) => {
     setSelectedFiles([...selectedFiles, ...item]);
 
 
   }
   return (
     <React.Fragment>
-      <UploadDocumentModel isOpen={modal1} toggle={toggleViewModal}  Document={reciveDocument}/>
+      <UploadDocumentModel isOpen={modal1} toggle={toggleViewModal} Document={reciveDocument} />
       <div className="page-content">
         <Container fluid={true}>
           <Row>
             <Col md="10"></Col>
             <Col md="2">
-              <Button onClick={() => setModal1(true)} className="btn btn-info" style={{ fontSize:'12px', display:'flex', padding:'10px'}}>
-               + Upload Documents
+              <Button onClick={() => setModal1(true)} className="btn btn-info" style={{ fontSize: '12px', display: 'flex', padding: '10px' }}>
+                + Upload Documents
               </Button>
             </Col>
           </Row>
-          <br/>
+          <br />
           <Row>
             <Col className="col-12">
               <Card>
                 <CardHeader>
-               <h5>General Documents</h5>
+                  <h5>General Documents</h5>
                 </CardHeader>
                 <CardBody>
 
@@ -90,43 +85,43 @@ useEffect(()=>{
                     <div className="row">
 
 
-                        
-
-                        <Row>
-                         {GetDocument != undefined ?
-                          GetDocument.map((item)=>{
-                            return<Col md={3} key={item}>
-                                 
-                     
 
 
-                    <Row>
-                      <Col md={4} className="text-end p-3">
-             
-  {/* <a >
+                      <Row>
+                        {GetDocument != undefined ?
+                          GetDocument.map((item) => {
+                            return <Col md={3} key={item}>
+
+
+
+
+                              <Row>
+                                <Col md={4} className="text-end p-3">
+
+                                  {/* <a >
                       <i className='bx bxs-file mt-2 fileSizing'></i></a> */}
-<a href={item.url} rel='noreferrer' target='_blank'>
+                                  <a href={item.url} rel='noreferrer' target='_blank'>
 
 
 
-                      <button type="button" className="btn btn-white" data-toggle="tooltip" data-placement="top" title="View Document"  rel='noreferrer' target='_blank'>
-                      {/* <i className='bx bxs-file mt-2 fileSizing '></i> */}
-                      <img src={pdfImg} className="imgsizing"/>
-</button>
-</a>
-                      
-                      </Col>
-                      <Col md={8} className="pt-3">
-                      <b>{item.name}</b>
+                                    <button type="button" className="btn btn-white" data-toggle="tooltip" data-placement="top" title="View Document" rel='noreferrer' target='_blank'>
+                                      {/* <i className='bx bxs-file mt-2 fileSizing '></i> */}
+                                      <img src={pdfImg} className="imgsizing" />
+                                    </button>
+                                  </a>
 
-                      </Col>
-                    </Row>
+                                </Col>
+                                <Col md={8} className="pt-3">
+                                  <b>{item.name}</b>
+
+                                </Col>
+                              </Row>
                             </Col>
-                          }):""
-                         } 
-                        
-                        </Row>
-                   
+                          }) : ""
+                        }
+
+                      </Row>
+
                     </div>
                   </div>
 

@@ -21,7 +21,7 @@ import InvoiceModal from "../InvoicePopupModal";
 import InvoicePopupForCredtiors from "../users/InvoicePopupForCredtiors";
 import { latestTransaction } from "../../../common/data/dashboard";
 
-import {OrderId,BillingName,DueSince,Total} from "./creditorsCol";
+import { OrderId, BillingName, DueSince, Total } from "./creditorsCol";
 
 import TableContainer from "../../../components/Common/TableContainer";
 
@@ -34,7 +34,6 @@ const Creditors = props => {
   const handleConfirmRefer = () => {
     if (selectedLevel) {
       // Handle refer logic here
-      console.log("Referring to senior with level:", selectedLevel);
       setSelectedLevel(''); // Reset the selected level
       setShowReferModal(false);
     }

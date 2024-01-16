@@ -17,9 +17,9 @@ import {
   CardTitle,
   Label,
 } from "reactstrap"
-import { getAllDebtors, getAllInvoice }  from '../../../store/debtors/debtors.actions'
+import { getAllDebtors, getAllInvoice } from '../../../store/debtors/debtors.actions'
 import CurrencyFormat from 'react-currency-format';
-import { addInvoiceBill}  from '../../../store/actions'
+import { addInvoiceBill } from '../../../store/actions'
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { selectDebtorsList, selectInvoiceList } from "store/debtors/debtors.selecter"
@@ -38,16 +38,15 @@ const SendBillTransaction = (props) => {
 
   const colourStyles = {
     menuList: styles => ({
-        ...styles,
-        background: '#FFFFFF'
+      ...styles,
+      background: '#FFFFFF'
     })
- 
+
   }
 
-  const  getAllDebtorsList = useSelector(selectDebtorsList);
-  const  getAllInvoiceList = useSelector(selectInvoiceList);
+  const getAllDebtorsList = useSelector(selectDebtorsList);
+  const getAllInvoiceList = useSelector(selectInvoiceList);
 
-console.log("getAllInvoiceList 00",getAllInvoiceList)
   const validationSchema = Yup.object().shape({
     customerName: Yup.string().required(
       "Customer Name is required. Please filll the field"
@@ -91,11 +90,10 @@ console.log("getAllInvoiceList 00",getAllInvoiceList)
     validationSchema,
     onSubmit: values => {
       // Handle form submission logic here
-    
+
     },
   })
 
-  console.log("propsddd", props)
   const [salutations, setsalutations] = useState([
     { label: "Mr.", value: "Mr." },
     { label: "Mrs.", value: "Mrs." },
@@ -125,7 +123,6 @@ console.log("getAllInvoiceList 00",getAllInvoiceList)
   const handleCloseModal = () => {
     setShowModal(false)
   }
-console.log("selectedOption", selectedOption)
   //first table
   const [faqsRow, setFaqsRow] = useState(1)
   const [subtotal, setSubtotal] = useState(0)
@@ -137,10 +134,10 @@ console.log("selectedOption", selectedOption)
       amount: "",
     },
   ])
-const [uploadInvoiceid,setuploadInvoiceId] = useState("")
-const [uploadpurchaseId,setuploadpurchaseId] = useState("")
-const [uploadChallanId,setuploadChallanId] = useState("")
-const [uploadTransportId,setuploadTransportId] = useState("")
+  const [uploadInvoiceid, setuploadInvoiceId] = useState("")
+  const [uploadpurchaseId, setuploadpurchaseId] = useState("")
+  const [uploadChallanId, setuploadChallanId] = useState("")
+  const [uploadTransportId, setuploadTransportId] = useState("")
   const [validationMessage, setValidationMessage] = useState("")
 
   const addFaqsRow = () => {
@@ -228,64 +225,57 @@ const [uploadTransportId,setuploadTransportId] = useState("")
   })
   const handleFileChange = (event, fieldName) => {
     const files = event.target.files
-    console.log("FILEEE", event.target.files,fieldName)
     if (files.length > 0) {
       setFileData({ ...fileData, [fieldName]: files[0] })
     }
     const formData = new FormData();
-   
+
     formData.append('file', files[0]);   //append the values with key, value pair
     formData.append('fieldName', fieldName);
-   
- 
+
+
     uploadFile(formData)
 
 
   }
 
-  function uploadFile(formData){
+  function uploadFile(formData) {
     const token = localStorage.getItem("tokenemployeeRegister")
     const headers = {
-      'x-access-token': token != null ? token :'',
+      'x-access-token': token != null ? token : '',
     };
-    console.log("HEADERDS", headers)
     // fetch('https://bafana-backend.azurewebsites.net/api/files/upload', {
     //   method: 'POST',
     //   body: formData,headers,
     // })
     // .then(response => response.json())
     // .then(lang => response['lang'].slice(-2))
-    //   console.log("payloaddddddd",formData)
 
     //   .then(success => {
-    //     console.log("payloaddddddd success",success)
 
     //     // Do something with the successful response
     //   })
-    //   .catch(error => console.log("payloaddddddd error",error)
     // );
     axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
       headers: headers
-      })       
-.then((response) => {
-  console.log("Response", response)
-  if(response.data.response.fieldName == "uploadInvoice"){
-    setuploadInvoiceId(response.data.response.documentId)
-  }
-  if(response.data.response.fieldName == "uploadPurchaseOrder"){
-    setuploadpurchaseId(response.data.response.documentId)
-  }
-  if(response.data.response.fieldName == "uploadchallanDispatchDocument"){
-    setuploadChallanId(response.data.response.documentId)
-  }
-  if(response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`"){
-    setuploadTransportId(response.data.response.documentId)
-  }
-})
-.catch((error) => {
-  console.log("Response", error)
+    })
+      .then((response) => {
+        if (response.data.response.fieldName == "uploadInvoice") {
+          setuploadInvoiceId(response.data.response.documentId)
+        }
+        if (response.data.response.fieldName == "uploadPurchaseOrder") {
+          setuploadpurchaseId(response.data.response.documentId)
+        }
+        if (response.data.response.fieldName == "uploadchallanDispatchDocument") {
+          setuploadChallanId(response.data.response.documentId)
+        }
+        if (response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`") {
+          setuploadTransportId(response.data.response.documentId)
+        }
+      })
+      .catch((error) => {
 
-})
+      })
   }
   //second Table
 
@@ -362,13 +352,13 @@ const [uploadTransportId,setuploadTransportId] = useState("")
     if (value.length == 0) {
       setAdjustmentsValue(0)
     } else {
-      
-        setAdjustmentsValue(value)
-      
-        setTotal(total+value)
-        
+
+      setAdjustmentsValue(value)
+
+      setTotal(total + value)
+
     }
-    }
+  }
 
   const handleDiscountChange = e => {
     const value = e.target.value
@@ -411,7 +401,7 @@ const [uploadTransportId,setuploadTransportId] = useState("")
       zipcode: "",
     },
 
-   
+
     validate: values => {
       const errors = {}
 
@@ -460,17 +450,17 @@ const [uploadTransportId,setuploadTransportId] = useState("")
       return errors
     },
     onSubmit: values => {
-      
+
       // Handle form submission here
     },
   })
   const handleFormSubmit = item => {
-    
-   
-    const dummy =[
+
+
+    const dummy = [
       {
         "debtorType": item.customerType,
-        "salutation":selectedOption.value,
+        "salutation": selectedOption.value,
         "firstname": item.firstname,
         "lastname": item.lastname,
         "customerEmail": item.customerEmail,
@@ -483,53 +473,52 @@ const [uploadTransportId,setuploadTransportId] = useState("")
         "gstin": item.gstNumber,
         "companyPan": item.panCard,
         "companyName": item.companyName
-  }
+      }
     ]
     dispatch(addCustomerlist(dummy))
   }
 
   const formikSendBill = useFormik({
     initialValues: {
-    customerName:"",
-    RefrenceNumber:"",
-    invoiceNumber:"",
-    invoiceDate:"",
-    dueDate:"",
-    itemDetail:[],
-    subtotal:"",
-    tax:"",
-    discount:"",
-    adjustment:"",
-    grandTotal:"",
-    puchaseOrderFile:"",
-    challanfile:"",
-    invoiceFile:"",
-    TransportFile:""
-    },})
-    // console.log("selectedOption.value",selectedOption.value!= undefined ? selectedOption.value.slice(-4):"Hello")
-console.log("selectedOption",selectedOption.value != null ? selectedOption.value.slice(-6).toUpperCase():'')
+      customerName: "",
+      RefrenceNumber: "",
+      invoiceNumber: "",
+      invoiceDate: "",
+      dueDate: "",
+      itemDetail: [],
+      subtotal: "",
+      tax: "",
+      discount: "",
+      adjustment: "",
+      grandTotal: "",
+      puchaseOrderFile: "",
+      challanfile: "",
+      invoiceFile: "",
+      TransportFile: ""
+    },
+  })
   const handleFormSubmitSendBill = item => {
     const dueDated = moment(item.dueDate).format("YYYY-MM-DD")
     const inVoiceDated = moment(item.invoiceDate).format("YYYY-MM-DD")
 
-   
 
-  const dummy=[{
+
+    const dummy = [{
       "debtorId": selectedOption.value,
       "billDate": inVoiceDated,
       "billDescription": "",
       "billNumber": "",
       "creditAmount": total,
-      "remainingAmount": total, 
+      "remainingAmount": total,
       "status": "",
       "interestRate": "",
       "creditLimitDays": "",
       "remark": "",
       "items": data,
       "subTotal": subtotal,
-      "tax": cgst != ''? cgst :sgst,
-      "referenceNumber": selectedOption.value != null ? "BAF"+"-"+ selectedOption.value.slice(-6).toUpperCase():'',
-      "invoiceNumber": "BAF"+"-"+item.invoiceNumber,
+      "tax": cgst != '' ? cgst : sgst,
+      "referenceNumber": selectedOption.value != null ? "BAF" + "-" + selectedOption.value.slice(-6).toUpperCase() : '',
+      "invoiceNumber": "BAF" + "-" + item.invoiceNumber,
       "dueDate": dueDated,
       "percentage": "",
       "purchaseOrderDocument": uploadpurchaseId,
@@ -537,75 +526,70 @@ console.log("selectedOption",selectedOption.value != null ? selectedOption.value
       "invoiceDocument": uploadInvoiceid,
       "transportationDocument": uploadTransportId
 
-}]
-if(uploadInvoiceid == ''){
+    }]
+    if (uploadInvoiceid == '') {
 
-  toast.error("Please Upload Invoice File")
-}
-else{
-  dispatch(addInvoiceBill(dummy))
-}
- 
+      toast.error("Please Upload Invoice File")
+    }
+    else {
+      dispatch(addInvoiceBill(dummy))
+    }
+
 
 
   }
-useEffect(()=>{
-  console.log("getAllDebtorsList",getAllDebtorsList)
-  dispatch(getAllDebtors());
-  dispatch(getAllInvoice());
-
-
- 
-  f();
-},[])
+  useEffect(() => {
+    dispatch(getAllDebtors());
+    dispatch(getAllInvoice());
 
 
 
-const handleSelectCustomer =(item)=>{
-  setSelectedOption(item)
-  console.log("ITEM +++",item,getAllDebtorsList)
-
-  var filteredArray =  []
-  filteredArray =  getAllDebtorsList.filter(value=>value.id == item.value)
-  console.log("ITEM +",filteredArray)
-  setfilteredCustomerDetail(filteredArray[0])
-
-  handleFilterInvoiceList(item)
-}
-
-const [filteredInvoiceList, setfilteredInvoiceList]=useState([])
-const handleFilterInvoiceList = (item)=>{
-  var filteredArrays =  []
-  filteredArrays =  getAllInvoiceList.filter(value=>value.debtorId == item.value)
-  console.log("filteredInvoiceList",filteredInvoiceList,filteredArrays[0])
-  setfilteredInvoiceList([filteredArrays[0]])
-  
-}
-const [totalValue, settotalValue]=useState([])
-
-const TotalDebtorPayment=(item)=>{
-console.log("TotalDebtorPayment",item)
-}
+    f();
+  }, [])
 
 
- return (
+
+  const handleSelectCustomer = (item) => {
+    setSelectedOption(item)
+
+    var filteredArray = []
+    filteredArray = getAllDebtorsList.filter(value => value.id == item.value)
+    setfilteredCustomerDetail(filteredArray[0])
+
+    handleFilterInvoiceList(item)
+  }
+
+  const [filteredInvoiceList, setfilteredInvoiceList] = useState([])
+  const handleFilterInvoiceList = (item) => {
+    var filteredArrays = []
+    filteredArrays = getAllInvoiceList.filter(value => value.debtorId == item.value)
+    setfilteredInvoiceList([filteredArrays[0]])
+
+  }
+  const [totalValue, settotalValue] = useState([])
+
+  const TotalDebtorPayment = (item) => {
+  }
+
+
+  return (
     <Container fluid className="mt-5 mb-5 text-capitalize">
       <Row>
         <Col lg={12}>
           <Card className="mt-5">
             <CardBody>
               <CardTitle className="h2 mb-4">
-                 <Row>
-                   <Col md={10}>
-                     <h5>Invoice</h5>
-                   </Col>
-                   <Col md={2} className="text-end">
-                   <Button className="btn btn-sm btn-info" onClick={()=>window.location.reload()}> View Invoice List</Button>
+                <Row>
+                  <Col md={10}>
+                    <h5>Invoice</h5>
+                  </Col>
+                  <Col md={2} className="text-end">
+                    <Button className="btn btn-sm btn-info" onClick={() => window.location.reload()}> View Invoice List</Button>
 
-                   </Col>
-        </Row> 
+                  </Col>
+                </Row>
 
-               </CardTitle>
+              </CardTitle>
               <form>
                 <Row className="custom-row">
                   <Col xs={12} md={2}>
@@ -664,41 +648,41 @@ console.log("TotalDebtorPayment",item)
                 </Row>
 
                 <Row>
-                <table className="table table-bordered">
-       <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Company Name</th>
-      <th scope="col">Invoice number</th>
-      <th scope="col">Date</th>
-      <th scope="col">Amount</th>
-     
-    </tr>
-  </thead>
-  <tbody>
-    {filteredInvoiceList != undefined && filteredInvoiceList.length != 0 ?filteredInvoiceList.map((item)=>{
-      return <tr key={item}>
-        <td><input type="radio" onChange={()=>TotalDebtorPayment(item)}/></td>
-        <td>
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Invoice number</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
 
-          {item.debtor.companyName}
-        </td>
-        <td> {item.invoiceNumber}</td>
-        <td>{ moment(item.dueDate).format("DD-MMM-YYYY")}</td>
-        <td className="text-end">
-        <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredInvoiceList != undefined && filteredInvoiceList.length != 0 ? filteredInvoiceList.map((item) => {
+                        return <tr key={item}>
+                          <td><input type="radio" onChange={() => TotalDebtorPayment(item)} /></td>
+                          <td>
 
-        </td>
+                            {item.debtor.companyName}
+                          </td>
+                          <td> {item.invoiceNumber}</td>
+                          <td>{moment(item.dueDate).format("DD-MMM-YYYY")}</td>
+                          <td className="text-end">
+                            <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
 
-      </tr>
-    }):''}
-    </tbody></table>
-    Total ={totalValue}
+                          </td>
+
+                        </tr>
+                      }) : ''}
+                    </tbody></table>
+                  Total ={totalValue}
                 </Row>
 
-              
-                </form>
-             
+
+              </form>
+
             </CardBody>
           </Card>
         </Col>

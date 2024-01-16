@@ -31,33 +31,24 @@ import { fetchReportDefulterPreviewStart } from "store/ReportDefulterPreview/Rep
 
 
 const ReportDefPreviewModals = props => {
-  const { isOpen, toggle, selected, filteredCustomerDetail, feedbackdataPaylod, allInvoiceList, ratingValue ,dataForPreview} = props
+  const { isOpen, toggle, selected, filteredCustomerDetail, feedbackdataPaylod, allInvoiceList, ratingValue, dataForPreview } = props
   const allInvoiceListForPreview = allInvoiceList[0] != undefined ? allInvoiceList[0].allInvoiceListForPreview : []
   const Integrity = ratingValue.Integrity
   const responsivestarRating = ratingValue.responsivestarRating
   const timelystarRating = ratingValue.timelystarRating
-  console.log("feedbackdataPaylod", allInvoiceList)
   const dispatch = useDispatch()
-  console.log("filteredCustomerDetail", filteredCustomerDetail)
   const isConfirmModalOpen = useSelector(confirReportDefaultModel)
   const ReportDefulterPreviewData = useSelector(selectReportDefPreviwData)
   const toggleViewModal = () => dispatch(setConfirmReportDefaultModal(!confirReportDefaultModel));
-  console.log("reportDefulterPreviw", ReportDefulterPreviewData);
-
-
 
   useEffect(() => {
     dispatch(fetchReportDefulterPreviewStart())
-    console.log("allInvoiceList Preview", dataForPreview)
   }, [])
 
   const handleFeedbackModal = () => {
-
-
     dispatch(setConfirmReportDefaultModal(!isConfirmModalOpen))
   }
   const PDF = "https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-file.pdf"
-  console.log("PREVIEW PROPS ", props)
   return (
     <Modal
       isOpen={isOpen}
@@ -72,7 +63,7 @@ const ReportDefPreviewModals = props => {
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Report Defaulter Preview</ModalHeader>
         <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceLists={allInvoiceList} ratingValue={ratingValue} />
-        {console.log('filteredCustomerDetail', filteredCustomerDetail)}
+
         <ModalBody className="bg-light">
           <Row className="p-3">
             <Row className="">
@@ -91,7 +82,7 @@ const ReportDefPreviewModals = props => {
                 GST Number - {filteredCustomerDetail.gstin}
               </Label>
               <Label className="text-capitalize">
-                {console.log("filteredCustomerDetail.address1", filteredCustomerDetail.address1)}
+
                 Address - {filteredCustomerDetail.address1 != '' ? filteredCustomerDetail.address1 + "," : ''} {filteredCustomerDetail.address2 != '' ? filteredCustomerDetail.address2 + "," : ''} {filteredCustomerDetail.city != '' ? filteredCustomerDetail.city + "," : ''} {filteredCustomerDetail.zipcode}
               </Label>
               <Label className="text-uppercase">
@@ -196,11 +187,11 @@ const ReportDefPreviewModals = props => {
 
                   </Col>
                   <Col md={3}>
-                   
+
 
                   </Col>
                   <Col md={3}>
-                   
+
 
                   </Col>
                 </Row>

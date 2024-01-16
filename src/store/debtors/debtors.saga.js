@@ -77,7 +77,6 @@ function* fetchAllInvoice() {
   try {
     const response = yield call(getAllInvoiceList)
     yield put(getAllInvoiceSuccess(response))
-    console.log("IUJIUJIUJIUJ0", response)
   } catch (error) {
     yield put(getAllInvoiceFail(error))
   }
@@ -156,7 +155,6 @@ function* updatePendingDocumentSaga(payload) {
 function* getFeedbackQuestionSaga() {
   try {
     const response = yield call(getFeebBackQuestionListAPI)
-    console.log("responseresponseresponse", response)
     yield put(getFeebBackQuestionListSuccess(response.response))
   } catch (error) {
     yield put(getFeebBackQuestionListFail(error))
