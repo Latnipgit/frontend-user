@@ -34,3 +34,7 @@ export const selectDoardAdminDataLoading = createSelector(
   (reportMeDefulter) => reportMeDefulter.loading
 );
 
+export const getAllCompanyListSelector = createSelector(
+  [selectCompanySearchReducer],
+  (reportMeDefulter) => reportMeDefulter.companyList
+);

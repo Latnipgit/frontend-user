@@ -53,7 +53,7 @@ export const getAllInvoiceList = () => getAfter("/api/defaulters/getAllDefaultIn
 export const getGeneralDoucmentsAPI = () => getwithToken("/api/files/getGeneralDocuments")
 export const getFeebBackQuestionListAPI = () => getwithToken("/api/questions/getAllQuestions")
 export const getCompanySearchList = () => getAfter("/api/debtors/getAllDebtorsByCompanyId")
-/* export const getCompanySearchList = data => post(url.GET_COMPNAY_SEARCH_LIST, data); */
+ export const getAllCompany = data => post(url.GET_COMPNAY_SEARCH_LIST); 
 // get Product detail
 export const getProductDetail = id =>
   get(`${url.GET_PRODUCTS_DETAIL}/${id}`, { params: { id } });

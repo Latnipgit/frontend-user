@@ -338,7 +338,7 @@ const ReportedDefaulterModel = props => {
           "transportationDocument": data[findIdex].DeliveryDocument != '' ? data[findIdex].DeliveryDocument.documentId : '',
         }
       } else {
-        if (data[setvalu].amount != "" && data[setvalu].itemDetail != "") {
+        if (data[setvalu].amount != "" &&data[setvalu].date != "" && data[setvalu].invoiceDocument != ""&& data[setvalu].itemDetail != "") {
           setallInvoiceList((items) => [...items, dummy])
           setisDisabled(false)
           toast.success("Invoice Add Successfully")
@@ -351,7 +351,7 @@ const ReportedDefaulterModel = props => {
         }
       }
     } else {
-      if (data[setvalu].amount != "" && data[setvalu].itemDetail != "") {
+      if (data[setvalu].amount != "" &&data[setvalu].date != "" && data[setvalu].invoiceDocument != ""&&  data[setvalu].itemDetail != "") {
         setallInvoiceList((items) => [...items, dummy])
         setisDisabled(false)
         toast.success("Invoice Add Successfully")

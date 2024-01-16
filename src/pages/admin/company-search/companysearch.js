@@ -49,8 +49,8 @@ import { getCompanyList as ongetCompanyList } from "../../../../src/store/action
 import TableContainer from "../../../components/Common/TableContainer";
 import InlineFilterForm from '../ApprovedTransaction/InlineFilterForm';
 import { get } from "helpers/api_helper";
-import { fetchCompanySearchStart } from "store/CompanySearch/CompanySearch.action";
-import { selectCompanySearchList, selectdashboardAdminDataMap } from "store/CompanySearch/CompanySearch.selecter";
+import { fetchCompanySearchStart, getAllCompanyListAction } from "store/CompanySearch/CompanySearch.action";
+import { selectCompanySearchList, selectdashboardAdminDataMap, getAllCompanyListSelector } from "store/CompanySearch/CompanySearch.selecter";
 import { fetchCompanySearchViewDatatlStart } from "store/CompanySearchView/CompanySearchView.action";
 import { selectCompanySearchVeiwDatilsList } from "store/CompanySearchView/CompanySearchView.selecter";
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
@@ -72,6 +72,7 @@ const CompanySearch = props => {
   };
 
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
+  const getAllCompanyList = useSelector(getAllCompanyListSelector)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
 
@@ -89,6 +90,7 @@ const CompanySearch = props => {
 
   useEffect(() => {
     dispatch(fetchCompanySearchStart())
+    dispatch(getAllCompanyListAction())
     setCurrenViewList(currentUserViewDetails)
   }, [])
 

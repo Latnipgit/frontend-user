@@ -322,7 +322,7 @@ const ReportedDefaulterModel = props => {
 
             <Row className="selectionListss">
               <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Notes</b></div>
+                <div className="mb-2"><b className="mt-2">Remarks</b></div>
               </Col>
               <Col md={5}>
                 <div className="d-inline">
@@ -333,7 +333,7 @@ const ReportedDefaulterModel = props => {
                     name="customerEmail"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    placeholder="Notes"
+                    placeholder="Remarks"
                   />
 
                 </div>

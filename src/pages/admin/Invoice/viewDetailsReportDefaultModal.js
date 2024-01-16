@@ -95,8 +95,8 @@ const ViewDetailsReportDefaultModal = props => {
                       <Col md={8} className="pt-4">
                         <strong>Invoice Document</strong>
                       </Col>
-                      <Col md={4}>
-                        {item.invoiceDocument != "" ?
+                      <Col md={4} className="mt-2">
+                        {item.invoiceDocument != null ?
                           <a href={item.invoiceDocument.url} rel='noreferrer' target='_blank'>
                             {/* <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
                             <img src={jpgImg} className="iconsImage shadow" />
