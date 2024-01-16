@@ -73,7 +73,7 @@ const CompanySearch = props => {
 
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
   const getAllCompanyList = useSelector(getAllCompanyListSelector)
-  const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
+  const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
 
   const viewModel = (value) => {
@@ -240,7 +240,7 @@ const CompanySearch = props => {
 
           <TableContainer
             columns={columns}
-            data={filteredData.length > 0 ? filteredData.reverse() : selectCompanySearchListMap}
+            data={filteredData.length > 0 ? filteredData : selectCompanySearchListMap}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}

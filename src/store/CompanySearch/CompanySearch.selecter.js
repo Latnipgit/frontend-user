@@ -10,11 +10,11 @@ export const selectCompanySearchList = createSelector(
 export const selectdashboardAdminDataMap = createSelector(
   [selectCompanySearchList],
   (reportMeDefulter) => {
-    return reportMeDefulter.map((list, i) => {
-
+    let SrNo = reportMeDefulter.length + 1
+    return reportMeDefulter.map((list, i, arr) => {
       const { createdAt, id } = list
       let DueSince = moment.utc(createdAt).format("DD-MM-YYYY");
-      let SrNo = i + 1
+      SrNo--
       const aatingArray = list.ratings.length !== 0 ? list.ratings.map(x => {
         if (x.rating != undefined) {
           return +x.rating
