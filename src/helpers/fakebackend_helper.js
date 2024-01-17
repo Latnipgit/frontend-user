@@ -52,8 +52,8 @@ export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
 export const getAllInvoiceList = () => getAfter("/api/defaulters/getAllDefaultInvoicesRaisedByMe")
 export const getGeneralDoucmentsAPI = () => getwithToken("/api/files/getGeneralDocuments")
 export const getFeebBackQuestionListAPI = () => getwithToken("/api/questions/getAllQuestions")
-export const getCompanySearchList = () => getAfter("/api/debtors/getAllDebtorsByCompanyId")
- export const getAllCompany = data => post(url.GET_COMPNAY_SEARCH_LIST); 
+export const getCompanySearchList = () => getAfter("/api/debtors/search")
+export const getAllCompany = data => post(url.GET_COMPNAY_SEARCH_LIST);
 // get Product detail
 export const getProductDetail = id =>
   get(`${url.GET_PRODUCTS_DETAIL}/${id}`, { params: { id } });
@@ -115,7 +115,7 @@ export const updatePendingDocument = data => addEmployeeAPImethod("api/transacti
 
 export const getEmployeeList = data => addEmployeeAPImethod(url.GET_EMPLOYEE);
 export const addDebtorIdToarrayForPreviewAPI = data => addEmployeeAPImethod("/api/transactions/getAllInvoicesForIds");
-export const addRatingofdebtor = data => addEmployeeAPImethod("/api/ratings/add",data);
+export const addRatingofdebtor = data => addEmployeeAPImethod("/api/ratings/add", data);
 export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api/defaulters/initiatePaymentVerificationGeneral");
 export const uploadCACertificateAPIMethod = data => addEmployeeAPImethod("/api/transactions/updateInvoiceDocumentsCACertificate");
 export const requestAEdit = data => addEmployeeAPImethod("/api/transactions/requestDefaultInvoiceEdit");

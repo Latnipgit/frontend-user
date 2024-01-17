@@ -75,7 +75,7 @@ const CompanySearch = props => {
   const getAllCompanyList = useSelector(getAllCompanyListSelector)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
-  console.log('selectCompanySearchListMap', selectCompanySearchListMap);
+  console.log('selectCompanySearchListMap', selectCompanySearchLists);
 
 
   const viewModel = (value) => {

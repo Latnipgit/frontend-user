@@ -21,7 +21,7 @@ import moment from 'moment'
 const CompnayViewDetails = props => {
     const { isOpen, toggle, selected, currenViewList } = props
 
-    console.log("currenViewList", selected);
+    console.log("currenViewList", currenViewList);
 
     const [attachments, setAttachments] = useState([
         { name: 'document.pdf', type: 'application/pdf' },
