@@ -52,7 +52,7 @@ export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
 export const getAllInvoiceList = () => getAfter("/api/defaulters/getAllDefaultInvoicesRaisedByMe")
 export const getGeneralDoucmentsAPI = () => getwithToken("/api/files/getGeneralDocuments")
 export const getFeebBackQuestionListAPI = () => getwithToken("/api/questions/getAllQuestions")
-export const getCompanySearchList = () => getAfter("/api/debtors/search")
+
 export const getAllCompany = data => post(url.GET_COMPNAY_SEARCH_LIST);
 // get Product detail
 export const getProductDetail = id =>
@@ -109,8 +109,8 @@ export const addCustomerListAPI = data => addEmployeeAPImethod(url.ADD_CUSTOMER_
 export const recordPaymentAPIMethod = data => addEmployeeAPImethod("api/defaulters/initiatePaymentVerification", data);
 export const updatePendingDocument = data => addEmployeeAPImethod("api/transactions/updateInvoiceDocuments", data);
 
-
-
+//company Search
+export const getCompanySearchList = (data) => addEmployeeAPImethod("/api/debtors/search", data)
 // Get employee
 
 export const getEmployeeList = data => addEmployeeAPImethod(url.GET_EMPLOYEE);

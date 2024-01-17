@@ -179,8 +179,8 @@ const CompnayViewDetails = props => {
                                         {currenViewList != undefined ? currenViewList.map((item, i) => {
                                             return <tr key={i}>
                                                 <td>{item.companyName}</td>
-                                                <td>₹1000,00,00</td>
-                                                <td>12-12-2023</td>
+                                                <td>{item.totalAmount != undefined ? item.totalAmount : ""}</td>
+                                                <td>{item.dueFrom != undefined ? item.dueFrom : ""}</td>
                                                 <td>4.2</td>
                                                 <td style={{ color: "green" }}><b><FcCheckmark />Approved</b> </td>
                                             </tr>

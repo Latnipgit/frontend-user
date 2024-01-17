@@ -66,16 +66,16 @@ const CompanySearch = props => {
   const [selected, setSelected] = useState('')
   const [showMenuItems, setShowMenuItems] = useState(true);
   const toggleViewModal = () => setModal1(!modal1);
-  const handleEyeIconClick = () => {
-    const newPageUrl = '/company-dashboard';
-    window.location.href = newPageUrl;
-  };
+  /*  const handleEyeIconClick = () => {
+     const newPageUrl = '/company-dashboard';
+     window.location.href = newPageUrl;
+   }; */
 
-  const selectCompanySearchLists = useSelector(selectCompanySearchList)
-  const getAllCompanyList = useSelector(getAllCompanyListSelector)
+  /*   const selectCompanySearchLists = useSelector(selectCompanySearchList)
+    const getAllCompanyList = useSelector(getAllCompanyListSelector) */
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
-  console.log('selectCompanySearchListMap', selectCompanySearchLists);
+  console.log('selectCompanySearchListMap', selectCompanySearchListMap);
 
 
   const viewModel = (value) => {
@@ -91,7 +91,11 @@ const CompanySearch = props => {
   }
 
   useEffect(() => {
-    dispatch(fetchCompanySearchStart())
+    dispatch(fetchCompanySearchStart({
+      "companyName": "",
+      "companyPan": "",
+      "gstin": ""
+    }))
     dispatch(getAllCompanyListAction())
     //  setCurrenViewList(currentUserViewDetails)
   }, [])
@@ -147,7 +151,7 @@ const CompanySearch = props => {
       },
       {
         Header: "Due Form",
-        accessor: "DueSince",
+        accessor: "dueFrom",
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
@@ -156,7 +160,7 @@ const CompanySearch = props => {
       },
       {
         Header: "Due Amount",
-        accessor: "amoutnDue",
+        accessor: "totalAmount",
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {

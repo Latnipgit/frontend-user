@@ -11,21 +11,19 @@ export const selectdashboardAdminDataMap = createSelector(
   [selectCompanySearchList],
   (reportMeDefulter) => {
     let SrNo = reportMeDefulter.length + 1
-    return reportMeDefulter.map((list, i, arr) => {
-      const { createdAt, id } = list
-      let DueSince = moment.utc(createdAt).format("DD-MM-YYYY");
+    return reportMeDefulter.map((list) => {
+      const { id, dueFrom, totalAmount } = list
       SrNo--
       const aatingArray = list.ratings.length !== 0 ? list.ratings.map(x => {
         if (x.rating != undefined) {
           return +x.rating
         }
       }).filter((y) => y !== undefined) : ''
-      let rating = aatingArray !== '' ? aatingArray.reduce((x, y) => x + y, 0) / aatingArray.length : "";
-      let CompanyName = list.companyName !== undefined ? list.companyName : "";
-      let PANCARD = list.companyPan !== undefined ? list.companyPan : "";
-      let GST = list.gstin !== undefined ? list.gstin : "";
-      let amoutnDue = 50000
-      return { SrNo, id, CompanyName, GST, PANCARD, rating, DueSince, amoutnDue }
+      const rating = aatingArray !== '' ? aatingArray.reduce((x, y) => x + y, 0) / aatingArray.length : "";
+      const CompanyName = list.companyName !== undefined ? list.companyName : "";
+      const PANCARD = list.companyPan !== undefined ? list.companyPan : "";
+      const GST = list.gstin !== undefined ? list.gstin : "";
+      return { SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount }
     })
   }
 );

@@ -40,8 +40,8 @@ const GST = (cell) => {
         textTransform: "uppercase"
     };
     return <div style={divStyle}>{cell.value}
-    
-    
+
+
     </div>
 };
 const AADHAR = (cell) => {
@@ -53,7 +53,7 @@ const PANCARD = (cell) => {
         textTransform: "uppercase"
     };
     return <div style={divStyle}>{cell.value}</div>
-    
+
 };
 const daysSinceReference = (cellValue, referenceDate) => {
     if (cellValue) {
@@ -86,7 +86,7 @@ const DueSince = (cell) => {
             day: 'numeric'
         }); */
 
-    const newDate = cell.value.split("-").reverse().join("-");
+    const newDate = cell.value != undefined ? cell.value.split("-").reverse().join("-") : "";
     const currentDate = new Date(newDate);
 
     const calculateDateDifference = () => {
@@ -100,8 +100,13 @@ const DueSince = (cell) => {
 
     return (
         <span className={badgeClassName}>
-            <div style={divStyle}>({calculateDateDifference()} days)</div>
-            <div style={divStyle}>{cell.value}</div>
+            {cell.value && (
+                <>
+                    <div style={divStyle}>({calculateDateDifference()} days)</div>
+                    <div style={divStyle}>{cell.value}</div>
+                </>
+            )}
+
         </span>
     );
 };

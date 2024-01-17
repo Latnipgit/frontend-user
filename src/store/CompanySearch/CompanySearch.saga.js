@@ -7,10 +7,10 @@ import { FETCH_COMPANY_SEARCH_START, GET_ALL_COMPANY_LIST } from "./CompanySearc
 import { getCompanySearchList, getAllCompany } from "helpers/fakebackend_helper"
 
 
-export function* fetchCompanySearchAsync() {
+export function* fetchCompanySearchAsync(payload) {
   try {
-    const ReportMeDefulterArray = yield call(getCompanySearchList)
-    yield put(fetchCompanySearchSuccess(ReportMeDefulterArray.response))
+    const ReportMeDefulterArray = yield call(getCompanySearchList, payload.payload)
+    yield put(fetchCompanySearchSuccess(ReportMeDefulterArray.data.response))
   } catch (error) {
     yield put(fetchCompanySearchFailure(error))
   }
