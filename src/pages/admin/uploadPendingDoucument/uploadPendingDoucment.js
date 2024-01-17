@@ -51,6 +51,8 @@ import moment from 'moment'
 import { ToastContainer, toast } from 'react-toastify';
 import { numberFormat } from "./uploadPendingDoc"
 import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultModal"
+import { ReportRaisedByMeTable } from "./uploadRaisedByMe"
+import { ReportSentTomeTable } from "./uploadSentTome"
 
 /* import './style.css' */
 // import { ToastContainer } from "react-toastify"
@@ -85,6 +87,7 @@ const UploadPendingListModule = props => {
     const uploadpendingFilelist = useSelector(selectUploadingPendingListData);
     const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeData);
     const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeData);
+    console.log("selectTransactionsSentToMe", selectTransactionsSentToMe);
     useEffect(() => {
         dispatch(getAllInvoice());
         dispatch(setIsViewDetailModalOpen())
@@ -206,14 +209,11 @@ const UploadPendingListModule = props => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {selectTransactionsRaisedByMe.length > 0 ? <ReportDefulterTable GetUploadPendingList={selectTransactionsRaisedByMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
+                                {selectTransactionsRaisedByMe.length > 0 ? <ReportRaisedByMeTable GetUploadPendingList={selectTransactionsRaisedByMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
                             </tbody>
                         </table>
-
-
                     </Row>
                 </CardBody>
-
                 <CardBody>
                     <div className="mb-4 h4 card-title"></div>
                     <Row>
@@ -238,11 +238,9 @@ const UploadPendingListModule = props => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {selectTransactionsSentToMe.length > 0 ? <ReportDefulterTable GetUploadPendingList={selectTransactionsSentToMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArrySecond} /> : ''}
+                                {selectTransactionsSentToMe.length > 0 ? <ReportSentTomeTable GetUploadPendingList={selectTransactionsSentToMe} handleUploadFiles={handleUploadFiles} getDaysArray={getDaysArrySecond} /> : ''}
                             </tbody>
                         </table>
-
-
                     </Row>
                 </CardBody>
             </Card>
@@ -250,83 +248,6 @@ const UploadPendingListModule = props => {
     );
 }
 
-const ReportDefulterTable = ({ GetUploadPendingList, viewModel, requestEdit, handleUploadFiles, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, handleViewDetail }) => {
 
-    return (
-        <>
-
-            {
-                GetUploadPendingList != undefined ? GetUploadPendingList.map((item, index) => {
-                    {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
-                    return <tr key={item}>
-
-                        <th scope="row" className="pt-4">{index + 1}</th>
-                        <td className="pt-4 text-capitalize">{item.defaulterEntry.debtor.companyName}</td>
-                        <td className="pt-4">{item.defaulterEntry.invoices.map((item) => {
-                            return <span key={item}>{item}, &nbsp;</span>
-                        })}</td>
-
-                        <td className="pt-4 d-flex text-capitalize">{item.defaulterEntry.debtor.companyName}
-                            <br />
-                            {item.defaulterEntry.debtor.address1} {item.defaulterEntry.debtor.address2}, {item.defaulterEntry.debtor.city}</td>
-
-                        <td className="pt-4">
-                            {numberFormat(item.defaulterEntry.totalAmount)}
-                            {/* <CurrencyFormat value={item.defaulterEntry.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
-
-                        </td>
-
-                        <td >
-
-                            <div className="" style={{ padding: "2px 15px" }}>
-
-                                <div className=" text-center bg-danger rounded text-light">
-                                    <div className="text-capitalize">
-
-                                        {getDaysArray[index]}  &nbsp;
-
-
-                                        <span className="ml-1">Days</span> </div>
-                                    <div className="text-capitalize" >{item.paymentDate}</div>
-                                </div>
-                            </div>
-
-                        </td>
-                        <td className="pt-4">4.2</td>
-                        <td>
-                            <div className="pt-2">
-                                &nbsp;
-                                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                                    title="Upload Pending Files" href={item.url} rel='noreferrer'
-                                    target='_blank' onClick={() => handleUploadFiles(item)
-
-                                    }>
-                                    <i className='bx bx-cloud-upload textsizing' ></i>
-                                </button>
-                                &nbsp;
-
-
-                            </div>
-                        </td>
-                        {/* <td>
-<div className="pt-2">
-<Button className="btn btn-info btn-sm"
-onClick={() => viewModels()
- 
-}
->
-Upload Document
-</Button>
-
-</div>
-</td> */}
-                    </tr>
-                }) : ''
-            }
-            <ToastContainer />
-        </>
-    )
-
-}
 
 export default withRouter(UploadPendingListModule)

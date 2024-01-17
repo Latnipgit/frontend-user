@@ -338,7 +338,7 @@ const ReportedDefaulterModel = props => {
           "transportationDocument": data[findIdex].DeliveryDocument != '' ? data[findIdex].DeliveryDocument.documentId : '',
         }
       } else {
-        if (data[setvalu].amount != "" &&data[setvalu].date != "" && data[setvalu].invoiceDocument != ""&& data[setvalu].itemDetail != "") {
+        if (data[setvalu].amount != "" && data[setvalu].date != "" && data[setvalu].invoiceDocument != "" && data[setvalu].itemDetail != "") {
           setallInvoiceList((items) => [...items, dummy])
           setisDisabled(false)
           toast.success("Invoice Add Successfully")
@@ -351,7 +351,7 @@ const ReportedDefaulterModel = props => {
         }
       }
     } else {
-      if (data[setvalu].amount != "" &&data[setvalu].date != "" && data[setvalu].invoiceDocument != ""&&  data[setvalu].itemDetail != "") {
+      if (data[setvalu].amount != "" && data[setvalu].date != "" && data[setvalu].invoiceDocument != "" && data[setvalu].itemDetail != "") {
         setallInvoiceList((items) => [...items, dummy])
         setisDisabled(false)
         toast.success("Invoice Add Successfully")
@@ -1136,7 +1136,7 @@ const ReportedDefaulterModel = props => {
                                 type="file"
                                 className="form-control"
                                 id="uploadInvoice"
-                                accept=".pdf, .doc, .docx, .txt"
+                                accept=".pdf, .png, .jpg, .jpeg"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
                                   handleFileChange(e, "uploadInvoice", index)
@@ -1154,7 +1154,7 @@ const ReportedDefaulterModel = props => {
                                 type="file"
                                 className="form-control"
                                 id="uploadchallanDispatchDocument"
-                                accept=".pdf, .doc, .docx, .txt"
+                                accept=".pdf, .png, .jpg, .jpeg"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
                                   handleFileChange(
@@ -1173,7 +1173,7 @@ const ReportedDefaulterModel = props => {
                                 type="file"
                                 className="form-control"
                                 id="uploadTransportationDocumentDeliveryReceipt"
-                                accept=".pdf, .doc, .docx, .txt"
+                                accept=".pdf, .png, .jpg, .jpeg"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
                                   handleFileChange(
@@ -1196,7 +1196,7 @@ const ReportedDefaulterModel = props => {
                                 type="file"
                                 className="form-control"
                                 id="uploadPurchaseOrder"
-                                accept=".pdf, .doc, .docx, .txt"
+                                accept=".pdf, .png, .jpg, .jpeg"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
                                   handleFileChange(e, "uploadPurchaseOrder", index)
@@ -1211,7 +1211,7 @@ const ReportedDefaulterModel = props => {
                                 type="file"
                                 className="form-control"
                                 id="GSTDocument"
-                                accept=".pdf, .doc, .docx, .txt"
+                                accept=".pdf, .png, .jpg, .jpeg"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
                                   handleFileChange(e, "GSTDocument", index)
@@ -1226,7 +1226,7 @@ const ReportedDefaulterModel = props => {
                                 type="file"
                                 className="form-control"
                                 id="generalDocuments"
-                                accept=".pdf, .doc, .docx, .txt"
+                                accept=".pdf, .png, .jpg, .jpeg"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
                                   handleFileChange(e, "generalDocuments", index)

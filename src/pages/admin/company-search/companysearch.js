@@ -75,6 +75,8 @@ const CompanySearch = props => {
   const getAllCompanyList = useSelector(getAllCompanyListSelector)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
+  console.log('selectCompanySearchListMap', selectCompanySearchListMap);
+
 
   const viewModel = (value) => {
     const valueDate = value.cell.row.original
@@ -91,7 +93,7 @@ const CompanySearch = props => {
   useEffect(() => {
     dispatch(fetchCompanySearchStart())
     dispatch(getAllCompanyListAction())
-    setCurrenViewList(currentUserViewDetails)
+    //  setCurrenViewList(currentUserViewDetails)
   }, [])
 
 
