@@ -13,8 +13,8 @@ import {
   CardBody,
 } from "reactstrap"
 import { useDispatch, useSelector } from "react-redux";
-import { setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen ,markAsDisputedModalOpenAction} from "../../../store/debtors/debtors.actions"
-import { uploadFilesModalOpen, selectCACertificateOpen, isViewDetailMOdalOpenSelector ,markAsDisputedModalOpenSelector} from "store/debtors/debtors.selecter"
+import { setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen, markAsDisputedModalOpenAction } from "../../../store/debtors/debtors.actions"
+import { uploadFilesModalOpen, selectCACertificateOpen, isViewDetailMOdalOpenSelector, markAsDisputedModalOpenSelector } from "store/debtors/debtors.selecter"
 import { selectReportMeDefData } from "store/ReportMeDefulter/ReportMeDefulter.selecter"
 import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
@@ -49,7 +49,6 @@ const ReportMedefulterComponent = props => {
 
   const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
-  console.log("isClickedToReported", props.isClickedToReported)
   const isViewDetailModal = useSelector(isViewDetailMOdalOpenSelector);
   const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
   const selectReportMeDeflist = useSelector(selectReportMeDefData)
@@ -66,7 +65,7 @@ const ReportMedefulterComponent = props => {
     setModal2(true)
   }
 
- 
+
 
 
   const handleUploadFiles = (item) => {
@@ -103,7 +102,6 @@ const ReportMedefulterComponent = props => {
 
   const requestEdit = (item) => {
 
-    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
     const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
     }
@@ -114,7 +112,6 @@ const ReportMedefulterComponent = props => {
 
   const markedDisputed = (item) => {
 
-    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
     const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
     }
@@ -137,7 +134,7 @@ const ReportMedefulterComponent = props => {
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       {/* <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
-<MarkDisputedMadal isOpen={markAsDisputed} toggle={toggleMarkAsDisputed} selected={selected}/>
+      <MarkDisputedMadal isOpen={markAsDisputed} toggle={toggleMarkAsDisputed} selected={selected} />
 
       <Card>
         <CardBody>
@@ -186,12 +183,11 @@ const ReportMedefulterComponent = props => {
   );
 }
 
-const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit,markedDisputed, handleViewDetail }) => {
+const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, markedDisputed, handleViewDetail }) => {
   return (
     <>
       {selectReportMeDeflistData != undefined ? selectReportMeDeflistData.map((item, index) => {
         return <tr key={item}>
-          {console.log("NEW TABLE ", item)}
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
           <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
@@ -249,7 +245,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Disputed Transaction" href={item.url} rel='noreferrer'
                 target='_blank' onClick={() => markedDisputed(item)
-                  
+
 
                 }>
                 {/* <i className='bx bx-edit textsizing' ></i> */}

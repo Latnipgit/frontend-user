@@ -178,7 +178,6 @@ const fakeBackend = () => {
 
   mock.onPost("/post-fake-profile").reply(config => {
     const user = JSON.parse(config["data"]);
-    // console.log("validUser",user)
 
     const validUser = users.filter(usr => usr.uid === user.idx);
 

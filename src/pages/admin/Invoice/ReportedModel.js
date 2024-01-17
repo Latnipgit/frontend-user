@@ -27,7 +27,6 @@ const ReportedDebtorsModel = props => {
   const [responsivestarRating, setresponsivestarRating] = useState(0)
   const [Integrity, setIntegrity] = useState(0)
   const { isOpen, toggle, filteredCustomerDetail, allInvoiceList, dataForPreview } = props
-  console.log("HARSJH allInvoiceList", allInvoiceList)
   const colourStyles = {
     menuList: styles => ({
       ...styles,
@@ -84,7 +83,6 @@ const ReportedDebtorsModel = props => {
   const toggleViewModal = () => dispatch(setConfirmReportDefaultModal(!confirReportDefaultModel));
   const togglePreviwModal = () => dispatch(setPreviewModalOpen(!isPreviewModalShow));
   const getFeebBackQuestion = useSelector(getFeebBackQuestionListSelector)
-  console.log("getFeebBackQuestiongetFeebBackQuestion", getFeebBackQuestion)
   const handleFeedbackModal = () => {
 
 
@@ -92,7 +90,6 @@ const ReportedDebtorsModel = props => {
   }
 
   const handlePreviewShow = () => {
-    console.log("feedbackdataPaylodfeedbackdataPaylod", feedbackdataPaylod)
     dispatch(addRatingToDebtor(feedbackdataPaylod))
     dispatch(setPreviewModalOpen(!isPreviewModalShow))
     setratingValue(
@@ -121,11 +118,9 @@ const ReportedDebtorsModel = props => {
   const [selectedOption, setSelectedOption] = useState("")
   const [feedbackdataPaylod, setfeedbackdataPaylod] = useState([])
 
-  console.log('feedbackdataPaylod', feedbackdataPaylod);
 
   const handlefinancialdifficult = (selected) => {
 
-    console.log("selected", selected)
     const userFeedbackcheck = feedbackdataPaylod.findIndex(x => x.questionDesc == selected.questionDesc)
     if (userFeedbackcheck !== -1) {
       feedbackdataPaylod[userFeedbackcheck].values = selected.values
@@ -140,7 +135,6 @@ const ReportedDebtorsModel = props => {
     dispatch(getFeebBackQuestionList())
 
   }, [])
-  console.log("allInvoiceList REPORT", props)
 
   return (
     <Modal
@@ -156,7 +150,7 @@ const ReportedDebtorsModel = props => {
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Customer Feedback </ModalHeader>
         <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} />
-        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue} dataForPreview={dataForPreview}/>
+        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue} dataForPreview={dataForPreview} />
         <ModalBody>
           <div className="mt-3 mb-3">
             <Row>

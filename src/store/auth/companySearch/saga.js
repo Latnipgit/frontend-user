@@ -10,17 +10,15 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import {searchCompanyAPI } from "helpers/fakebackend_helper";
+import { searchCompanyAPI } from "helpers/fakebackend_helper";
 
 function* searchCompanyasync(id) {
-   
-  console.log("IDIDIDID", id.id)
-  const payload={
-    "companyId":id.id
+
+  const payload = {
+    "companyId": id.id
   }
   try {
-    const response = yield call(searchCompanyAPI,payload)
-    console.log("RESPONCE", response)
+    const response = yield call(searchCompanyAPI, payload)
     localStorage.setItem("tokenemployeeRegister", response.data.response.token)
     yield put(searchCompanySuccess(response))
   } catch (error) {

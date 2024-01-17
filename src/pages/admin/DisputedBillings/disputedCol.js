@@ -12,9 +12,9 @@ const dateFormat = (date, format) => {
 };
 const toLowerCase1 = str => {
     return (
-      str === "" || str === undefined ? "" : str.toLowerCase()
+        str === "" || str === undefined ? "" : str.toLowerCase()
     );
-  };
+};
 
 const CheckBox = (cell) => {
     return cell.value ? cell.value : '';
@@ -37,7 +37,7 @@ const InvoiceNo = (cell) => {
     // Function to handle the click event on the icon
     const handleIconClick = () => {
         // Add your functionality here when the icon is clicked
-        console.log('Icon clicked!');
+
         // For example, you could open a modal, trigger an action, etc.
     };
 

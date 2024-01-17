@@ -91,7 +91,6 @@ export const DebtorsGraph = () => {
   }))
 
   useEffect(() => {
-    console.log(chartData)
     if (chartRef.current) {
       const ctx = chartRef.current.getContext("2d")
 
@@ -259,7 +258,6 @@ export const DebtorsGraph = () => {
 
   const handleChartChange = chartType => {
     setActiveChart(chartType)
-    console.log(chartType)
   }
 
   function getRandomColor(index) {
@@ -280,36 +278,32 @@ export const DebtorsGraph = () => {
           >
             <button
               type="button"
-              className={`btn btn-secondary ${
-                activeChart === "totalDebtors" ? "active" : ""
-              }`}
+              className={`btn btn-secondary ${activeChart === "totalDebtors" ? "active" : ""
+                }`}
               onClick={() => handleChartChange("totalDebtors")}
             >
               Total Debts
             </button>
             <button
               type="button"
-              className={`btn btn-secondary ${
-                activeChart === "citywise" ? "active" : ""
-              }`}
+              className={`btn btn-secondary ${activeChart === "citywise" ? "active" : ""
+                }`}
               onClick={() => handleChartChange("citywise")}
             >
               City Wise
             </button>
             <button
               type="button"
-              className={`btn btn-secondary ${
-                activeChart === "top10Debtors" ? "active" : ""
-              }`}
+              className={`btn btn-secondary ${activeChart === "top10Debtors" ? "active" : ""
+                }`}
               onClick={() => handleChartChange("top10Debtors")}
             >
               Top Debtors
             </button>
             <button
               type="button"
-              className={`btn btn-secondary ${
-                activeChart === "daysWise" ? "active" : ""
-              }`}
+              className={`btn btn-secondary ${activeChart === "daysWise" ? "active" : ""
+                }`}
               onClick={() => handleChartChange("daysWise")}
             >
               Days Wise

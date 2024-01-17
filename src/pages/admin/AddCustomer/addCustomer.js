@@ -36,7 +36,7 @@ import moment from 'moment'
 
 
 const AddCustomer = props => {
-  
+
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const dispatch = useDispatch();
@@ -53,7 +53,6 @@ const AddCustomer = props => {
     GetAllDebtors = selectGetAllDebtors
   }
 
-  console.log(GetAllDebtors);
 
   useEffect(() => {
     dispatch(getAllDebtors());
@@ -151,8 +150,6 @@ const CustomerList = ({ GetAllDebtorsdata }) => {
     <>
       {GetAllDebtorsdata != undefined ? GetAllDebtorsdata.map((item, index) => {
         return <tr key={item}>
-          {console.log("NEW TABLE ", item)}
-
           <th scope="row" className="pt-4">{index + 1}</th>
           {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
           <td className="pt-4 text-capitalize">{item.firstname + '' + item.lastname}</td>

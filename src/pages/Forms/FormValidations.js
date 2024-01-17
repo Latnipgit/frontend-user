@@ -24,8 +24,8 @@ import Breadcrumbs from "../../components/Common/Breadcrumb";
 
 const FormValidations = () => {
 
-   //meta title
-   document.title="Form Validation | Skote - React Admin & Dashboard Template";
+  //meta title
+  document.title = "Form Validation | Skote - React Admin & Dashboard Template";
 
   // Form validation 
   const validation = useFormik({
@@ -47,7 +47,6 @@ const FormValidations = () => {
       zip: Yup.string().required("Please Enter Your Zip"),
     }),
     onSubmit: (values) => {
-      console.log("values", values);
     }
   });
 
@@ -106,7 +105,6 @@ const FormValidations = () => {
       ),
     }),
     onSubmit: (values) => {
-      console.log("values", values);
     }
   });
   const regExp = /\b\d{5}\b/;
@@ -131,9 +129,9 @@ const FormValidations = () => {
       max_Length: Yup.string()
         .max(6, "Must be exactly 6 digits")
         .required("Max 6 chars"),
-        range_Length: Yup.string().required(
-          "range between 5 to 10"
-        ).min(5, "This value should be between 5 and 10")
+      range_Length: Yup.string().required(
+        "range between 5 to 10"
+      ).min(5, "This value should be between 5 and 10")
         .max(10, "This value should be between 5 and 10"),
       min_Value: Yup.string().required("Min Value 6").test('val', 'This value should be greater than or equal to 6', val => val >= 6),
       max_Value: Yup.string().required("Max Value 6").matches(/^[0-6]+$/, "This value should be lower than or equal to 6."),
@@ -149,7 +147,6 @@ const FormValidations = () => {
         .required("Only Hex Value"),
     }),
     onSubmit: (values) => {
-      console.log("values", values);
     }
   });
 
@@ -280,7 +277,7 @@ const FormValidations = () => {
                       </Col>
                     </Row>
                     <Row>
-                    <Col md="4">
+                      <Col md="4">
                         <FormGroup className="mb-3">
                           <Label htmlFor="validationCustom04">State</Label>
                           <Input
@@ -321,7 +318,7 @@ const FormValidations = () => {
                           ) : null}
                         </FormGroup>
                       </Col>
-                      
+
                       <Col md="4">
                         <FormGroup className="mb-3">
                           <Label htmlFor="validationCustom05">Zip</Label>
@@ -813,7 +810,7 @@ const FormValidations = () => {
                         <FormFeedback type="invalid">{rangeValidation.errors.min_Value}</FormFeedback>
                       ) : null}
                     </div>
-                    
+
                     <div className="mb-3">
                       <Label className="form-label">Max Value</Label>
                       <Input

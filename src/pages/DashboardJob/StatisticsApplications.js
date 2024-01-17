@@ -3,7 +3,7 @@ import { Card, CardBody, Col, Nav, NavItem, NavLink } from 'reactstrap';
 import { StatisticsApplicationsChart } from './JobCharts';
 
 import { getStatisticData } from '../../store/actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const StatisticsApplications = () => {
     const [duration, setDuration] = useState('year');
@@ -16,14 +16,13 @@ const StatisticsApplications = () => {
 
     useEffect(() => {
         dispatch(getStatisticData(duration))
-    },[dispatch])
+    }, [dispatch])
 
     const { statistic_data } = useSelector((state) => ({
-        statistic_data : state.DashboardJob.statistic_data
+        statistic_data: state.DashboardJob.statistic_data
     }))
 
     useEffect(() => {
-        console.log("statistic_data", statistic_data)
     }, [statistic_data])
 
     return (

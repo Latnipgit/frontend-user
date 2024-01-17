@@ -15,7 +15,6 @@ import { ToastContainer, toast } from "react-toastify"
 
 const RequestEditMessageModal = props => {
     const { isOpen, toggle } = props
-    console.log("HDHDHDHDHD",isOpen)
 
 
     const dispatch = useDispatch();
@@ -38,7 +37,7 @@ const RequestEditMessageModal = props => {
                     <p>
                         You will be notified when you are given access to edit the documents by email.
                         For any queries please reach out to us on <a className="text-info">support@anandrishi.com</a>.
-                        <br/>
+                        <br />
                         Please note the access will be available to you only for a period of 7 days
                         during which your post status will be Under Process.
                     </p>

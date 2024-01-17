@@ -17,7 +17,7 @@ import CarouselPage from "./CarouselPage";
 const LockScreen2 = (props) => {
 
   //meta title
-  document.title="Lock Screen 2 | Bafana - React Admin & Dashboard ";
+  document.title = "Lock Screen 2 | Bafana - React Admin & Dashboard ";
 
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -30,7 +30,6 @@ const LockScreen2 = (props) => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      console.log(values);
     }
   });
   return (

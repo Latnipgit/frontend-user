@@ -45,7 +45,6 @@ const LatestTranaction = props => {
   const handleConfirmRefer = () => {
     if (selectedLevel) {
       // Handle refer logic here
-      console.log("Referring to senior with level:", selectedLevel);
       setSelectedLevel(''); // Reset the selected level
       setShowReferModal(false);
     }

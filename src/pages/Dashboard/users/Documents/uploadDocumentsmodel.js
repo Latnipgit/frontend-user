@@ -1,23 +1,23 @@
-import React, {useCallback, useState} from 'react'
-import {useDropzone} from 'react-dropzone'
+import React, { useCallback, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
 import axios from "axios";
 
 import {
-    Row,
-    Col,
-    Card,
-    Form,
-    CardBody,
-    Container,
-    ModalFooter,
-    ModalBody,
-    ModalHeader,
-    Modal,
-    InputGroup,
+  Row,
+  Col,
+  Card,
+  Form,
+  CardBody,
+  Container,
+  ModalFooter,
+  ModalBody,
+  ModalHeader,
+  Modal,
+  InputGroup,
 
-    Button,
+  Button,
 } from "reactstrap";
 import Dropzone from "react-dropzone";
 import { Link } from "react-router-dom";
@@ -27,91 +27,87 @@ import UploadDocumentModel from './uploadDocumentsmodel'
 
 
 const uploadDocumentsModel = props => {
-    const { isOpen, toggle, additionalValue } = props
-    const [selectedFiles, setSelectedFiles] = useState([]);
-    const [uploadSuccess, setUploadSuccess] = useState(false);
-    const [modal1, setModal1] = useState(false);
-    const [error, setError] = useState('');
-    const [uploadDocumentID, setuploadDocumentID] = useState('');
-    const toggleViewModal = () => setModal1(!modal1);
-    
-    const handleFileChange = (event) => {
-        const files = event.target.files
-        console.log("FILEEE", event.target.files)
-    
-        const formData = new FormData();
-    
-        formData.append('file', files[0]);   //append the values with key, value pair
-        formData.append('fieldName', "");
-        formData.append('type', "GENERAL");
-    
-    
-        // uploadFile(formData)
-    
-        setuploadDocumentID(formData)
-      }
-    
-     
-    
-    
-    
-    
-    
-      function uploadFile(formData) {
-        console.log("UPLOAD FILE", formData)
-        const token = JSON.parse(localStorage.getItem("authUser")).token
-        const headers = {
-          'x-access-token': token != null ? token : '',
-        };
-    
-    
-        axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
-          headers: headers
-        })
-          .then((response) => {
-       console.log("respo+++",response.data.response)
-       setuploadedCertificate(response.data.response)
+  const { isOpen, toggle, additionalValue } = props
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [modal1, setModal1] = useState(false);
+  const [error, setError] = useState('');
+  const [uploadDocumentID, setuploadDocumentID] = useState('');
+  const toggleViewModal = () => setModal1(!modal1);
 
-          })
-          .catch((error) => {
-            console.log("Response", error)
-    
-          })
-      }
-    
-      const handleSubmit=()=>{
-        uploadFile(uploadDocumentID)
+  const handleFileChange = (event) => {
+    const files = event.target.files
 
-        const timer = setInterval(() => {
-           window.location.reload()
-           toggle()
-          return ()=> clearInterval(timer)
-        }, 1000);
-    
-        // dispatch(uploadCACertificateID(payload))
-     
-    
-      }
-    
-    return (
-        <Modal
-            isOpen={isOpen}
-            role="dialog"
-            autoFocus={true}
-            centered={true}
-            className="exampleModal"
-            tabIndex="-1"
-            toggle={toggle}
-        >
-            <div className="modal-content">
-                <ModalHeader toggle={toggle}>Upload Document</ModalHeader>
-                <ModalBody>
-                    {/* <h6 className="card-title"></h6> */}
-                    
-                   
-                  
-           
-{/* 
+    const formData = new FormData();
+
+    formData.append('file', files[0]);   //append the values with key, value pair
+    formData.append('fieldName', "");
+    formData.append('type', "GENERAL");
+
+
+    // uploadFile(formData)
+
+    setuploadDocumentID(formData)
+  }
+
+
+
+
+
+
+
+  function uploadFile(formData) {
+    const token = JSON.parse(localStorage.getItem("authUser")).token
+    const headers = {
+      'x-access-token': token != null ? token : '',
+    };
+
+
+    axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
+      headers: headers
+    })
+      .then((response) => {
+        setuploadedCertificate(response.data.response)
+
+      })
+      .catch((error) => {
+
+      })
+  }
+
+  const handleSubmit = () => {
+    uploadFile(uploadDocumentID)
+
+    const timer = setInterval(() => {
+      window.location.reload()
+      toggle()
+      return () => clearInterval(timer)
+    }, 1000);
+
+    // dispatch(uploadCACertificateID(payload))
+
+
+  }
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      role="dialog"
+      autoFocus={true}
+      centered={true}
+      className="exampleModal"
+      tabIndex="-1"
+      toggle={toggle}
+    >
+      <div className="modal-content">
+        <ModalHeader toggle={toggle}>Upload Document</ModalHeader>
+        <ModalBody>
+          {/* <h6 className="card-title"></h6> */}
+
+
+
+
+          {/* 
 <div {...getRootProps()}  className='text-center'>
       <input {...getInputProps()} 
       type='file'
@@ -170,35 +166,35 @@ const uploadDocumentsModel = props => {
             <Col md={3}></Col>
           </Row>
 
-     
 
-                </ModalBody>
-                <ModalFooter>
-                    <div className="text-center">
-                        <Button
-                            type="button"
-                            color="primary"
-                            onClick={()=>handleSubmit()
-                               
-                            
-                            }
-                            // disabled={selectedFiles.length == 0}
-                        >
-                        submit
-                        </Button>
-                    </div>
-                    <Button type="button" color="secondary" onClick={toggle}>
-                        Close
-                    </Button>
-                </ModalFooter>
-            </div>
-        </Modal>
-    )
+
+        </ModalBody>
+        <ModalFooter>
+          <div className="text-center">
+            <Button
+              type="button"
+              color="primary"
+              onClick={() => handleSubmit()
+
+
+              }
+            // disabled={selectedFiles.length == 0}
+            >
+              submit
+            </Button>
+          </div>
+          <Button type="button" color="secondary" onClick={toggle}>
+            Close
+          </Button>
+        </ModalFooter>
+      </div>
+    </Modal>
+  )
 }
 
 uploadDocumentsModel.propTypes = {
-    toggle: PropTypes.func,
-    isOpen: PropTypes.bool,
+  toggle: PropTypes.func,
+  isOpen: PropTypes.bool,
 }
 
 export default uploadDocumentsModel

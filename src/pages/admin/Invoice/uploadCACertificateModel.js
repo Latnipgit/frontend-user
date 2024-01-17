@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCACertificateOpen,uploadCACertificateID } from "../../../store/debtors/debtors.actions"
-import { selectCACertificateOpen,uploadCAcertificateSelector } from "store/debtors/debtors.selecter"
+import { setCACertificateOpen, uploadCACertificateID } from "../../../store/debtors/debtors.actions"
+import { selectCACertificateOpen, uploadCAcertificateSelector } from "store/debtors/debtors.selecter"
 import axios from "axios"
 
 import {
@@ -23,17 +23,15 @@ import { ToastContainer, toast } from "react-toastify"
 
 
 const UploadCACertificateModel = props => {
-  const { isOpen, toggle,invoiceId } = props
+  const { isOpen, toggle, invoiceId } = props
   const dispatch = useDispatch();
   const selectCACertificate = useSelector(selectCACertificateOpen);
   const uploadCAcertificate = useSelector(uploadCAcertificateSelector);
-console.log("invoiceIdinvoiceId",invoiceId)
   const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
-const [ uploadedCertificate, setuploadedCertificate] = useState('')
+  const [uploadedCertificate, setuploadedCertificate] = useState('')
 
   const handleFileChange = (event) => {
     const files = event.target.files
-    console.log("FILEEE", event.target.files)
 
     const formData = new FormData();
 
@@ -46,38 +44,34 @@ const [ uploadedCertificate, setuploadedCertificate] = useState('')
 
   }
 
- 
+
 
 
 
 
 
   function uploadFile(formData) {
-    console.log("UPLOAD FILE", formData)
     const token = localStorage.getItem("tokenemployeeRegister")
     const headers = {
       'x-access-token': token != null ? token : '',
     };
 
-
     axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
       headers: headers
     })
       .then((response) => {
-   console.log("respo+++",response.data.response)
-   setuploadedCertificate(response.data.response)
+        setuploadedCertificate(response.data.response)
       })
       .catch((error) => {
-        console.log("Response", error)
 
       })
   }
 
-  const handleSubmit=()=>{
+  const handleSubmit = () => {
 
-    const payload =[{
-      "caCertificateDocument":uploadedCertificate.documentId,
-      "invoiceId":invoiceId,
+    const payload = [{
+      "caCertificateDocument": uploadedCertificate.documentId,
+      "invoiceId": invoiceId,
 
     }]
     dispatch(uploadCACertificateID(payload))
@@ -125,9 +119,9 @@ const [ uploadedCertificate, setuploadedCertificate] = useState('')
               <Row className=" mt-3">
                 <Col md={4}></Col>
                 <Col md={4}>
-<Button className="btn btn-info" onClick={()=>handleSubmit()}>
-  Submit
-</Button>
+                  <Button className="btn btn-info" onClick={() => handleSubmit()}>
+                    Submit
+                  </Button>
 
                 </Col>
                 <Col md={4}></Col>
@@ -139,7 +133,7 @@ const [ uploadedCertificate, setuploadedCertificate] = useState('')
 
         </ModalBody>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </Modal>
   )
 }

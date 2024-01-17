@@ -31,7 +31,6 @@ const Login2 = () => {
       password: Yup.string().required("Please Enter Your Password"),
     }),
     onSubmit: (values) => {
-      console.log("values", values);
     }
   });
   return (

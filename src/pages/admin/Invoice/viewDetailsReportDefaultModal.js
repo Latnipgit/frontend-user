@@ -21,11 +21,10 @@ import pdfImg from '../../../assets/images/newImg/pdf.png'
 import jpgImg from '../../../assets/images/newImg/png-file-.png'
 
 const ViewDetailsReportDefaultModal = props => {
-  const { isOpen, toggle,viewModalData  } = props
-  console.log("viewModalData",viewModalData)
+  const { isOpen, toggle, viewModalData } = props
 
   const filteredCustomerDetail = viewModalData.debtor
-const allInvoiceListForPreview = viewModalData.invoices
+  const allInvoiceListForPreview = viewModalData.invoices
 
   return (
     <Modal
@@ -42,8 +41,8 @@ const allInvoiceListForPreview = viewModalData.invoices
         <ModalHeader toggle={toggle}>View Detail</ModalHeader>
 
         <ModalBody>
-            {filteredCustomerDetail != undefined ?<>
-                    <Row className="">
+          {filteredCustomerDetail != undefined ? <>
+            <Row className="">
               <div className="mb-2"><b className="">Company Detail :</b></div>
 
               <Label className="text-capitalize">
@@ -59,142 +58,141 @@ const allInvoiceListForPreview = viewModalData.invoices
                 GST Number : {filteredCustomerDetail.gstin}
               </Label>
               <Label className="text-capitalize">
-                {console.log("filteredCustomerDetail.address1", filteredCustomerDetail.address1)}
                 Address : {filteredCustomerDetail.address1 != '' ? filteredCustomerDetail.address1 + "," : ''} {filteredCustomerDetail.address2 != '' ? filteredCustomerDetail.address2 + "," : ''} {filteredCustomerDetail.city != '' ? filteredCustomerDetail.city + "," : ''} {filteredCustomerDetail.zipcode}
               </Label>
               <Label className="text-uppercase">
                 PAN Number : {filteredCustomerDetail.companyPan}
               </Label>
             </Row>
-           
-
-<Row>
-  <Col md={10}>
-  <div className="mb-3 mt-3"><b className="">Invoice Detail</b></div>
-
-  </Col>
-  <Col md={2} className="text-end">
-
-    <Button className="btn btn-info">Edit Invoice</Button>
-  </Col>
-</Row>
-
-{viewModalData != undefined ? viewModalData.invoices.map((item)=>{
- return  <Row className="bg-light p-3 mt-1" key={item}>
- <Row>
-   <Col md={3}><strong>Invoice Number : {item.invoiceNumber}</strong></Col>
-   <Col md={3}><strong>Due Date : {moment(item.dueDate).format("DD-MM-YYYY")}</strong></Col>
-   <Col md={3}><strong>Due Amount : {item.remainingAmount}</strong></Col>
-   <Col md={3}>
-
-   </Col>
-
- </Row>
-
- <Row className="mt-2">
-              <Col md={3}>
-                <Row    >
-                  <Col md={8} className="pt-4">
-                    <strong>Invoice Document</strong>
-                  </Col>
-                  <Col md={4} className="mt-2">
-                 {item.invoiceDocument != null  ?
-                  <a href={item.invoiceDocument.url} rel='noreferrer' target='_blank'>
-                      {/* <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
-                      <img src={jpgImg} className="iconsImage shadow"/>
 
 
-                    </a>
-                    :
-                    // <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
-                    <img src={noFile} className="iconsImage shadow"/>
-
-
-                    }
-                  </Col>
-                </Row>
+            <Row>
+              <Col md={10}>
+                <div className="mb-3 mt-3"><b className="">Invoice Detail</b></div>
 
               </Col>
-              <Col md={3}>
-                <Row>
-                  <Col md={8} className="pt-4">
-                    <strong>Dispatch Document</strong>
-                  </Col>
-                  <Col md={4} className="mt-2">
-                  {item.challanDocument != null  ?  <a href={item.challanDocument.url} rel='noreferrer' target='_blank'>
-                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={jpgImg} className="iconsImage shadow"/>
+              <Col md={2} className="text-end">
 
-
-                    </a>   :
-                    // :                      <i className='bx bxs-file mt-2 fileSizing'></i>
-                    <img src={noFile} className="iconsImage shadow"/>
-
-                }
-                    </Col>
-                </Row>
-
-              </Col>
-              <Col md={3}>
-                <Row>
-                  <Col md={10} className="pt-4">
-                    <strong>Transportation Document</strong>
-                  </Col>
-                  <Col md={2} className="mt-2">
-                  {item.transportationDocument != null  ?  <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
-                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={pdfImg} className="iconsImage shadow"/>
-
-
-                    </a>    
-                    :                    
-                      // <i className='bx bxs-file mt-2 fileSizing'></i>
-                      <img src={noFile} className="iconsImage shadow"/>
-
-            }
-                    </Col>
-                </Row>
-
-              </Col>
-              <Col md={3}>
-                <Row>
-                  <Col md={8} className="pt-4">
-                    <strong>Purchase Document</strong>
-                  </Col>
-                  <Col md={4} className="mt-2">
-                  {item.purchaseOrderDocument != null  ?   <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
-                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={pdfImg} className="iconsImage shadow"/>
-
-
-                    </a>    :
-                                          // <i className='bx bxs-file mt-2 fileSizing'></i>
-                                          <img src={noFile} className="iconsImage shadow"/>
-
-
-                    }          </Col>
-                </Row>
-
+                <Button className="btn btn-info">Edit Invoice</Button>
               </Col>
             </Row>
 
+            {viewModalData != undefined ? viewModalData.invoices.map((item) => {
+              return <Row className="bg-light p-3 mt-1" key={item}>
+                <Row>
+                  <Col md={3}><strong>Invoice Number : {item.invoiceNumber}</strong></Col>
+                  <Col md={3}><strong>Due Date : {moment(item.dueDate).format("DD-MM-YYYY")}</strong></Col>
+                  <Col md={3}><strong>Due Amount : {item.remainingAmount}</strong></Col>
+                  <Col md={3}>
 
-</Row>
+                  </Col>
 
-})
-:''
+                </Row>
+
+                <Row className="mt-2">
+                  <Col md={3}>
+                    <Row    >
+                      <Col md={8} className="pt-4">
+                        <strong>Invoice Document</strong>
+                      </Col>
+                      <Col md={4} className="mt-2">
+                        {item.invoiceDocument != null ?
+                          <a href={item.invoiceDocument.url} rel='noreferrer' target='_blank'>
+                            {/* <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                            <img src={jpgImg} className="iconsImage shadow" />
 
 
-}
+                          </a>
+                          :
+                          // <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
+                          <img src={noFile} className="iconsImage shadow" />
 
-<Row className="mt-2 mb-2">
-<b>Total Due Amount : {viewModalData.totalAmount}</b>
-</Row>
-</>
- :""}
+
+                        }
+                      </Col>
+                    </Row>
+
+                  </Col>
+                  <Col md={3}>
+                    <Row>
+                      <Col md={8} className="pt-4">
+                        <strong>Dispatch Document</strong>
+                      </Col>
+                      <Col md={4}>
+                        {item.challanDocument != null ? <a href={item.challanDocument.url} rel='noreferrer' target='_blank'>
+                          {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
+                          <img src={jpgImg} className="iconsImage shadow" />
+
+
+                        </a> :
+                          // :                      <i className='bx bxs-file mt-2 fileSizing'></i>
+                          <img src={noFile} className="iconsImage shadow" />
+
+                        }
+                      </Col>
+                    </Row>
+
+                  </Col>
+                  <Col md={3}>
+                    <Row>
+                      <Col md={8} className="pt-4">
+                        <strong>Transportation Document</strong>
+                      </Col>
+                      <Col md={4}>
+                        {item.transportationDocument != null ? <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
+                          {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+
+
+                        </a>
+                          :
+                          // <i className='bx bxs-file mt-2 fileSizing'></i>
+                          <img src={noFile} className="iconsImage shadow" />
+
+                        }
+                      </Col>
+                    </Row>
+
+                  </Col>
+                  <Col md={3}>
+                    <Row>
+                      <Col md={8} className="pt-4">
+                        <strong>Purchase Document</strong>
+                      </Col>
+                      <Col md={4}>
+                        {item.purchaseOrderDocument != null ? <a href={item.purchaseOrderDocument.url} rel='noreferrer' target='_blank'>
+                          {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+
+
+                        </a> :
+                          // <i className='bx bxs-file mt-2 fileSizing'></i>
+                          <img src={noFile} className="iconsImage shadow" />
+
+
+                        }          </Col>
+                    </Row>
+
+                  </Col>
+                </Row>
+
+
+              </Row>
+
+            })
+              : ''
+
+
+            }
+
+            <Row className="mt-2 mb-2">
+              <b>Total Due Amount : {viewModalData.totalAmount}</b>
+            </Row>
+          </>
+            : ""}
 
         </ModalBody>
-        </div>
+      </div>
     </Modal>
   )
 }

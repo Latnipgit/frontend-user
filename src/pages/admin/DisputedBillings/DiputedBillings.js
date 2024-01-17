@@ -142,9 +142,9 @@ const DiputedBillings = props => {
       const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
       setgetDaysArray(items => [...items, differenceInDays])
     }) : []
-    console.log("ABABABABABAB", getDaysArray)
+
   }
-  console.log("ABABABABABAB", getDaysArray)
+
 
 
   function getDebtrosLists(responsData) {
@@ -193,8 +193,6 @@ const DiputedBillings = props => {
   };
 
   const requestEdit = (item) => {
-
-    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
     const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
     }

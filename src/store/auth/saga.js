@@ -20,45 +20,41 @@ function* loginUser({ payload: { user, history } }) {
       const response = yield call(postJwtLogin, {
         userName: user.email,
         password: user.password,
-        });
-        console.log("responseRespo",response)
-        if(response!=undefined && response!=null){
-          if(response.data.success){
-            localStorage.setItem("authUser", JSON.stringify(response.data.response));
-            yield put(loginSuccess(response.data.response)); 
-            console.log("CHECK RESPONCE", response.data.response.passwordChangeNeeded)   
-            if(response.data.response.passwordChangeNeeded == false){
-              history('/companies');
+      });
+      if (response != undefined && response != null) {
+        if (response.data.success) {
+          localStorage.setItem("authUser", JSON.stringify(response.data.response));
+          yield put(loginSuccess(response.data.response));
+          if (response.data.response.passwordChangeNeeded == false) {
+            history('/companies');
 
-            }
-            else{
-              history('/changePassword');
+          }
+          else {
+            history('/changePassword');
 
-            }
-          }else{
-            console.log("SUCCESS CHECK",response.data )
-          if(response.data.passwordChangeNeeded == true){
+          }
+        } else {
+          if (response.data.passwordChangeNeeded == true) {
             history('/changePassword');
             localStorage.setItem("one-time-token", response.data.passwordChangeToken)
             alert(response.data.message);
 
 
           }
-          else{
+          else {
             alert(response.data.message);
           }
-        
+
         }
-        
-      }else{
+
+      } else {
         // window.alert('Invalid Email / Password');
       }
     }
-    
+
   } catch (error) {
     yield put(apiError(error));
 
-    console.log("responseRespo err",error)
   }
 }
 
@@ -70,7 +66,6 @@ function* loginUser({ payload: { user, history } }) {
 //       const response = yield call(fireBaseBackend.logout);
 //       yield put(logoutUserSuccess(response));
 //     }
-//     console.log("history",history)
 //     history("/login");
 //   } catch (error) {
 //     yield put(apiError(error));
@@ -79,12 +74,12 @@ function* loginUser({ payload: { user, history } }) {
 
 function* logoutUser({ payload: { history } }) {
   try {
-    
+
 
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(fireBaseBackend.logout);
       yield put(logoutUserSuccess(response));
-  
+
     }
     localStorage.removeItem("authUser");
     history('/login');

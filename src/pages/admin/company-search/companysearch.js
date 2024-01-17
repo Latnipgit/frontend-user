@@ -49,8 +49,8 @@ import { getCompanyList as ongetCompanyList } from "../../../../src/store/action
 import TableContainer from "../../../components/Common/TableContainer";
 import InlineFilterForm from '../ApprovedTransaction/InlineFilterForm';
 import { get } from "helpers/api_helper";
-import { fetchCompanySearchStart,getAllCompanyListAction } from "store/CompanySearch/CompanySearch.action";
-import { selectCompanySearchList, selectdashboardAdminDataMap ,getAllCompanyListSelector} from "store/CompanySearch/CompanySearch.selecter";
+import { fetchCompanySearchStart, getAllCompanyListAction } from "store/CompanySearch/CompanySearch.action";
+import { selectCompanySearchList, selectdashboardAdminDataMap, getAllCompanyListSelector } from "store/CompanySearch/CompanySearch.selecter";
 import { fetchCompanySearchViewDatatlStart } from "store/CompanySearchView/CompanySearchView.action";
 import { selectCompanySearchVeiwDatilsList } from "store/CompanySearchView/CompanySearchView.selecter";
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
@@ -65,7 +65,6 @@ const CompanySearch = props => {
   const [modal1, setModal1] = useState(false);
   const [selected, setSelected] = useState('')
   const [showMenuItems, setShowMenuItems] = useState(true);
-  console.log('showMenuItems:', showMenuItems);
   const toggleViewModal = () => setModal1(!modal1);
   const handleEyeIconClick = () => {
     const newPageUrl = '/company-dashboard';
@@ -74,14 +73,12 @@ const CompanySearch = props => {
 
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
   const getAllCompanyList = useSelector(getAllCompanyListSelector)
-  const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap).reverse()
+  const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
-  console.log('currentUserViewDetails', currentUserViewDetails);
-  console.log('selectCompanySearchLists', selectCompanySearchLists);
-  console.log('getAllCompanyListgetAllCompanyList', getAllCompanyList);
+  console.log('selectCompanySearchListMap', selectCompanySearchListMap);
+
 
   const viewModel = (value) => {
-    console.log("VALUE", value)
     const valueDate = value.cell.row.original
     dispatch(fetchCompanySearchViewDatatlStart({ "debtorId": `${valueDate.id}` }))
     openViewModule(valueDate)
@@ -96,7 +93,7 @@ const CompanySearch = props => {
   useEffect(() => {
     dispatch(fetchCompanySearchStart())
     dispatch(getAllCompanyListAction())
-    setCurrenViewList(currentUserViewDetails)
+    //  setCurrenViewList(currentUserViewDetails)
   }, [])
 
 
@@ -204,8 +201,6 @@ const CompanySearch = props => {
 
     const filterePANCARD = filteredgstMatch.filter(item => item.PANCARD.includes(filters.pan));
 
-    console.log("filteredResults", filters,filtereCompany )
-
     setFilteredData(filterePANCARD);
   };
   const { getCompanyList } = useSelector(state => ({
@@ -213,7 +208,6 @@ const CompanySearch = props => {
   }));
   useEffect(() => {
     dispatch(ongetCompanyList());
-    console.log("HDHDHDHD", getCompanyList)
   }, [getCompanyList])
   const additionalValue = "Hello from additional prop!";
   return (
@@ -248,7 +242,7 @@ const CompanySearch = props => {
 
           <TableContainer
             columns={columns}
-            data={filteredData.length > 0 ? filteredData.reverse() : selectCompanySearchListMap}
+            data={filteredData.length > 0 ? filteredData : selectCompanySearchListMap}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}

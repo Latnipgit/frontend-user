@@ -20,8 +20,9 @@ import moment from 'moment'
 
 const CompnayViewDetails = props => {
     const { isOpen, toggle, selected, currenViewList } = props
-    console.log("InvoiceModal", selected
-    )
+
+    console.log("currenViewList", selected);
+
     const [attachments, setAttachments] = useState([
         { name: 'document.pdf', type: 'application/pdf' },
         { name: 'image.jpg', type: 'image/jpeg' },
@@ -134,24 +135,24 @@ const CompnayViewDetails = props => {
                         </Col>
                         <Col md="6" className="mt-4">
                             <Card className="mb-3 shadow-lg" >
-                                <CardBody className="seller-card-body" style={{  }}>
+                                <CardBody className="seller-card-body" style={{}}>
                                     <b className="mb-2">Key Points</b>
                                     <Row className="mb-2"><Col md={12}>
-                                    <span style={{fontSize:'12px'}}> <b className="" style={{color:'#00b300'}}>1. Approved : </b>
-                                       From the information gathered thus far, it appears that the buyer may be in default.</span>
-                                        </Col></Row>
-                                        <Row className="mb-2"><Col md={12}>
-                                    <span style={{fontSize:'12px',}}> <b className="" style={{ color:' #ff794d'}}>2. In Process : </b>
-                                    The evaluation of the buyer's defaulter status is pending until their response is received or one week has passed from the complainant's date, whichever occurs first.</span>
-                                        </Col></Row>
-                                        <Row className="mb-2"><Col md={12}>
-                                    <span style={{fontSize:'12px',}}> <b className="" style={{ color:'#e63900 '}}>3. Disputed : </b>
-                                    The presented evidence is insufficient to definitively establish that the buyer is in default.</span>
-                                        </Col></Row>
-                                        <Row className="mb-2"><Col md={12}>
-                                    <span style={{fontSize:'12px',}}> <b className="" style={{ color:'#ffc61a '}}>4. Rating : </b>
-                                    The buyer's creditworthiness is depicted on a scale of 0 to 5, where zero signifies the lowest creditworthiness and five indicates the highest.</span>
-                                        </Col></Row>
+                                        <span style={{ fontSize: '12px' }}> <b className="" style={{ color: '#00b300' }}>1. Approved : </b>
+                                            From the information gathered thus far, it appears that the buyer may be in default.</span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '12px', }}> <b className="" style={{ color: ' #ff794d' }}>2. In Process : </b>
+                                            The evaluation of the buyer's defaulter status is pending until their response is received or one week has passed from the complainant's date, whichever occurs first.</span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '12px', }}> <b className="" style={{ color: '#e63900 ' }}>3. Disputed : </b>
+                                            The presented evidence is insufficient to definitively establish that the buyer is in default.</span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '12px', }}> <b className="" style={{ color: '#ffc61a ' }}>4. Rating : </b>
+                                            The buyer's creditworthiness is depicted on a scale of 0 to 5, where zero signifies the lowest creditworthiness and five indicates the highest.</span>
+                                    </Col></Row>
                                     {/* <Row className="mb-2"><Col md={3}><h5>2. InProcess :</h5></Col> <Col md={9}>The evaluation of the buyer's defaulter status is pending until their response is received or one week has passed from the complainant's date, whichever occurs first.
                                     </Col></Row> */}
                                     {/* <Row className="mb-2"><Col md={3}><h5>3. Disputed :</h5></Col> <Col md={9}>The presented evidence is insufficient to definitively establish that the buyer is in default</Col></Row> */}

@@ -10,7 +10,6 @@ const initialState = {
 }
 
 const forgetPassword = (state = initialState, action) => {
-  console.log("REDucer", action)
   switch (action.type) {
     case FORGET_PASSWORD:
       state = {

@@ -81,7 +81,6 @@ const Dashboard = props => {
 
   useEffect(() => {
     const companyid = localStorage.getItem("COMPANY-ID")
-    console.log("COMPANY-ID", companyid)
     dispatch(onsearchCompany(companyid));
 
   })
@@ -152,16 +151,16 @@ const Dashboard = props => {
                   <button type="button" className="btn btn-info " style={{ background: isClickedToReported == false ? " #50a5f1" : "	 #707274", border: "none", width: "230px" }} onClick={() => setisClickedToReported(false)} >Reported Me as A Defaulter</button>
                   <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#50a5f1" : "	 #707274", border: "none", width: "230px" }} onClick={() => setisClickedToReported(true)} >Reported Defaulter</button>
                 </div>
-              
+
 
               </Col>
               <Col md={12} className="">
-              <div className="btn-group" role="group" aria-label="Basic example">
-                 <span style={{ width:'100px', height:"5px", background: isClickedToReported == false ? " #50a5f1" : "" , marginRight:"110px"}}></span>
-                 <span style={{ width:'100px', height:"5px", background: isClickedToReported != false ? " #50a5f1" : "",}}></span>
+                <div className="btn-group" role="group" aria-label="Basic example">
+                  <span style={{ width: '100px', height: "5px", background: isClickedToReported == false ? " #50a5f1" : "", marginRight: "110px" }}></span>
+                  <span style={{ width: '100px', height: "5px", background: isClickedToReported != false ? " #50a5f1" : "", }}></span>
                 </div>
                 <br />
-               
+
               </Col>
 
 
@@ -241,7 +240,6 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
     <>
       {GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
         return <tr key={item}>
-          {console.log("NEW TABLE ", item)}
 
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>

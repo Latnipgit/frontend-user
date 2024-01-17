@@ -140,7 +140,7 @@ const ReportDebtor = props => {
       const b = moment()
       const c = moment(b).diff(a)
       const d = moment.duration(c)
-      // console.log("ABABABABABAB", getDaysArray,item.invoices)
+
 
       if (getDaysArray.length != GetAllInvoice.length) {
         getDaysArray.push(d.days())
@@ -149,11 +149,9 @@ const ReportDebtor = props => {
     }) : []
   }
   const RequestEditData = useSelector(requestEditSelector)
-  console.log("ABABABABABAB 2", RequestEditData)
+
   const requestEdit = (item) => {
     dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
-
-    console.log("ITEMMMMM", item.invoices[0].invoiceNumber)
     const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
     }
@@ -200,7 +198,7 @@ const ReportDebtor = props => {
               <h5 className="m-1">Report a Defaulter</h5>
             </Col>
             <Col md={2}>
-              {console.log("GetAllInvoiceGetAllInvoiceGetAllInvoice", GetAllInvoice)}
+
               <Button className="btn btn-md btn-info" onClick={() => handleReportDefaulter()}>Report a Defaulter</Button>
               {/* <div data-tip="msg to show" data-for='toolTip1' data-place='top'>Tooltip</div>
 <ReactTooltip id="toolTip1" /> */}
@@ -236,7 +234,7 @@ const ReportDebtor = props => {
                 </tr>
               </thead>
               <tbody>
-                {console.log("GetAllInvoiceGetAllInvoice", GetAllInvoice)}
+
                 {filteredData.length >= 0 ? <ReportDefulterTable GetAllInvoicedata={filteredData} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} handleViewDetail={handleViewDetail} /> : <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
               </tbody>
             </table>
@@ -258,8 +256,6 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit, re
 
 
           return <tr key={item}>
-            {console.log("NEW TABLE ", item)}
-
             <th scope="row" className="pt-4">{index + 1}</th>
             <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
             <td className="pt-4">{item.invoices.map((item) => {

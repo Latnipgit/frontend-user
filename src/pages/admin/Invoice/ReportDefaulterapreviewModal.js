@@ -28,36 +28,30 @@ import { confirReportDefaultModel, ReportDefPreviewModal } from "store/debtors/d
 import ConfirmReportModal from './ConfirmReportDefaulterModal'
 import { selectReportDefPreviwData } from "store/ReportDefulterPreview/ReportDefulterPreview.selecter";
 import { fetchReportDefulterPreviewStart } from "store/ReportDefulterPreview/ReportDefulterPreview.action";
+import noFile from '../../../assets/images/newImg/no-document.png'
+import pdfImg from '../../../assets/images/newImg/pdf.png'
+import jpgImg from '../../../assets/images/newImg/png-file-.png'
 
 
 const ReportDefPreviewModals = props => {
-  const { isOpen, toggle, selected, filteredCustomerDetail, feedbackdataPaylod, allInvoiceList, ratingValue ,dataForPreview} = props
+  const { isOpen, toggle, selected, filteredCustomerDetail, feedbackdataPaylod, allInvoiceList, ratingValue, dataForPreview } = props
   const allInvoiceListForPreview = allInvoiceList[0] != undefined ? allInvoiceList[0].allInvoiceListForPreview : []
   const Integrity = ratingValue.Integrity
   const responsivestarRating = ratingValue.responsivestarRating
   const timelystarRating = ratingValue.timelystarRating
-  console.log("feedbackdataPaylod", allInvoiceList)
   const dispatch = useDispatch()
-  console.log("filteredCustomerDetail", filteredCustomerDetail)
   const isConfirmModalOpen = useSelector(confirReportDefaultModel)
   const ReportDefulterPreviewData = useSelector(selectReportDefPreviwData)
   const toggleViewModal = () => dispatch(setConfirmReportDefaultModal(!confirReportDefaultModel));
-  console.log("reportDefulterPreviw", ReportDefulterPreviewData);
-
-
 
   useEffect(() => {
     dispatch(fetchReportDefulterPreviewStart())
-    console.log("allInvoiceList Preview", dataForPreview)
   }, [])
 
   const handleFeedbackModal = () => {
-
-
     dispatch(setConfirmReportDefaultModal(!isConfirmModalOpen))
   }
   const PDF = "https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-file.pdf"
-  console.log("PREVIEW PROPS ", props)
   return (
     <Modal
       isOpen={isOpen}
@@ -72,7 +66,7 @@ const ReportDefPreviewModals = props => {
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Report Defaulter Preview</ModalHeader>
         <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceLists={allInvoiceList} ratingValue={ratingValue} />
-        {console.log('filteredCustomerDetail', filteredCustomerDetail)}
+
         <ModalBody className="bg-light">
           <Row className="p-3">
             <Row className="">
@@ -91,7 +85,7 @@ const ReportDefPreviewModals = props => {
                 GST Number - {filteredCustomerDetail.gstin}
               </Label>
               <Label className="text-capitalize">
-                {console.log("filteredCustomerDetail.address1", filteredCustomerDetail.address1)}
+
                 Address - {filteredCustomerDetail.address1 != '' ? filteredCustomerDetail.address1 + "," : ''} {filteredCustomerDetail.address2 != '' ? filteredCustomerDetail.address2 + "," : ''} {filteredCustomerDetail.city != '' ? filteredCustomerDetail.city + "," : ''} {filteredCustomerDetail.zipcode}
               </Label>
               <Label className="text-uppercase">
@@ -118,10 +112,11 @@ const ReportDefPreviewModals = props => {
                         <strong>Invoice Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.invoiceDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
-
-                        </a>
+                        {item.invoiceDocument != '' ? <a href={item.invoiceDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
                       </Col>
                     </Row>
 
@@ -132,23 +127,27 @@ const ReportDefPreviewModals = props => {
                         <strong>Dispatch Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.DispatchDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file mt-2 fileSizing'></i>
-
-                        </a>              </Col>
+                        {item.DispatchDocument != '' ? <a href={item.DispatchDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
+                      </Col>
                     </Row>
 
                   </Col>
                   <Col md={3}>
                     <Row>
-                      <Col md={8} className="pt-4">
-                        <strong>Transportation Document</strong>
+                      <Col md={7} className="pt-2">
+                        <strong className="">Transportation Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.DeliveryDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file mt-2 fileSizing'></i>
-
-                        </a>              </Col>
+                        {item.DeliveryDocument != '' ? <a href={item.DeliveryDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
+                      </Col>
                     </Row>
 
                   </Col>
@@ -158,10 +157,12 @@ const ReportDefPreviewModals = props => {
                         <strong>Purchase Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.purchaseOrderDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file mt-2 fileSizing'></i>
-
-                        </a>              </Col>
+                        {item.purchaseOrderDocument != '' ? <a href={item.purchaseOrderDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
+                      </Col>
                     </Row>
 
                   </Col>
@@ -174,10 +175,11 @@ const ReportDefPreviewModals = props => {
                         <strong>General Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.generalDocuments.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file-jpg mt-2 fileSizing'></i>
-
-                        </a>
+                        {item.generalDocuments != '' ? <a href={item.generalDocuments.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
                       </Col>
                     </Row>
 
@@ -188,19 +190,21 @@ const ReportDefPreviewModals = props => {
                         <strong>GST Document</strong>
                       </Col>
                       <Col md={4}>
-                        <a href={item.GSTDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          <i className='bx bxs-file mt-2 fileSizing'></i>
-
-                        </a>              </Col>
+                        {item.GSTDocument != '' ? <a href={item.GSTDocument.fileUrl} rel='noreferrer' target='_blank'>
+                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+                          <img src={pdfImg} className="iconsImage shadow" />
+                        </a> : <img src={noFile} className="iconsImage shadow" />
+                        }
+                      </Col>
                     </Row>
 
                   </Col>
                   <Col md={3}>
-                   
+
 
                   </Col>
                   <Col md={3}>
-                   
+
 
                   </Col>
                 </Row>
@@ -346,80 +350,89 @@ const ReportDefPreviewModals = props => {
 
 
             <div className="mb-3 mt-3"><b className="">Rating</b></div>
+            {feedbackdataPaylod != undefined ?
+              feedbackdataPaylod.map((item, index) => {
+                let x = 1
+                return (
+                  <>
+                    {item.questionType === "RATING" && (<div className="mb-1">
+                      <Row>
+                        <Col md={9}>
+                          <span className="mb-2">
+                            {x++}.  {item.questionDesc} ?</span>
+                        </Col>
+                        <Col md={3}>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={() => {
+                              }}
+                              // onClick={(selected) => {
+                              //   handlefinancialdifficult({
+                              //     "questionDesc": "Integrity",
+                              //     "questionType": "RATING",
+                              //     "values": 1
+                              //   })
+                              //   setIntegrity(1)
+                              // }
+                              //  }
+                              style={{ color: Integrity != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={(selected) => {
+                                // handlefinancialdifficult({
+                                //   "questionDesc": "Integrity",
+                                //   "questionType": "RATING",
+                                //   "values": 2
+                                // })
+                              }
+                              }
+                              style={{ color: Integrity != 0 && Integrity > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={(selected) => {
+                                // handlefinancialdifficult({
+                                //   "questionDesc": "Integrity",
+                                //   "questionType": "RATING",
+                                //   "values": 3
+                                // })
+                              }
+                              }
+                              style={{ color: Integrity != 0 && Integrity > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={(selected) => {
+                                // handlefinancialdifficult({
+                                //   "questionDesc": "Integrity",
+                                //   "questionType": "RATING",
+                                //   "values": 4
+                                // })
+                              }
+                              }
+                              style={{ color: Integrity != 0 && Integrity > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                          <span>
+                            <i className='bx bxs-star'
+                              onClick={(selected) => {
+                                // handlefinancialdifficult({
+                                //   "questionDesc": "Integrity",
+                                //   "questionType": "RATING",
+                                //   "values": 5
+                                // })
+                              }
+                              }
+                              style={{ color: Integrity != 0 && Integrity > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
+                            ></i></span>
+                        </Col>
+                      </Row>
+                    </div>)}
 
-            <div className="mb-1">
-              <Row>
-                <Col md={9}>
-                  <span className="mb-2">
-                    1. Integrity</span>
-                </Col>
-                <Col md={3}>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={() => {
-                      }}
-                      // onClick={(selected) => {
-                      //   handlefinancialdifficult({
-                      //     "questionDesc": "Integrity",
-                      //     "questionType": "RATING",
-                      //     "values": 1
-                      //   })
-                      //   setIntegrity(1)
-                      // }
-                      //  }
-                      style={{ color: Integrity != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={(selected) => {
-                        // handlefinancialdifficult({
-                        //   "questionDesc": "Integrity",
-                        //   "questionType": "RATING",
-                        //   "values": 2
-                        // })
-                      }
-                      }
-                      style={{ color: Integrity != 0 && Integrity > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={(selected) => {
-                        // handlefinancialdifficult({
-                        //   "questionDesc": "Integrity",
-                        //   "questionType": "RATING",
-                        //   "values": 3
-                        // })
-                      }
-                      }
-                      style={{ color: Integrity != 0 && Integrity > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={(selected) => {
-                        // handlefinancialdifficult({
-                        //   "questionDesc": "Integrity",
-                        //   "questionType": "RATING",
-                        //   "values": 4
-                        // })
-                      }
-                      }
-                      style={{ color: Integrity != 0 && Integrity > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                  <span>
-                    <i className='bx bxs-star'
-                      onClick={(selected) => {
-                        // handlefinancialdifficult({
-                        //   "questionDesc": "Integrity",
-                        //   "questionType": "RATING",
-                        //   "values": 5
-                        // })
-                      }
-                      }
-                      style={{ color: Integrity != 0 && Integrity > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                    ></i></span>
-                </Col>
-              </Row>
-            </div>
+                  </>
+                )
+              }) : ""}
+            {/* 
             <div className="mb-1">
               <Row>
                 <Col md={9}>
@@ -550,7 +563,7 @@ const ReportDefPreviewModals = props => {
                     ></i></span>
                 </Col>
               </Row>
-            </div>
+            </div> */}
 
 
             <Row>

@@ -57,7 +57,6 @@ const SendBillTransaction = (props) => {
     })
 
   }
-  console.log("getDebtor", getDebtor)
   const { getAllDebtorsList } = useSelector(state => ({
     getAllDebtorsList: state.DebtorsReducer.debtors != undefined ? state.DebtorsReducer.debtors.response : [],
   }));
@@ -109,7 +108,6 @@ const SendBillTransaction = (props) => {
     },
   })
 
-  console.log("propsddd", props)
   const [salutations, setsalutations] = useState([
     { label: "Mr.", value: "Mr." },
     { label: "Mrs.", value: "Mrs." },
@@ -132,12 +130,10 @@ const SendBillTransaction = (props) => {
 
   }
 
-  console.log("selectedOptionselectedOption", filteredArrays)
 
   const handleCloseModal = () => {
     setShowModal(false)
   }
-  console.log("selectedOption", selectedOption)
   //first table
   const [faqsRow, setFaqsRow] = useState(1)
   const [subtotal, setSubtotal] = useState(0)
@@ -195,7 +191,6 @@ const SendBillTransaction = (props) => {
   const [currenIndex, setCurrentIndex] = useState(0)
 
   const handleItemDetailChange = (index, value) => {
-    console.log("INDEXXXXX",index)
     setCurrentIndex(index)
     const newData = [...data]
     newData[index].itemDetail = value
@@ -203,18 +198,17 @@ const SendBillTransaction = (props) => {
   }
 
   const handleQuantityChange = (index, value) => {
-    console.log("valuevalue", value)
-    if(value != ''){
+    if (value != '') {
       const newData = [...data]
       newData[index].quantity = value.replace(/[^0-9.]/g, "")
       setData(newData)
     }
-    else{
+    else {
       const newData = [...data]
-    newData[index].quantity = 0
-    setData(newData)
+      newData[index].quantity = 0
+      setData(newData)
     }
-    
+
   }
 
   const formatQuantity = index => {
@@ -252,7 +246,6 @@ const SendBillTransaction = (props) => {
   })
   const handleFileChange = (event, fieldName) => {
     const files = event.target.files
-    console.log("FILEEE", event.target.files, fieldName)
     if (files.length > 0) {
       setFileData({ ...fileData, [fieldName]: files[0] })
     }
@@ -272,27 +265,22 @@ const SendBillTransaction = (props) => {
     const headers = {
       'x-access-token': token != null ? token : '',
     };
-    console.log("HEADERDS", headers)
     // fetch('https://bafana-backend.azurewebsites.net/api/files/upload', {
     //   method: 'POST',
     //   body: formData,headers,
     // })
     // .then(response => response.json())
     // .then(lang => response['lang'].slice(-2))
-    //   console.log("payloaddddddd",formData)
 
     //   .then(success => {
-    //     console.log("payloaddddddd success",success)
 
     //     // Do something with the successful response
     //   })
-    //   .catch(error => console.log("payloaddddddd error",error)
     // );
     axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
       headers: headers
     })
       .then((response) => {
-        console.log("Response", response)
         if (response.data.response.fieldName == "uploadInvoice") {
           setuploadInvoiceId(response.data.response.documentId)
         }
@@ -307,7 +295,6 @@ const SendBillTransaction = (props) => {
         }
       })
       .catch((error) => {
-        console.log("Response", error)
 
       })
   }
@@ -484,7 +471,7 @@ const SendBillTransaction = (props) => {
       return errors
     },
     onSubmit: values => {
-      
+
       // Handle form submission here
     },
   })
@@ -531,8 +518,6 @@ const SendBillTransaction = (props) => {
       TransportFile: ""
     },
   })
-  // console.log("selectedOption.value",selectedOption.value!= undefined ? selectedOption.value.slice(-4):"Hello")
-  console.log("selectedOption", selectedOption.value != null ? selectedOption.value.slice(-6).toUpperCase() : '')
   const handleFormSubmitSendBill = item => {
     const dueDated = moment(item.dueDate).format("YYYY-MM-DD")
     const inVoiceDated = moment(item.invoiceDate).format("YYYY-MM-DD")
@@ -575,7 +560,6 @@ const SendBillTransaction = (props) => {
 
   }
   useEffect(() => {
-    console.log("getAllDebtorsList", getAllDebtorsList)
     dispatch(ongetAllDebtors());
     setgetDebtor(getAllDebtorsList != undefined ? getAllDebtorsList : [])
 
@@ -781,7 +765,7 @@ const SendBillTransaction = (props) => {
                                 }
                               />
                             </td>
-                            <td  className="text-end p-2" >
+                            <td className="text-end p-2" >
                               <input
                                 type="number"
                                 className="form-control mt-3"
@@ -793,7 +777,7 @@ const SendBillTransaction = (props) => {
                                 onBlur={() => formatQuantity(index)}
                               />
                             </td>
-                            <td  className="text-end p-2">
+                            <td className="text-end p-2">
                               <input
                                 type="number"
                                 className="form-control mt-3"
@@ -805,7 +789,7 @@ const SendBillTransaction = (props) => {
                                 onBlur={() => formatRate(index)}
                               />
                             </td>
-                            <td  className="text-end p-2">
+                            <td className="text-end p-2">
                               <input
                                 className="form-control mt-3"
                                 type="number"
@@ -815,7 +799,7 @@ const SendBillTransaction = (props) => {
                               />
                             </td>
 
-                            <td   className="text-end d-flex p-2">
+                            <td className="text-end d-flex p-2">
                               <Input
                                 type="number"
                                 id="cgstInput"
@@ -844,73 +828,73 @@ const SendBillTransaction = (props) => {
                                 value={row.amount}
                                 disabled
                               /> */}
-                             <b className="mt-1"> {row.amount}</b>
+                              <b className="mt-1"> {row.amount}</b>
 
                             </td>
-                          
+
                           </tr>
 
-                          
+
                         ))}
-                      
-                        
+
+
                       </tbody>
                     </table>
                   </div>
                 </Row>
-<Row>
-  <Col md={8}></Col>
-<Col md={3} className="text-end">
+                <Row>
+                  <Col md={8}></Col>
+                  <Col md={3} className="text-end">
 
 
-                            {currenIndex > 0 ? (
-                                <Button
-                                  className="icon-container delete-icon m-2 btn btn-info"
-                                  onClick={() => removeFaqsRow(currenIndex)}
-                                >
-                                  <span > Remove Item</span>
-                                </Button>
-                             ) : null}
-                             
-                              <Button
-                                className="icon-container add-icon btn btn-info"
-                                onClick={()=>addFaqsRow(currenIndex)}
-                              >
-                                <span > ADD Item</span>
-                              </Button>
-</Col>
-<Col md={1} className="text-end">
-</Col>
-</Row>
-<Row className="mt-3">
+                    {currenIndex > 0 ? (
+                      <Button
+                        className="icon-container delete-icon m-2 btn btn-info"
+                        onClick={() => removeFaqsRow(currenIndex)}
+                      >
+                        <span > Remove Item</span>
+                      </Button>
+                    ) : null}
+
+                    <Button
+                      className="icon-container add-icon btn btn-info"
+                      onClick={() => addFaqsRow(currenIndex)}
+                    >
+                      <span > ADD Item</span>
+                    </Button>
+                  </Col>
+                  <Col md={1} className="text-end">
+                  </Col>
+                </Row>
+                <Row className="mt-3">
 
 
-  <Card>
-    <Row className="bg-light">
-      <Col md={6}></Col>
-      <Col md={2}></Col>
-      <Col md={2} className="bg-light text-center p-4">
+                  <Card>
+                    <Row className="bg-light">
+                      <Col md={6}></Col>
+                      <Col md={2}></Col>
+                      <Col md={2} className="bg-light text-center p-4">
 
-        <p className="cardTextSubtotal">sub Total - </p>
-        <p className="cardTextSubtotal">CGST - </p>
-        <p className="cardTextSubtotal">SGST - </p>
-        <p className="cardTextSubtotal">Discount - </p>
-        <p className="cardTextSubtotal">TOTAL - </p>
+                        <p className="cardTextSubtotal">sub Total - </p>
+                        <p className="cardTextSubtotal">CGST - </p>
+                        <p className="cardTextSubtotal">SGST - </p>
+                        <p className="cardTextSubtotal">Discount - </p>
+                        <p className="cardTextSubtotal">TOTAL - </p>
 
-      </Col>
-      <Col md={2} className="bg-light text-end p-4">
+                      </Col>
+                      <Col md={2} className="bg-light text-end p-4">
 
-      <p className="cardTextSubtotal">{subtotal.toFixed(2)}</p>
-      <p className="cardTextSubtotal">{cgst}%</p>
-      <p className="cardTextSubtotal">{sgst}%</p>
-      <p className="cardTextSubtotal">{discount}</p>
-      <p className="cardTextSubtotal">{total.toFixed(2)}</p>
+                        <p className="cardTextSubtotal">{subtotal.toFixed(2)}</p>
+                        <p className="cardTextSubtotal">{cgst}%</p>
+                        <p className="cardTextSubtotal">{sgst}%</p>
+                        <p className="cardTextSubtotal">{discount}</p>
+                        <p className="cardTextSubtotal">{total.toFixed(2)}</p>
 
-      </Col>
+                      </Col>
 
-    </Row>
-  </Card>
-</Row>
+                    </Row>
+                  </Card>
+                </Row>
 
 
 
