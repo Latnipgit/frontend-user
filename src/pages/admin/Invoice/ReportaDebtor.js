@@ -165,7 +165,8 @@ const ReportDebtor = props => {
   const handleFilterdata = (filters) => {
     if (GetAllInvoice) {
       if (filters === "") {
-        setFilteredData(GetAllInvoice)
+        const revArr = GetAllInvoice.reverse()
+        setFilteredData(revArr)
       } else {
         const filteredResults = GetAllInvoice.filter(item => {
           return item.debtor.companyName.toLocaleLowerCase().includes(filters);
@@ -258,7 +259,7 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit, re
             <th scope="row" className="pt-4">{index + 1}</th>
             <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
             <td className="pt-4">{item.invoices.map((item) => {
-              return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
+              return <span key={item}>{item.invoiceNumber}{" "+" "} &nbsp;</span>
             })}</td>
 
             <td className="pt-4 d-flex text-capitalize reportDebAdd">{item.debtor.companyName}

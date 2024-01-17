@@ -76,7 +76,8 @@ const ReportMedefulterComponent = props => {
   const handleFilterdata = (filters) => {
     if (selectReportMeDeflist) {
       if (filters === "") {
-        setFilteredData(selectReportMeDeflist)
+        const revArr = selectReportMeDeflist.reverse()
+        setFilteredData(revArr)
       } else {
         const filteredResults = selectReportMeDeflist.filter(item => {
           return item.debtor.companyName.toLocaleLowerCase().includes(filters);
