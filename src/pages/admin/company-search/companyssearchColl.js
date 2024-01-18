@@ -74,7 +74,7 @@ const DueSince = (cell) => {
 
     let badgeClassName = "font-size-11 badge ";
     if (daysSince > 1 && daysSince < 800) {
-        badgeClassName += "bg-success text-white";
+        badgeClassName += "bg-danger text-white";
     } else if (daysSince > 800) {
         badgeClassName += "bg-warning text-dark";
     } else {

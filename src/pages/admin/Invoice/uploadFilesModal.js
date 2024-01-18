@@ -160,7 +160,6 @@ const UploadPendingFiles = props => {
                   </Col>
                     :
                     <Col md={3} className="text-center">
-                      {console.log("item.invoiceDocument", item)}
                       <a href={item.invoiceDocument != null ? item.invoiceDocument.url : ''} rel='noreferrer' target='_blank'>
                         {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                         <img src={fileImg1} className="iconsImage" />

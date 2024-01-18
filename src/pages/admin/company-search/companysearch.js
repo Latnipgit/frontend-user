@@ -71,11 +71,10 @@ const CompanySearch = props => {
      window.location.href = newPageUrl;
    }; */
 
-  /*   const selectCompanySearchLists = useSelector(selectCompanySearchList)
-    const getAllCompanyList = useSelector(getAllCompanyListSelector) */
+  const selectCompanySearchLists = useSelector(selectCompanySearchList)
+  /*  const getAllCompanyList = useSelector(getAllCompanyListSelector) */
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
-  console.log('selectCompanySearchListMap', selectCompanySearchListMap);
 
 
   const viewModel = (value) => {
@@ -216,7 +215,7 @@ const CompanySearch = props => {
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
-      <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currentUserViewDetails} />
+      <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currentUserViewDetails} selectCompanySearchListMap={selectCompanySearchLists} />
       {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/> */}
 
       <InlineFilterForm onFilter={handleFilter} handleFilter={handleFilter} />

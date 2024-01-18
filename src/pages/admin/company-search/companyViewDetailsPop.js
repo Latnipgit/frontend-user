@@ -19,9 +19,8 @@ import { Link } from 'react-router-dom';
 import moment from 'moment'
 
 const CompnayViewDetails = props => {
-    const { isOpen, toggle, selected, currenViewList } = props
+    const { isOpen, toggle, selected, currenViewList, selectCompanySearchListMap } = props
 
-    console.log("currenViewList", currenViewList);
 
     const [attachments, setAttachments] = useState([
         { name: 'document.pdf', type: 'application/pdf' },
@@ -177,6 +176,14 @@ const CompnayViewDetails = props => {
                                     </thead>
                                     <tbody>
                                         {currenViewList != undefined ? currenViewList.map((item, i) => {
+                                            const ratingArray = selectCompanySearchListMap.filter((value, index) => {
+                                                if (value.ratings != undefined && value.ratings.length > 0) {
+                                                    if (value.ratings.ratingCompany = item.id) {
+                                                        return value.ratings.response
+                                                    }
+                                                }
+
+                                            })
                                             return <tr key={i}>
                                                 <td>{item.companyName}</td>
                                                 <td>{item.totalAmount != undefined ? item.totalAmount : ""}</td>
