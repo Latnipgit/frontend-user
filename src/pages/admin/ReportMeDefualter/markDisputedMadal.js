@@ -137,7 +137,7 @@ const MarkDisputedMadal = props => {
       toggle={toggle}
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>Mark As A Disputed Transaction</ModalHeader>
+        <ModalHeader toggle={toggle}>Record Payment</ModalHeader>
 
         <ModalBody>
 

@@ -26,17 +26,27 @@ import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultMo
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
 import CaImg from '../../../assets/images/newImg/CA-BG_Remove.png'
 import MarkDisputedMadal from "./markDisputedMadal"
+import { MarkDisputedPopModule } from "./markDisputedPop"
 
 const ReportMedefulterComponent = props => {
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
-  const [modal3, setModal3] = useState(false);
   const [selected, setSelected] = useState('');
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [viewModalData, setViewModalData] = useState('');
-  const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
   const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
   const [filteredData, setFilteredData] = useState([]);
+
+  const [isOpenmark, setIsOpenmark] = useState(false)
+  const [currentindex, setCurrentindex] = useState({})
+
+  const markOpenModule = (value) => {
+    setIsOpenmark(!isOpenmark)
+    setCurrentindex(value)
+  }
+
+
+
   const toggleViewModal = () => setModal1(!modal1);
   const toggleViewModal1 = () => setModal2(!modal2);
   const dispatch = useDispatch();
@@ -68,11 +78,6 @@ const ReportMedefulterComponent = props => {
 
 
 
-  const handleUploadFiles = (item) => {
-    setuploadFilesModelDataForUpload(item)
-    dispatch(setUploadFilesOpen(!uploadFilesModalShow))
-  }
-
   const handleFilterdata = (filters) => {
     if (selectReportMeDeflist) {
       if (filters === "") {
@@ -101,17 +106,14 @@ const ReportMedefulterComponent = props => {
   }
 
   const requestEdit = (item) => {
-
     const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
     }
-
     dispatch(requestInvoiceDefEdit(payload))
     toast.success("Edit Request Sent Successfully")
   }
 
   const markedDisputed = (item) => {
-
     const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
     }
@@ -135,7 +137,7 @@ const ReportMedefulterComponent = props => {
       {/* <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
       <MarkDisputedMadal isOpen={markAsDisputed} toggle={toggleMarkAsDisputed} selected={selected} />
-
+      <MarkDisputedPopModule isOpen={isOpenmark} toggle={markOpenModule} currentindex={currentindex} markedDisputed={markedDisputed} />
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
@@ -172,7 +174,7 @@ const ReportMedefulterComponent = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} /> : <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} />}
+                <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule} />
               </tbody>
             </table>
 
@@ -183,7 +185,7 @@ const ReportMedefulterComponent = props => {
   );
 }
 
-const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, markedDisputed, handleViewDetail }) => {
+const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, markedDisputed, handleViewDetail, markOpenModule }) => {
   return (
     <>
       {selectReportMeDeflistData != undefined ? selectReportMeDeflistData.map((item, index) => {
@@ -244,8 +246,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
 
               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Disputed Transaction" href={item.url} rel='noreferrer'
-                target='_blank' onClick={() => markedDisputed(item)
-
+                target='_blank' onClick={() => /* markedDisputed(item) */markOpenModule(item)
 
                 }>
                 {/* <i className='bx bx-edit textsizing' ></i> */}
