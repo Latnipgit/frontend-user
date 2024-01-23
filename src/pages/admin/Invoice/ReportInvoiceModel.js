@@ -1096,10 +1096,11 @@ const ReportedDefaulterModel = props => {
 
                           </Col>
                           <Col md={4} className="p-2">
+                            {console.log("data[index].date",data[index].date== '')}
                             <DatePicker
-                              /*  selected={new Date()} */
-                              value={data[index].date}
-                              placeholder="Select your date"
+                              selected={data[index].date == ''? new Date():""}
+                              value={ data[index].date == ''? new Date():data[index].date}
+                              // placeholder="Select your date"
 
                               onChange={(date) =>
                                 handleDateChange(date, index)
@@ -1204,7 +1205,7 @@ const ReportedDefaulterModel = props => {
                               />
                             </InputGroup>
                           </Col>
-                          <Col md={4} className="p-2">
+                          {/* <Col md={4} className="p-2">
                             <Label><strong>GST Document</strong></Label>
                             <InputGroup className="text-capitalize">
                               <input
@@ -1218,9 +1219,9 @@ const ReportedDefaulterModel = props => {
                                 }
                               />
                             </InputGroup>
-                          </Col>
+                          </Col> */}
                           <Col md={4} className="p-2">
-                            <Label><strong>General Documents</strong></Label>
+                            <Label><strong>Other Documents</strong></Label>
                             <InputGroup className="text-capitalize">
                               <input
                                 type="file"
@@ -1233,7 +1234,9 @@ const ReportedDefaulterModel = props => {
                                 }
                               />
                             </InputGroup>
+                            <p className="text-danger" style={{ fontSize:'11px'}}>Please upload all Documents in a single Pdf</p>
                           </Col>
+                          <Col md={4}></Col>
 
                           <Col md={4} className="p-2">
 
