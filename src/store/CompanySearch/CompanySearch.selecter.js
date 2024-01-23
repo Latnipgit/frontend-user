@@ -4,12 +4,13 @@ const selectCompanySearchReducer = (state) => state.CompanySearchReducer;
 
 export const selectCompanySearchList = createSelector(
   [selectCompanySearchReducer],
-  (reportMeDefulter) => reportMeDefulter.companySearchList
+  (reportMeDefulter) => reportMeDefulter.companySearchList != undefined ? reportMeDefulter.companySearchList : []
 );
 
 export const selectdashboardAdminDataMap = createSelector(
   [selectCompanySearchList],
   (reportMeDefulter) => {
+    if (reportMeDefulter == "") return []
     let SrNo = reportMeDefulter.length + 1
     return reportMeDefulter.map((list) => {
       const { id, dueFrom, totalAmount } = list
