@@ -44,14 +44,15 @@ const AddCustomer = props => {
   const isAddCustomerOpen = useSelector(SelectAddCustomer);
   const toggleAddCustomer = () => dispatch(setAddCustomerOpen(!isAddCustomerOpen));
 
-  const selectGetAllDebtors = useSelector(selectDebtorsList)
-  const selectNewCustomerList = useSelector(SelectAddCustomerList)
-  let GetAllDebtors
-  if (selectNewCustomerList.length > 0) {
-    GetAllDebtors = [...selectGetAllDebtors, ...selectNewCustomerList]
-  } else {
-    GetAllDebtors = selectGetAllDebtors
-  }
+  const GetAllDebtors = useSelector(selectDebtorsList)
+  /*   const selectNewCustomerList = useSelector(SelectAddCustomerList) */
+
+  /*   let GetAllDebtors
+    if (selectNewCustomerList.length > 0) {
+      GetAllDebtors = [...selectGetAllDebtors, ...selectNewCustomerList]
+    } else {
+      GetAllDebtors = selectGetAllDebtors
+    } */
 
 
   useEffect(() => {
@@ -149,7 +150,7 @@ const CustomerList = ({ GetAllDebtorsdata }) => {
   return (
     <>
       {GetAllDebtorsdata != undefined ? GetAllDebtorsdata.map((item, index) => {
-        return <tr key={item}>
+        return <tr key={index}>
           <th scope="row" className="pt-4">{index + 1}</th>
           {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
           <td className="pt-4 text-capitalize">{item.firstname + '' + item.lastname}</td>

@@ -1,16 +1,16 @@
 import { takeLatest, call, put, all, fork, takeEvery } from "redux-saga/effects"
 
-import { fetchCompanySearchSuccess, fetchCompanySearchFailure, getAllCompanyListAction,getAllCompanyListActionSuccess,getAllCompanyListActionFail} from "./CompanySearch.action"
+import { fetchCompanySearchSuccess, fetchCompanySearchFailure, getAllCompanyListAction, getAllCompanyListActionSuccess, getAllCompanyListActionFail } from "./CompanySearch.action"
 
 import { FETCH_COMPANY_SEARCH_START, GET_ALL_COMPANY_LIST } from "./CompanySearch.type"
 
-import { getCompanySearchList ,getAllCompany} from "helpers/fakebackend_helper"
+import { getCompanySearchList, getAllCompany } from "helpers/fakebackend_helper"
 
 
-export function* fetchCompanySearchAsync() {
+export function* fetchCompanySearchAsync(payload) {
   try {
-    const ReportMeDefulterArray = yield call(getCompanySearchList)
-    yield put(fetchCompanySearchSuccess(ReportMeDefulterArray.response))
+    const ReportMeDefulterArray = yield call(getCompanySearchList, payload.payload)
+    yield put(fetchCompanySearchSuccess(ReportMeDefulterArray.data.response))
   } catch (error) {
     yield put(fetchCompanySearchFailure(error))
   }

@@ -87,7 +87,6 @@ const UploadPendingListModule = props => {
     const uploadpendingFilelist = useSelector(selectUploadingPendingListData);
     const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeData);
     const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeData);
-    console.log("selectTransactionsSentToMe", selectTransactionsSentToMe);
     useEffect(() => {
         dispatch(getAllInvoice());
         dispatch(setIsViewDetailModalOpen())

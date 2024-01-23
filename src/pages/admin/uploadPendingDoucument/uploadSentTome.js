@@ -31,7 +31,6 @@ export const ReportSentTomeTable = ({ GetUploadPendingList, handleUploadFiles, g
             {
 
                 GetUploadPendingList != undefined ? GetUploadPendingList.map((item, index) => {
-                    debugger
                     {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
                     return <tr key={index}>
 

@@ -40,8 +40,8 @@ const GST = (cell) => {
         textTransform: "uppercase"
     };
     return <div style={divStyle}>{cell.value}
-    
-    
+
+
     </div>
 };
 const AADHAR = (cell) => {
@@ -53,7 +53,7 @@ const PANCARD = (cell) => {
         textTransform: "uppercase"
     };
     return <div style={divStyle}>{cell.value}</div>
-    
+
 };
 const daysSinceReference = (cellValue, referenceDate) => {
     if (cellValue) {
@@ -74,7 +74,7 @@ const DueSince = (cell) => {
 
     let badgeClassName = "font-size-11 badge ";
     if (daysSince > 1 && daysSince < 800) {
-        badgeClassName += "bg-success text-white";
+        badgeClassName += "bg-danger text-white";
     } else if (daysSince > 800) {
         badgeClassName += "bg-warning text-dark";
     } else {
@@ -86,7 +86,7 @@ const DueSince = (cell) => {
             day: 'numeric'
         }); */
 
-    const newDate = cell.value.split("-").reverse().join("-");
+    const newDate = cell.value != undefined ? cell.value.split("-").reverse().join("-") : "";
     const currentDate = new Date(newDate);
 
     const calculateDateDifference = () => {
@@ -100,8 +100,13 @@ const DueSince = (cell) => {
 
     return (
         <span className={badgeClassName}>
-            <div style={divStyle}>({calculateDateDifference()} days)</div>
-            <div style={divStyle}>{cell.value}</div>
+            {cell.value && (
+                <>
+                    <div style={divStyle}>({calculateDateDifference()} days)</div>
+                    <div style={divStyle}>{cell.value}</div>
+                </>
+            )}
+
         </span>
     );
 };

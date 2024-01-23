@@ -8,10 +8,11 @@ import {
 } from "./CompanySearch.type"
 
 export const REPORT_ME_DEFULTER_INITIAL_STATE = {
+  companySearch: [],
   companySearchList: [],
-  companyList:[],
-  companyListSucess:[],
-  companyListFail:[],
+  companyList: [],
+  companyListSucess: [],
+  companyListFail: [],
   recordPaymentAddReportDef: {},
   companySearchViewDatailsSuccess: [],
   loading: false,
@@ -25,17 +26,17 @@ export const CompanySearchReducer = (
   const { type, payload } = action
   switch (type) {
     case FETCH_COMPANY_SEARCH_START:
-      return { ...state, loading: true }
+      return { ...state, loading: false, companySearch: payload }
     case FETCH_COMPANY_SEARCH_SUCCESS:
       return { ...state, loading: false, companySearchList: payload }
-      case GET_ALL_COMPANY_LIST:
-        return { ...state, loading: true,companyList:payload }
     case FETCH_COMPANY_SEARCH_FAILED:
       return { ...state, loading: false, error: payload }
-      case GET_ALL_COMPANY_LIST_SUCCESS:
-        return { ...state, companyList: payload, }
-      case GET_ALL_COMPANY_LIST_FAIL:
-        return { ...state, error: payload, }
+    case GET_ALL_COMPANY_LIST:
+      return { ...state, loading: true, companyList: payload }
+    case GET_ALL_COMPANY_LIST_SUCCESS:
+      return { ...state, companyList: payload, }
+    case GET_ALL_COMPANY_LIST_FAIL:
+      return { ...state, error: payload, }
     default:
       return state
   }
