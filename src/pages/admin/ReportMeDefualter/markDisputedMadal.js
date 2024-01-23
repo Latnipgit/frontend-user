@@ -117,7 +117,7 @@ const MarkDisputedMadal = props => {
       }
 
     ]
-    dispatch(recoredPaymentReportDefault(payload[0]))
+    // dispatch(recoredPaymentReportDefault(payload[0]))
     toast.success("Record Payment Successfully")
     toggle()
   }
