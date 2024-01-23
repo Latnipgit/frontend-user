@@ -179,8 +179,8 @@ const ReportMedefulterComponent = props => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} /> :
-                 <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} />}
+                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule}/> :
+                 <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
               </tbody>
             </table>
             :
@@ -201,6 +201,9 @@ const ReportMedefulterComponent = props => {
 }
 
 const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, markedDisputed, handleViewDetail, markOpenModule }) => {
+ 
+ {console.log("markOpenModulemarkOpenModule",markOpenModule)}
+
   return (
     <>
       {selectReportMeDeflistData != undefined && selectReportMeDeflistData.length != 0 ? selectReportMeDeflistData.map((item, index) => {
@@ -258,15 +261,14 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
                 >
                   <i className='bx bx-edit textsizing' ></i>
                 </Button> */}
-
-              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+              <Button  className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Disputed Transaction" href={item.url} rel='noreferrer'
-                target='_blank' onClick={() => /* markedDisputed(item) */markOpenModule(item)
+                target='_blank' onClick={() => markOpenModule(item)
 
                 }>
                 {/* <i className='bx bx-edit textsizing' ></i> */}
                 <i className='bx bx-window-close textsizing'></i>
-              </button>
+              </Button>
 
               &nbsp;
 
