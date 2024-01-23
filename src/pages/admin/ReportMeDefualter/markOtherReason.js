@@ -140,7 +140,7 @@ export const MarkOtherReasonModel = props => {
                     Select Customer
                   </label>
                   <div className=" mb-2">
-                    <b> Upload File to challan / Dispatch Document</b>
+                    <b> Upload Supported Document File</b>
                   </div>
                   <InputGroup className="text-capitalize">
                     <input

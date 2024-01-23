@@ -129,7 +129,7 @@ const MarkDisputedMadal = props => {
     <Modal
       isOpen={isOpen}
       role="dialog"
-      size="lg"
+      size="xl"
       autoFocus={true}
       centered={true}
       className="exampleModal"
@@ -140,214 +140,215 @@ const MarkDisputedMadal = props => {
         <ModalHeader toggle={toggle}>Record Payment</ModalHeader>
 
         <ModalBody>
+          <Row>
+            <Col md="6" className="mt-4">
+              <Card className="mb-3">
+                <CardBody className="buyer-card-body">
+                  <h4>Record Payment & Upload Proofs</h4>
+                  <form>
+                    <Row className="selectionListss">
+                      <Col md={5}>
+                        <div className="mb-2"><b className="mt-2">Company Name*</b></div>
+                      </Col>
+                      <Col md={5}>
+                        <div className="d-inline">
+                          <label
+                            className="visually-hidden custom-content"
+                            htmlFor="customerSelect"
+                          >
+                            Customer Name
+                          </label>
+                          <Input
+                            type="text"
+                            id="customerEmail"
+                            name="customerEmail"
+                            value={selected.debtor != undefined ? selected.debtor.companyName : ""}
+                            disabled
 
-          <form>
-            <Row className="selectionListss">
-              <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Company Name*</b></div>
-              </Col>
-              <Col md={5}>
-                <div className="d-inline">
-                  <label
-                    className="visually-hidden custom-content"
-                    htmlFor="customerSelect"
-                  >
-                    Customer Name
-                  </label>
-                  <Input
-                    type="text"
-                    id="customerEmail"
-                    name="customerEmail"
-                    value={selected.debtor != undefined ? selected.debtor.companyName : ""}
-                    disabled
 
+                            placeholder="Amount Recieved"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
 
-                    placeholder="Amount Recieved"
-                  />
-                </div>
-              </Col>
-              <Col md={3}>
+                    <Row className="selectionListss">
+                      <Col md={5}>
+                        <div className="mb-2"><b className="mt-2">Amount*</b></div>
+                      </Col>
+                      <Col md={5}>
+                        <div className="d-inline">
+                          <label
+                            className="visually-hidden custom-content"
+                            htmlFor="customerSelect"
+                          >
+                            Select Customer
+                          </label>
+                          <Input
+                            type="number"
+                            id="customerEmail"
+                            name="customerEmail"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            placeholder="Amount Recieved"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row style={{ marginTop: "-5px" }}>
+                      <Col md={5}>
+                      </Col>
+                      <Col md={5}>
+                        <div className="d-inline">
+                          <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount)} />
+                          <span>Full amount ({selected.totalAmount})</span>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="selectionListss">
+                      <Col md={5}>
+                        <div className="mb-2"><b className="mt-2">Payment Date*</b></div>
+                      </Col>
+                      <Col md={5}>
+                        <div className="d-inline">
+                          <label
+                            className="visually-hidden custom-content"
+                            htmlFor="customerSelect"
+                          >
+                            Select Customer
+                          </label>
 
-              </Col>
+                          <DatePicker
+                            selected={new Date()}
+                            value={date}
+                            onChange={(date) =>
+                              handleDateChange(date)
+                            }
+                            dateFormat="dd-MMM-yyyy" // Format to display year, month, and day
+                            className="form-control custom-content"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
 
-            </Row>
+                    <Row className="selectionListss">
+                      <Col md={5}>
+                        <div className="mb-2"><b className="mt-2">Payment Mode*</b></div>
+                      </Col>
+                      <Col md={5}>
+                        <div className="d-inline">
+                          <label
+                            className="visually-hidden custom-content"
+                            htmlFor="customerSelect"
+                          >
+                            Select Customer
+                          </label>
 
-            <Row className="selectionListss">
-              <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Amount*</b></div>
-              </Col>
-              <Col md={5}>
-                <div className="d-inline">
-                  <label
-                    className="visually-hidden custom-content"
-                    htmlFor="customerSelect"
-                  >
-                    Select Customer
-                  </label>
+                          <Select
+                            id="primaryContact"
+                            className="custom-content"
+                            options={salutations}
+                            styles={colourStyles}
+                            onChange={selected => setPaymentMode(selected.value)}
+                            placeholder="Cash"
+                          />
 
-                  <Input
-                    type="number"
-                    id="customerEmail"
-                    name="customerEmail"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    placeholder="Amount Recieved"
-                  />
-
-                </div>
-              </Col>
-              <Col md={3}>
-
-              </Col>
-
-            </Row>
-            <Row style={{ marginTop: "-5px" }}>
-              <Col md={3}>
-              </Col>
-              <Col md={5}>
-                <div className="d-inline">
-
-                  <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount)} />
-
-                  <span>Full amount ({selected.totalAmount})</span>
-                </div>
-              </Col>
-              <Col md={3}>
-
-              </Col>
-            </Row>
-
-            <Row className="selectionListss">
-              <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Payment Date*</b></div>
-              </Col>
-              <Col md={5}>
-                <div className="d-inline">
-                  <label
-                    className="visually-hidden custom-content"
-                    htmlFor="customerSelect"
-                  >
-                    Select Customer
-                  </label>
-
-                  <DatePicker
-                    selected={new Date()}
-                    value={date}
-                    onChange={(date) =>
-                      handleDateChange(date)
-                    }
-
-                    dateFormat="dd-MMM-yyyy" // Format to display year, month, and day
-                    className="form-control custom-content"
-
-                  />
-
-                </div>
-              </Col>
-              <Col md={3}>
-
-              </Col>
-
-            </Row>
-
-            <Row className="selectionListss">
-              <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Payment Mode*</b></div>
-              </Col>
-              <Col md={5}>
-                <div className="d-inline">
-                  <label
-                    className="visually-hidden custom-content"
-                    htmlFor="customerSelect"
-                  >
-                    Select Customer
-                  </label>
-
-                  <Select
-                    id="primaryContact"
-                    className="custom-content"
-                    options={salutations}
-                    styles={colourStyles}
-                    onChange={selected => setPaymentMode(selected.value)}
-                    placeholder="Cash"
-                  />
-
-                </div>
-              </Col>
-              <Col md={3}>
-
-              </Col>
-
-            </Row>
+                        </div>
+                      </Col>
+                    </Row>
 
 
 
-            <Row className="selectionListss">
-              <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Attachment*</b></div>
-              </Col>
-              <Col md={5}>
-                <div className="d-inline">
-                  <label
-                    className="visually-hidden custom-content"
-                    htmlFor="customerSelect"
-                  >
-                    Select Customer
-                  </label>
-                  <InputGroup className="text-capitalize">
-                    <input
-                      type="file"
-                      className="form-control"
-                      id=""
-                      accept=".pdf, .doc, .docx, .txt"
-                      aria-describedby="fileUploadHelp"
-                      onChange={e =>
-                        handleFileChange(e, "")
-                      }
-                    />
-                  </InputGroup>
+                    <Row className="selectionListss">
+                      <Col md={5}>
+                        <div className="mb-2"><b className="mt-2">Attachment*</b></div>
+                      </Col>
+                      <Col md={5}>
+                        <div className="d-inline">
+                          <label
+                            className="visually-hidden custom-content"
+                            htmlFor="customerSelect"
+                          >
+                            Select Customer
+                          </label>
+                          <InputGroup className="text-capitalize">
+                            <input
+                              type="file"
+                              className="form-control"
+                              id=""
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(e, "")
+                              }
+                            />
+                          </InputGroup>
 
-                </div>
-              </Col>
-              <Col md={3}>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row className="selectionListss">
+                      <Col md={5}>
+                        <div className="mb-2"><b className="mt-2">Remarks</b></div>
+                      </Col>
+                      <Col md={5}>
+                        <div className="d-inline">
 
-              </Col>
+                          <Input
+                            type="textarea"
+                            id="customerEmail"
+                            name="customerEmail"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            placeholder="Remarks"
+                          />
 
-            </Row>
-            <Row className="selectionListss">
-              <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Remarks</b></div>
-              </Col>
-              <Col md={5}>
-                <div className="d-inline">
+                        </div>
+                      </Col>
+                    </Row>
 
-                  <Input
-                    type="textarea"
-                    id="customerEmail"
-                    name="customerEmail"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    placeholder="Remarks"
-                  />
+                  </form>
 
-                </div>
-              </Col>
-              <Col md={3}>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col md="6" className="mt-4">
+              <Card className="mb-3">
+                <CardBody className="buyer-card-body">
+                  <h4>Upload CA Verfied ledge</h4>
+                  <Row className="mt-4 mb-4">
 
-              </Col>
-
-            </Row>
-
-          </form>
+                    <Col md={8}>
 
 
+                      <InputGroup className="text-capitalize">
+                        <input
+                          type="file"
+                          className="form-control"
+                          id="uploadPurchaseOrder"
+                          accept=".pdf, .doc, .docx, .txt"
+                          aria-describedby="fileUploadHelp"
+                          onChange={e =>
+                            handleFileChange(e)
+                          }
+                        />
+                      </InputGroup>
 
+                      <div id="fileUploadHelp" className="form-text">
+                        Choose a file to upload (PDF, DOC, DOCX, TXT).
+                      </div>
+                    </Col>
+
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
         </ModalBody>
         <ModalFooter>
           <Button type="button" color="primary" onClick={() => handleSubmit(true)}>
             Submit
           </Button>
-
           <Button type="button" color="secondary" onClick={toggle}>
             Close
           </Button>

@@ -13,12 +13,13 @@ import {
     Label,
     Card,
     CardBody,
-
+    FormGroup,
     Table,
     Row, Col
 } from "reactstrap"
 import 'react-datepicker/dist/react-datepicker.css';
 import { MarkOtherReasonModel } from "./markOtherReason";
+import { MarkUploadCACertificate } from "./MarkUploadCACertificate";
 // import axios from "axios";
 
 
@@ -26,13 +27,37 @@ export const MarkDisputedPopModule = props => {
     const { isOpen, toggle, selected, markedDisputed, currentindex } = props
 
     const [otherReason, setOtherReason] = useState(false)
+    const [markCAupload, setMarkCAupload] = useState(false)
+    const [radioOption, setRadioOption] = useState("")
+    const [nextBtn, setNextBtn] = useState(false)
 
     const OtherReasonOpen = () => {
         setOtherReason(!otherReason)
     }
+    const marCAUpload = () => {
+        setMarkCAupload(!markCAupload)
+    }
+
+    function handleToggleItem(radio) {
+        setRadioOption(radio)
+    }
+
+    function handleNext() {
+        if (radioOption == "radio1") {
+            markedDisputed(currentindex)
+        }
+        if (radioOption == "radio2") {
+            marCAUpload()
+        }
+        if (radioOption == "radio3") {
+            OtherReasonOpen()
+        }
+    }
+
     return (
         <>
             <MarkOtherReasonModel isOpen={otherReason} toggle={OtherReasonOpen} />
+            <MarkUploadCACertificate isOpen={markCAupload} toggle={marCAUpload} setMarkCAupload={setMarkCAupload} />
             <Modal
                 isOpen={isOpen}
                 role="dialog"
@@ -45,20 +70,61 @@ export const MarkDisputedPopModule = props => {
                 fullscreen="sm"
             >
                 <div className="modal-content">
-                    <ModalHeader toggle={toggle}>Mark As A Disputed Transaction</ModalHeader>
+                    <ModalHeader toggle={toggle}>You Deny Seller Claim For The Follwing Reasons </ModalHeader>
                     <ModalBody>
-                        <Col className="d-flex justify-content-around">
-                            <Button type="button" color="primary" onClick={() => markedDisputed(currentindex)}>
-                                Record Payment
-                            </Button>
-                            <Button type="button" color="primary" onClick={() => OtherReasonOpen()}>
-                                Other reasons
-                            </Button>
-                        </Col>
 
+                        <form>
+                            <Row className="selectionListss">
+                                <Col md={8}>
+                                    <FormGroup tag="fieldset">
+                                        <FormGroup check className="mb-2">
+                                            <Input
+                                                name="radio1"
+                                                type="radio"
+                                                onChange={() => handleToggleItem("radio1")}
+                                            />
+                                            {' '}
+                                            <Label check>
+                                                Dispute amount is less then Claimed by seller
+                                            </Label>
+                                        </FormGroup>
+                                        <FormGroup check className="mb-2">
+                                            <Input
+                                                name="radio1"
+                                                type="radio"
+                                                onChange={() => handleToggleItem("radio2")}
+                                            />
+                                            {' '}
+                                            <Label check>
+                                                Seller has not given input credit of inverce recieved to buyer
+                                            </Label>
+                                        </FormGroup>
+                                        <FormGroup
+                                            check
+                                            className="mb-2"
+                                        >
+                                            <Input
+                                                name="radio1"
+                                                type="radio"
+                                                onChange={() => handleToggleItem("radio3")}
+                                            />
+                                            {' '}
+                                            <Label check>
+                                                Any Other Reasons
+                                            </Label>
+                                        </FormGroup>
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                        </form>
                     </ModalBody>
+                    <ModalFooter>
+                        <Button type="button" color="primary" onClick={() => handleNext()} disabled={nextBtn == true}>
+                            Next
+                        </Button>
+                    </ModalFooter>
                 </div>
-            </Modal>
+            </Modal >
         </>
     )
 }
