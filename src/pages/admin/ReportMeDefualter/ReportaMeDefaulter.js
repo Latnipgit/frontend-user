@@ -158,6 +158,11 @@ const ReportMedefulterComponent = props => {
             {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Seller"} /> : ""}
           </Row>
           <Row className="p-4  ml-5">
+            {selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ?
+
+
+              
+         
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -174,9 +179,19 @@ const ReportMedefulterComponent = props => {
                 </tr>
               </thead>
               <tbody>
-                <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule} />
+                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} /> :
+                 <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} />}
               </tbody>
             </table>
+            :
+            <Card style={{ height:'60vh'}}>
+              <CardBody className="text-center p-5 ">
+                <h5 className="mt-5">
+                  No Data Found
+                </h5>
+              </CardBody>
+            </Card>
+            }
 
           </Row>
         </CardBody>
@@ -188,7 +203,7 @@ const ReportMedefulterComponent = props => {
 const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, markedDisputed, handleViewDetail, markOpenModule }) => {
   return (
     <>
-      {selectReportMeDeflistData != undefined ? selectReportMeDeflistData.map((item, index) => {
+      {selectReportMeDeflistData != undefined && selectReportMeDeflistData.length != 0 ? selectReportMeDeflistData.map((item, index) => {
         return <tr key={item}>
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
@@ -306,7 +321,9 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
             </div>
           </td>
         </tr>
-      }) : ''}
+      }) : 
+     ""
+      }
       <ToastContainer />
     </>
   )
