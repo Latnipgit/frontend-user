@@ -182,14 +182,15 @@ const CompnayViewDetails = props => {
                                                         return value.ratings.response
                                                     }
                                                 }
-
                                             })
+                                            const totalAmount = item.status == "APPROVED" ? item.totalAmount : "*******"
                                             return <tr key={i}>
                                                 <td>{item.companyName}</td>
-                                                <td>{item.totalAmount != undefined ? item.totalAmount : ""}</td>
+                                                <td>{item.totalAmount != undefined ? totalAmount : ""}</td>
                                                 <td>{item.dueFrom != undefined ? item.dueFrom : ""}</td>
-                                                <td>4.2</td>
-                                                <td style={{ color: "green" }}><b><FcCheckmark />Approved</b> </td>
+                                                <td>{ratingArray}</td>
+                                                {item.status != undefined ? <td style={item.status == "APPROVED" ? { color: "green" } : item.status == "PENDING" ? { color: "red" } : item.status == "DISPUTED" ? { color: "red", filter: "2px" } : ""}>{item.status == "APPROVED" ? <b><FcCheckmark />Approved</b> : item.status == "PENDING" ? <b><FcClock /> InProcess</b> : item.status == "DISPUTED" ? <b><FcCancel /> Disputed</b> : ""} </td> : <td></td>}
+
                                             </tr>
                                         }) : ''}
 
@@ -411,7 +412,7 @@ const CompnayViewDetails = props => {
                     </Button>
                 </ModalFooter>
             </div>
-        </Modal>
+        </Modal >
     )
 }
 
