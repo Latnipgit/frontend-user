@@ -66,10 +66,10 @@ const CompanySearch = props => {
   const [selected, setSelected] = useState('')
   const [showMenuItems, setShowMenuItems] = useState(true);
   const toggleViewModal = () => setModal1(!modal1);
-  /*  const handleEyeIconClick = () => {
-     const newPageUrl = '/company-dashboard';
-     window.location.href = newPageUrl;
-   }; */
+  const handleEyeIconClick = () => {
+    const newPageUrl = '/company-dashboard';
+    window.location.href = newPageUrl;
+  };
 
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
   /*  const getAllCompanyList = useSelector(getAllCompanyListSelector) */
