@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import withRouter from "components/Common/withRouter";
 import { Row, Col, CardBody, Card, Alert, Container, Input, Label, Form, FormFeedback } from "reactstrap";
+import Select from "react-select"
+
+// state and city select
+import { City, Country, State } from "country-state-city";
 
 // Formik Validation
 import * as Yup from "yup";
@@ -20,6 +24,7 @@ import { Link } from "react-router-dom";
 // import images
 import profileImg from "../../assets/images/profile-img.png";
 import logoImg from "../../assets/images/logo.svg";
+import index from "pages/Dashboard-Blog";
 // toast.configure() 
 const Register = props => {
 
@@ -35,6 +40,62 @@ const Register = props => {
   const [panValidation, setPanValidation] = useState("");
   const [mobileValidation, setmobileValidation] = useState("");
   const [emailValidation, setemailValidation] = useState("");
+
+
+  //city and State
+
+  let countryData = Country.getAllCountries();
+  const [stateData, setStateData] = useState();
+  const [cityData, setCityData] = useState();
+
+  const [country, setCountry] = useState(countryData[100]);
+
+  const [selectedState, setSelectedState] = useState("")
+  const [selectedCity, setSelectedCity] = useState("")
+  const [salutationState, setsalutationState] = useState([])
+  const [salutationCity, setSalutationCity] = useState([])
+
+  const colourStyles = {
+    menuList: styles => ({
+      ...styles,
+      background: '#FFFFFF'
+    })
+  }
+
+  useEffect(() => {
+    setStateData(State.getStatesOfCountry(country?.isoCode));
+  }, [country]);
+
+
+
+  useEffect(() => {
+    if (stateData) {
+      const selectState = stateData.filter((state) => state.name == selectedState.value)
+      setCityData(City.getCitiesOfState(country?.isoCode, selectState[0]?.isoCode));
+    }
+
+  }, [selectedState]);
+
+  useEffect(() => {
+    if (stateData) {
+      const stateDatalist = stateData.map((value, index) => {
+        return { label: value.name, value: value.name }
+      })
+      setsalutationState(stateDatalist)
+    }
+  }, [stateData]);
+
+  useEffect(() => {
+    if (cityData) {
+      const stateDatalist = cityData.map((value, index) => {
+        return { label: value.name, value: value.name }
+      })
+      setSalutationCity(stateDatalist)
+    }
+  }, [cityData]);
+
+  // 
+
 
   const handleGSTChange = (event) => {
     const gst = event.target.value;
@@ -122,6 +183,8 @@ const Register = props => {
       mobileNumber: '',
       gstNumber: '',
       panNumber: '',
+      state: '',
+      city: '',
 
     },
     validationSchema: Yup.object({
@@ -133,6 +196,8 @@ const Register = props => {
       mobileNumber: Yup.string().required("Please Enter Your Mobile Number"),
       gstNumber: Yup.string().required("Please Enter Your gst Number"),
       panNumber: Yup.string().required("Please Enter Your pan Number"),
+      state: Yup.string().required("Please Select state"),
+      city: Yup.string().required("Please Select city"),
     })
   });
 
@@ -366,6 +431,42 @@ const Register = props => {
 
                                 onBlur={handlePanBlur}
                               // value={panNumber}
+                              />
+                              {panValidation.error && panValidation.error != '' && (
+                                <div className="invalid-feedback">{panValidation.error}</div>
+                              )}
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <div className="mb-3">
+                              <label className="form-label">State*</label>
+                              <Select
+                                id="primaryContact"
+                                className="custom-content"
+                                options={salutationState}
+                                styles={colourStyles}
+                                value={selectedState}
+                                onChange={selected => setSelectedState(selected)}
+                                placeholder="Select State"
+                              />
+                              {panValidation.error && panValidation.error != '' && (
+                                <div className="invalid-feedback">{panValidation.error}</div>
+                              )}
+                            </div>
+                          </Col>
+                          <Col>
+                            <div className="mb-3">
+                              <label className="form-label">City*</label>
+                              <Select
+                                id="primaryContact"
+                                className="custom-content"
+                                options={salutationCity}
+                                styles={colourStyles}
+                                value={selectedCity}
+                                onChange={selected => setSelectedCity(selected)}
+                                placeholder="Select City"
                               />
                               {panValidation.error && panValidation.error != '' && (
                                 <div className="invalid-feedback">{panValidation.error}</div>

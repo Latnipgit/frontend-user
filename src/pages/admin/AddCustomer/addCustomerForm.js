@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Select from "react-select"
 import { useFormik } from "formik"
 import {
@@ -20,6 +20,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter"
 import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
 import { addCustomerlist } from "store/actions"
+
+// state and city select
+import { City, Country, State } from "country-state-city";
 
 export const AddcustomerFomr = () => {
   const [selectedOption, setSelectedOption] = useState("")
@@ -111,6 +114,54 @@ export const AddcustomerFomr = () => {
     },
   })
 
+
+  //city and State
+
+  let countryData = Country.getAllCountries();
+  const [stateData, setStateData] = useState();
+  const [cityData, setCityData] = useState();
+
+  const [country, setCountry] = useState(countryData[100]);
+
+  const [selectedState, setSelectedState] = useState("")
+  const [selectedCity, setSelectedCity] = useState("")
+  const [salutationState, setsalutationState] = useState([])
+  const [salutationCity, setSalutationCity] = useState([])
+
+  useEffect(() => {
+    setStateData(State.getStatesOfCountry(country?.isoCode));
+  }, [country]);
+
+
+
+  useEffect(() => {
+    if (stateData) {
+      const selectState = stateData.filter((state) => state.name == selectedState.value)
+      setCityData(City.getCitiesOfState(country?.isoCode, selectState[0]?.isoCode));
+    }
+
+  }, [selectedState]);
+
+  useEffect(() => {
+    if (stateData) {
+      const stateDatalist = stateData.map((value, index) => {
+        return { label: value.name, value: value.name }
+      })
+      setsalutationState(stateDatalist)
+    }
+  }, [stateData]);
+
+  useEffect(() => {
+    if (cityData) {
+      const stateDatalist = cityData.map((value, index) => {
+        return { label: value.name, value: value.name }
+      })
+      setSalutationCity(stateDatalist)
+    }
+  }, [cityData]);
+
+  // 
+
   const handleFormSubmit = (item, e) => {
     const dummy = [
       {
@@ -122,8 +173,8 @@ export const AddcustomerFomr = () => {
         "customerMobile": item.customerPhone,
         "address1": item.address1,
         "address2": item.address2,
-        "city": item.city,
-        "state": item.state,
+        "city": selectedCity.value,
+        "state": selectedState.value,
         "zipcode": item.zipcode,
         "gstin": item.gstNumber,
         "companyPan": item.panCard,
@@ -145,6 +196,7 @@ export const AddcustomerFomr = () => {
     })
 
   }
+
 
 
   return (
@@ -473,19 +525,19 @@ export const AddcustomerFomr = () => {
           </Row>
           <Row>
             <Col xs={12} md={2} className="mt-2">
-              <Label for="cityState">City*</Label>
+              <Label for="cityState">State*</Label>
             </Col>
             <Col xs={12} md={6} className="mt-1">
               <FormGroup>
-                <Input
-                  type="text"
-                  id="city"
-                  name="city"
-                  className="text-capitalize"
-                  value={formikModal.values.city}
-                  onChange={formikModal.handleChange}
+                <Select
+                  id="primaryContact"
+                  className="custom-content"
+                  options={salutationState}
+                  styles={colourStyles}
+                  value={selectedState}
+                  onChange={selected => setSelectedState(selected)}
                   onBlur={formikModal.handleBlur}
-                  placeholder="Enter City Name"
+                  placeholder="Select State"
                 />
                 {formikModal.touched.city &&
                   formikModal.errors.city && (
@@ -498,20 +550,19 @@ export const AddcustomerFomr = () => {
           </Row>
           <Row>
             <Col xs={12} md={2} className="mt-2">
-              <Label for="cityState">State</Label>
+              <Label for="cityState">City*</Label>
             </Col>
             <Col xs={12} md={6} className="mt-1">
               <FormGroup>
-                <Input
-                  type="text"
-                  id="state"
-                  name="state"
-                  className="text-capitalize"
-
-                  value={formikModal.values.state}
-                  onChange={formikModal.handleChange}
+                <Select
+                  id="primaryContact"
+                  className="custom-content"
+                  options={salutationCity}
+                  styles={colourStyles}
+                  value={selectedCity}
+                  onChange={selected => setSelectedCity(selected)}
                   onBlur={formikModal.handleBlur}
-                  placeholder="Enter State Name"
+                  placeholder="Select City"
                 />
                 {formikModal.touched.state &&
                   formikModal.errors.state && (
