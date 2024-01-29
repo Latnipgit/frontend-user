@@ -68,6 +68,7 @@ import { CompanySearchReducer } from "./CompanySearch/CompanySearch.reducer";
 import documentsReducer from "./Documents/DocumentsdReducer";
 import { UploadPendingListReducer } from "./UploadPendingDocList/UploadPendingDocList.reducer";
 import { CompanySearchViewReducer } from "./CompanySearchView/CompanySearchView.reducer";
+import { SelectCompanyReducer } from "./selectCompany/selectCompany.reducer";
 
 
 const rootReducer = combineReducers({
@@ -106,6 +107,7 @@ const rootReducer = combineReducers({
   CompanySearchReducer,
   UploadPendingListReducer,
   CompanySearchViewReducer,
+  SelectCompanyReducer,
 
 });
 

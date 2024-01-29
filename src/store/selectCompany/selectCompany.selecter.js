@@ -1,0 +1,1 @@
+export const SelectCompnay = (state) => state.SelectCompanyReducer.isSelectCompanyOpen;

@@ -43,12 +43,18 @@ import { useSelector, useDispatch } from "react-redux"
 import CurrencyFormat from 'react-currency-format';
 // import { Creditor } from "pages/admin/DisputedBillings/disputedCol";
 import ReportMedefulterComponent from '../../pages/admin/ReportMeDefualter/ReportaMeDefaulter'
+
+import { SelectCompnay } from "store/selectCompany/selectCompany.selecter";
+import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype";
+
 const Dashboard = props => {
   const [subscribemodal, setSubscribemodal] = useState(false)
   const [filteredData, setFilteredData] = useState([]);
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [isClickedToReported, setisClickedToReported] = useState(false);
   const dispatch = useDispatch();
+
+  const SelectCompnayOpen = useSelector(SelectCompnay)
 
   const renderStarRating = rating => {
     const starCount = 5
@@ -118,7 +124,13 @@ const Dashboard = props => {
   }
 
   document.title = "Dashboard | Bafana"
-  const companiesURL = "/companies"
+
+
+  const handleMainDashboard = () => {
+    /*     const companiesURL = "/companies"
+        window.location.href = companiesURL */
+    dispatch(setSelectCopenOpen(!SelectCompnayOpen))
+  };
 
   return (
     <React.Fragment>
@@ -134,7 +146,7 @@ const Dashboard = props => {
             </Col>
             <Col md={4}>
               <Button style={{ float: 'right', width: "180px" }} className="'btn btn-info p-2" onClick={() => {
-                window.location.href = companiesURL;
+                handleMainDashboard()
               }}>
                 Back To Main Dashboard
               </Button>

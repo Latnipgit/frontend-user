@@ -8,27 +8,36 @@ import { Link } from "react-router-dom"
 import { withTranslation } from "react-i18next"
 import { useMenu } from "./MenuContext"
 
+import { useSelector, useDispatch } from "react-redux";
+import { SelectCompnay } from "store/selectCompany/selectCompany.selecter"
+import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype"
+
 const SidebarContent = props => {
+  const dispatch = useDispatch();
   const [showMenuItems, setshowMenuItems] = useState(false)
   const [isShowEmployee, setisShowEmployee] = useState()
   const [isShowSales, setShowSales] = useState(false)
   const [currentPath, setCurrentpath] = useState('')
 
+  const SelectCompnayOpen = useSelector(SelectCompnay)
 
-  useEffect(() => {
-    setCurrentpath(window.location.pathname)
-    if (
-      currentPath == "/companies" ||
-      currentPath == "/documents" ||
-      currentPath == "/profile" ||
-      currentPath == "/notification"
-    ) {
-      setshowMenuItems(false)
-    } else {
-      setshowMenuItems(true)
 
-    }
-  }, [currentPath, showMenuItems])
+
+
+  /*  useEffect(() => {
+     setCurrentpath(window.location.pathname)
+     if (
+       currentPath == "/companies" ||
+       currentPath == "/documents" ||
+       currentPath == "/profile" ||
+       currentPath == "/notification"
+     ) {
+       setshowMenuItems(false)
+     } else {
+       setshowMenuItems(true)
+ 
+     }
+   }, [currentPath, showMenuItems]) */
   const ref = useRef()
   const activateParentDropdown = useCallback(item => {
     item.classList.add("active")
@@ -178,7 +187,7 @@ const SidebarContent = props => {
           <ul className="metismenu list-unstyled" id="side-menu">
             <li className="menu-title">{props.t("Menu")} </li>
 
-            {showMenuItems == true ? (
+            {SelectCompnayOpen == true ? (
               <>
                 <li>
                   <Link to="/company-dashboard">

@@ -26,17 +26,22 @@ import TableContainer from "../../../components/Common/TableContainer";
 
 import AddCompanyModel from "./addCompanyModel"
 
+import { SelectCompnay } from "store/selectCompany/selectCompany.selecter";
+import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype";
+
 
 const ApprovedTranction = props => {
   const dispatch = useDispatch();
   const [modal1, setModal1] = useState(false);
   const toggleViewModal = () => setModal1(!modal1);
+  const SelectCompnayOpen = useSelector(SelectCompnay)
 
 
   const handleEyeIconClick = (item) => {
     localStorage.setItem("COMPANY-ID", item.id)
     const newPageUrl = '/company-dashboard';
-    window.location.href = newPageUrl;
+    // window.location.href = newPageUrl;
+    dispatch(setSelectCopenOpen(!SelectCompnayOpen))
   };
   const columns = useMemo(
     () => [
