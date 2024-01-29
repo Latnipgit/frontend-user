@@ -127,8 +127,6 @@ const Dashboard = props => {
 
 
   const handleMainDashboard = () => {
-    /*     const companiesURL = "/companies"
-        window.location.href = companiesURL */
     dispatch(setSelectCopenOpen(!SelectCompnayOpen))
   };
 
@@ -145,11 +143,14 @@ const Dashboard = props => {
               <h5 className="m-1">Company Dashboard</h5>
             </Col>
             <Col md={4}>
-              <Button style={{ float: 'right', width: "180px" }} className="'btn btn-info p-2" onClick={() => {
-                handleMainDashboard()
-              }}>
-                Back To Main Dashboard
-              </Button>
+              <Link to="/companies">
+                <Button style={{ float: 'right', width: "180px" }} className="'btn btn-info p-2" onClick={() => {
+                  handleMainDashboard()
+                }}>
+                  Back To Main Dashboard
+                </Button>
+              </Link>
+
             </Col>
 
 
