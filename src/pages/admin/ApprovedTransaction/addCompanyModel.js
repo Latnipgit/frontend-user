@@ -25,6 +25,10 @@ import {
   Container,
   Row, Col
 } from "reactstrap"
+import Select from "react-select"
+
+// state and city select
+import { City, Country, State } from "country-state-city";
 
 const ReportedDebtorsModel = props => {
   document.title = "Register | Bafana - User & Dashboard";
@@ -93,7 +97,59 @@ const ReportedDebtorsModel = props => {
   });
   const { isOpen, toggle } = props
 
+  //city and State
 
+  let countryData = Country.getAllCountries();
+  const [stateData, setStateData] = useState();
+  const [cityData, setCityData] = useState();
+
+  const [country, setCountry] = useState(countryData[100]);
+
+  const [selectedState, setSelectedState] = useState("")
+  const [selectedCity, setSelectedCity] = useState("")
+  const [salutationState, setsalutationState] = useState([])
+  const [salutationCity, setSalutationCity] = useState([])
+
+  const colourStyles = {
+    menuList: styles => ({
+      ...styles,
+      background: '#FFFFFF'
+    })
+  }
+
+  useEffect(() => {
+    setStateData(State.getStatesOfCountry(country?.isoCode));
+  }, [country]);
+
+
+
+  useEffect(() => {
+    if (stateData) {
+      const selectState = stateData.filter((state) => state.name == selectedState.value)
+      setCityData(City.getCitiesOfState(country?.isoCode, selectState[0]?.isoCode));
+    }
+
+  }, [selectedState]);
+
+  useEffect(() => {
+    if (stateData) {
+      const stateDatalist = stateData.map((value, index) => {
+        return { label: value.name, value: value.name }
+      })
+      setsalutationState(stateDatalist)
+    }
+  }, [stateData]);
+
+  useEffect(() => {
+    if (cityData) {
+      const stateDatalist = cityData.map((value, index) => {
+        return { label: value.name, value: value.name }
+      })
+      setSalutationCity(stateDatalist)
+    }
+  }, [cityData]);
+
+  //
 
 
   return (
@@ -230,6 +286,42 @@ const ReportedDebtorsModel = props => {
 
                                 />
 
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <div className="mb-3">
+                                <label className="form-label">State*</label>
+                                <Select
+                                  id="primaryContact"
+                                  className="custom-content"
+                                  options={salutationState}
+                                  styles={colourStyles}
+                                  value={selectedState}
+                                  onChange={selected => setSelectedState(selected)}
+                                  placeholder="Select State"
+                                />
+                                {panValidation.error && panValidation.error != '' && (
+                                  <div className="invalid-feedback">{panValidation.error}</div>
+                                )}
+                              </div>
+                            </Col>
+                            <Col>
+                              <div className="mb-3">
+                                <label className="form-label">City*</label>
+                                <Select
+                                  id="primaryContact"
+                                  className="custom-content"
+                                  options={salutationCity}
+                                  styles={colourStyles}
+                                  value={selectedCity}
+                                  onChange={selected => setSelectedCity(selected)}
+                                  placeholder="Select City"
+                                />
+                                {panValidation.error && panValidation.error != '' && (
+                                  <div className="invalid-feedback">{panValidation.error}</div>
+                                )}
                               </div>
                             </Col>
                           </Row>

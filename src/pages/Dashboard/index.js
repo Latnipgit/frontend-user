@@ -74,6 +74,7 @@ const Dashboard = props => {
   }
 
   const GetAllInvoice = useSelector(selectInvoiceList)
+
   useEffect(() => {
     dispatch(getAllInvoice());
     getDays()
@@ -217,7 +218,7 @@ const Dashboard = props => {
                     <tbody>
                       {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
                       {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
-                      {filteredData.length >= 0 ? <FilterData GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} /> : <FilterData GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} />}
+                      <FilterData GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} />
                     </tbody>
                   </table>
 
