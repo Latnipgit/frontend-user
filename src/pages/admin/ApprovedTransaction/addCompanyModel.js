@@ -34,6 +34,7 @@ const ReportedDebtorsModel = props => {
   document.title = "Register | Bafana - User & Dashboard";
   const [panNumber, setPanNumber] = useState('');
   const [gstNumber, setGSTNumber] = useState('');
+  const [zipcode, setZipcode] = useState('');
   const [mobile, setMobile] = useState('');
   const [name, setName] = useState('');
   const [companyName, setcompanyName] = useState('');
@@ -66,6 +67,8 @@ const ReportedDebtorsModel = props => {
 
   const [selectedState, setSelectedState] = useState("")
   const [selectedCity, setSelectedCity] = useState("")
+
+
   const [salutationState, setsalutationState] = useState([])
   const [salutationCity, setSalutationCity] = useState([])
 
@@ -111,13 +114,15 @@ const ReportedDebtorsModel = props => {
   //
 
   const formSubmit = () => {
-    if (selectedState === "" && selectedCity === "") return
+    debugger
+    if (selectedState === "" && selectedCity === "" && zipcode === "") return
     const payload = {
       "companyName": companyName != '' ? companyName : props.getCompanyList[0].companyName,
       "gstin": gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
       "companyPan": panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
       "state": selectedState.value,
       "city": selectedCity.value,
+      "zipcode": zipcode,
     }
     dispatch(addNewCompany(payload));
     toast.success("Registration successfully")
@@ -137,6 +142,9 @@ const ReportedDebtorsModel = props => {
       mobileNumber: '',
       gstNumber: '',
       panNumber: '',
+      state: '',
+      city: '',
+      zipcode: '',
 
     },
     validationSchema: Yup.object({
@@ -150,6 +158,7 @@ const ReportedDebtorsModel = props => {
       panNumber: Yup.string().required("Please Enter Your pan Number"),
       state: Yup.string().required("Please Enter Your gst Number"),
       city: Yup.string().required("Please Enter Your pan Number"),
+      zipcode: Yup.string().required("Please Enter Zip code"),
     })
   });
   const { isOpen, toggle } = props
@@ -305,7 +314,7 @@ const ReportedDebtorsModel = props => {
                                   styles={colourStyles}
                                   value={selectedState}
                                   onChange={selected => setSelectedState(selected)}
-                                  placeholder="Select State"
+                                  placeholder="SELECT STATE"
                                 />
                                 {panValidation.error && panValidation.error != '' && (
                                   <div className="invalid-feedback">{panValidation.error}</div>
@@ -322,12 +331,31 @@ const ReportedDebtorsModel = props => {
                                   styles={colourStyles}
                                   value={selectedCity}
                                   onChange={selected => setSelectedCity(selected)}
-                                  placeholder="Select City"
+                                  placeholder="SELECT CITY"
                                 />
                                 {panValidation.error && panValidation.error != '' && (
                                   <div className="invalid-feedback">{panValidation.error}</div>
                                 )}
                               </div>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <div className="mb-3">
+                                <Label className="form-label">GST Number</Label>
+                                <Input
+                                  id="zipcode"
+                                  name="zipcode"
+                                  className="form-control text-uppercase"
+                                  placeholder='Enter your Zip code'
+                                  type="text"
+                                  onChange={(event) => setZipcode(event.target.value)}
+
+                                />
+
+                              </div>
+                            </Col>
+                            <Col>
                             </Col>
                           </Row>
                           <Row>
