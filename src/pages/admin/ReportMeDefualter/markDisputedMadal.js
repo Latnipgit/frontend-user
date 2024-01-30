@@ -315,7 +315,7 @@ const MarkDisputedMadal = props => {
             <Col md="6" className="mt-4">
               <Card className="mb-3">
                 <CardBody className="buyer-card-body">
-                  <h4>Upload CA Verfied ledge</h4>
+                  <h4>Upload CA Verified ledger</h4>
                   <Row className="mt-4 mb-4">
 
                     <Col md={8}>

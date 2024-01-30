@@ -147,7 +147,7 @@ const Dashboard = props => {
                 <Button style={{ float: 'right', width: "180px" }} className="'btn btn-info p-2" onClick={() => {
                   handleMainDashboard()
                 }}>
-                  Back To Main Dashboard
+                  Back To My Companyes
                 </Button>
               </Link>
 

@@ -84,7 +84,7 @@ export const MarkUploadCACertificate = props => {
       tabIndex="-1"
     >
       <div className="modal-content">
-        <ModalHeader toggle={() => toggleViewModal2()}>Upload CA Verfied GST Input Credit Report</ModalHeader>
+        <ModalHeader toggle={() => toggleViewModal2()}>Upload CA Verified GST Input Credit Report</ModalHeader>
 
         <ModalBody>
           <Row className="mt-4 mb-4">
