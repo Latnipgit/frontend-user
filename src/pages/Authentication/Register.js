@@ -291,8 +291,11 @@ const Register = props => {
                             // aadharNumber: formik.values.aadharNumber,
                             panNumber: panNumber.toUpperCase(),
                             email: formik.values.email,
+                            state: selectedState.value,
+                            city: selectedCity.value,
+
                           };
-                          if (formik.values.name != '' && formik.values.email != '' && gstNumber != '' && panNumber != "") {
+                          if (formik.values.name != '' && formik.values.email != '' && gstNumber != '' && panNumber != "" && selectedState != "" && selectedCity != "") {
 
                             dispatch(registerUser_login(user, props.router.navigate));
                             setTimerStart(true)
@@ -451,9 +454,9 @@ const Register = props => {
                                 onChange={selected => setSelectedState(selected)}
                                 placeholder="Select State"
                               />
-                              {panValidation.error && panValidation.error != '' && (
-                                <div className="invalid-feedback">{panValidation.error}</div>
-                              )}
+                              {formik.touched.state && formik.errors.state ? (
+                                <FormFeedback type="invalid">{formik.errors.state}</FormFeedback>
+                              ) : null}
                             </div>
                           </Col>
                           <Col>
@@ -468,9 +471,9 @@ const Register = props => {
                                 onChange={selected => setSelectedCity(selected)}
                                 placeholder="Select City"
                               />
-                              {panValidation.error && panValidation.error != '' && (
-                                <div className="invalid-feedback">{panValidation.error}</div>
-                              )}
+                              {formik.touched.city && formik.errors.city ? (
+                                <FormFeedback type="invalid">{formik.errors.city}</FormFeedback>
+                              ) : null}
                             </div>
                           </Col>
                         </Row>

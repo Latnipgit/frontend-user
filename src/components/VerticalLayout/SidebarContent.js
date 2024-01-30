@@ -204,14 +204,14 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/Report-defaulter">
                     <i className='bx bxs-report'></i>
-                    {props.t("Report A Defaulter")}
+                    {props.t("My Complaints")}
                   </Link>
 
                 </li>
                 <li>
                   <Link to="/Report-me-defaulter">
                     <i className='bx bx-shield-quarter'></i>
-                    {props.t("Reported Me Defaulter")}
+                    {props.t("Complaints Against Me")}
                   </Link>
                 </li>
                 <li>
