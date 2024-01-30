@@ -49,53 +49,12 @@ const ReportedDebtorsModel = props => {
   });
 
 
-
-
-
   const dispatch = useDispatch();
   useEffect(() => {
     setName(logindata.name)
 
   }, [logindata])
 
-  const formSubmit = () => {
-    const payload = {
-      "companyName": companyName != '' ? companyName : props.getCompanyList[0].companyName,
-      "gstin": gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
-      "companyPan": panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
-    }
-    dispatch(addNewCompany(payload));
-    toast.success("Registration successfully")
-    window.location.reload()
-
-  }
-
-  const formik = useFormik({
-    enableReinitialize: true,
-
-    initialValues: {
-      email: '',
-      name: '',
-      companyName: '',
-      password: '',
-      aadharNumber: '',
-      mobileNumber: '',
-      gstNumber: '',
-      panNumber: '',
-
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      name: Yup.string().required("Please Enter Your Name"),
-      companyName: Yup.string().required("Please Enter Your Company Name"),
-      password: Yup.string().required("Please Enter Your Password"),
-      aadharNumber: Yup.string().required("Please Enter Your aadhar Number"),
-      mobileNumber: Yup.string().required("Please Enter Your Mobile Number"),
-      gstNumber: Yup.string().required("Please Enter Your gst Number"),
-      panNumber: Yup.string().required("Please Enter Your pan Number"),
-    })
-  });
-  const { isOpen, toggle } = props
 
   //city and State
 
@@ -150,6 +109,52 @@ const ReportedDebtorsModel = props => {
   }, [cityData]);
 
   //
+
+  const formSubmit = () => {
+    if (selectedState === "" && selectedCity === "") return
+    const payload = {
+      "companyName": companyName != '' ? companyName : props.getCompanyList[0].companyName,
+      "gstin": gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
+      "companyPan": panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
+      "state": selectedState.value,
+      "city": selectedCity.value,
+    }
+    dispatch(addNewCompany(payload));
+    toast.success("Registration successfully")
+    window.location.reload()
+
+  }
+
+  const formik = useFormik({
+    enableReinitialize: true,
+
+    initialValues: {
+      email: '',
+      name: '',
+      companyName: '',
+      password: '',
+      aadharNumber: '',
+      mobileNumber: '',
+      gstNumber: '',
+      panNumber: '',
+
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().required("Please Enter Your Email"),
+      name: Yup.string().required("Please Enter Your Name"),
+      companyName: Yup.string().required("Please Enter Your Company Name"),
+      password: Yup.string().required("Please Enter Your Password"),
+      aadharNumber: Yup.string().required("Please Enter Your aadhar Number"),
+      mobileNumber: Yup.string().required("Please Enter Your Mobile Number"),
+      gstNumber: Yup.string().required("Please Enter Your gst Number"),
+      panNumber: Yup.string().required("Please Enter Your pan Number"),
+      state: Yup.string().required("Please Enter Your gst Number"),
+      city: Yup.string().required("Please Enter Your pan Number"),
+    })
+  });
+  const { isOpen, toggle } = props
+
+
 
 
   return (
