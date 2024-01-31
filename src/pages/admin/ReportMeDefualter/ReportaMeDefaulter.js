@@ -161,36 +161,35 @@ const ReportMedefulterComponent = props => {
             {selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ?
 
 
-              
-         
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Seller Name</th>
-                  {/* <th scope="col">Refrence Number</th> */}
-                  <th scope="col">Invoice Number</th>
-                  {/* <th scope="col">Status</th> */}
-                  <th scope="col">Address</th>
-                  <th scope="col">Due Amount</th>
-                  <th scope="col">Due From</th>
-                  <th scope="col">Action</th>
-                  {/* <th scope="col">Upload Document</th> */}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule}/> :
-                 <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
-              </tbody>
-            </table>
-            :
-            <Card style={{ height:'60vh'}}>
-              <CardBody className="text-center p-5 ">
-                <h5 className="mt-5">
-                  No Data Found
-                </h5>
-              </CardBody>
-            </Card>
+
+
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Seller Name</th>
+                    {/* <th scope="col">Refrence Number</th> */}
+                    <th scope="col">Invoice Number</th>
+                    {/* <th scope="col">Status</th> */}
+                    <th scope="col">Address</th>
+                    <th scope="col">Due Amount</th>
+                    <th scope="col">Due From</th>
+                    <th scope="col">Action</th>
+                    {/* <th scope="col">Upload Document</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule} />
+                </tbody>
+              </table>
+              :
+              <Card style={{ height: '60vh' }}>
+                <CardBody className="text-center p-5 ">
+                  <h5 className="mt-5">
+                    No Data Found
+                  </h5>
+                </CardBody>
+              </Card>
             }
 
           </Row>
@@ -201,8 +200,6 @@ const ReportMedefulterComponent = props => {
 }
 
 const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, markedDisputed, handleViewDetail, markOpenModule }) => {
- 
- {console.log("markOpenModulemarkOpenModule",markOpenModule)}
 
   return (
     <>
@@ -261,7 +258,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
                 >
                   <i className='bx bx-edit textsizing' ></i>
                 </Button> */}
-              <Button  className="btn btn-info" data-toggle="tooltip" data-placement="top"
+              <Button className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Disputed Transaction" href={item.url} rel='noreferrer'
                 target='_blank' onClick={() => markOpenModule(item)
 
@@ -323,8 +320,8 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
             </div>
           </td>
         </tr>
-      }) : 
-     ""
+      }) :
+        ""
       }
       <ToastContainer />
     </>

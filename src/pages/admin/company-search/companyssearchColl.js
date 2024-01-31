@@ -22,7 +22,7 @@ const CheckBox = (cell) => {
 };
 
 const DueAmount = (cell) => {
-    return cell.value ? numberFormat(cell.value) : '';
+    return cell.value ? numberFormat(cell.value) : '₹0.00';
 };
 
 const Reating = (cell) => {

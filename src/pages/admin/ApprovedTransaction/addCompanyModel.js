@@ -114,7 +114,6 @@ const ReportedDebtorsModel = props => {
   //
 
   const formSubmit = () => {
-    debugger
     if (selectedState === "" && selectedCity === "" && zipcode === "") return
     const payload = {
       "companyName": companyName != '' ? companyName : props.getCompanyList[0].companyName,

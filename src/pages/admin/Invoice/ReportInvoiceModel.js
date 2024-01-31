@@ -567,7 +567,7 @@ const ReportedDefaulterModel = props => {
 
                           </Col>
                           <Col md={4} className="p-2">
-                            {console.log("data[index].date", data[index].date == '')}
+
                             <DatePicker
                               selected={data[index].date == '' ? new Date() : ""}
                               value={data[index].date == '' ? new Date() : data[index].date}
