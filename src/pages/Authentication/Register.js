@@ -485,7 +485,7 @@ const Register = props => {
                             <div className="mb-3">
                               <Label className="form-label">Zip Code</Label>
                               <Input
-                                name="name"
+                                name="zipcode"
                                 type="text"
                                 className="form-control"
                                 placeholder=" Entar Zip code"

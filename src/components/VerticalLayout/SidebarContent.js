@@ -35,7 +35,6 @@ const SidebarContent = props => {
       dispatch(setSelectCopenOpen(false))
     } else {
       dispatch(setSelectCopenOpen(true))
-
     }
   }, [currentPath])
   const ref = useRef()
