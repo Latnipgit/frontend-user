@@ -29,6 +29,7 @@ import AddCompanyModel from "./addCompanyModel"
 import { SelectCompnay } from "store/selectCompany/selectCompany.selecter";
 import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype";
 
+import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action";
 
 const ApprovedTranction = props => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const ApprovedTranction = props => {
     const newPageUrl = '/company-dashboard';
     // window.location.href = newPageUrl;
     dispatch(setSelectCopenOpen(!SelectCompnayOpen))
+    dispatch(fetchReportMeDefulterStart())
   };
   const columns = useMemo(
     () => [
