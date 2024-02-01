@@ -22,22 +22,22 @@ const SidebarContent = props => {
   const SelectCompnayOpen = useSelector(SelectCompnay)
 
 
+  console.log('SelectCompnayOpen', SelectCompnayOpen);
 
+  useEffect(() => {
+    setCurrentpath(window.location.pathname)
+    if (
+      currentPath == "/companies" ||
+      currentPath == "/documents" ||
+      currentPath == "/profile" ||
+      currentPath == "/notification"
+    ) {
+      dispatch(setSelectCopenOpen(false))
+    } else {
+      dispatch(setSelectCopenOpen(true))
 
-  /*  useEffect(() => {
-     setCurrentpath(window.location.pathname)
-     if (
-       currentPath == "/companies" ||
-       currentPath == "/documents" ||
-       currentPath == "/profile" ||
-       currentPath == "/notification"
-     ) {
-       setshowMenuItems(false)
-     } else {
-       setshowMenuItems(true)
- 
-     }
-   }, [currentPath, showMenuItems]) */
+    }
+  }, [currentPath])
   const ref = useRef()
   const activateParentDropdown = useCallback(item => {
     item.classList.add("active")
