@@ -21,9 +21,6 @@ const SidebarContent = props => {
 
   const SelectCompnayOpen = useSelector(SelectCompnay)
 
-
-  console.log('SelectCompnayOpen', SelectCompnayOpen);
-
   useEffect(() => {
     setCurrentpath(window.location.pathname)
     if (
