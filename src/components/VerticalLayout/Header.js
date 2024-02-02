@@ -91,14 +91,14 @@ const Header = props => {
                 </span>
               </Link> */}
 
-              {/* <Link to="/" className="logo logo-light">
+               <Link to="/" className="logo logo-light">
                 <span className="logo-sm">
                   <img src={logoLightSvg} alt="" height="22" />
                 </span>
-              </Link> */}
+              </Link> 
             </div>
 
-            {/* <button
+             <button
               type="button"
               onClick={() => {
                 tToggle();
@@ -107,7 +107,7 @@ const Header = props => {
               id="vertical-menu-btn"
             >
               <i className="fa fa-fw fa-bars" />
-            </button> */}
+            </button> 
 
             {/* <form className="app-search d-none d-lg-block">
               <div className="position-relative">

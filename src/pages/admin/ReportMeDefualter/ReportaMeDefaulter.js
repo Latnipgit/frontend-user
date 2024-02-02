@@ -163,7 +163,7 @@ const ReportMedefulterComponent = props => {
 
               
          
-            <table className="table table-bordered">
+            <table className="table table-bordered table-responsive">
               <thead>
                 <tr>
                   <th scope="col">#</th>
