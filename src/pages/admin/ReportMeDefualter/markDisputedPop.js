@@ -85,7 +85,7 @@ export const MarkDisputedPopModule = props => {
                                             />
                                             {' '}
                                             <Label check>
-                                                Dispute amount is less then Claimed by seller
+                                                Disputed amount is less that Claimed by seller
                                             </Label>
                                         </FormGroup>
                                         <FormGroup check className="mb-2">
@@ -96,7 +96,7 @@ export const MarkDisputedPopModule = props => {
                                             />
                                             {' '}
                                             <Label check>
-                                                Seller has not given input credit of inverce recieved to buyer
+                                                Seller has not given input credit of invoice raised
                                             </Label>
                                         </FormGroup>
                                         <FormGroup

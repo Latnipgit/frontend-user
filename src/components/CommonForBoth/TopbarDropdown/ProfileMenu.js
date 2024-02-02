@@ -50,11 +50,11 @@ const ProfileMenu = props => {
           id="page-header-user-dropdown"
           tag="button"
         >
-          
+
           <div className="d-flex">
-          <i className='bx bxs-user-circle' style={{ fontSize:"35px", marginTop:'20px'}}></i>
-          <i className="mdi mdi-chevron-down d-none d-xl-inline-block"  style={{ fontSize:"15px", marginTop:'25px'}}/>
-          
+            <i className='bx bxs-user-circle' style={{ fontSize: "35px", marginTop: '20px' }}></i>
+            <i className="mdi mdi-chevron-down d-none d-xl-inline-block" style={{ fontSize: "15px", marginTop: '25px' }} />
+
           </div>
 
           {/* <img
@@ -67,11 +67,11 @@ const ProfileMenu = props => {
           {/* <span className="d-none d-xl-inline-block ms-2 me-1">{username}</span> */}
         </DropdownToggle>
         <DropdownMenu className="dropdown-menu-end">
-          <DropdownItem tag="a" href="/profile">
+          {/*           <DropdownItem tag="a" href="/profile">
             {" "}
             <i className="bx bx-user font-size-16 align-middle me-1" />
             {props.t("Profile")}{" "}
-          </DropdownItem>
+          </DropdownItem> */}
           {/* <DropdownItem tag="a" href="/crypto-wallet">
             <i className="bx bx-wallet font-size-16 align-middle me-1" />
             {props.t("My Wallet")}
@@ -85,7 +85,7 @@ const ProfileMenu = props => {
             <i className="bx bx-lock-open font-size-16 align-middle me-1" />
             {props.t("Lock screen")}
           </DropdownItem> */}
-          <div className="dropdown-divider" />
+          {/*           <div className="dropdown-divider" /> */}
           <Link to="/logout" className="dropdown-item">
             <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
             <span>{props.t("Logout")}</span>

@@ -46,6 +46,9 @@ import ReportMedefulterComponent from '../../pages/admin/ReportMeDefualter/Repor
 
 import { SelectCompnay } from "store/selectCompany/selectCompany.selecter";
 import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype";
+import { numberFormat } from "pages/admin/uploadPendingDoucument/uploadPendingDoc"
+
+
 
 const Dashboard = props => {
   const [subscribemodal, setSubscribemodal] = useState(false)
@@ -191,7 +194,7 @@ const Dashboard = props => {
               : <>
                 <Row>
                   <Col md={10} className="pl-3">
-                    <h5 className="m-1">Reported Defaulter</h5>
+                    <h5 className="m-1">Report a Defaulter</h5>
                   </Col>
                   <Col md={2}>
                     {/* <Button className="btn btn-md btn-info" >Report a Defaulter</Button> */}
@@ -261,7 +264,7 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
           <td style={{ width: "35%" }}>
             {item.debtor.address1}, {item.debtor.address2}
           </td>
-          <td className="pt-4"><CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /></td>
+          <td className="pt-4">{numberFormat(item.totalAmount)}</td>
 
           <td>
             <div className="" style={{ padding: "2px 15px" }}>

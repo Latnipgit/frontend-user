@@ -13,7 +13,7 @@ import {
   Label,
   Card,
   CardBody,
-
+  textarea,
   Table,
   Row, Col
 } from "reactstrap"
@@ -40,10 +40,11 @@ export const MarkOtherReasonModel = props => {
   useEffect(() => {
     // dispatch()
   }, [])
-  const [amount, setAmount] = useState('')
-  const [date, setDate] = useState('')
-  const [payentMode, setPaymentMode] = useState('')
+
   const [attachment, setAttachment] = useState('')
+  const [textBox, setTextBox] = useState("")
+  const [error, setError] = useState("")
+
 
 
   const handleFileChange = (event) => {
@@ -73,14 +74,15 @@ export const MarkOtherReasonModel = props => {
       })
   }
 
+
   const handleSubmit = () => {
     const payload = [
       {
         "defaulterEntryId": selected.id,
-        "amtPaid": amount,
+        "amtPaid": textBox,
         "requestor": "CREDITOR", // CREDITOR/DEBTOR
-        "paymentDate": date,
-        "paymentMode": payentMode,
+        "paymentDate": "",
+        "paymentMode": "",
         "attachments": attachment.documentId,
         "isDispute": true // make this flag as true whenever recording payment for a disputed transaction
       }
@@ -89,6 +91,20 @@ export const MarkOtherReasonModel = props => {
     toast.success("Record Payment Successfully")
     toggle()
   }
+
+  const textBoxModule = (value) => {
+    if (value.length > 250) {
+      setError("Reached the limit 250 words")
+    } else {
+      setTextBox(value)
+      setError("")
+    }
+  }
+
+
+
+
+
   return (
     <Modal
       isOpen={isOpen}
@@ -104,59 +120,55 @@ export const MarkOtherReasonModel = props => {
         <ModalHeader toggle={toggle}>Other Reasons</ModalHeader>
         <ModalBody>
           <form>
-            <Row className="selectionListss">
-              <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Mation your reason</b></div>
-              </Col>
-              <Col md={5}>
-                <div className="d-inline">
+            <Row>
+              <Col className="selectionListss">
+                <Col md={3}>
+                  <div className="mb-2"><b className="mt-2">Your reason</b></div>
+                </Col>
+                <Col md={12}>
+                  <div className="d-inline">
 
-                  <Input
-                    type="textarea"
-                    id="customerEmail"
-                    name="customerEmail"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    placeholder="Mation your reason"
-                  />
-
-                </div>
-              </Col>
-              <Col md={3}>
-
-              </Col>
-
-            </Row>
-            <Row className="selectionListss mb-2 mt-2">
-              <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Disputed Transaction</b></div>
-              </Col>
-              <Col md={5} >
-                <div className="d-inline">
-                  <label
-                    className="visually-hidden custom-content"
-                    htmlFor="customerSelect"
-                  >
-                    Select Customer
-                  </label>
-                  <div className=" mb-2">
-                    <b> Upload Supported Document File</b>
-                  </div>
-                  <InputGroup className="text-capitalize">
-                    <input
-                      type="file"
-                      className="form-control"
-                      id=""
-                      accept=".pdf, .doc, .docx, .txt"
-                      aria-describedby="fileUploadHelp"
-                      onChange={e =>
-                        handleFileChange(e, "")
-                      }
+                    <Input
+                      rows={7}
+                      type="textarea"
+                      id="customerEmail"
+                      name="customerEmail"
+                      value={textBox}
+                      onChange={(e) => textBoxModule(e.target.value)}
+                      placeholder="Mation your reason"
                     />
-                  </InputGroup>
-                </div>
+                  </div>
+                  {error != "" ? <div className="text-danger mt-2">{error}</div> : ""}
+                </Col>
               </Col>
-              <Col md={3}>
+              <Col className="selectionListss mb-2 mt-2">
+                <Col md={8}>
+                  <div className="mb-2"><b className="mt-2">Upload Supported Document File</b></div>
+                </Col>
+                <Col md={8} >
+                  <div className="d-inline">
+                    <label
+                      className="visually-hidden custom-content"
+                      htmlFor="customerSelect"
+                    >
+                      Select Customer
+                    </label>
+                    <InputGroup className="text-capitalize">
+                      <input
+                        type="file"
+                        className="form-control"
+                        id=""
+                        accept=".pdf, .doc, .docx, .txt"
+                        aria-describedby="fileUploadHelp"
+                        onChange={e =>
+                          handleFileChange(e, "")
+                        }
+                      />
+                    </InputGroup>
+                  </div>
+                </Col>
+                <Col md={3}>
+                </Col>
               </Col>
             </Row>
           </form>
@@ -173,7 +185,7 @@ export const MarkOtherReasonModel = props => {
       </div>
       <ToastContainer />
 
-    </Modal>
+    </Modal >
   )
 }
 

@@ -142,8 +142,6 @@ const ReportMedefulterComponent = props => {
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
           {props.isClickedToReported != undefined && props.isClickedToReported != false ?
-
-
             <div>
               <br />
               <br />
@@ -163,7 +161,7 @@ const ReportMedefulterComponent = props => {
 
               
          
-            <table className="table table-bordered table-responsive">
+            <table className="table table-bordered">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -192,7 +190,6 @@ const ReportMedefulterComponent = props => {
               </CardBody>
             </Card>
             }
-
           </Row>
         </CardBody>
       </Card>
@@ -200,10 +197,7 @@ const ReportMedefulterComponent = props => {
   );
 }
 
-const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, requestEdit, markedDisputed, handleViewDetail, markOpenModule }) => {
- 
- {console.log("markOpenModulemarkOpenModule",markOpenModule)}
-
+const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, getDaysArray, handleViewDetail, markOpenModule }) => {
   return (
     <>
       {selectReportMeDeflistData != undefined && selectReportMeDeflistData.length != 0 ? selectReportMeDeflistData.map((item, index) => {
@@ -216,17 +210,12 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
           </td>
           <td className="pt-4">
             {numberFormat(item.totalAmount)}
-            {/* <CurrencyFormat value={item.totalAmount} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
           </td>
           <td>
             <div className="" style={{ padding: "2px 15px" }}>
-
               <div className=" text-center bg-danger rounded text-light">
                 <div className="text-capitalize">
-
                   {getDaysArray[index]}  &nbsp;
-
-
                   <span className="ml-1">Days</span> </div>
                 <div className="text-capitalize" >{moment(item.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
               </div>
@@ -234,81 +223,28 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
           </td>
           <td>
             <div className="pt-2">
-              {/* <Button className="btn btn-info btn-sm "
-                  onClick={() => viewModel(item)
-
-                  }
-
-                >
-               
-                </Button> */}
-
-
               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Record Payment" href={item.url} rel='noreferrer'
                 target='_blank' onClick={() => viewModel(item)
-
                 }>
                 <i className='bx bx-wallet-alt textsizing' ></i>
               </button>
-
               &nbsp;
-
-              {/* <Button className="btn btn-info btn-sm"
-                  onClick={() => requestEdit(item)
-
-                  }
-                >
-                  <i className='bx bx-edit textsizing' ></i>
-                </Button> */}
-              <Button  className="btn btn-info" data-toggle="tooltip" data-placement="top"
+              <Button className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Disputed Transaction" href={item.url} rel='noreferrer'
                 target='_blank' onClick={() => markOpenModule(item)
 
                 }>
-                {/* <i className='bx bx-edit textsizing' ></i> */}
                 <i className='bx bx-window-close textsizing'></i>
               </Button>
-
               &nbsp;
-
-              {/* <Button className="btn btn-info btn-sm"
-                  onClick={() => handleUploadFiles(item)
-
-                  }
-                >
-                  <i className='bx bx-cloud-upload textsizing' ></i>
-
-
-                </Button> */}
-              {/*               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                title="Upload Pending Files" href={item.url} rel='noreferrer'
-                target='_blank' onClick={() => handleUploadFiles(item)
-
-                }>
-                <i className='bx bx-cloud-upload textsizing' ></i>
-              </button>
-
-              &nbsp; */}
-              {/* <Button className="btn btn-info btn-sm"
-                  onClick={() => {
-                    toggleViewModal2()
-                    setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                  }
-
-                  }
-                >
-                  <i className='bx bx-file textsizing' ></i>
-                </Button> */}
               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Upload CA Certificate" href={item.url} rel='noreferrer'
                 target='_blank' onClick={() => {
                   toggleViewModal2()
                   setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
                 }
-
                 }>
-                {/* <i className='bx bx-file textsizing' ></i> */}
                 <img src={CaImg} className="" style={{ height: "22.5px" }} />
               </button>
               &nbsp;
@@ -323,8 +259,8 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
             </div>
           </td>
         </tr>
-      }) : 
-     ""
+      }) :
+        ""
       }
       <ToastContainer />
     </>

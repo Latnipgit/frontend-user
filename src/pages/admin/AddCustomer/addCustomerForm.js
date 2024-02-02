@@ -81,10 +81,14 @@ export const AddcustomerFomr = () => {
         errors.customerEmail = "Invalid email address"
       }
       if (!values.customerPhone) {
-        errors.customerPhone = "Customer Phone is required"
+        errors.customerPhone = "Phone Number is required"
+      } else if (!/^([0|+[9,1]{1,2})?([6-9][0-9]{9})$/.test(values.customerPhone)) {
+        errors.customerPhone = "Invalid Phone Number"
       }
       if (!values.gstNumber) {
         errors.gstNumber = "GST Number is required"
+      } else if (!/^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/.test(values.gstNumber)) {
+        errors.gstNumber = "Invalid GST Number"
       }
       //else if (
       //   !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\w{1}\d{1}$/.test(values.gstNumber)
@@ -432,15 +436,15 @@ export const AddcustomerFomr = () => {
 
                   value={formikModal.values.panCard}
                   onChange={formikModal.handleChange}
-                  // onBlur={formikModal.handleBlur}
+                  onBlur={formikModal.handleBlur}
                   placeholder="Enter Pan Number"
                 />
-                {/* {formikModal.touched.panCard &&
-                formikModal.errors.panCard && (
-                  <div className="text-danger">
-                    {formikModal.errors.panCard}
-                  </div>
-                )} */}
+                {formikModal.touched.panCard &&
+                  formikModal.errors.panCard && (
+                    <div className="text-danger">
+                      {formikModal.errors.panCard}
+                    </div>
+                  )}
               </FormGroup>
             </Col>
           </Row>

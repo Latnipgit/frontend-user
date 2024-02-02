@@ -185,6 +185,7 @@ const Register = props => {
       panNumber: '',
       state: '',
       city: '',
+      zipcode: '',
 
     },
     validationSchema: Yup.object({
@@ -198,6 +199,7 @@ const Register = props => {
       panNumber: Yup.string().required("Please Enter Your pan Number"),
       state: Yup.string().required("Please Select state"),
       city: Yup.string().required("Please Select city"),
+      zipcode: Yup.string().required("Please Enter Zip Code"),
     })
   });
 
@@ -291,8 +293,12 @@ const Register = props => {
                             // aadharNumber: formik.values.aadharNumber,
                             panNumber: panNumber.toUpperCase(),
                             email: formik.values.email,
+                            state: selectedState.value,
+                            city: selectedCity.value,
+                            zipcode: formik.values.zipcode,
+
                           };
-                          if (formik.values.name != '' && formik.values.email != '' && gstNumber != '' && panNumber != "") {
+                          if (formik.values.name != '' && formik.values.zipcode != '' && formik.values.email != '' && gstNumber != '' && panNumber != "" && selectedState != "" && selectedCity != "") {
 
                             dispatch(registerUser_login(user, props.router.navigate));
                             setTimerStart(true)
@@ -451,9 +457,9 @@ const Register = props => {
                                 onChange={selected => setSelectedState(selected)}
                                 placeholder="Select State"
                               />
-                              {panValidation.error && panValidation.error != '' && (
-                                <div className="invalid-feedback">{panValidation.error}</div>
-                              )}
+                              {formik.touched.state && formik.errors.state ? (
+                                <FormFeedback type="invalid">{formik.errors.state}</FormFeedback>
+                              ) : null}
                             </div>
                           </Col>
                           <Col>
@@ -468,10 +474,32 @@ const Register = props => {
                                 onChange={selected => setSelectedCity(selected)}
                                 placeholder="Select City"
                               />
-                              {panValidation.error && panValidation.error != '' && (
-                                <div className="invalid-feedback">{panValidation.error}</div>
-                              )}
+                              {formik.touched.city && formik.errors.city ? (
+                                <FormFeedback type="invalid">{formik.errors.city}</FormFeedback>
+                              ) : null}
                             </div>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col md={6}>
+                            <div className="mb-3">
+                              <Label className="form-label">Zip Code</Label>
+                              <Input
+                                name="zipcode"
+                                type="text"
+                                className="form-control"
+                                placeholder=" Entar Zip code"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.zipcode || ""}
+                                invalid={formik.touched.zipcode && formik.errors.zipcode ? true : false}
+                              />
+                              {formik.touched.zipcode && formik.errors.zipcode ? (
+                                <FormFeedback type="invalid">{formik.errors.zipcode}</FormFeedback>
+                              ) : null}
+                            </div>
+                          </Col>
+                          <Col md={6}>
                           </Col>
                         </Row>
                         <Row>
