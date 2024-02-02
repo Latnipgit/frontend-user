@@ -259,8 +259,8 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
         return <tr key={item}>
 
           <th scope="row" className="pt-4">{index + 1}</th>
-          <td className="pt-4 text-capitalize" style={{ width: "10%" }}>{item.debtor.companyName}</td>
-          <td className="pt-4" style={{ width: "10%" }}>{item.invoices[0].invoiceNumber}</td>
+          <td className="pt-4 text-capitalize" style={{ width: "13%" }}>{item.debtor.companyName}</td>
+          <td className="pt-4" style={{ width: "15%" }}>{item.invoices[0].invoiceNumber}</td>
           <td style={{ width: "35%" }}>
             {item.debtor.address1}, {item.debtor.address2}
           </td>
@@ -282,7 +282,7 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
             {/*  {newDate} */}
           </td>
           <td>
-            <td className={item.status == undefined ? 'text-success' : 'text-danger'}>{item.status == undefined ? "Approved" : item.status}</td>
+            <td className={item.status == undefined ? 'text-success h6' : 'text-danger h6'}>{item.status == undefined ? "Approved" : item.status}</td>
           </td>
         </tr>
       }) : ''}
