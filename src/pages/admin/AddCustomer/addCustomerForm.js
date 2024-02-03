@@ -444,6 +444,8 @@ export const AddcustomerFomr = () => {
                   onChange={formikModal.handleChange}
                   onBlur={formikModal.handleBlur}
                   placeholder="Mobile Number"
+                  pattern="[6-9]\d{9}" // Allow only 10 digits starting with 6, 7, 8, or 9
+                  maxLength="10"
                 />
                 {formikModal.touched.customerPhone &&
                   formikModal.errors.customerPhone && (

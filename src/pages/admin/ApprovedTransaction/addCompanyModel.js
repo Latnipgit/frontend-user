@@ -140,7 +140,7 @@ const ReportedDebtorsModel = props => {
       if (!values.mobileNumber) {
         errors.mobileNumber = "Phone Number is required"
         setMobileNumberValid(false)
-      } else if (!/^([0|+[9,1]{1,2})?([6-9][0-9]{9})$/.test(values.mobileNumber)) {
+      } else if (!/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(values.mobileNumber)) {
         errors.mobileNumber = "Invalid Phone Number"
         setMobileNumberValid(false)
       } else {
@@ -290,6 +290,8 @@ const ReportedDebtorsModel = props => {
                                       onChange={formikModal.handleChange}
                                       onBlur={formikModal.handleBlur}
                                       placeholder="Mobile Number"
+                                      pattern="[6-9]\d{9}" // Allow only 10 digits starting with 6, 7, 8, or 9
+                                      maxLength={10}
                                     />
                                     {formikModal.touched.mobileNumber &&
                                       formikModal.errors.mobileNumber && (

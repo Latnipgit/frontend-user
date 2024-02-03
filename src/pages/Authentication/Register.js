@@ -219,7 +219,7 @@ const Register = props => {
       if (!values.mobileNumber) {
         errors.mobileNumber = "Phone Number is required"
         setMobileNumberValid(false)
-      } else if (!/^([0|+[9,1]{1,2})?([6-9][0-9]{9})$/.test(values.mobileNumber)) {
+      } else if (!/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(values.mobileNumber)) {
         errors.mobileNumber = "Invalid Phone Number"
         setMobileNumberValid(false)
       } else {
