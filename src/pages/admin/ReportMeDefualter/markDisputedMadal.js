@@ -150,7 +150,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Company Name*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -176,7 +176,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Amount*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -198,7 +198,7 @@ const MarkDisputedMadal = props => {
                     <Row style={{ marginTop: "-5px" }}>
                       <Col md={5}>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount)} />
                           <span>Full amount ({selected.totalAmount})</span>
@@ -209,7 +209,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Payment Date*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -235,7 +235,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Payment Mode*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -263,7 +263,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Attachment*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -276,14 +276,16 @@ const MarkDisputedMadal = props => {
                               type="file"
                               className="form-control"
                               id=""
-                              accept=".pdf, .doc, .docx, .txt"
+                              accept=".pdf, .png, .jpg, .jpeg"
                               aria-describedby="fileUploadHelp"
                               onChange={e =>
                                 handleFileChange(e, "")
                               }
                             />
                           </InputGroup>
-
+                          <div id="fileUploadHelp" className="form-text">
+                            Choose a file to upload (PDF, PNG, JPG, JPEG).
+                          </div>
                         </div>
                       </Col>
                     </Row>
@@ -291,7 +293,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Remarks</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
 
                           <Input
@@ -326,7 +328,7 @@ const MarkDisputedMadal = props => {
                           type="file"
                           className="form-control"
                           id="uploadPurchaseOrder"
-                          accept=".pdf, .doc, .docx, .txt"
+                          accept=".pdf, .png, .jpg, .jpeg"
                           aria-describedby="fileUploadHelp"
                           onChange={e =>
                             handleFileChange(e)
@@ -335,7 +337,7 @@ const MarkDisputedMadal = props => {
                       </InputGroup>
 
                       <div id="fileUploadHelp" className="form-text">
-                        Choose a file to upload (PDF, DOC, DOCX, TXT).
+                        Choose a file to upload (PDF, PNG, JPG, JPEG).
                       </div>
                     </Col>
 

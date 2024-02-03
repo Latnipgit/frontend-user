@@ -158,13 +158,17 @@ export const MarkOtherReasonModel = props => {
                         type="file"
                         className="form-control"
                         id=""
-                        accept=".pdf, .doc, .docx, .txt"
+                        accept=".pdf, .png, .jpg, .jpeg"
                         aria-describedby="fileUploadHelp"
                         onChange={e =>
                           handleFileChange(e, "")
                         }
                       />
                     </InputGroup>
+                    <div id="fileUploadHelp" className="form-text">
+                      Choose a file to upload (PDF, PNG, JPG, JPEG).
+                    </div>
+                    <p className="text-danger" style={{ fontSize: '11px' }}>Please upload all Documents in a single Pdf</p>
                   </div>
                 </Col>
                 <Col md={3}>

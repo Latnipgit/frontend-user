@@ -96,6 +96,11 @@ const Register = props => {
 
   // 
 
+  const [gstNumberValid, setGstNumberValid] = useState(true)
+  const [panNumberValid, setPanNumberValid] = useState(true)
+  const [zipcodeValid, setZipcodeValid] = useState(true)
+  const [mobileNumberValid, setMobileNumberValid] = useState(true)
+  const [emailidValid, setemailidValid] = useState(true)
 
   const handleGSTChange = (event) => {
     const gst = event.target.value;
@@ -110,21 +115,24 @@ const Register = props => {
     }
   };
   function isPanCardValid(panCardNumber) {
-    const panPattern = /^([A-Z]{5}[0-9]{4}[A-Z]{1})$/;
+    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     return panPattern.test(panCardNumber);
   }
   function isGSTValid(gstNumber) {
-    const gstPattern = /^([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{1}Z[0-9A-Z]{1})$/;
+    const gstPattern = /^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/;
     return gstPattern.test(gstNumber);
   }
 
   const handleGSTBlur = () => {
     if (gstNumber === '') {
       setGSTValidation({ touched: true, error: 'GST number is required' });
+      setGstNumberValid(false)
     } else if (!isGSTValid(gstNumber)) {
       setGSTValidation({ touched: true, error: 'Invalid GST format' });
+      setGstNumberValid(false)
     } else {
       setGSTValidation({ touched: true, error: '' });
+      setGstNumberValid(true)
     }
   };
   const handlePanChange = (event) => {
@@ -143,10 +151,13 @@ const Register = props => {
   const handlePanBlur = () => {
     if (panNumber === '') {
       setPanValidation({ touched: true, error: 'PAN number is required' });
+      setPanNumberValid(false)
     } else if (!isPanCardValid(panNumber)) {
       setPanValidation({ touched: true, error: 'Invalid PAN format' });
+      setPanNumberValid(false)
     } else {
       setPanValidation({ touched: true, error: '' });
+      setPanNumberValid(true)
     }
   };
   function isAadharNumberValid(aadharNumber) {
@@ -188,19 +199,45 @@ const Register = props => {
       zipcode: '',
 
     },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      name: Yup.string().required("Please Enter Your Name"),
-      companyName: Yup.string().required("Please Enter Your Company Name"),
-      password: Yup.string().required("Please Enter Your Password"),
-      aadharNumber: Yup.string().required("Please Enter Your aadhar Number"),
-      mobileNumber: Yup.string().required("Please Enter Your Mobile Number"),
-      gstNumber: Yup.string().required("Please Enter Your gst Number"),
-      panNumber: Yup.string().required("Please Enter Your pan Number"),
-      state: Yup.string().required("Please Select state"),
-      city: Yup.string().required("Please Select city"),
-      zipcode: Yup.string().required("Please Enter Zip Code"),
-    })
+
+    validate: values => {
+      const errors = {}
+      if (!values.companyName) {
+        errors.companyName = "Company Name is required"
+      }
+
+      if (!values.email) {
+        errors.email = "Customer Email is required"
+        setemailidValid(false)
+      } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(values.email)) {
+        errors.email = "Invalid email address"
+        setemailidValid(false)
+      } else {
+        setemailidValid(true)
+      }
+
+      if (!values.mobileNumber) {
+        errors.mobileNumber = "Phone Number is required"
+        setMobileNumberValid(false)
+      } else if (!/^([0|+[9,1]{1,2})?([6-9][0-9]{9})$/.test(values.mobileNumber)) {
+        errors.mobileNumber = "Invalid Phone Number"
+        setMobileNumberValid(false)
+      } else {
+        setMobileNumberValid(true)
+      }
+      if (!values.zipcode) {
+        errors.zipcode = "zipcode is required"
+        setZipcodeValid(false)
+      } else if (!/^\d{6}$/.test(values.zipcode)) {
+        errors.zipcode = "Invalid Zipcode"
+        setZipcodeValid(false)
+      } else {
+        setZipcodeValid(true)
+      }
+      return errors
+    },
+    onSubmit: values => {
+    },
   });
 
 
@@ -293,18 +330,24 @@ const Register = props => {
                             // aadharNumber: formik.values.aadharNumber,
                             panNumber: panNumber.toUpperCase(),
                             email: formik.values.email,
-                            state: selectedState.value,
-                            city: selectedCity.value,
+                            state: selectedState.value != undefined ? selectedState.value : '',
+                            city: selectedCity.value != undefined ? selectedCity.value : '',
                             zipcode: formik.values.zipcode,
 
                           };
-                          if (formik.values.name != '' && formik.values.zipcode != '' && formik.values.email != '' && gstNumber != '' && panNumber != "" && selectedState != "" && selectedCity != "") {
 
-                            dispatch(registerUser_login(user, props.router.navigate));
-                            setTimerStart(true)
+                          if (gstNumberValid && panNumberValid && zipcodeValid && mobileNumberValid && emailidValid) {
 
+                            if (formik.values.name != '' && formik.values.zipcode != '' && formik.values.email != '' && gstNumber != '' && panNumber != "" && selectedState != "" && selectedCity != "") {
+
+                              // dispatch(registerUser_login(user, props.router.navigate));
+                              setTimerStart(true)
+
+                            }
+                            return false;
                           }
-                          return false;
+                          return
+
                         }}
                       >
 
@@ -485,18 +528,20 @@ const Register = props => {
                             <div className="mb-3">
                               <Label className="form-label">Zip Code</Label>
                               <Input
+                                type="number"
+                                id="zipcode"
                                 name="zipcode"
-                                type="text"
-                                className="form-control"
-                                placeholder=" Entar Zip code"
+                                value={formik.values.zipcode}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.zipcode || ""}
-                                invalid={formik.touched.zipcode && formik.errors.zipcode ? true : false}
+                                placeholder="Enter 6 digit zipcode"
                               />
-                              {formik.touched.zipcode && formik.errors.zipcode ? (
-                                <FormFeedback type="invalid">{formik.errors.zipcode}</FormFeedback>
-                              ) : null}
+                              {formik.touched.zipcode &&
+                                formik.errors.zipcode && (
+                                  <div className="text-danger">
+                                    {formik.errors.zipcode}
+                                  </div>
+                                )}
                             </div>
                           </Col>
                           <Col md={6}>
