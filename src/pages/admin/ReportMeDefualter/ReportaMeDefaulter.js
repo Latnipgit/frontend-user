@@ -164,7 +164,7 @@ const ReportMedefulterComponent = props => {
 
               
          
-            <table className="table table-bordered">
+            <table className="table table-bordered table-responsive">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -208,15 +208,15 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
           <th scope="row" className="pt-4">{index + 1}</th>
           <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
           <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-          <td style={{ width: "220px" }}>
+          <td style={{ width: "250px" }}>
             {item.debtor.address1}<br />{item.debtor.address2}
           </td>
           <td className="pt-4">
             {numberFormat(item.totalAmount)}
           </td>
-          <td>
+          <td style={{ width: "150px" }}>
             <div className="" style={{ padding: "2px 15px" }}>
-              <div className=" text-center bg-danger rounded text-light">
+              <div className=" text-center bg-danger rounded text-light p-1">
                 <div className="text-capitalize">
                   {getDaysArray[index]}  &nbsp;
                   <span className="ml-1">Days</span> </div>
