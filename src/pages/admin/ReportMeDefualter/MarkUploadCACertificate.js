@@ -23,7 +23,7 @@ import { ToastContainer, toast } from "react-toastify"
 
 
 export const MarkUploadCACertificate = props => {
-  const { isOpen, toggle, invoiceId, setMarkCAupload } = props
+  const { isOpen, toggle, invoiceId, setMarkCAupload, setIsOpenmark } = props
   const dispatch = useDispatch();
   const selectCACertificate = useSelector(selectCACertificateOpen);
   const uploadCAcertificate = useSelector(uploadCAcertificateSelector);
@@ -68,6 +68,7 @@ export const MarkUploadCACertificate = props => {
 
     }]
     // dispatch(uploadCACertificateID(payload))
+    setIsOpenmark(false)
     toast.success("CA Certificate Updated")
     toggle()
 

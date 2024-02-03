@@ -27,7 +27,7 @@ import { recoredPaymentReportDefault } from "../../../store/debtors/debtors.acti
 
 
 export const MarkOtherReasonModel = props => {
-  const { isOpen, toggle } = props
+  const { isOpen, toggle, setIsOpenmark } = props
   const dispatch = useDispatch()
 
   const [salutations, setsalutations] = useState([
@@ -89,6 +89,7 @@ export const MarkOtherReasonModel = props => {
      ] */
     //  dispatch(recoredPaymentReportDefault(payload[0]))
     toast.success("Record Payment Successfully")
+    setIsOpenmark(false)
     toggle()
   }
 
