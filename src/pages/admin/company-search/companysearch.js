@@ -200,9 +200,9 @@ const CompanySearch = props => {
   const handleFilter = (filters) => {
     const filtereCompany = selectCompanySearchListMap.filter(item => item.CompanyName.toLocaleLowerCase().includes(filters.company.toLocaleLowerCase()));
 
-    const filteredgstMatch = filtereCompany.filter(item => item.GST.includes(filters.gst));
+    const filteredgstMatch = filtereCompany.filter(item => item.GST.toLocaleLowerCase().includes(filters.gst.toLocaleLowerCase()));
 
-    const filterePANCARD = filteredgstMatch.filter(item => item.PANCARD.includes(filters.pan));
+    const filterePANCARD = filteredgstMatch.filter(item => item.PANCARD.toLocaleLowerCase().includes(filters.pan.toLocaleLowerCase()));
 
     setFilteredData(filterePANCARD);
   };
