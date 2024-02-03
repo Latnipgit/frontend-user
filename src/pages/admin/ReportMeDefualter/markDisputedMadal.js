@@ -30,6 +30,7 @@ import { recordPaymentReportDefaulter } from "store/debtors/debtors.selecter"
 
 
 const MarkDisputedMadal = props => {
+  debugger
   const [selectedOption, setSelectedOption] = useState("")
 
   const [isProceed, setisProceed] = useState(false)
@@ -162,7 +163,7 @@ const MarkDisputedMadal = props => {
                             type="text"
                             id="customerEmail"
                             name="customerEmail"
-                            value={selected.debtor != undefined ? selected.debtor.companyName : ""}
+                            value={selected.creditor != undefined ? selected.creditor.companyName : ""}
                             disabled
 
 

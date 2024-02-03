@@ -76,17 +76,17 @@ export const MarkOtherReasonModel = props => {
 
 
   const handleSubmit = () => {
-    const payload = [
-      {
-        "defaulterEntryId": selected.id,
-        "amtPaid": textBox,
-        "requestor": "CREDITOR", // CREDITOR/DEBTOR
-        "paymentDate": "",
-        "paymentMode": "",
-        "attachments": attachment.documentId,
-        "isDispute": true // make this flag as true whenever recording payment for a disputed transaction
-      }
-    ]
+    /*  const payload = [
+       {
+         "defaulterEntryId": selected.id,
+         "amtPaid": textBox,
+         "requestor": "CREDITOR", // CREDITOR/DEBTOR
+         "paymentDate": "",
+         "paymentMode": "",
+         "attachments": attachment.documentId,
+         "isDispute": true // make this flag as true whenever recording payment for a disputed transaction
+       }
+     ] */
     //  dispatch(recoredPaymentReportDefault(payload[0]))
     toast.success("Record Payment Successfully")
     toggle()

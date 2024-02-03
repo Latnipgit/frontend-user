@@ -162,7 +162,7 @@ const ReportedDefaulterModel = props => {
                     type="text"
                     id="customerEmail"
                     name="customerEmail"
-                    value={selected.debtor != undefined ? selected.debtor.companyName : ""}
+                    value={selected.creditor != undefined ? selected.creditor.companyName : ""}
                     disabled
 
 
