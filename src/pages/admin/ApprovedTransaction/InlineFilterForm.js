@@ -30,20 +30,19 @@ const InlineFilterForm = ({ onFilter, handleFilter }) => {
   };
 
   const handleReset = (event) => {
-  
+
     event.preventDefault();
 
-    const resetAray = {
-      company: '',
-      pan: '',
-      gst: '',
-    }
     setFilters({
       company: '',
       pan: '',
       gst: '',
     })
-    handleFilter(filters)
+    handleFilter({
+      company: '',
+      pan: '',
+      gst: '',
+    })
   }
   const validateAadhar = () => {
     const aadharPattern = /^\d{12}$/;
