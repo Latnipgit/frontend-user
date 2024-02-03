@@ -37,7 +37,7 @@ import { CompanySerchForm } from "pages/admin/ApprovedTransaction/companySearchC
 
 //i18n
 import { withTranslation } from "react-i18next"
-
+import './Dashboard.css'
 //redux
 import { useSelector, useDispatch } from "react-redux"
 import CurrencyFormat from 'react-currency-format';
@@ -156,10 +156,10 @@ const Dashboard = props => {
             </Col>
             <Col md={4}>
               <Link to="/companies">
-                <Button style={{ float: 'right', width: "180px" }} className="'btn btn-info p-2" onClick={() => {
+                <Button style={{ float: 'right' }} className="'btn btn-info p-2 backtoHomeButton" onClick={() => {
                   handleMainDashboard()
                 }}>
-                  Back To My Companyes
+              <i className='bx bx-arrow-back'></i> Dashboard
                 </Button>
               </Link>
 
@@ -174,8 +174,8 @@ const Dashboard = props => {
             <Row className="text-center" >
               <Col md={12}>
                 <div className="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" className="btn btn-info " style={{ background: isClickedToReported == false ? " #50a5f1" : "	 #707274", border: "none", width: "230px" }} onClick={() => setisClickedToReported(false)} >Complaints Against Me</button>
-                  <button type="button" className="btn btn-info " style={{ background: isClickedToReported != false ? "#50a5f1" : "	 #707274", border: "none", width: "230px" }} onClick={() => setisClickedToReported(true)} >My Complaints</button>
+                  <button type="button" className="btn btn-info backtoHomeButton " style={{ background: isClickedToReported == false ? " #50a5f1" : "	 #707274", border: "none", width: "" }} onClick={() => setisClickedToReported(false)} >Reported Me As a Defaulter</button>
+                  <button type="button" className="btn btn-info  backtoHomeButton" style={{ background: isClickedToReported != false ? "#50a5f1" : "	 #707274", border: "none", width: "" }} onClick={() => setisClickedToReported(true)} >Reported Defaulter</button>
                 </div>
 
 
@@ -224,7 +224,7 @@ const Dashboard = props => {
     defaultPageSize={5}
   /> */}
 
-                  <table className="table table-bordered">
+                  <table className="table table-bordered table-responsive w-100hmm">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -266,9 +266,9 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
         return <tr key={item}>
 
           <th scope="row" className="pt-4">{index + 1}</th>
-          <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-          <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-          <td style={{ width: "220px" }}>
+          <td className="pt-4 text-capitalize" style={{ width: "13%" }}>{item.debtor.companyName}</td>
+          <td className="pt-4" style={{ width: "15%" }}>{item.invoices[0].invoiceNumber}</td>
+          <td style={{ width: "35%" }}>
             {item.debtor.address1}, {item.debtor.address2}
           </td>
           <td className="pt-4">{numberFormat(item.totalAmount)}</td>
@@ -276,7 +276,7 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
           <td>
             <div className="" style={{ padding: "2px 15px" }}>
 
-              <div className=" text-center bg-danger   rounded text-light">
+              <div className=" text-center bg-danger p-2  rounded text-light">
                 <div className="text-capitalize">
 
                   {getDaysArray[index]}  &nbsp;
@@ -289,7 +289,7 @@ const FilterData = ({ GetAllInvoicedata, getDaysArray }) => {
             {/*  {newDate} */}
           </td>
           <td>
-            <td className={item.status == undefined ? 'text-success' : 'text-danger'}>{item.status == undefined ? "Approved" : item.status}</td>
+            <td className={item.status == undefined ? 'text-success h6' : 'text-danger h6'}>{item.status == undefined ? "Approved" : item.status}</td>
           </td>
         </tr>
       }) : ''}
