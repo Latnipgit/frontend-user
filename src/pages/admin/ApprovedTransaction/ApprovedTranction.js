@@ -43,7 +43,7 @@ const ApprovedTranction = props => {
     const newPageUrl = '/company-dashboard';
     // window.location.href = newPageUrl;
     dispatch(setSelectCopenOpen(!SelectCompnayOpen))
-    dispatch(fetchReportMeDefulterStart())
+    //  dispatch(fetchReportMeDefulterStart())
   };
   const columns = useMemo(
     () => [

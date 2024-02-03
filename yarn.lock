@@ -2224,19 +2224,6 @@
     "protobufjs" "^7.2.4"
     "yargs" "^17.7.2"
 
-"@headlessui/react@^1.7.18":
-  "integrity" "sha512-4i5DOrzwN4qSgNsL4Si61VMkUcWbcSKueUV7sFhpHzQcSShdlHENE5+QBntMSRvHt8NyoFO2AGG8si9lq+w4zQ=="
-  "resolved" "https://registry.npmjs.org/@headlessui/react/-/react-1.7.18.tgz"
-  "version" "1.7.18"
-  dependencies:
-    "@tanstack/react-virtual" "^3.0.0-beta.60"
-    "client-only" "^0.0.1"
-
-"@heroicons/react@^2.1.1":
-  "integrity" "sha512-JyyN9Lo66kirbCMuMMRPtJxtKJoIsXKS569ebHGGRKbl8s4CtUfLnyKJxteA+vIKySocO4s1SkTkGS4xtG/yEA=="
-  "resolved" "https://registry.npmjs.org/@heroicons/react/-/react-2.1.1.tgz"
-  "version" "2.1.1"
-
 "@humanwhocodes/config-array@^0.11.11":
   "integrity" "sha512-N2brEuAadi0CcdeMXUkhbZB84eskAc8MEX1By6qEchoVywSgXPIjou4rYsl0V3Hj0ZnuGycGCjdNgockbzeWNA=="
   "resolved" "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.11.tgz"
@@ -3027,18 +3014,6 @@
     "@svgr/plugin-jsx" "^5.5.0"
     "@svgr/plugin-svgo" "^5.5.0"
     "loader-utils" "^2.0.0"
-
-"@tanstack/react-virtual@^3.0.0-beta.60":
-  "integrity" "sha512-9XbRLPKgnhMwwmuQMnJMv+5a9sitGNCSEtf/AZXzmJdesYk7XsjYHaEDny+IrJzvPNwZliIIDwCRiaUqR3zzCA=="
-  "resolved" "https://registry.npmjs.org/@tanstack/react-virtual/-/react-virtual-3.0.2.tgz"
-  "version" "3.0.2"
-  dependencies:
-    "@tanstack/virtual-core" "3.0.0"
-
-"@tanstack/virtual-core@3.0.0":
-  "integrity" "sha512-SYXOBTjJb05rXa2vl55TTwO40A6wKu0R5i1qQwhJYNDIqaIGF7D0HsLw+pJAyi2OvntlEIVusx3xtbbgSUi6zg=="
-  "resolved" "https://registry.npmjs.org/@tanstack/virtual-core/-/virtual-core-3.0.0.tgz"
-  "version" "3.0.0"
 
 "@testing-library/dom@^8.5.0":
   "integrity" "sha512-/DiOQ5xBxgdYRC8LNk7U+RWat0S3qRLeIw3ZIkMQ9kkVlRmwD/Eg8k8CqIpD6GW7u20JIUOfMKbxtiLutpjQ4g=="
@@ -4830,11 +4805,6 @@
   "integrity" "sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A=="
   "resolved" "https://registry.npmjs.org/clean-stack/-/clean-stack-2.2.0.tgz"
   "version" "2.2.0"
-
-"client-only@^0.0.1":
-  "integrity" "sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA=="
-  "resolved" "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz"
-  "version" "0.0.1"
 
 "cliui@^7.0.2":
   "integrity" "sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ=="

@@ -1,0 +1,1 @@
+export const selectCompanyloding = (state) => state.searchCompany.isLoding;
