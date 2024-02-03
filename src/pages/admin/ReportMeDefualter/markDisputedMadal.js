@@ -30,6 +30,7 @@ import { recordPaymentReportDefaulter } from "store/debtors/debtors.selecter"
 
 
 const MarkDisputedMadal = props => {
+  debugger
   const [selectedOption, setSelectedOption] = useState("")
 
   const [isProceed, setisProceed] = useState(false)
@@ -63,7 +64,7 @@ const MarkDisputedMadal = props => {
   const [date, setDate] = useState('')
   const [payentMode, setPaymentMode] = useState('')
   const [attachment, setAttachment] = useState('')
-
+  const [remark, setRemark] = useState('')
 
   const handleFileChange = (event) => {
     const files = event.target.files
@@ -148,9 +149,9 @@ const MarkDisputedMadal = props => {
                   <form>
                     <Row className="selectionListss">
                       <Col md={5}>
-                        <div className="mb-2"><b className="mt-2">Company Name*</b></div>
+                        <div className="mb-2"><b className="mt-2">Seller Name*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -162,11 +163,11 @@ const MarkDisputedMadal = props => {
                             type="text"
                             id="customerEmail"
                             name="customerEmail"
-                            value={selected.debtor != undefined ? selected.debtor.companyName : ""}
+                            value={selected.creditor != undefined ? selected.creditor.companyName : ""}
                             disabled
 
 
-                            placeholder="Amount Recieved"
+                            placeholder="Amount Paid"
                           />
                         </div>
                       </Col>
@@ -176,7 +177,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Amount*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -190,7 +191,7 @@ const MarkDisputedMadal = props => {
                             name="customerEmail"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
-                            placeholder="Amount Recieved"
+                            placeholder="Amount Paid"
                           />
                         </div>
                       </Col>
@@ -198,7 +199,7 @@ const MarkDisputedMadal = props => {
                     <Row style={{ marginTop: "-5px" }}>
                       <Col md={5}>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount)} />
                           <span>Full amount ({selected.totalAmount})</span>
@@ -209,7 +210,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Payment Date*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -235,7 +236,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Payment Mode*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -263,7 +264,7 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Attachment*</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
                           <label
                             className="visually-hidden custom-content"
@@ -276,14 +277,16 @@ const MarkDisputedMadal = props => {
                               type="file"
                               className="form-control"
                               id=""
-                              accept=".pdf, .doc, .docx, .txt"
+                              accept=".pdf, .png, .jpg, .jpeg"
                               aria-describedby="fileUploadHelp"
                               onChange={e =>
                                 handleFileChange(e, "")
                               }
                             />
                           </InputGroup>
-
+                          <div id="fileUploadHelp" className="form-text">
+                            Choose a file to upload (PDF, PNG, JPG, JPEG).
+                          </div>
                         </div>
                       </Col>
                     </Row>
@@ -291,15 +294,15 @@ const MarkDisputedMadal = props => {
                       <Col md={5}>
                         <div className="mb-2"><b className="mt-2">Remarks</b></div>
                       </Col>
-                      <Col md={5}>
+                      <Col md={6}>
                         <div className="d-inline">
 
                           <Input
                             type="textarea"
                             id="customerEmail"
                             name="customerEmail"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
+                            value={remark}
+                            onChange={(e) => setRemark(e.target.value)}
                             placeholder="Remarks"
                           />
 
@@ -326,7 +329,7 @@ const MarkDisputedMadal = props => {
                           type="file"
                           className="form-control"
                           id="uploadPurchaseOrder"
-                          accept=".pdf, .doc, .docx, .txt"
+                          accept=".pdf, .png, .jpg, .jpeg"
                           aria-describedby="fileUploadHelp"
                           onChange={e =>
                             handleFileChange(e)
@@ -335,7 +338,7 @@ const MarkDisputedMadal = props => {
                       </InputGroup>
 
                       <div id="fileUploadHelp" className="form-text">
-                        Choose a file to upload (PDF, DOC, DOCX, TXT).
+                        Choose a file to upload (PDF, PNG, JPG, JPEG).
                       </div>
                     </Col>
 

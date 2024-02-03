@@ -97,7 +97,7 @@ export const MarkUploadCACertificate = props => {
                   type="file"
                   className="form-control"
                   id="uploadPurchaseOrder"
-                  accept=".pdf, .doc, .docx, .txt"
+                  accept=".pdf, .png, .jpg, .jpeg"
                   aria-describedby="fileUploadHelp"
                   onChange={e =>
                     handleFileChange(e)
@@ -106,9 +106,8 @@ export const MarkUploadCACertificate = props => {
               </InputGroup>
 
               <div id="fileUploadHelp" className="form-text">
-                Choose a file to upload (PDF, DOC, DOCX, TXT).
+                Choose a file to upload (PDF, PNG, JPG, JPEG).
               </div>
-
               <Row className=" mt-3">
                 <Col md={4}></Col>
                 <Col md={4}>

@@ -76,17 +76,17 @@ export const MarkOtherReasonModel = props => {
 
 
   const handleSubmit = () => {
-    const payload = [
-      {
-        "defaulterEntryId": selected.id,
-        "amtPaid": textBox,
-        "requestor": "CREDITOR", // CREDITOR/DEBTOR
-        "paymentDate": "",
-        "paymentMode": "",
-        "attachments": attachment.documentId,
-        "isDispute": true // make this flag as true whenever recording payment for a disputed transaction
-      }
-    ]
+    /*  const payload = [
+       {
+         "defaulterEntryId": selected.id,
+         "amtPaid": textBox,
+         "requestor": "CREDITOR", // CREDITOR/DEBTOR
+         "paymentDate": "",
+         "paymentMode": "",
+         "attachments": attachment.documentId,
+         "isDispute": true // make this flag as true whenever recording payment for a disputed transaction
+       }
+     ] */
     //  dispatch(recoredPaymentReportDefault(payload[0]))
     toast.success("Record Payment Successfully")
     toggle()
@@ -158,13 +158,17 @@ export const MarkOtherReasonModel = props => {
                         type="file"
                         className="form-control"
                         id=""
-                        accept=".pdf, .doc, .docx, .txt"
+                        accept=".pdf, .png, .jpg, .jpeg"
                         aria-describedby="fileUploadHelp"
                         onChange={e =>
                           handleFileChange(e, "")
                         }
                       />
                     </InputGroup>
+                    <div id="fileUploadHelp" className="form-text">
+                      Choose a file to upload (PDF, PNG, JPG, JPEG).
+                    </div>
+                    <p className="text-danger" style={{ fontSize: '11px' }}>Please upload all Documents in a single Pdf</p>
                   </div>
                 </Col>
                 <Col md={3}>

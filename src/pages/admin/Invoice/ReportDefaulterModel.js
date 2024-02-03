@@ -63,7 +63,7 @@ const ReportedDefaulterModel = props => {
   const [date, setDate] = useState('')
   const [payentMode, setPaymentMode] = useState('')
   const [attachment, setAttachment] = useState('')
-
+  const [remark, setRemark] = useState('')
 
   const handleFileChange = (event) => {
     const files = event.target.files
@@ -148,7 +148,7 @@ const ReportedDefaulterModel = props => {
           <form>
             <Row className="selectionListss">
               <Col md={3}>
-                <div className="mb-2"><b className="mt-2">Company Name*</b></div>
+                <div className="mb-2"><b className="mt-2">Seller Name*</b></div>
               </Col>
               <Col md={5}>
                 <div className="d-inline">
@@ -162,7 +162,7 @@ const ReportedDefaulterModel = props => {
                     type="text"
                     id="customerEmail"
                     name="customerEmail"
-                    value={selected.debtor != undefined ? selected.debtor.companyName : ""}
+                    value={selected.creditor != undefined ? selected.creditor.companyName : ""}
                     disabled
 
 
@@ -331,8 +331,8 @@ const ReportedDefaulterModel = props => {
                     type="textarea"
                     id="customerEmail"
                     name="customerEmail"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    value={remark}
+                    onChange={(e) => setRemark(e.target.value)}
                     placeholder="Remarks"
                   />
 

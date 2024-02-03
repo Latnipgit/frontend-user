@@ -23,7 +23,8 @@ import {
   CardBody,
   Card,
   Container,
-  Row, Col
+  Row, Col,
+  FormGroup,
 } from "reactstrap"
 import Select from "react-select"
 
@@ -113,53 +114,89 @@ const ReportedDebtorsModel = props => {
 
   //
 
-  const formSubmit = () => {
-    if (selectedState === "" && selectedCity === "" && zipcode === "") return
-    const payload = {
-      "companyName": companyName != '' ? companyName : props.getCompanyList[0].companyName,
-      "gstin": gstNumber != '' ? gstNumber : props.getCompanyList[0].gstin,
-      "companyPan": panNumber != '' ? panNumber : props.getCompanyList[0].companyPan,
-      "state": selectedState.value,
-      "city": selectedCity.value,
-      "zipcode": zipcode,
-    }
-    dispatch(addNewCompany(payload));
-    toast.success("Registration successfully")
-    window.location.reload()
+  const [gstNumberValid, setGstNumberValid] = useState(true)
+  const [panNumberValid, setPanNumberValid] = useState(true)
+  const [zipcodeValid, setZipcodeValid] = useState(true)
+  const [mobileNumberValid, setMobileNumberValid] = useState(true)
 
-  }
-
-  const formik = useFormik({
+  const formikModal = useFormik({
     enableReinitialize: true,
 
     initialValues: {
-      email: '',
-      name: '',
       companyName: '',
-      password: '',
-      aadharNumber: '',
       mobileNumber: '',
       gstNumber: '',
       panNumber: '',
       state: '',
       city: '',
       zipcode: '',
-
     },
-    validationSchema: Yup.object({
-      email: Yup.string().required("Please Enter Your Email"),
-      name: Yup.string().required("Please Enter Your Name"),
-      companyName: Yup.string().required("Please Enter Your Company Name"),
-      password: Yup.string().required("Please Enter Your Password"),
-      aadharNumber: Yup.string().required("Please Enter Your aadhar Number"),
-      mobileNumber: Yup.string().required("Please Enter Your Mobile Number"),
-      gstNumber: Yup.string().required("Please Enter Your gst Number"),
-      panNumber: Yup.string().required("Please Enter Your pan Number"),
-      state: Yup.string().required("Please Enter Your gst Number"),
-      city: Yup.string().required("Please Enter Your pan Number"),
-      zipcode: Yup.string().required("Please Enter Zip code"),
-    })
+
+    validate: values => {
+      const errors = {}
+      if (!values.companyName) {
+        errors.companyName = "Company Name is required"
+      }
+      if (!values.mobileNumber) {
+        errors.mobileNumber = "Phone Number is required"
+        setMobileNumberValid(false)
+      } else if (!/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(values.mobileNumber)) {
+        errors.mobileNumber = "Invalid Phone Number"
+        setMobileNumberValid(false)
+      } else {
+        setMobileNumberValid(true)
+      }
+      if (!values.gstNumber) {
+        errors.gstNumber = "GST Number is required"
+        setGstNumberValid(false)
+      } else if (!/^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/.test(values.gstNumber)) {
+        errors.gstNumber = "Invalid GST Number"
+        setGstNumberValid(false)
+      } else {
+        setGstNumberValid(true)
+      }
+      if (!values.panNumber) {
+        errors.panNumber = "PANCARD is required"
+        setPanNumberValid(false)
+      } else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(values.panNumber)) {
+        errors.panNumber = "Invalid PANCARD"
+        setPanNumberValid(false)
+      } else {
+        setPanNumberValid(true)
+      }
+      if (!values.zipcode) {
+        errors.zipcode = "zipcode is required"
+        setZipcodeValid(false)
+      } else if (!/^\d{6}$/.test(values.zipcode)) {
+        errors.zipcode = "Invalid Zipcode"
+        setZipcodeValid(false)
+      } else {
+        setZipcodeValid(true)
+      }
+      return errors
+    },
+    onSubmit: values => {
+    },
   });
+
+  const formSubmit = (item, e) => {
+    if (gstNumberValid && panNumberValid && zipcodeValid && mobileNumberValid) {
+      const payload = {
+        "companyName": item.companyName,
+        "gstin": item.gstNumber,
+        "companyPan": item.panNumber,
+        "state": selectedState.value != undefined ? selectedState.value : '',
+        "city": selectedCity.value != undefined ? selectedCity.value : '',
+        "zipcode": item.zipcode,
+      }
+      let checkvalue = Object.values(payload).includes('')
+      if (checkvalue) return
+      dispatch(addNewCompany(payload));
+      toast.success("Registration successfully")
+      window.location.reload()
+    }
+    return
+  }
   const { isOpen, toggle } = props
 
 
@@ -197,13 +234,13 @@ const ReportedDebtorsModel = props => {
                           <Row>
                             <Col md={6}>
                               <div className="mb-3">
-                                <Label className="form-label">Name</Label>
+                                <Label className="form-label">Personal Name</Label>
                                 <Input
                                   name="name"
                                   type="text"
                                   className="form-control"
                                   placeholder={logindata != undefined ? logindata.name : 'Enter Name'}
-                                  onChange={formik.handleChange}
+                                  onChange={formikModal.handleChange}
                                   value={logindata != undefined ? logindata.name : ''}
                                   disabled
                                 />
@@ -214,13 +251,22 @@ const ReportedDebtorsModel = props => {
                               <div className="mb-3">
                                 <Label className="form-label">Company Name</Label>
                                 <Input
-                                  name="companyName"
                                   type="text"
-                                  className="form-control"
-                                  placeholder={props.getCompanyList[0] != undefined ? props.getCompanyList[0].companyName : 'Enter Company Name'}
-                                  onChange={(event) => setcompanyName(event.target.value)}
+                                  id="companyName"
+                                  name="companyName"
+                                  value={formikModal.values.companyName}
+                                  className="text-capitalize"
 
+                                  onChange={formikModal.handleChange}
+                                  onBlur={formikModal.handleBlur}
+                                  placeholder="Enter Company Name"
                                 />
+                                {formikModal.touched.companyName &&
+                                  formikModal.errors.companyName && (
+                                    <div className="text-danger">
+                                      {formikModal.errors.companyName}
+                                    </div>
+                                  )}
 
                               </div>
                             </Col>
@@ -235,18 +281,25 @@ const ReportedDebtorsModel = props => {
                                   <div className="input-group-prepend">
                                     <span className="input-group-text">(+91)-</span>
                                   </div>
-                                  <input
-                                    name="mobileNumber"
-                                    type="number"
-
-                                    className="form-control"
-                                    placeholder="Enter 10-digit mobile number"
-                                    onChange={(e) => setMobile(e.target.value)}
-
-                                    pattern="[6-9]\d{9}" // Allow only 10 digits starting with 6, 7, 8, or 9
-                                    maxLength="10" // Restrict input to 10 characters
-                                  />
-
+                                  <FormGroup>
+                                    <Input
+                                      type="number"
+                                      id="mobileNumber"
+                                      name="mobileNumber"
+                                      value={formikModal.values.mobileNumber}
+                                      onChange={formikModal.handleChange}
+                                      onBlur={formikModal.handleBlur}
+                                      placeholder="Mobile Number"
+                                      pattern="[6-9]\d{9}" // Allow only 10 digits starting with 6, 7, 8, or 9
+                                      maxLength={10}
+                                    />
+                                    {formikModal.touched.mobileNumber &&
+                                      formikModal.errors.mobileNumber && (
+                                        <div className="text-danger">
+                                          {formikModal.errors.mobileNumber}
+                                        </div>
+                                      )}
+                                  </FormGroup>
                                 </div>
                               </div>
                             </Col>
@@ -259,7 +312,7 @@ const ReportedDebtorsModel = props => {
                                   className="form-control"
                                   placeholder="Enter email"
                                   type="email"
-                                  onChange={formik.handleChange}
+                                  onChange={formikModal.handleChange}
                                   value={logindata != undefined ? logindata.emailId : ""}
                                   disabled
 
@@ -274,14 +327,22 @@ const ReportedDebtorsModel = props => {
                               <div className="mb-3">
                                 <Label className="form-label">GST Number</Label>
                                 <Input
+                                  type="text"
                                   id="gstNumber"
                                   name="gstNumber"
-                                  className="form-control text-uppercase"
-                                  placeholder='Enter your GST Number'
-                                  type="text"
-                                  onChange={(event) => setGSTNumber(event.target.value)}
+                                  className="text-uppercase"
 
+                                  value={formikModal.values.gstNumber}
+                                  onChange={formikModal.handleChange}
+                                  onBlur={formikModal.handleBlur}
+                                  placeholder="Enter GST Number"
                                 />
+                                {formikModal.touched.gstNumber &&
+                                  formikModal.errors.gstNumber && (
+                                    <div className="text-danger">
+                                      {formikModal.errors.gstNumber}
+                                    </div>
+                                  )}
 
                               </div>
                             </Col>
@@ -289,15 +350,23 @@ const ReportedDebtorsModel = props => {
 
                               <div className="mb-3">
                                 <label className="form-label">PAN Number</label>
-                                <input
+                                <Input
+                                  type="text"
                                   id="panNumber"
                                   name="panNumber"
-                                  className={`form-control text-uppercase ${panValidation.touched && panValidation.error ? 'is-invalid' : ''}`}
-                                  placeholder='Enter PAN number'
-                                  type="text"
-                                  onChange={(event) => setPanNumber(event.target.value)}
+                                  className="text-uppercase"
 
+                                  value={formikModal.values.panNumber}
+                                  onChange={formikModal.handleChange}
+                                  onBlur={formikModal.handleBlur}
+                                  placeholder="Enter Pan Number"
                                 />
+                                {formikModal.touched.panNumber &&
+                                  formikModal.errors.panNumber && (
+                                    <div className="text-danger">
+                                      {formikModal.errors.panNumber}
+                                    </div>
+                                  )}
 
                               </div>
                             </Col>
@@ -341,16 +410,22 @@ const ReportedDebtorsModel = props => {
                           <Row>
                             <Col>
                               <div className="mb-3">
-                                <Label className="form-label">GST Number</Label>
+                                <Label className="form-label">Zip Number</Label>
                                 <Input
+                                  type="number"
                                   id="zipcode"
                                   name="zipcode"
-                                  className="form-control text-uppercase"
-                                  placeholder='Enter your Zip code'
-                                  type="text"
-                                  onChange={(event) => setZipcode(event.target.value)}
-
+                                  value={formikModal.values.zipcode}
+                                  onChange={formikModal.handleChange}
+                                  onBlur={formikModal.handleBlur}
+                                  placeholder="Enter 6 digit zipcode"
                                 />
+                                {formikModal.touched.zipcode &&
+                                  formikModal.errors.zipcode && (
+                                    <div className="text-danger">
+                                      {formikModal.errors.zipcode}
+                                    </div>
+                                  )}
 
                               </div>
                             </Col>
@@ -379,7 +454,7 @@ const ReportedDebtorsModel = props => {
                             className="btn btn-primary waves-effect waves-light "
                             type="submit"
                             style={{ width: '150px' }}
-                            onClick={() => formSubmit()}
+                            onClick={(e) => formSubmit(formikModal.values, e)}
                           >
                             Add Company
                           </button>

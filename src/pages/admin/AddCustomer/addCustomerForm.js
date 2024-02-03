@@ -41,6 +41,12 @@ export const AddcustomerFomr = () => {
     // Handle input change here
   }
 
+  const [gstNumberValid, setGstNumberValid] = useState(true)
+  const [panNumberValid, setPanNumberValid] = useState(true)
+  const [zipcodeValid, setZipcodeValid] = useState(true)
+  const [mobileNumberValid, setMobileNumberValid] = useState(true)
+  const [emailidValid, setemailidValid] = useState(true)
+
   const formikModal = useFormik({
     initialValues: {
       customerTypeIndividual: "",
@@ -77,18 +83,31 @@ export const AddcustomerFomr = () => {
       }
       if (!values.customerEmail) {
         errors.customerEmail = "Customer Email is required"
-      } else if (!/^\S+@\S+\.\S+$/.test(values.customerEmail)) {
+        setemailidValid(false)
+      } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(values.customerEmail)) {
         errors.customerEmail = "Invalid email address"
+        setemailidValid(false)
+      } else {
+        setemailidValid(true)
       }
       if (!values.customerPhone) {
         errors.customerPhone = "Phone Number is required"
-      } else if (!/^([0|+[9,1]{1,2})?([6-9][0-9]{9})$/.test(values.customerPhone)) {
+        setMobileNumberValid(false)
+      } else if (!/^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10}\s*,?$/.test(values.customerPhone)) {
         errors.customerPhone = "Invalid Phone Number"
+        setMobileNumberValid(false)
+      } else {
+        setMobileNumberValid(true)
       }
+
       if (!values.gstNumber) {
         errors.gstNumber = "GST Number is required"
+        setGstNumberValid(false)
       } else if (!/^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$/.test(values.gstNumber)) {
         errors.gstNumber = "Invalid GST Number"
+        setGstNumberValid(false)
+      } else {
+        setGstNumberValid(true)
       }
       //else if (
       //   !/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\w{1}\d{1}$/.test(values.gstNumber)
@@ -97,8 +116,12 @@ export const AddcustomerFomr = () => {
       // }
       if (!values.panCard) {
         errors.panCard = "PANCARD is required"
+        setPanNumberValid(false)
       } else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(values.panCard)) {
         errors.panCard = "Invalid PANCARD"
+        setPanNumberValid(false)
+      } else {
+        setPanNumberValid(true)
       }
       if (!values.address1) {
         errors.address1 = "Address 1 is required"
@@ -108,8 +131,12 @@ export const AddcustomerFomr = () => {
       }
       if (!values.zipcode) {
         errors.zipcode = "Zipcode is required"
+        setZipcodeValid(false)
       } else if (!/^\d{6}$/.test(values.zipcode)) {
         errors.zipcode = "Invalid Zipcode"
+        setZipcodeValid(false)
+      } else {
+        setZipcodeValid(true)
       }
 
       return errors
@@ -177,20 +204,25 @@ export const AddcustomerFomr = () => {
         "customerMobile": item.customerPhone,
         "address1": item.address1,
         "address2": item.address2,
-        "city": selectedCity.value,
-        "state": selectedState.value,
+        "city": selectedCity.value != undefined ? selectedCity.value : '',
+        "state": selectedState.value != undefined ? selectedState.value : '',
         "zipcode": item.zipcode,
         "gstin": item.gstNumber,
         "companyPan": item.panCard,
         "companyName": item.companyName
       }
     ]
-    let dummyData = dummy[0]
-    let checkvalue = Object.values(dummyData).includes('')
-    if (checkvalue) return
-    dispatch(addCustomerlist(dummy))
-    toggleAddCustomer()
-    e.preventDefault();
+    if (gstNumberValid && panNumberValid && zipcodeValid && mobileNumberValid && emailidValid) {
+      let dummyData = dummy[0]
+      let checkvalue = Object.values(dummyData).includes('')
+      if (checkvalue) return
+      dispatch(addCustomerlist(dummy))
+      toggleAddCustomer()
+      e.preventDefault();
+    }
+    return
+
+
   }
 
   const colourStyles = {
@@ -412,6 +444,8 @@ export const AddcustomerFomr = () => {
                   onChange={formikModal.handleChange}
                   onBlur={formikModal.handleBlur}
                   placeholder="Mobile Number"
+                  pattern="[6-9]\d{9}" // Allow only 10 digits starting with 6, 7, 8, or 9
+                  maxLength="10"
                 />
                 {formikModal.touched.customerPhone &&
                   formikModal.errors.customerPhone && (
