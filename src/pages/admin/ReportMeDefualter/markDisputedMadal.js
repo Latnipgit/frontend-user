@@ -30,7 +30,6 @@ import { recordPaymentReportDefaulter } from "store/debtors/debtors.selecter"
 
 
 const MarkDisputedMadal = props => {
-  debugger
   const [selectedOption, setSelectedOption] = useState("")
 
   const [isProceed, setisProceed] = useState(false)
