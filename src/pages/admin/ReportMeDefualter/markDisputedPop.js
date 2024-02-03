@@ -24,7 +24,7 @@ import { MarkUploadCACertificate } from "./MarkUploadCACertificate";
 
 
 export const MarkDisputedPopModule = props => {
-    const { isOpen, toggle, selected, markedDisputed, currentindex } = props
+    const { isOpen, toggle, selected, markedDisputed, currentindex, setIsOpenmark } = props
 
     const [otherReason, setOtherReason] = useState(false)
     const [markCAupload, setMarkCAupload] = useState(false)
@@ -56,8 +56,8 @@ export const MarkDisputedPopModule = props => {
 
     return (
         <>
-            <MarkOtherReasonModel isOpen={otherReason} toggle={OtherReasonOpen} />
-            <MarkUploadCACertificate isOpen={markCAupload} toggle={marCAUpload} setMarkCAupload={setMarkCAupload} />
+            <MarkOtherReasonModel isOpen={otherReason} toggle={OtherReasonOpen} setIsOpenmark={setIsOpenmark} />
+            <MarkUploadCACertificate isOpen={markCAupload} toggle={marCAUpload} setMarkCAupload={setMarkCAupload} setIsOpenmark={setIsOpenmark} />
             <Modal
                 isOpen={isOpen}
                 role="dialog"

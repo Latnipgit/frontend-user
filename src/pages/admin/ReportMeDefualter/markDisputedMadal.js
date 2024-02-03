@@ -33,7 +33,7 @@ const MarkDisputedMadal = props => {
   const [selectedOption, setSelectedOption] = useState("")
 
   const [isProceed, setisProceed] = useState(false)
-  const { isOpen, toggle, selected, } = props
+  const { isOpen, toggle, selected, setIsOpenmark } = props
   const dispatch = useDispatch()
   const colourStyles = {
     menuList: styles => ({
@@ -118,6 +118,7 @@ const MarkDisputedMadal = props => {
 
     ]
     // dispatch(recoredPaymentReportDefault(payload[0]))
+    setIsOpenmark(false)
     toast.success("Record Payment Successfully")
     toggle()
   }
