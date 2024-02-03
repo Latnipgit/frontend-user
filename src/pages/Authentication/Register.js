@@ -340,7 +340,7 @@ const Register = props => {
 
                             if (formik.values.name != '' && formik.values.zipcode != '' && formik.values.email != '' && gstNumber != '' && panNumber != "" && selectedState != "" && selectedCity != "") {
 
-                              // dispatch(registerUser_login(user, props.router.navigate));
+                              dispatch(registerUser_login(user, props.router.navigate));
                               setTimerStart(true)
 
                             }
