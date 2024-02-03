@@ -322,13 +322,7 @@ const ReportMedefulterComponent = props => {
                 </tbody>
               </table>
               :
-              <Card style={{ height: '60vh' }}>
-                <CardBody className="text-center p-5 ">
-                  <h5 className="mt-5">
-                    No Data Found
-                  </h5>
-                </CardBody>
-              </Card>
+              
 <div>
          
             {/* <table className="table table-bordered table-responsive" style={{ width:"100vw"}}>
