@@ -12,6 +12,8 @@ import {
   Card,
   CardBody,
 } from "reactstrap"
+import TableContainer from "../../../components/Common/TableContainer";
+import InlineFilterForm from '../ApprovedTransaction/InlineFilterForm';
 import { useDispatch, useSelector } from "react-redux";
 import { setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen, markAsDisputedModalOpenAction } from "../../../store/debtors/debtors.actions"
 import { uploadFilesModalOpen, selectCACertificateOpen, isViewDetailMOdalOpenSelector, markAsDisputedModalOpenSelector } from "store/debtors/debtors.selecter"
@@ -27,7 +29,17 @@ import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc"
 import CaImg from '../../../assets/images/newImg/CA-BG_Remove.png'
 import MarkDisputedMadal from "./markDisputedMadal"
 import { MarkDisputedPopModule } from "./markDisputedPop"
-
+import {
+  CheckBox,
+  SrNo,
+  PANCARD,
+  AADHAR,
+  GST,
+  CompanyName,
+  DueSince,
+  DueAmount,
+  Reating
+} from ".././company-search/companyssearchColl";
 const ReportMedefulterComponent = props => {
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
@@ -129,6 +141,128 @@ const ReportMedefulterComponent = props => {
     dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
 
   }
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Sr No",
+        accessor: "SrNo",
+        filterable: false,
+        disableFilters: true,
+        Cell: cellProps => {
+          return <SrNo {...cellProps} />;
+        },
+      },
+      {
+        Header: "Seller Name",
+        accessor: "CompanyName",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+          {cellProps.cell.row.original.debtor.companyName}
+     </div>
+          
+        },
+      },
+      {
+        Header: "Invoice Number",
+        accessor: "PANCARD",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return<div>
+          {cellProps.cell.row.original.invoices[0].invoiceNumber}
+     </div>
+      
+        },
+      },
+      {
+        Header: "Address",
+        accessor: "GST",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return<div>
+               {cellProps.cell.row.original.debtor.address1}<br />{cellProps.cell.row.original.debtor.address2}
+          </div>
+        },
+      },
+      {
+        Header: "Due Amount",
+        accessor: "totalAmount",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <DueAmount {...cellProps} />;
+        },
+      },
+      {
+        Header: "Due Form",
+        accessor: "dueFrom",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return  <div className="" style={{ padding: "2px 15px" }}>
+          <div className=" text-center bg-danger rounded text-light p-1">
+            <div className="text-capitalize">
+              {getDaysArray[currentindex]}  &nbsp;
+              <span className="ml-1">Days</span> </div>
+            <div className="text-capitalize" >{moment(cellProps.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
+          </div>
+        </div>;
+        },
+      },
+  
+    
+      {
+        Header: "Action",
+        disableFilters: true,
+        accessor: "view",
+        Cell: cellProps => {
+          return (
+            <div className="d-flex">
+              <div className="pt-2">
+              <button type="button" rel='noreferrer'className="btn btn-info"
+                target='_blank' onClick={() => viewModel(cellProps.cell.row.original)
+                }>
+                <i className='bx bx-wallet-alt textsizing' ></i>
+              </button>
+              &nbsp;
+              <Button className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Disputed Transaction"  rel='noreferrer'
+                target='_blank' onClick={() => markOpenModule(cellProps.cell.row.original)
+
+                }>
+                <i className='bx bx-window-close textsizing'></i>
+              </Button>
+              &nbsp;
+
+              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Upload CA Certificate" rel='noreferrer'
+                target='_blank' onClick={() => {
+                  toggleViewModal2()
+                  setinvoiceIdsForCAcertificate(cellProps.cell.row.original.invoices[0].invoiceNumber)
+                }
+                }>
+                <img src={CaImg} className="" style={{ height: "22.5px" }} />
+              </button>
+              &nbsp;
+              <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="View Details" rel='noreferrer'
+                target='_blank'
+                onClick={() => handleViewDetail(cellProps.cell.row.original)}>
+                <i className='fa fa-eye textsizing' style={{ fontSize: "19.5px" }}></i>   </Button>
+
+
+            </div>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
@@ -162,28 +296,37 @@ const ReportMedefulterComponent = props => {
             {selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ?
 
 
-              
+<div>
          
-            <table className="table table-bordered table-responsive">
+            {/* <table className="table table-bordered table-responsive" style={{ width:"100vw"}}>
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Seller Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
-                  <th scope="col">Invoice Number</th>
+                  {/* <th scope="col">Invoice Number</th>
                   {/* <th scope="col">Status</th> */}
-                  <th scope="col">Address</th>
+                  {/* <th scope="col">Address</th>
                   <th scope="col">Due Amount</th>
                   <th scope="col">Due From</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">Action</th> */}
                   {/* <th scope="col">Upload Document</th> */}
-                </tr>
-              </thead>
-              <tbody>
+                {/* </tr>
+              </thead> */} 
+              {/* <tbody>
                 {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule}/> :
                  <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
               </tbody>
-            </table>
+            </table> */} 
+
+<TableContainer
+columns={columns}
+data= {selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ?selectReportMeDeflist:''}
+isGlobalFilter={false}
+isAddOptions={false}
+customPageSize={20}
+/>
+</div>
             :
             <Card style={{ height:'60vh'}}>
               <CardBody className="text-center p-5 ">
@@ -204,17 +347,17 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
   return (
     <>
       {selectReportMeDeflistData != undefined && selectReportMeDeflistData.length != 0 ? selectReportMeDeflistData.map((item, index) => {
-        return <tr key={item}>
-          <th scope="row" className="pt-4">{index + 1}</th>
-          <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-          <td className="pt-4">{item.invoices[0].invoiceNumber}</td>
-          <td style={{ width: "250px" }}>
+        return <tr key={item} style={{ width:"100vw"}}>
+          <th scope="row" className="pt-4" style={{ width: "5%" }}>{index + 1}</th>
+          <td className="pt-4 text-capitalize" style={{ width: "15%" }}>{item.ha}</td>
+          <td className="pt-4" style={{ width: "15%" }} >{item.invoices[0].invoiceNumber}</td>
+          <td style={{ width: "22%" }}>
             {item.debtor.address1}<br />{item.debtor.address2}
           </td>
-          <td className="pt-4">
+          <td className="pt-4" style={{ width: "10%" }}>
             {numberFormat(item.totalAmount)}
           </td>
-          <td style={{ width: "150px" }}>
+          <td style={{ width: "13%" }}>
             <div className="" style={{ padding: "2px 15px" }}>
               <div className=" text-center bg-danger rounded text-light p-1">
                 <div className="text-capitalize">
@@ -224,7 +367,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
               </div>
             </div>
           </td>
-          <td>
+          <td style={{ width: "20%" }}>
             <div className="pt-2">
               <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                 title="Record Payment" href={item.url} rel='noreferrer'
@@ -265,6 +408,9 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
       }) :
         ""
       }
+
+1
+
       <ToastContainer />
     </>
   )

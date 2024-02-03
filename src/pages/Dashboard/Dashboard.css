@@ -1,8 +1,8 @@
 @media only screen and (max-width: 600px) {
     .backtoHomeButton {
-        width: auto !important;
+        width:  150px!important;
     }
     }
     .backtoHomeButton{
-        width: auto;
+        width: 180px;
     }
