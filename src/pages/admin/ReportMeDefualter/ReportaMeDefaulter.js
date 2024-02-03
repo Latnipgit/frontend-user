@@ -301,27 +301,27 @@ const ReportMedefulterComponent = props => {
 
 
 
-              <table className="table table-bordered table-responsive">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Seller Name</th>
-                    {/* <th scope="col">Refrence Number</th> */}
-                    <th scope="col">Invoice Number</th>
-                    {/* <th scope="col">Status</th> */}
-                    <th scope="col">Address</th>
-                    <th scope="col">Due Amount</th>
-                    <th scope="col">Due From</th>
-                    <th scope="col">Action</th>
-                    {/* <th scope="col">Upload Document</th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule} /> :
-                    <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
-                </tbody>
-              </table>
-              :
+              // <table className="table table-bordered table-responsive">
+              //   <thead>
+              //     <tr>
+              //       <th scope="col">#</th>
+              //       <th scope="col">Seller Name</th>
+              //       {/* <th scope="col">Refrence Number</th> */}
+              //       <th scope="col">Invoice Number</th>
+              //       {/* <th scope="col">Status</th> */}
+              //       <th scope="col">Address</th>
+              //       <th scope="col">Due Amount</th>
+              //       <th scope="col">Due From</th>
+              //       <th scope="col">Action</th>
+              //       {/* <th scope="col">Upload Document</th> */}
+              //     </tr>
+              //   </thead>
+              //   <tbody>
+              //     {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule} /> :
+              //       <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
+              //   </tbody>
+              // </table>
+              // :
               
 <div>
          
