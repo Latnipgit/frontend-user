@@ -63,7 +63,7 @@ const MarkDisputedMadal = props => {
   const [date, setDate] = useState('')
   const [payentMode, setPaymentMode] = useState('')
   const [attachment, setAttachment] = useState('')
-
+  const [remark, setRemark] = useState('')
 
   const handleFileChange = (event) => {
     const files = event.target.files
@@ -148,7 +148,7 @@ const MarkDisputedMadal = props => {
                   <form>
                     <Row className="selectionListss">
                       <Col md={5}>
-                        <div className="mb-2"><b className="mt-2">Company Name*</b></div>
+                        <div className="mb-2"><b className="mt-2">Seller Name*</b></div>
                       </Col>
                       <Col md={6}>
                         <div className="d-inline">
@@ -166,7 +166,7 @@ const MarkDisputedMadal = props => {
                             disabled
 
 
-                            placeholder="Amount Recieved"
+                            placeholder="Amount Paid"
                           />
                         </div>
                       </Col>
@@ -190,7 +190,7 @@ const MarkDisputedMadal = props => {
                             name="customerEmail"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
-                            placeholder="Amount Recieved"
+                            placeholder="Amount Paid"
                           />
                         </div>
                       </Col>
@@ -300,8 +300,8 @@ const MarkDisputedMadal = props => {
                             type="textarea"
                             id="customerEmail"
                             name="customerEmail"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
+                            value={remark}
+                            onChange={(e) => setRemark(e.target.value)}
                             placeholder="Remarks"
                           />
 

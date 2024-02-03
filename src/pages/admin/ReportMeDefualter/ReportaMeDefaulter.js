@@ -37,12 +37,15 @@ const ReportMedefulterComponent = props => {
   const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
   const [filteredData, setFilteredData] = useState([]);
 
+  const [selectDisput, setSelectDisput] = useState('')
+
   const [isOpenmark, setIsOpenmark] = useState(false)
   const [currentindex, setCurrentindex] = useState({})
 
   const markOpenModule = (value) => {
     setIsOpenmark(!isOpenmark)
     setCurrentindex(value)
+
   }
 
 
@@ -117,7 +120,7 @@ const ReportMedefulterComponent = props => {
     const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
     }
-
+    setSelectDisput(item)
     dispatch(markAsDisputedModalOpenAction(payload))
   }
 
@@ -136,18 +139,18 @@ const ReportMedefulterComponent = props => {
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       {/* <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
-      <MarkDisputedMadal isOpen={markAsDisputed} toggle={toggleMarkAsDisputed} selected={selected} />
+      <MarkDisputedMadal isOpen={markAsDisputed} toggle={toggleMarkAsDisputed} selected={selectDisput} />
       <MarkDisputedPopModule isOpen={isOpenmark} toggle={markOpenModule} currentindex={currentindex} markedDisputed={markedDisputed} />
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
-          {console.log("isClickedToReported",props.isClickedToReported)}
+          {console.log("isClickedToReported", props.isClickedToReported)}
           {props.isClickedToReported == undefined && props.isClickedToReported != false ?
             <div>
               <br />
               <br />
-             
-           
+
+
             </div>
             : ""
           }
@@ -162,36 +165,36 @@ const ReportMedefulterComponent = props => {
             {selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ?
 
 
-              
-         
-            <table className="table table-bordered table-responsive">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Seller Name</th>
-                  {/* <th scope="col">Refrence Number</th> */}
-                  <th scope="col">Invoice Number</th>
-                  {/* <th scope="col">Status</th> */}
-                  <th scope="col">Address</th>
-                  <th scope="col">Due Amount</th>
-                  <th scope="col">Due From</th>
-                  <th scope="col">Action</th>
-                  {/* <th scope="col">Upload Document</th> */}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule}/> :
-                 <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
-              </tbody>
-            </table>
-            :
-            <Card style={{ height:'60vh'}}>
-              <CardBody className="text-center p-5 ">
-                <h5 className="mt-5">
-                  No Data Found
-                </h5>
-              </CardBody>
-            </Card>
+
+
+              <table className="table table-bordered table-responsive">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Seller Name</th>
+                    {/* <th scope="col">Refrence Number</th> */}
+                    <th scope="col">Invoice Number</th>
+                    {/* <th scope="col">Status</th> */}
+                    <th scope="col">Address</th>
+                    <th scope="col">Due Amount</th>
+                    <th scope="col">Due From</th>
+                    <th scope="col">Action</th>
+                    {/* <th scope="col">Upload Document</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule} /> :
+                    <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
+                </tbody>
+              </table>
+              :
+              <Card style={{ height: '60vh' }}>
+                <CardBody className="text-center p-5 ">
+                  <h5 className="mt-5">
+                    No Data Found
+                  </h5>
+                </CardBody>
+              </Card>
             }
           </Row>
         </CardBody>
