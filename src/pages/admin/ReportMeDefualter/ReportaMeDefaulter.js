@@ -141,17 +141,20 @@ const ReportMedefulterComponent = props => {
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
-          {props.isClickedToReported != undefined && props.isClickedToReported != false ?
+          {console.log("isClickedToReported",props.isClickedToReported)}
+          {props.isClickedToReported == undefined && props.isClickedToReported != false ?
             <div>
               <br />
               <br />
-              <br />
+             
+           
             </div>
             : ""
           }
-          <Row>
+          <Row className="">
+            <Col md={12}>&nbsp;</Col>
             <Col md={10} className="pl-3">
-              <h5 className="m-1">Reported Me As a Defaulter</h5>
+              <h5 className="m-1">Complaints Against me</h5>
             </Col>
             {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Seller"} /> : ""}
           </Row>

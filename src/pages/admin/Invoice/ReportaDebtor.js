@@ -195,7 +195,7 @@ const ReportDebtor = props => {
 
           <Row>
             <Col md={10} className="pl-3">
-              <h5 className="m-1">Report a Defaulter</h5>
+              <h5 className="m-1">My Complaints</h5>
             </Col>
             <Col md={2}>
 
@@ -272,7 +272,7 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit, re
               {/*           <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
 
             </td>
-            <td className="pt-4  text-capitalize"><span className="text-danger">{item.status}</span></td>
+            <td className="pt-4  text-capitalize"><span className="text-danger ">{item.status}</span></td>
             {/* <td className="pt-4  text-capitalize">}</td> */}
 
             <td >
