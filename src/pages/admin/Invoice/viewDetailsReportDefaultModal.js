@@ -73,7 +73,7 @@ const ViewDetailsReportDefaultModal = props => {
               </Col>
               <Col md={2} className="text-end">
 
-                <Button className="btn btn-info">Edit Invoice</Button>
+                {/* <Button className="btn btn-info">Edit Invoice</Button> */}
               </Col>
             </Row>
 
@@ -138,7 +138,7 @@ const ViewDetailsReportDefaultModal = props => {
                       <Col md={8} className="pt-4">
                         <strong>Transportation Document</strong>
                       </Col>
-                      <Col md={4}>
+                      <Col md={4} className="pt-2">
                         {item.transportationDocument != null ? <a href={item.transportationDocument.url} rel='noreferrer' target='_blank'>
                           {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
