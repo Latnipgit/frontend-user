@@ -165,16 +165,16 @@ const Dashboard = props => {
             <Row className="text-center" >
               <Col md={12}>
                 <div className="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" className="btn btn-info backtoHomeButton " style={{ background: isClickedToReported == false ? " #50a5f1" : "	 #707274", border: "none", width: "" }} onClick={() => setisClickedToReported(false)} >Reported Me As a Defaulter</button>
-                  <button type="button" className="btn btn-info  backtoHomeButton" style={{ background: isClickedToReported != false ? "#50a5f1" : "	 #707274", border: "none", width: "" }} onClick={() => setisClickedToReported(true)} >Reported Defaulter</button>
+                  <button type="button" className="btn btn-info backtoHomeButton " style={{ background: isClickedToReported == false ? " #50a5f1" : "	 #707274", border: "none", width: "" }} onClick={() => setisClickedToReported(false)} >Complaints Against Me</button>
+                  <button type="button" className="btn btn-info  backtoHomeButton" style={{ background: isClickedToReported != false ? "#50a5f1" : "	 #707274", border: "none", width: "" }} onClick={() => setisClickedToReported(true)} >My Complaints</button>
                 </div>
 
 
               </Col>
               <Col md={12} className="">
                 <div className="btn-group" role="group" aria-label="Basic example">
-                  <span style={{ width: '100px', height: "5px", background: isClickedToReported == false ? " #50a5f1" : "", marginRight: "110px" }}></span>
-                  <span style={{ width: '100px', height: "5px", background: isClickedToReported != false ? " #50a5f1" : "", }}></span>
+                  <span style={{ width: '70px', height: "5px", background: isClickedToReported == false ? " #50a5f1" : "", marginRight: "30px", marginLeft:"30px" }}></span>
+                  <span style={{ width: '70px', height: "5px", background: isClickedToReported != false ? " #50a5f1" : "",marginLeft: "50px"  }}></span>
                 </div>
                 <br />
 
