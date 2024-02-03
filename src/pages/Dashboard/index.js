@@ -48,16 +48,26 @@ import { SelectCompnay } from "store/selectCompany/selectCompany.selecter";
 import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype";
 import { numberFormat } from "pages/admin/uploadPendingDoucument/uploadPendingDoc"
 
+import { selectCompanyloding } from "store/auth/companySearch/companySearch.selecter"
+
+import { Spinner } from "pages/admin/spinner/spinner"
 
 
 const Dashboard = props => {
+  const companyid = localStorage.getItem("COMPANY-ID")
   const [subscribemodal, setSubscribemodal] = useState(false)
   const [filteredData, setFilteredData] = useState([]);
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [isClickedToReported, setisClickedToReported] = useState(false);
+
+  const [currentComany, setCurrentComany] = useState(companyid)
   const dispatch = useDispatch();
 
   const SelectCompnayOpen = useSelector(SelectCompnay)
+
+  const isLodingCompany = useSelector(selectCompanyloding)
+
+  console.log('isLodingCompany', isLodingCompany);
 
   const renderStarRating = rating => {
     const starCount = 5
@@ -90,10 +100,9 @@ const Dashboard = props => {
   }, [])
 
   useEffect(() => {
-    const companyid = localStorage.getItem("COMPANY-ID")
-    dispatch(onsearchCompany(companyid));
+    dispatch(onsearchCompany(currentComany));
 
-  })
+  }, [currentComany])
   const handleSignUp = () => {
     setSubscribemodal(false)
   }
@@ -136,7 +145,7 @@ const Dashboard = props => {
   return (
     <React.Fragment>
       <Card>
-        <CardBody>
+        {isLodingCompany ? <Spinner /> : (<CardBody>
           <div className="mb-4 h4 card-title"></div>
           <br />
           <br />
@@ -243,10 +252,8 @@ const Dashboard = props => {
 
             }
           </div>
+        </CardBody>)}
 
-
-
-        </CardBody>
       </Card>
     </React.Fragment>
   )
