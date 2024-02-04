@@ -8,6 +8,22 @@ export const selectDebtorsList = createSelector(
     (DebtorsReducer) => DebtorsReducer.debtors != undefined ? DebtorsReducer.debtors.response : []
 )
 
+export const selectDebtorsListMap = createSelector(
+    [selectDebtorsList],
+    (DebtorsReducers) => {
+        if (DebtorsReducers == undefined) return []
+        let SrNo = DebtorsReducers.length + 1
+        const debtorMap = DebtorsReducers.map((item) => {
+            SrNo--
+            const { companyName, gstin, customerEmail, customerMobile } = item
+            let customerName = item.firstname + ' ' + item.lastname
+            const address = item.address1 + ', ' + item.address2
+            return { SrNo, companyName, gstin, customerEmail, customerMobile, customerName, address }
+        })
+        return debtorMap
+    }
+)
+
 export const selectInvoiceList = createSelector(
     [selectDebtorsReducer],
     (DebtorsReducer) => DebtorsReducer.getInvoiceList != undefined ? DebtorsReducer.getInvoiceList.response : []
