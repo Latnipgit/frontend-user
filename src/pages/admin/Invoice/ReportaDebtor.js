@@ -59,7 +59,9 @@ import RequestEditMessageModal from "./RequestEditMessageModal"
 import './style.css'
 // import { ToastContainer } from "react-toastify"
 
-
+import {
+  DueAmount,
+} from ".././company-search/companyssearchColl";
 
 const ReportDebtor = props => {
   const [modal1, setModal1] = useState(false);
@@ -176,6 +178,173 @@ const ReportDebtor = props => {
     }
   };
 
+
+  const SrNo = (cell) => {
+    let serno = cell.data.length + 1
+    serno--
+    return serno;
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Sr No",
+        accessor: "SrNo",
+        filterable: false,
+        disableFilters: true,
+        Cell: cellProps => {
+
+          return <SrNo {...cellProps} />;
+        },
+      },
+      {
+        Header: "BUYER NAME",
+        accessor: "CompanyName",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+            {cellProps.cell.row.original.debtor.companyName}
+          </div>
+
+        },
+      },
+      {
+        Header: "INVOICE NUMBER",
+        accessor: "PANCARD",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+            {cellProps.cell.row.original.invoices[0].invoiceNumber}
+          </div>
+
+        },
+      },
+      {
+        Header: "ADDRESS",
+        accessor: "GST",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div>
+            {cellProps.cell.row.original.debtor.address1},<br />{cellProps.cell.row.original.debtor.address2}
+          </div>
+        },
+      },
+      {
+        Header: "DUE AMOUNT",
+        accessor: "totalAmount",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <DueAmount {...cellProps} />;
+        },
+      },
+      {
+        Header: "STATUS",
+        accessor: "STATUS",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div className="pt-4  text-capitalize"><span className="text-danger ">{cellProps.cell.row.original.status}</span></div>
+        },
+      },
+
+      {
+        Header: "DUE FROM",
+        accessor: "dueFrom",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <div className="" style={{ padding: "2px 15px" }}>
+            <div className=" text-center bg-danger rounded text-light p-1">
+              <div className="text-capitalize">
+                {/*  {getDaysArray[currentindex]} */}  &nbsp;
+                <span className="ml-1">Days</span> </div>
+              <div className="text-capitalize" >{moment(cellProps.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
+            </div>
+          </div>;
+        },
+      },
+
+
+      {
+        Header: "ACTION",
+        disableFilters: true,
+        accessor: "view",
+        Cell: cellProps => {
+          debugger
+          return (
+            <div className="d-flex">
+              <div className="pt-2">
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
+                  title="Record Payment" href={cellProps.cell.row.original.url} rel='noreferrer'
+                  target='_blank' onClick={() => viewModel(cellProps.cell.row.original)
+
+                  }>
+                  <i className='bx bx-wallet-alt textsizing' ></i>
+
+
+                  {/* <img src={RecordPayImg} className="iconsImage"/> */}
+
+                </button>
+
+                &nbsp;
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
+                  title="Request Edit" href={cellProps.cell.row.original.url} rel='noreferrer'
+                  target='_blank' onClick={() => requestEdit(cellProps.cell.row.original)
+
+
+                  }
+                  disabled={isRequestedEdit == true}
+                >
+                  <i className='bx bx-edit textsizing' ></i>
+                  {/* <img src={ReqEdit} className="iconsImage"/> */}
+
+                </button>
+                &nbsp;
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
+                  title="Upload Pending Files" href={cellProps.cell.row.original.url} rel='noreferrer'
+                  target='_blank' onClick={() => handleUploadFiles(cellProps.cell.row.original)
+                  }>
+                  <i className='bx bx-cloud-upload textsizing' ></i>
+                </button>
+                &nbsp;
+                <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
+                  title="Upload CA Certificate" href={cellProps.cell.row.original.url} rel='noreferrer'
+                  target='_blank' onClick={() => {
+                    toggleViewModal2()
+                    setinvoiceIdsForCAcertificate(cellProps.cell.row.original.invoices[0].invoiceNumber)
+                  }
+
+                  }>
+                  {/* <i className='bx bx-file textsizing' ></i> */}
+                  <img src={CaImg} className="" style={{ height: "22.5px" }} />
+                </button>
+                &nbsp;
+                <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                  title="View Details" href={cellProps.cell.row.original.url} rel='noreferrer'
+                  target='_blank'
+
+                  onClick={() => handleViewDetail(cellProps.cell.row.original)}>
+                  <i className='fa fa-eye textsizing' style={{ fontSize: "19.5px" }}></i>
+
+                  {/* <img src={profileimg} className="iconsImage"/> */}
+
+
+                </Button>
+
+
+              </div>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
   return (
     <React.Fragment>
       <ReportedDebtorsModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue} selected={selected} />
@@ -206,38 +375,15 @@ const ReportDebtor = props => {
           </Row>
           {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Buyer"} /> : ""}
           <Row className="p-4  ml-5">
-            {/* <br/> */}
 
-            {/* <ReactTable
-              data={GetAllInvoice != undefined ? GetAllInvoice : []}
+            {GetAllInvoice != undefined && (<TableContainer
               columns={columns}
-              showPagination={true}
-              defaultPageSize={5}
-            /> */}
-            <h5 className="m-1">List of My Defaulters</h5>
+              data={filteredData.length > 0 ? filteredData : GetAllInvoice}
+              isGlobalFilter={false}
+              isAddOptions={false}
+              customPageSize={20}
+            />)}
 
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Buyer Name</th>
-                  {/* <th scope="col">Refrence Number</th> */}
-                  <th scope="col">Invoice Number</th>
-                  <th scope="col" className="reportDebAdd">Address</th>
-                  <th scope="col">Due Amount</th>
-                  <th scope="col">status</th>
-                  {/* <th scope="col">Rating</th> */}
-
-                  <th scope="col">Due From</th>
-                  <th scope="col">Action</th>
-                  {/* <th scope="col">Upload Document</th> */}
-                </tr>
-              </thead>
-              <tbody>
-
-                {filteredData.length >= 0 ? <ReportDefulterTable GetAllInvoicedata={filteredData} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} handleViewDetail={handleViewDetail} /> : <ReportDefulterTable GetAllInvoicedata={GetAllInvoice} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} />}
-              </tbody>
-            </table>
 
           </Row>
         </CardBody>
@@ -259,7 +405,7 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit, re
             <th scope="row" className="pt-4">{index + 1}</th>
             <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
             <td className="pt-4">{item.invoices.map((item) => {
-              return <span key={item}>{item.invoiceNumber}{" "+" "} &nbsp;</span>
+              return <span key={item}>{item.invoiceNumber}{" " + " "} &nbsp;</span>
             })}</td>
 
             <td className="pt-4 d-flex text-capitalize reportDebAdd">{item.debtor.companyName}
@@ -294,16 +440,6 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit, re
 
             <td>
               <div className="pt-2">
-                {/* <Button className="btn btn-info btn-sm "
-                  onClick={() => viewModel(item)
-
-                  }
-
-                >
-               
-                </Button> */}
-
-
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
                   title="Record Payment" href={item.url} rel='noreferrer'
                   target='_blank' onClick={() => viewModel(item)
@@ -317,15 +453,6 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit, re
                 </button>
 
                 &nbsp;
-
-                {/* <Button className="btn btn-info btn-sm"
-                  onClick={() => requestEdit(item)
-
-                  }
-                >
-                  <i className='bx bx-edit textsizing' ></i>
-                </Button> */}
-
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
                   title="Request Edit" href={item.url} rel='noreferrer'
                   target='_blank' onClick={() => requestEdit(item)
@@ -338,39 +465,14 @@ const ReportDefulterTable = ({ GetAllInvoicedata, viewModel, isRequestedEdit, re
                   {/* <img src={ReqEdit} className="iconsImage"/> */}
 
                 </button>
-
                 &nbsp;
-
-                {/* <Button className="btn btn-info btn-sm"
-                  onClick={() => handleUploadFiles(item)
-
-                  }
-                >
-                  <i className='bx bx-cloud-upload textsizing' ></i>
-
-
-                </Button> */}
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
                   title="Upload Pending Files" href={item.url} rel='noreferrer'
                   target='_blank' onClick={() => handleUploadFiles(item)
-
                   }>
                   <i className='bx bx-cloud-upload textsizing' ></i>
-                  {/* <img src={fileImg} className="iconsImage"/> */}
-
                 </button>
-
                 &nbsp;
-                {/* <Button className="btn btn-info btn-sm"
-                  onClick={() => {
-                    toggleViewModal2()
-                    setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                  }
-
-                  }
-                >
-                  <i className='bx bx-file textsizing' ></i>
-                </Button> */}
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
                   title="Upload CA Certificate" href={item.url} rel='noreferrer'
                   target='_blank' onClick={() => {

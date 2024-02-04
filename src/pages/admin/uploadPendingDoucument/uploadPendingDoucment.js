@@ -56,7 +56,17 @@ import { ReportSentTomeTable } from "./uploadSentTome"
 
 /* import './style.css' */
 // import { ToastContainer } from "react-toastify"
-
+import {
+    CheckBox,
+    SrNo,
+    PANCARD,
+    AADHAR,
+    GST,
+    CompanyName,
+    DueSince,
+    DueAmount,
+    Reating
+} from ".././company-search/companyssearchColl";
 
 
 const UploadPendingListModule = props => {
@@ -176,6 +186,239 @@ const UploadPendingListModule = props => {
         }
     };
 
+    const Reatings = (cell) => {
+        return <div>4.2</div>;
+    };
+    const columns = useMemo(
+        () => [
+            {
+                Header: "Sr No",
+                accessor: "SrNo",
+                filterable: false,
+                disableFilters: true,
+                Cell: cellProps => {
+                    return <SrNo {...cellProps} />;
+                },
+            },
+            {
+                Header: "COMPANY NAME",
+                accessor: "CompanyName",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div>
+                        {cellProps.cell.row.original.defaulterEntry.creditor.companyName}
+                    </div>
+
+                },
+            },
+            {
+                Header: "INVOICE NUMBER",
+                accessor: "PANCARD",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div>
+                        {cellProps.cell.row.original.defaulterEntry.invoices.map((x) => {
+                            return <span key={x}>{x.invoiceNumber}, &nbsp;</span>
+                        })}
+                    </div>
+
+                },
+            },
+            {
+                Header: "ADDRESS",
+                accessor: "GST",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div className="d-flex text-capitalize">{cellProps.cell.row.original.defaulterEntry.creditor.companyName}
+                        <br />
+                        {cellProps.cell.row.original.defaulterEntry.creditor.address1} {cellProps.cell.row.original.defaulterEntry.creditor.address2}, {cellProps.cell.row.original.defaulterEntry.creditor.city}
+                    </div>
+                },
+            },
+            {
+                Header: "DUE AMOUNT",
+                accessor: "totalAmount",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div>
+                        {numberFormat(cellProps.cell.row.original.defaulterEntry.totalAmount)}
+                    </div>;
+                },
+            },
+            {
+                Header: "DUE FROM",
+                accessor: "dueFrom",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div className="" style={{ padding: "2px 15px" }}>
+                        <div className=" text-center bg-danger rounded text-light p-1">
+                            <div className="text-capitalize">
+                                {getDaysArray[cellProps.cell.row.original]}  &nbsp;
+                                <span className="ml-1">Days</span> </div>
+                            <div className="text-capitalize" >{cellProps.cell.row.original.paymentDate}</div>
+                        </div>
+                    </div>;
+                },
+            },
+            {
+                Header: "RATINGS",
+                accessor: "RATINGS",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <Reatings {...cellProps} />;
+                },
+            },
+
+
+            {
+                Header: "ACTION",
+                disableFilters: true,
+                accessor: "view",
+                Cell: cellProps => {
+                    return (
+                        <div className="d-flex">
+                            <div className="pt-2">
+                                &nbsp;
+                                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                    title="Upload Pending Files" href={cellProps.cell.row.original.url} rel='noreferrer'
+                                    target='_blank' onClick={() => handleUploadFiles(cellProps.cell.row.original)
+
+                                    }>
+                                    <i className='bx bx-cloud-upload textsizing' ></i>
+                                </button>
+                                &nbsp;
+
+
+                            </div>
+                        </div>
+                    );
+                },
+            },
+        ],
+        []
+    );
+    const columns2 = useMemo(
+        () => [
+            {
+                Header: "Sr No",
+                accessor: "SrNo",
+                filterable: false,
+                disableFilters: true,
+                Cell: cellProps => {
+                    return <SrNo {...cellProps} />;
+                },
+            },
+            {
+                Header: "COMPANY NAME",
+                accessor: "CompanyName",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div>
+                        {cellProps.cell.row.original.defaulterEntry.debtor.companyName}
+                    </div>
+
+                },
+            },
+            {
+                Header: "INVOICE NUMBER",
+                accessor: "PANCARD",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div>
+                        {cellProps.cell.row.original.defaulterEntry.invoices.map((x) => {
+                            return <span key={x}>{x.invoiceNumber}, &nbsp;</span>
+                        })}
+                    </div>
+
+                },
+            },
+            {
+                Header: "ADDRESS",
+                accessor: "GST",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div className=" d-flex text-capitalize">
+                        {cellProps.cell.row.original.defaulterEntry.debtor.companyName}
+                        <br />
+                        {cellProps.cell.row.original.defaulterEntry.debtor.address1} {cellProps.cell.row.original.defaulterEntry.debtor.address2}, {cellProps.cell.row.original.defaulterEntry.debtor.city}
+                    </div>
+                },
+            },
+            {
+                Header: "DUE AMOUNT",
+                accessor: "totalAmount",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div>
+                        {numberFormat(cellProps.cell.row.original.defaulterEntry.totalAmount)}
+                    </div>;
+                },
+            },
+            {
+                Header: "DUE FROM",
+                accessor: "dueFrom",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <div className="" style={{ padding: "2px 15px" }}>
+                        <div className=" text-center bg-danger rounded text-light p-1">
+                            <div className="text-capitalize">
+                                {getDaysArray[cellProps.cell.row.original]}  &nbsp;
+                                <span className="ml-1">Days</span> </div>
+                            <div className="text-capitalize" >{cellProps.cell.row.original.paymentDate}</div>
+                        </div>
+                    </div>;
+                },
+            },
+            {
+                Header: "RATINGS",
+                accessor: "RATINGS",
+                disableFilters: true,
+                filterable: false,
+                Cell: cellProps => {
+                    return <Reatings {...cellProps} />;
+                },
+            },
+
+
+            {
+                Header: "ACTION",
+                disableFilters: true,
+                accessor: "view",
+                Cell: cellProps => {
+                    return (
+                        <div className="d-flex">
+                            <div className="pt-2">
+                                &nbsp;
+                                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                    title="Upload Pending Files" href={cellProps.cell.row.original.url} rel='noreferrer'
+                                    target='_blank' onClick={() => handleUploadFiles(cellProps.cell.row.original)
+
+                                    }>
+                                    <i className='bx bx-cloud-upload textsizing' ></i>
+                                </button>
+                                &nbsp;
+
+
+                            </div>
+                        </div>
+                    );
+                },
+            },
+        ],
+        []
+    );
+
     return (
         <React.Fragment>
             <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
@@ -192,25 +435,32 @@ const UploadPendingListModule = props => {
                         </Col>
                     </Row>
                     <Row className="p-4  ml-5">
-                        <table className="table table-bordered">
+                        <TableContainer
+                            columns={columns}
+                            data={selectTransactionsRaisedByMe}
+                            isGlobalFilter={false}
+                            isAddOptions={false}
+                            customPageSize={20}
+                        />
+                        {/*                      <table className="table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Company Name</th>
-                                    {/* <th scope="col">Refrence Number</th> */}
+
                                     <th scope="col">Invoice Number</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Due Amount</th>
                                     <th scope="col">Due From</th>
                                     <th scope="col">Ratings</th>
                                     <th scope="col">Action</th>
-                                    {/* <th scope="col">Upload Document</th> */}
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {selectTransactionsRaisedByMe.length > 0 ? <ReportRaisedByMeTable GetUploadPendingList={selectTransactionsRaisedByMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
                             </tbody>
-                        </table>
+                        </table> */}
                     </Row>
                 </CardBody>
                 <CardBody>
@@ -221,25 +471,32 @@ const UploadPendingListModule = props => {
                         </Col>
                     </Row>
                     <Row className="p-4  ml-5">
-                        <table className="table table-bordered">
+                        <TableContainer
+                            columns={columns2}
+                            data={selectTransactionsSentToMe}
+                            isGlobalFilter={false}
+                            isAddOptions={false}
+                            customPageSize={20}
+                        />
+                        {/*                     <table className="table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Company Name</th>
-                                    {/* <th scope="col">Refrence Number</th> */}
+
                                     <th scope="col">Invoice Number</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Due Amount</th>
                                     <th scope="col">Due From</th>
                                     <th scope="col">Ratings</th>
                                     <th scope="col">Action</th>
-                                    {/* <th scope="col">Upload Document</th> */}
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {selectTransactionsSentToMe.length > 0 ? <ReportSentTomeTable GetUploadPendingList={selectTransactionsSentToMe} handleUploadFiles={handleUploadFiles} getDaysArray={getDaysArrySecond} /> : ''}
                             </tbody>
-                        </table>
+                        </table> */}
                     </Row>
                 </CardBody>
             </Card>
