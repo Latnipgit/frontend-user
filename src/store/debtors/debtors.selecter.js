@@ -29,6 +29,21 @@ export const selectInvoiceList = createSelector(
     (DebtorsReducer) => DebtorsReducer.getInvoiceList != undefined ? DebtorsReducer.getInvoiceList.response : []
 )
 
+
+export const selectInvoiceListMap = createSelector(
+    [selectInvoiceList],
+    (DebtorsReducer) => {
+        if (DebtorsReducer == undefined) return []
+        let SrNo = DebtorsReducer.length + 1
+        const mapinvoicelist = DebtorsReducer.map((item) => {
+            SrNo--
+            return { ...item, SrNo }
+        })
+        return mapinvoicelist
+    }
+)
+
+
 /* export const selectInvoiceListMap = createSelector(
     [selectInvoiceList],
     (DebtorsReducer) => {

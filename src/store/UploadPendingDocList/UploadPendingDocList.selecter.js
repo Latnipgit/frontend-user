@@ -14,9 +14,37 @@ export const selectTransactionsRaisedByMeData = createSelector(
 
 );
 
+export const selectTransactionsRaisedByMeDataMap = createSelector(
+  [selectTransactionsRaisedByMeData],
+  (transactionuploainglist) => {
+    if (transactionuploainglist == undefined) return []
+    let SrNo = transactionuploainglist.length + 1
+    const mapinvoicelist = transactionuploainglist.map((item) => {
+      SrNo--
+      return { ...item, SrNo }
+    })
+    return mapinvoicelist
+  }
+
+);
+
 export const selectTransactionsSentToMeData = createSelector(
   [selectUploadingPendingListData],
   (transactionuploainglist) => transactionuploainglist.transactionsSentToMe != undefined ? transactionuploainglist.transactionsSentToMe : []
+
+);
+
+export const selectTransactionsSentToMeDataMap = createSelector(
+  [selectTransactionsSentToMeData],
+  (transactionuploainglist) => {
+    if (transactionuploainglist == undefined) return []
+    let SrNo = transactionuploainglist.length + 1
+    const mapinvoicelist = transactionuploainglist.map((item) => {
+      SrNo--
+      return { ...item, SrNo }
+    })
+    return mapinvoicelist
+  }
 
 );
 
