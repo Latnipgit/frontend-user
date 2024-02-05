@@ -15,7 +15,10 @@ export const selectdashboardAdminDataMap = createSelector(
     return reportMeDefulter.map((list) => {
       const { id, dueFrom, totalAmount } = list
       SrNo--
+
       const aatingArray = list.ratings.length !== 0 ? list.ratings.map(x => {
+        console.log("reportMeDefulterre",reportMeDefulter,list,x)
+
         if (x.rating != undefined) {
           return +x.rating
         }

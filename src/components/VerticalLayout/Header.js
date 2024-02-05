@@ -24,7 +24,7 @@ import slack from "../../assets/images/brands/slack.png";
 
 import logo from "../../assets/images/logo.svg";
 import logoLightSvg from "../../assets/images/logo-light.svg";
-
+import './verticalFile.css'
 //i18n
 import { withTranslation } from "react-i18next";
 
@@ -103,7 +103,7 @@ const Header = props => {
               onClick={() => {
                 tToggle();
               }}
-              className="btn btn-sm px-3 font-size-16 header-item "
+              className="btn btn-sm px-3 font-size-16 header-item  toggleeButton"
               id="vertical-menu-btn"
             >
               <i className="fa fa-fw fa-bars" />
