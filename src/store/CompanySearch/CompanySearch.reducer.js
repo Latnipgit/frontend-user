@@ -32,7 +32,7 @@ export const CompanySearchReducer = (
     case FETCH_COMPANY_SEARCH_FAILED:
       return { ...state, loading: false, error: payload }
     case GET_ALL_COMPANY_LIST:
-      return { ...state, loading: true, companyList: payload }
+      return { ...state, loading: true, }
     case GET_ALL_COMPANY_LIST_SUCCESS:
       return { ...state, companyList: payload, }
     case GET_ALL_COMPANY_LIST_FAIL:

@@ -153,7 +153,7 @@ export async function del(url, config = {}) {
 
 
 export async function addEmployeeAPImethod(url, data, config = {}) {
-  console.log("urururur", url, data)
+  console.log("urururur", url)
   const token = localStorage.getItem("tokenemployeeRegister")
   const headers = {
     ...config.headers,

@@ -27,6 +27,7 @@ export const selectdashboardAdminDataMap = createSelector(
       const CompanyName = list.companyName !== undefined ? list.companyName : "";
       const PANCARD = list.companyPan !== undefined ? list.companyPan : "";
       const GST = list.gstin !== undefined ? list.gstin : "";
+      console.log("SELECTORRRRRR",SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount )
       return { SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount }
     })
   }
