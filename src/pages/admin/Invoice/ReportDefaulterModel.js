@@ -62,8 +62,14 @@ const ReportedDefaulterModel = props => {
   const [amount, setAmount] = useState('')
   const [date, setDate] = useState('')
   const [payentMode, setPaymentMode] = useState('')
-  const [attachment, setAttachment] = useState('')
+  const [attachment, setAttachment] = useState({})
   const [remark, setRemark] = useState('')
+
+  const [amountValid, setAmountValid] = useState(false)
+  const [payMentDateValid, setpayMentDateValid] = useState(false)
+  const [payMentModeValid, setpayMentModeValid] = useState(false)
+  const [attachmentValid, setAttachmentValid] = useState(false)
+
 
   const handleFileChange = (event) => {
     const files = event.target.files
@@ -80,12 +86,6 @@ const ReportedDefaulterModel = props => {
 
   }
 
-
-
-
-
-
-
   function uploadFile(formData) {
 
     const token = localStorage.getItem("tokenemployeeRegister")
@@ -99,7 +99,7 @@ const ReportedDefaulterModel = props => {
     })
       .then((response) => {
 
-        setAttachment(response.data.response / documentId)
+        setAttachment(response.data.response)
         toast.success("File Upload Successfully")
       })
       .catch((error) => {
@@ -108,7 +108,34 @@ const ReportedDefaulterModel = props => {
       })
   }
 
+
   const handleSubmit = () => {
+    debugger
+    var size = Object.keys(attachment).length;
+    if (amount.length > 0) {
+      setAmountValid(false)
+    } else {
+      setAmountValid(true)
+    }
+
+    if (date.length > 0) {
+      setpayMentDateValid(false)
+    } else {
+      setpayMentDateValid(true)
+    }
+
+    if (payentMode.length > 0) {
+      setpayMentModeValid(false)
+    } else {
+      setpayMentModeValid(true)
+    }
+
+    if (size > 0) {
+      setAttachmentValid(false)
+    } else {
+      setAttachmentValid(true)
+    }
+
     const payload = [
       {
         "defaulterEntryId": selected.id,
@@ -116,14 +143,22 @@ const ReportedDefaulterModel = props => {
         "requestor": "CREDITOR", // CREDITOR/DEBTOR
         "paymentDate": date,
         "paymentMode": payentMode,
-        "attachments": attachment.documentId,
-        "isDispute": false // make this flag as true whenever recording payment for a disputed transaction
+        "attachments": [attachment.documentId],
+        "debtorRemarks": remark,
+
+        // if disputing a transaction
+        "isDispute": false, // make this flag as true whenever recording payment for a disputed transaction,
+        "disputeType": "" // values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
       }
 
     ]
-    dispatch(recoredPaymentReportDefault(payload[0]))
-    toast.success("Record Payment Successfully")
-    toggle()
+    if (amount !== '' && date !== '' && payentMode !== '' && attachment !== '') {
+      // dispatch(recoredPaymentReportDefault(payload[0]))
+      toast.success("Record Payment Successfully")
+      toggle()
+    }
+    // dispatch(recoredPaymentReportDefault(payload[0]))
+
   }
   const handleDateChange = (value) => {
     const Dates = moment(value).format("YYYY-MM-DD")
@@ -197,6 +232,7 @@ const ReportedDefaulterModel = props => {
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="Amount Paid"
                   />
+                  {amountValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Enter Amount</p>}
 
                 </div>
               </Col>
@@ -245,8 +281,9 @@ const ReportedDefaulterModel = props => {
                     className="form-control custom-content"
 
                   />
-
                 </div>
+                {payMentDateValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Select Payment Date</p>}
+
               </Col>
               <Col md={3}>
 
@@ -275,6 +312,7 @@ const ReportedDefaulterModel = props => {
                     onChange={selected => setPaymentMode(selected.value)}
                     placeholder="Cash"
                   />
+                  {payMentModeValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Select Payment Mode</p>}
 
                 </div>
               </Col>
@@ -310,7 +348,7 @@ const ReportedDefaulterModel = props => {
                       }
                     />
                   </InputGroup>
-
+                  {attachmentValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Upload Attachment</p>}
                 </div>
               </Col>
               <Col md={3}>
