@@ -48,6 +48,7 @@ const AADHAR = (cell) => {
     return cell.value ? cell.value : '';
 };
 const PANCARD = (cell) => {
+    console.log("cellcellcell",cell)
     // return cell.value ? cell.value : '';
     const divStyle = {
         textTransform: "uppercase"
@@ -66,12 +67,11 @@ const daysSinceReference = (cellValue, referenceDate) => {
 };
 
 const DueSince = (cell) => {
-    console.log("cellcellcell",cell.row.original.createdAt)
     /*  const [startDate, setStartDate] = useState(new Date('1965-04-05')); */
     //const startDate = new Date('2019-10-07'); // October 7, 2019
     const today = new Date(); // Current date
     // const currentDate = moment(today).format('YYYY-MM-DD')
-    const daysSince = daysSinceReference(cell.row.original.createdAt, today);
+    const daysSince = daysSinceReference(cell.value, today);
 
     let badgeClassName = "font-size-11 badge ";
     if (daysSince > 1 && daysSince < 800) {
@@ -87,13 +87,13 @@ const DueSince = (cell) => {
             day: 'numeric'
         }); */
 
-    const newDate = cell.row.original.createdAt != undefined ? cell.row.original.createdAt.split("-").reverse().join("-") : "";
-    const currentDate = new Date(cell.row.original.createdAt);
+    const newDate = cell.value != undefined ? cell.value.split("-").reverse().join("-") : "";
+    const currentDate = new Date(newDate);
 
     const calculateDateDifference = () => {
         const differenceInMilliseconds = today - currentDate;
         const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-        console.log("differenceInDaysdifferenceInDays",currentDate,newDate)
+        console.log("differenceInDaysdifferenceInDays",cell)
         return differenceInDays;
 
     };
@@ -103,10 +103,10 @@ const DueSince = (cell) => {
 
     return (
         <span className={badgeClassName}>
-            {cell.row.original.createdAt && (
+            {cell.value && (
                 <>
                     <div style={divStyle}>({calculateDateDifference()} days)</div>
-                    <div style={divStyle}>{moment(cell.row.original.createdAt).format("DD-MM-YYYY")}</div>
+                    <div style={divStyle}>{cell.value}</div>
                 </>
             )}
 
