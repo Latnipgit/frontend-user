@@ -72,12 +72,17 @@ const CompanySearch = props => {
   };
 
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
-  /*  const getAllCompanyList = useSelector(getAllCompanyListSelector) */
+    // const getAllCompanyList = useSelector(getAllCompanyListSelector)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
 
-
+  const { CompanyList } = useSelector((state) => ({
+    CompanyList: state.CompanySearchReducer.companyList != undefined && state.CompanySearchReducer.companyList.data != undefined? state.CompanySearchReducer.companyList.data.response:[],
+   
+  }));
   const viewModel = (value) => {
+    console.log("CompanyListCompanyList",value.cell.row.original)
+
     const valueDate = value.cell.row.original
     dispatch(fetchCompanySearchViewDatatlStart({ "debtorId": `${valueDate.id}` }))
     openViewModule(valueDate)
@@ -88,6 +93,7 @@ const CompanySearch = props => {
     setSelected(value)
 
   }
+
 
   useEffect(() => {
     dispatch(fetchCompanySearchStart({
@@ -110,7 +116,12 @@ const CompanySearch = props => {
         filterable: false,
         disableFilters: true,
         Cell: cellProps => {
-          return <SrNo {...cellProps} />;
+          return  <div
+          className="company-name-cell"
+          style={{ cursor: 'pointer' }}
+        >
+          {cellProps.data.length-cellProps.cell.row.index}
+        </div>;
         },
       },
       {
@@ -119,13 +130,14 @@ const CompanySearch = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
+          console.log("cellPropscellProps", cellProps)
           return (
             <div
               className="company-name-cell"
-              onClick={() => handleEyeIconClick(cellProps.row.original)}
+              onClick={() => handleEyeIconClick(cellProps.rows)}
               style={{ cursor: 'pointer' }}
             >
-              {cellProps.value}
+              {cellProps.cell.row.original.companyName}
             </div>
           );
         },
@@ -136,7 +148,14 @@ const CompanySearch = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <PANCARD {...cellProps} />;
+          return (
+            <div
+              className="company-name-cell"
+              style={{ cursor: 'pointer' }}
+            >
+              {cellProps.cell.row.original.companyPan}
+            </div>
+          );
         },
       },
       {
@@ -145,7 +164,12 @@ const CompanySearch = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <GST {...cellProps} />;
+          return  <div
+          className="company-name-cell"
+          style={{ cursor: 'pointer' }}
+        >
+          {cellProps.cell.row.original.gstin}
+        </div>;
         },
       },
       {
@@ -206,13 +230,8 @@ const CompanySearch = props => {
 
     setFilteredData(filterePANCARD);
   };
-  const { getCompanyList } = useSelector(state => ({
-    getCompanyList: state.getCompanyList,
-  }));
-  useEffect(() => {
-    dispatch(ongetCompanyList());
-  }, [getCompanyList])
-  const additionalValue = "Hello from additional prop!";
+ 
+
   return (
     <React.Fragment>
       <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currentUserViewDetails} selectCompanySearchListMap={selectCompanySearchLists} />
@@ -242,10 +261,10 @@ const CompanySearch = props => {
             </Col>
           </Row>
         </div> */}
-
+{console.log("selectCompanySearchListMap", CompanyList)}
           <TableContainer
             columns={columns}
-            data={filteredData.length > 0 ? filteredData : selectCompanySearchListMap}
+            data={filteredData.length > 0 ? filteredData : CompanyList}
             isGlobalFilter={false}
             isAddOptions={false}
             customPageSize={20}
