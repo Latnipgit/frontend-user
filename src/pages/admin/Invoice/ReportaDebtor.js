@@ -42,7 +42,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { success } from "toastr"
 //import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
 import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen, setRequestEditModalOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector, requestModelSelector } from "store/debtors/debtors.selecter"
+import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector, requestModelSelector, selectInvoiceListMap } from "store/debtors/debtors.selecter"
 import UploadPendingFiles from "./uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import moment from 'moment'
@@ -61,6 +61,7 @@ import './style.css'
 
 import {
   DueAmount,
+  SrNo,
 } from ".././company-search/companyssearchColl";
 
 const ReportDebtor = props => {
@@ -90,7 +91,10 @@ const ReportDebtor = props => {
   const [isRequestedEdit, setisRequestedEdit] = useState(false)
 
 
-  const GetAllInvoice = useSelector(selectInvoiceList)
+  const GetAllInvoice = useSelector(selectInvoiceListMap)
+
+  console.log('GetAllInvoice', GetAllInvoice);
+
   useEffect(() => {
     dispatch(getAllInvoice());
     dispatch(setIsViewDetailModalOpen())
@@ -178,12 +182,28 @@ const ReportDebtor = props => {
     }
   };
 
+  const DueSincedate = (cell) => {
+    const today = new Date();
+    const currentDate = new Date(cell.cell.row.original.debtor.createdAt);
 
-  const SrNo = (cell) => {
-    let serno = cell.data.length + 1
-    serno--
-    return serno;
+    const calculateDateDifference = () => {
+      const differenceInMilliseconds = today - currentDate;
+      const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+      return differenceInDays;
+    };
+
+    return (
+      <div className="" style={{ padding: "2px 15px" }}>
+        <div className=" text-center bg-danger rounded text-light p-1">
+          <div className="text-capitalize">
+            {calculateDateDifference()}  &nbsp;
+            <span className="ml-1">Days</span> </div>
+          <div className="text-capitalize" >{moment(cell.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
+        </div>
+      </div>
+    );
   };
+
 
   const columns = useMemo(
     () => [
@@ -257,14 +277,7 @@ const ReportDebtor = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div className="" style={{ padding: "2px 15px" }}>
-            <div className=" text-center bg-danger rounded text-light p-1">
-              <div className="text-capitalize">
-                {/*  {getDaysArray[currentindex]} */}  &nbsp;
-                <span className="ml-1">Days</span> </div>
-              <div className="text-capitalize" >{moment(cellProps.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
-            </div>
-          </div>;
+          return <DueSincedate {...cellProps} />;
         },
       },
 
@@ -274,7 +287,6 @@ const ReportDebtor = props => {
         disableFilters: true,
         accessor: "view",
         Cell: cellProps => {
-          debugger
           return (
             <div className="d-flex">
               <div className="pt-2">

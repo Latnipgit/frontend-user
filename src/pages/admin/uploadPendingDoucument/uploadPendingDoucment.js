@@ -43,7 +43,7 @@ import { success } from "toastr"
 import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen } from "../../../store/debtors/debtors.actions"
 import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector } from "store/debtors/debtors.selecter"
 import { fetchUploadPendingListStart } from "store/UploadPendingDocList/UploadPendingDocList.action"
-import { selectUploadingPendingListData, selectTransactionsRaisedByMeData, selectTransactionsSentToMeData } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
+import { selectUploadingPendingListData, selectTransactionsRaisedByMeData, selectTransactionsSentToMeData, selectTransactionsRaisedByMeDataMap, selectTransactionsSentToMeDataMap } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
 import UploadPendingDocModel from "./uploadPendingDoc"
 import UploadPendingFiles from "../Invoice/uploadFilesModal"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
@@ -95,8 +95,8 @@ const UploadPendingListModule = props => {
 
     const GetAllInvoice = useSelector(selectInvoiceList)
     const uploadpendingFilelist = useSelector(selectUploadingPendingListData);
-    const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeData);
-    const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeData);
+    const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeDataMap);
+    const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeDataMap);
     useEffect(() => {
         dispatch(getAllInvoice());
         dispatch(setIsViewDetailModalOpen())
@@ -189,6 +189,30 @@ const UploadPendingListModule = props => {
     const Reatings = (cell) => {
         return <div>4.2</div>;
     };
+
+    const DueSincedate = (cell) => {
+        const today = new Date();
+        const newDate = cell.cell.row.original.paymentDate != undefined ? cell.cell.row.original.paymentDate.split("-").reverse().join("-") : "";
+        const currentDate = new Date(newDate);
+
+        const calculateDateDifference = () => {
+            const differenceInMilliseconds = today - currentDate;
+            const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+            return differenceInDays;
+        };
+
+        return (
+            <div className="" style={{ padding: "2px 15px" }}>
+                <div className=" text-center bg-danger rounded text-light p-1">
+                    <div className="text-capitalize">
+                        {calculateDateDifference()}  &nbsp;
+                        <span className="ml-1">Days</span> </div>
+                    <div className="text-capitalize" >{cell.cell.row.original.paymentDate}</div>
+                </div>
+            </div>
+        );
+    };
+
     const columns = useMemo(
         () => [
             {
@@ -255,14 +279,7 @@ const UploadPendingListModule = props => {
                 disableFilters: true,
                 filterable: false,
                 Cell: cellProps => {
-                    return <div className="" style={{ padding: "2px 15px" }}>
-                        <div className=" text-center bg-danger rounded text-light p-1">
-                            <div className="text-capitalize">
-                                {getDaysArray[cellProps.cell.row.original]}  &nbsp;
-                                <span className="ml-1">Days</span> </div>
-                            <div className="text-capitalize" >{cellProps.cell.row.original.paymentDate}</div>
-                        </div>
-                    </div>;
+                    return <DueSincedate {...cellProps} />;
                 },
             },
             {
@@ -370,14 +387,7 @@ const UploadPendingListModule = props => {
                 disableFilters: true,
                 filterable: false,
                 Cell: cellProps => {
-                    return <div className="" style={{ padding: "2px 15px" }}>
-                        <div className=" text-center bg-danger rounded text-light p-1">
-                            <div className="text-capitalize">
-                                {getDaysArray[cellProps.cell.row.original]}  &nbsp;
-                                <span className="ml-1">Days</span> </div>
-                            <div className="text-capitalize" >{cellProps.cell.row.original.paymentDate}</div>
-                        </div>
-                    </div>;
+                    return <DueSincedate {...cellProps} />;
                 },
             },
             {

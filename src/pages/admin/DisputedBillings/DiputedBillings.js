@@ -36,7 +36,7 @@ import CaImg from '../../../assets/images/newImg/CA-BG_Remove.png'
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 import TableContainer from "../../../components/Common/TableContainer";
 import DisputedViewModal from "./NewPaymentModel";
-
+import { selectInvoiceListMap } from "store/debtors/debtors.selecter";
 import {
   CheckBox,
   SrNo,
@@ -50,7 +50,6 @@ import {
 } from ".././company-search/companyssearchColl";
 
 const DiputedBillings = props => {
-  debugger
   const [selectedOption, setSelectedOption] = useState("")
   const [selected, setSelected] = useState('');
   const [modal2, setModal2] = useState(false);
@@ -71,7 +70,7 @@ const DiputedBillings = props => {
 
 
 
-  const GetAllInvoice = useSelector(selectInvoiceList)
+  const GetAllInvoice = useSelector(selectInvoiceListMap)
   useEffect(() => {
     dispatch(getAllInvoice());
 
@@ -160,6 +159,7 @@ const DiputedBillings = props => {
 
   }
 
+  console.log('getDaysArray', getDaysArray);
 
 
   function getDebtrosLists(responsData) {
@@ -215,6 +215,29 @@ const DiputedBillings = props => {
     dispatch(requestInvoiceDefEdit(payload))
     toast.success("Edit Request Sent Successfully")
   }
+
+
+  const DueSincedate = (cell) => {
+    const today = new Date();
+    const currentDate = new Date(cell.cell.row.original.debtor.createdAt);
+
+    const calculateDateDifference = () => {
+      const differenceInMilliseconds = today - currentDate;
+      const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+      return differenceInDays;
+    };
+
+    return (
+      <div className="" style={{ padding: "2px 15px" }}>
+        <div className=" text-center bg-danger rounded text-light p-1">
+          <div className="text-capitalize">
+            {calculateDateDifference()}  &nbsp;
+            <span className="ml-1">Days</span> </div>
+          <div className="text-capitalize" >{moment(cell.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
+        </div>
+      </div>
+    );
+  };
 
 
   const columns = useMemo(
@@ -278,14 +301,7 @@ const DiputedBillings = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div className="" style={{ padding: "2px 15px" }}>
-            <div className=" text-center bg-danger rounded text-light p-1">
-              <div className="text-capitalize">
-                {getDaysArray[cellProps.cell.row.original]}  &nbsp;
-                <span className="ml-1">Days</span> </div>
-              <div className="text-capitalize" >{moment(cellProps.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
-            </div>
-          </div>;
+          return <DueSincedate {...cellProps} />;
         },
       },
 

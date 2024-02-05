@@ -54,7 +54,6 @@ const AddCustomer = props => {
 
 
   const handleFilterdata = (filters) => {
-    debugger
     if (GetAllDebtorsMap.length > 0) {
       const filteredResults = GetAllDebtorsMap.filter(item => {
         const fullname = item.customerName.toLocaleLowerCase()
