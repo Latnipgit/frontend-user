@@ -287,7 +287,6 @@ const ReportDebtor = props => {
         disableFilters: true,
         accessor: "view",
         Cell: cellProps => {
-          debugger
           return (
             <div className="d-flex">
               <div className="pt-2">
