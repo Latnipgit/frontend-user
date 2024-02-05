@@ -153,7 +153,11 @@ const ReportMedefulterComponent = props => {
         filterable: false,
         disableFilters: true,
         Cell: cellProps => {
-          return <SrNo {...cellProps} />;
+          return  <div
+          className="company-name-cell"
+        >
+          {cellProps.data.length-cellProps.cell.row.index}
+        </div>;
         },
       },
       {
