@@ -51,7 +51,17 @@ import { numberFormat } from "pages/admin/uploadPendingDoucument/uploadPendingDo
 import { selectCompanyloding } from "store/auth/companySearch/companySearch.selecter"
 
 import { Spinner } from "pages/admin/spinner/spinner"
-
+import {
+  CheckBox,
+  SrNo,
+  PANCARD,
+  AADHAR,
+  GST,
+  CompanyName,
+  DueSince,
+  DueAmount,
+  Reating
+} from "./companyssearchColl";
 
 const Dashboard = props => {
   const companyid = localStorage.getItem("COMPANY-ID")
@@ -140,6 +150,89 @@ const Dashboard = props => {
     dispatch(setSelectCopenOpen(!SelectCompnayOpen))
   };
 
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Sr No",
+        accessor: "SrNo",
+        filterable: false,
+        disableFilters: true,
+        Cell: cellProps => {
+          return  <div
+          className="company-name-cell"
+          style={{ cursor: 'pointer' }}
+        >
+          {cellProps.data.length-cellProps.cell.row.index}
+        </div>;
+        },
+      },
+      {
+        Header: "Buyer Name",
+        accessor: "CompanyName",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <span>
+            {cellProps.cell.row.original.debtor.companyName}
+          </span>
+        },
+      },
+      {
+        Header: "Invoice Number",
+        accessor: "PANCARD",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <span>
+          {cellProps.cell.row.original.invoices[0].invoiceNumber}
+        </span>
+        },
+      },
+      {
+        Header: "Address",
+        accessor: "GST",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <span>
+          {cellProps.cell.row.original.debtor.address1}       {cellProps.cell.row.original.debtor.address2}
+        </span>
+        },
+      },
+      {
+        Header: "Due Form",
+        accessor: "dueFrom",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <DueSince {...cellProps} />;
+        },
+      },
+      {
+        Header: "Due Amount",
+        accessor: "totalAmount",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return  <span>
+          {cellProps.cell.row.original.totalAmount}
+        </span>
+        },
+      },
+      {
+        Header: "Status",
+        accessor: "rating",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <span className=  {cellProps.cell.row.original.status == undefined ? 'text-success h6' : 'text-danger h6'}>
+        {cellProps.cell.row.original.status == undefined ? "Approved" : cellProps.cell.row.original.status} </span>
+        },
+      },
+     
+    ],
+    []
+  );
   return (
     <React.Fragment>
       <Card>
@@ -150,7 +243,7 @@ const Dashboard = props => {
           <br />
           <Row>
             <Col md={8}>
-              <h5 className="m-1">Company Dashboard</h5>
+              <h5 className="m-1">Company Dashboard : {localStorage.getItem("COMPANY")}</h5>
             </Col>
             <Col md={4}>
               <Link to="/companies">
@@ -212,22 +305,13 @@ const Dashboard = props => {
                 </Row>
                 {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Buyer"} /> : ""}
 
-                <Row className="p-4  ml-5">
-                  {/* <br/> */}
+                <Row className="p-2  ml-5">
 
-                  {/* <ReactTable
-    data={GetAllInvoice != undefined ? GetAllInvoice : []}
-    columns={columns}
-    showPagination={true}
-    defaultPageSize={5}
-  /> */}
-
-                  <table className="table table-bordered table-responsive w-100hmm">
+                   {/* <table className="table table-bordered table-responsive w-100hmm">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Buyer Name</th>
-                        {/* <th scope="col">Refrence Number</th> */}
                         <th scope="col">Invoice Number</th>
                         <th scope="col">Address</th>
 
@@ -235,15 +319,21 @@ const Dashboard = props => {
 
                         <th scope="col">Due From</th>
                         <th scope="col">Status</th>
-                        {/* <th scope="col">Upload Document</th> */}
                       </tr>
                     </thead>
                     <tbody>
-                      {/*    {<FilterData GetAllInvoicedata={GetAllInvoice} />} */}
-                      {/* {GetAllInvoice != undefined ? GetAllInvoice.map((item, index)=>{ */}
+                    {console.log("filteredData",filteredData)}
                       <FilterData GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} />
                     </tbody>
-                  </table>
+                  </table>  */}
+
+ <TableContainer
+            columns={columns}
+            data={ filteredData}
+            isGlobalFilter={false}
+            isAddOptions={false}
+            customPageSize={10}
+          /> 
 
                 </Row>
               </>
