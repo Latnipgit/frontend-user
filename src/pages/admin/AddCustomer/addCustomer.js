@@ -5,29 +5,19 @@ import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 import 'react-table-6/react-table.css'
 import { AddcustomerFomr } from "./addCustomerForm"
 import {
-  Container,
   Row,
   Col,
   Button,
   Card,
   CardBody,
-  Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  CardHeader,
-  Table,
-  InputGroup,
-  Form,
-  CardTitle,
-  FormGroup,
-  Label,
+
 } from "reactstrap"
+
+import TableContainer from "components/Common/TableContainer"
 
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDebtors } from "../../../store/debtors/debtors.actions"
-import { selectDebtorsList } from "store/debtors/debtors.selecter"
+import { selectDebtorsList, selectDebtorsListMap } from "store/debtors/debtors.selecter"
 import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter"
 import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
@@ -45,6 +35,7 @@ const AddCustomer = props => {
   const toggleAddCustomer = () => dispatch(setAddCustomerOpen(!isAddCustomerOpen));
 
   const GetAllDebtors = useSelector(selectDebtorsList)
+  const GetAllDebtorsMap = useSelector(selectDebtorsListMap)
   /*   const selectNewCustomerList = useSelector(SelectAddCustomerList) */
 
   /*   let GetAllDebtors
@@ -57,38 +48,97 @@ const AddCustomer = props => {
 
   useEffect(() => {
     dispatch(getAllDebtors());
-    getDays()
-    setFilteredData(GetAllDebtors)
+    setFilteredData(GetAllDebtorsMap)
   }, [])
 
-  const getDays = () => {
-    if (GetAllDebtors != undefined) {
-      for (let x = 0; x < GetAllDebtors.length; x++) {
-        const a = moment(GetAllDebtors[x]);
-        const b = moment()
-        const c = moment(b).diff(a)
-        const d = moment.duration(c)
-        getDaysArray.push(d.days())
-      }
-    }
-  }
+
 
   const handleFilterdata = (filters) => {
-    if (GetAllDebtors) {
-      if (filters === "") {
-        setFilteredData(GetAllDebtors)
-      } else {
-        const filteredResults = GetAllDebtors.filter(item => {
-          if (item.firstname === undefined) return
-          const fullname = item.firstname + item.lastname.toLocaleLowerCase()
-          return fullname.toLocaleLowerCase().includes(filters);
-        });
-        setFilteredData(filteredResults);
-      }
+    debugger
+    if (GetAllDebtorsMap.length > 0) {
+      const filteredResults = GetAllDebtorsMap.filter(item => {
+        const fullname = item.customerName.toLocaleLowerCase()
+        return fullname.toLocaleLowerCase().includes(filters);
+      });
+      setFilteredData(filteredResults);
     }
 
-
   };
+
+  const CompanyName = (cell) => {
+    return cell.value ? cell.value : '';
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Sr No",
+        accessor: "SrNo",
+        filterable: false,
+        disableFilters: true,
+        Cell: cellProps => {
+          return <CompanyName {...cellProps} />;
+        },
+      },
+      {
+        Header: "CUSTOMER NAME",
+        accessor: "customerName",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <CompanyName {...cellProps} />;
+        },
+      },
+      {
+        Header: "COMPANY NAME",
+        accessor: "companyName",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <CompanyName {...cellProps} />;
+        },
+      },
+      {
+        Header: "ADDRESS",
+        accessor: "address",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <CompanyName {...cellProps} />;
+        },
+      },
+      {
+        Header: "GST NUMBER",
+        accessor: "gstin",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <CompanyName {...cellProps} />;
+        },
+      },
+      {
+        Header: "MOBILE NUMBER",
+        accessor: "customerMobile",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <CompanyName {...cellProps} />;
+        },
+      },
+      {
+        Header: "EMAIL",
+        accessor: "customerEmail",
+        disableFilters: true,
+        filterable: false,
+        Cell: cellProps => {
+          return <CompanyName {...cellProps} />;
+        },
+      },
+    ],
+    []
+  );
+
+
   return (
     <React.Fragment>
       <Card>
@@ -105,39 +155,15 @@ const AddCustomer = props => {
               <Button className="btn btn-md btn-info" onClick={() => toggleAddCustomer()}>Add New Customer</Button>
             </Col>
           </Row>
-          {GetAllDebtors != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Customer"} /> : ""}
+          {GetAllDebtorsMap != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Customer"} /> : ""}
           <Row className="p-4  ml-5">
-            {/* <br/> */}
-
-            {/* <ReactTable
-              data={GetAllDebtors != undefined ? GetAllDebtors : []}
+            <TableContainer
               columns={columns}
-              showPagination={true}
-              defaultPageSize={5}
-            /> */}
-
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Customer Name</th>
-                  {/* <th scope="col">Refrence Number</th> */}
-                  <th scope="col">Company Name</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">GST Number</th>
-                  {/* <th scope="col">Status</th> */}
-                  <th scope="col">Mobile Number</th>
-                  <th scope="col">Email</th>
-                  {/*       <th scope="col">Due From</th>
-      <th scope="col">Action</th> */}
-                  {/* <th scope="col">Upload Document</th> */}
-                </tr>
-              </thead>
-              <tbody>
-                <CustomerList GetAllDebtorsdata={filteredData} />
-              </tbody>
-            </table>
-
+              data={filteredData.length > 0 ? filteredData : GetAllDebtorsMap}
+              isGlobalFilter={false}
+              isAddOptions={false}
+              customPageSize={20}
+            />
           </Row>
         </CardBody>
       </Card>
@@ -146,78 +172,5 @@ const AddCustomer = props => {
   );
 }
 
-const CustomerList = ({ GetAllDebtorsdata }) => {
-  return (
-    <>
-      {GetAllDebtorsdata != undefined ? GetAllDebtorsdata.map((item, index) => {
-        return <tr key={index}>
-          <th scope="row" className="pt-4">{index + 1}</th>
-          {/* <td className="pt-4">{item.debtor.firstname} {item.debtor.lastname}</td> */}
-          <td className="pt-4 text-capitalize">{item.firstname + '' + item.lastname}</td>
-          {/* <td className="pt-4">{item.referenceNumber}</td> */}
-          <td className="pt-4">{item.companyName}</td>
-          <td className="pt-4">{/* {item.address1},{item.address2}, */}{item.city}</td>
-          <td className="pt-4">{item.gstin}</td>
-          <td className="pt-4 text-start">{item.customerMobile}</td>
-          {/* <td className="pt-4">{item.status}</td> */}
-          <td className="pt-4 text-start">
-            {/* <CurrencyFormat value={item.remainingAmount} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
-            {item.customerEmail}
-          </td>
-
-          {/*  <td >
-   
-    <div className="" style={{ padding:"2px 15px"}}>
-      
-  <div className=" text-center bg-success rounded text-light">
-    <div className="text-capitalize">
-      
-       {getDaysArray[index]}  &nbsp;
-
-
-       <span className="ml-1">Days</span> </div>
-    <div className="text-capitalize" >{moment(item.dueDate).format("MM-DD-YY")}</div>
-  </div>
-</div>
-           
-    </td>
-    <td>
-    <div className="pt-2">
-            <Button className="btn btn-info btn-sm"
-              onClick={() => viewModel(item)
-               
-              }
-            >
-           Record Payment
-            </Button>
-            &nbsp;
-
-            <Button className="btn btn-info btn-sm"
-              // onClick={() => viewModels()
-               
-              // }
-            >
-           Request Edit
-            </Button>
-  
-          </div>
-    </td> */}
-          {/* <td>
-    <div className="pt-2">
-            <Button className="btn btn-info btn-sm"
-              onClick={() => viewModels()
-               
-              }
-            >
-           Upload Document
-            </Button>
-  
-          </div>
-    </td> */}
-        </tr>
-      }) : ''}
-    </>
-  )
-}
 
 export default withRouter(AddCustomer)
