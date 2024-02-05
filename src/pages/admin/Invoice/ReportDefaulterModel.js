@@ -195,7 +195,7 @@ const ReportedDefaulterModel = props => {
                     name="customerEmail"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    placeholder="Amount Recieved"
+                    placeholder="Amount Paid"
                   />
 
                 </div>

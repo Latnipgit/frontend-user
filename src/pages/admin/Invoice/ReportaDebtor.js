@@ -93,8 +93,6 @@ const ReportDebtor = props => {
 
   const GetAllInvoice = useSelector(selectInvoiceListMap)
 
-  console.log('GetAllInvoice', GetAllInvoice);
-
   useEffect(() => {
     dispatch(getAllInvoice());
     dispatch(setIsViewDetailModalOpen())

@@ -67,8 +67,6 @@ const Dashboard = props => {
 
   const isLodingCompany = useSelector(selectCompanyloding)
 
-  console.log('isLodingCompany', isLodingCompany);
-
   const renderStarRating = rating => {
     const starCount = 5
     const fullStarCount = Math.floor(rating)
