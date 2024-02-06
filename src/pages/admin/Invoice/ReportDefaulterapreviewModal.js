@@ -112,7 +112,7 @@ const ReportDefPreviewModals = props => {
                         <strong>Invoice Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.invoiceDocument != '' ? <a href={item.invoiceDocument.fileUrl} rel='noreferrer' target='_blank'>
+                        {item.invoiceDocument != '' && item.invoiceDocument != undefined ? <a href={item.invoiceDocument.fileUrl} rel='noreferrer' target='_blank'>
                           {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
                         </a> : <img src={noFile} className="iconsImage shadow" />
@@ -127,7 +127,7 @@ const ReportDefPreviewModals = props => {
                         <strong>Dispatch Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.DispatchDocument != '' ? <a href={item.DispatchDocument.fileUrl} rel='noreferrer' target='_blank'>
+                        {item.DispatchDocument != '' && item.DispatchDocument != undefined ? <a href={item.DispatchDocument.fileUrl} rel='noreferrer' target='_blank'>
                           {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
                         </a> : <img src={noFile} className="iconsImage shadow" />
@@ -142,7 +142,7 @@ const ReportDefPreviewModals = props => {
                         <strong className="">Transportation Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.DeliveryDocument != '' ? <a href={item.DeliveryDocument.fileUrl} rel='noreferrer' target='_blank'>
+                        {item.DeliveryDocument != '' && item.DeliveryDocument != undefined ? <a href={item.DeliveryDocument.fileUrl} rel='noreferrer' target='_blank'>
                           {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
                         </a> : <img src={noFile} className="iconsImage shadow" />
@@ -157,7 +157,7 @@ const ReportDefPreviewModals = props => {
                         <strong>Purchase Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.purchaseOrderDocument != '' ? <a href={item.purchaseOrderDocument.fileUrl} rel='noreferrer' target='_blank'>
+                        {item.purchaseOrderDocument != '' && item.purchaseOrderDocument != undefined ? <a href={item.purchaseOrderDocument.fileUrl} rel='noreferrer' target='_blank'>
                           {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
                         </a> : <img src={noFile} className="iconsImage shadow" />
@@ -175,7 +175,7 @@ const ReportDefPreviewModals = props => {
                         <strong>General Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.generalDocuments != '' ? <a href={item.generalDocuments.fileUrl} rel='noreferrer' target='_blank'>
+                        {item.generalDocuments != '' && item.generalDocuments != undefined ? <a href={item.generalDocuments.fileUrl} rel='noreferrer' target='_blank'>
                           {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
                         </a> : <img src={noFile} className="iconsImage shadow" />
@@ -190,7 +190,7 @@ const ReportDefPreviewModals = props => {
                         <strong>GST Document</strong>
                       </Col>
                       <Col md={4}>
-                        {item.GSTDocument != '' ? <a href={item.GSTDocument.fileUrl} rel='noreferrer' target='_blank'>
+                        {item.GSTDocument != '' && item.GSTDocument != undefined ? <a href={item.GSTDocument.fileUrl} rel='noreferrer' target='_blank'>
                           {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
                           <img src={pdfImg} className="iconsImage shadow" />
                         </a> : <img src={noFile} className="iconsImage shadow" />

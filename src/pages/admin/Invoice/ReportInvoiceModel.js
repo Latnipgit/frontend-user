@@ -36,7 +36,7 @@ import { AddcustomerFomr } from "../AddCustomer/addCustomerForm";
 
 import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter";
 import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
-
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 // import { hover } from "@testing-library/user-event/dist/types/convenience";
 // import '../../../pages/Dashboard/users/send-bill-transaction/sendbilltransaction.scss'
 const ReportedDefaulterModel = props => {
@@ -133,20 +133,7 @@ const ReportedDefaulterModel = props => {
     dispatch(addInvoiceBillSuccess())
   }, [])
 
-  const [data, setData] = useState([
-    {
-      itemDetail: "",
-      date: "",
-      amount: "",
-      invoiceDocument: "",
-      DispatchDocument: "",
-      DeliveryDocument: "",
-      generalDocuments: "",
-      purchaseOrderDocument: "",
-      GSTDocument: ""
 
-    },
-  ])
   const [uploadTransportId, setuploadTransportId] = useState('')
   const [uploadpurchaseId, setuploadpurchaseId] = useState('')
   const [uploadInvoiceId, setuploadInvoiceId] = useState('')
@@ -161,7 +148,25 @@ const ReportedDefaulterModel = props => {
   const [total, setTotal] = useState(0)
 
   const invoiceStateValue = allInvoiceList
+
+  const [data, setData] = useState([
+    {
+      itemDetail: "",
+      date: "",
+      amount: "",
+      invoiceDocument: "",
+      DispatchDocument: "",
+      DeliveryDocument: "",
+      generalDocuments: "",
+      purchaseOrderDocument: "",
+      GSTDocument: ""
+
+    },
+  ])
+
+
   const submitInvoice = (setvalu) => {
+    debugger
     calculateSubtotal(data)
     const date = moment()
     const dummy =
@@ -177,18 +182,18 @@ const ReportedDefaulterModel = props => {
       "creditLimitDays": "",
       "remark": "",
       "items": [],
-      "subTotal": data[setvalu].amount,
+      "subTotal": data[setvalu].amount != undefined ? data[setvalu].amount : '',
       "tax": "",
 
       "referenceNumber": '',
-      "invoiceNumber": data[setvalu].itemDetail,
-      "dueDate": data[setvalu].date === "" ? date.format("YYYY-MM-DD") : moment(data[setvalu].date).format("YYYY-MM-DD"),
+      "invoiceNumber": data[setvalu].itemDetail != undefined ? data[setvalu].itemDetail : '',
+      "dueDate": data[setvalu].date === "" || data[setvalu].date === undefined ? date.format("YYYY-MM-DD") : moment(data[setvalu].date).format("YYYY-MM-DD"),
       "percentage": "",
 
-      "purchaseOrderDocument": data[setvalu].purchaseOrderDocument != '' ? data[setvalu].purchaseOrderDocument.documentId : '',
-      "challanDocument": data[setvalu].DispatchDocument != '' ? data[setvalu].DispatchDocument.documentId : '',
-      "invoiceDocument": data[setvalu].invoiceDocument != '' ? data[setvalu].invoiceDocument.documentId : '',
-      "transportationDocument": data[setvalu].DeliveryDocument != '' ? data[setvalu].DeliveryDocument.documentId : '',
+      "purchaseOrderDocument": data[setvalu].purchaseOrderDocument != '' && data[setvalu].purchaseOrderDocument != undefined ? data[setvalu].purchaseOrderDocument.documentId : '',
+      "challanDocument": data[setvalu].DispatchDocument != '' && data[setvalu].DispatchDocument != undefined ? data[setvalu].DispatchDocument.documentId : '',
+      "invoiceDocument": data[setvalu].invoiceDocument != '' && data[setvalu].invoiceDocument != undefined ? data[setvalu].invoiceDocument.documentId : '',
+      "transportationDocument": data[setvalu].DeliveryDocument != '' && data[setvalu].DeliveryDocument != undefined ? data[setvalu].DeliveryDocument.documentId : '',
     }
 
     if (allInvoiceList.length > 0) {
@@ -214,13 +219,13 @@ const ReportedDefaulterModel = props => {
           "dueDate": data[setvalu].date === "" ? date.format("YYYY-MM-DD") : moment(data[setvalu].date).format("YYYY-MM-DD"),
           "percentage": "",
 
-          "purchaseOrderDocument": data[findIdex].purchaseOrderDocument != '' ? data[findIdex].purchaseOrderDocument.documentId : '',
-          "challanDocument": data[findIdex].DispatchDocument != '' ? data[findIdex].DispatchDocument.documentId : '',
-          "invoiceDocument": data[findIdex].invoiceDocument != '' ? data[findIdex].invoiceDocument.documentId : '',
-          "transportationDocument": data[findIdex].DeliveryDocument != '' ? data[findIdex].DeliveryDocument.documentId : '',
+          "purchaseOrderDocument": data[findIdex].purchaseOrderDocument != '' && data[findIdex].purchaseOrderDocument != undefined ? data[findIdex].purchaseOrderDocument.documentId : '',
+          "challanDocument": data[findIdex].DispatchDocument != '' && data[findIdex].DispatchDocument != undefined ? data[findIdex].DispatchDocument.documentId : '',
+          "invoiceDocument": data[findIdex].invoiceDocument != '' && data[findIdex].invoiceDocument != undefined ? data[findIdex].invoiceDocument.documentId : '',
+          "transportationDocument": data[findIdex].DeliveryDocument != '' && data[findIdex].DeliveryDocument != undefined ? data[findIdex].DeliveryDocument.documentId : '',
         }
       } else {
-        if (data[setvalu].amount != "" && data[setvalu].date != "" && data[setvalu].invoiceDocument != "" && data[setvalu].itemDetail != "") {
+        if (data[setvalu].amount != "" && data[setvalu].invoiceDocument != "" && data[setvalu].itemDetail != "" && data[setvalu].amount != undefined && data[setvalu].invoiceDocument != undefined && data[setvalu].itemDetail != undefined) {
           setallInvoiceList((items) => [...items, dummy])
           setisDisabled(false)
           toast.success("Invoice Add Successfully")
@@ -233,7 +238,7 @@ const ReportedDefaulterModel = props => {
         }
       }
     } else {
-      if (data[setvalu].amount != "" && data[setvalu].date != "" && data[setvalu].invoiceDocument != "" && data[setvalu].itemDetail != "") {
+      if (data[setvalu].amount != "" && data[setvalu].invoiceDocument != "" && data[setvalu].itemDetail != "" && data[setvalu].amount != undefined && data[setvalu].invoiceDocument != undefined && data[setvalu].itemDetail != undefined) {
         setallInvoiceList((items) => [...items, dummy])
         setisDisabled(false)
         toast.success("Invoice Add Successfully")
@@ -751,7 +756,7 @@ const ReportedDefaulterModel = props => {
                 </Row>
                 <Row className="text-end mt-3">
                   <Col md={12}>
-                    <h5>  <CurrencyFormat value={total} displayType={'text'} thousandSeparator={true} renderText={value => <div> Total Amount = {value}</div>} />
+                    <h5> <div> Total Amount = {numberFormat(total)}</div>
                     </h5>
                   </Col>
 

@@ -30,11 +30,11 @@ const confirmReportModal = props => {
     handleSubmitInvoice()
     toast.success("Reported Defaulter successfully")
     /*     toggle() */
-    const timer = setInterval(() => {
-      window.location.reload()
-      toggle()
-      return () => clearInterval(timer)
-    }, 1000);
+    /*     const timer = setInterval(() => {
+          window.location.reload()
+          toggle()
+          return () => clearInterval(timer)
+        }, 1000); */
     // window.location.reload()
 
   }

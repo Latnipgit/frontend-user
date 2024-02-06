@@ -158,7 +158,6 @@ const MarkDisputedMadal = props => {
     ]
     if (amount !== '' && date !== '' && payentMode !== '' && size > 0) {
       dispatch(recoredPaymentReportDefault(payload[0]))
-      toast.success("Record Payment Successfully")
       setAmount('')
       setDate('')
       setPaymentMode('')
@@ -167,6 +166,7 @@ const MarkDisputedMadal = props => {
       setRemark('')
       toggle()
     }
+    toast.success("Record Payment Successfully")
   }
   const handleDateChange = (value) => {
     const Dates = moment(value).format("YYYY-MM-DD")
