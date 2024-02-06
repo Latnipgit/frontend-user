@@ -191,7 +191,7 @@ const ReportDebtor = props => {
     };
 
     return (
-      <div className="" style={{ padding: "2px 15px" }}>
+      <div className="" style={{ padding: "2px 5px" , fontSize:"12px"}}>
         <div className=" text-center bg-danger rounded text-light p-1">
           <div className="text-capitalize">
             {calculateDateDifference()}  &nbsp;
@@ -212,7 +212,11 @@ const ReportDebtor = props => {
         disableFilters: true,
         Cell: cellProps => {
 
-          return <SrNo {...cellProps} />;
+            return  <div
+          className="company-name-cell"
+        >
+          {cellProps.data.length-cellProps.cell.row.index}
+        </div>;;
         },
       },
       {
@@ -245,7 +249,7 @@ const ReportDebtor = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div>
+          return <div style={{width:"200px"}}>
             {cellProps.cell.row.original.debtor.address1},<br />{cellProps.cell.row.original.debtor.address2}
           </div>
         },
@@ -384,14 +388,14 @@ const ReportDebtor = props => {
             </Col>
           </Row>
           {GetAllInvoice != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Buyer"} /> : ""}
-          <Row className="p-4  ml-5">
+          <Row className="">
 
             {GetAllInvoice != undefined && (<TableContainer
               columns={columns}
               data={filteredData.length > 0 ? filteredData : GetAllInvoice}
               isGlobalFilter={false}
               isAddOptions={false}
-              customPageSize={20}
+              customPageSize={10}
             />)}
 
 
