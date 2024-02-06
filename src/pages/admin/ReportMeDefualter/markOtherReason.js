@@ -98,12 +98,13 @@ export const MarkOtherReasonModel = props => {
         "disputeType": "DISPUTE_TYPE3",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
 
         // if DISPUTE_TYPE1, DISPUTE_TYPE2 
-        "debtorcacertificate": ''// this field stores the document id of "Upload CA Verified GST Input Credit Report"
+        "debtorcacertificate": '',// this field stores the document id of "Upload CA Verified GST Input Credit Report"
+        "supportingDocuments": attachment.documentId,
       }
 
     ]
     if (size > 0 && textBox.length <= 250) {
-      // dispatch(recoredPaymentReportDefault(payload[0]))
+      dispatch(recoredPaymentReportDefault(payload[0]))
       toast.success("Record Payment Successfully")
       setAttachment('')
       setTextBox('')

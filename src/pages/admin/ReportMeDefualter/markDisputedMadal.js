@@ -150,7 +150,8 @@ const MarkDisputedMadal = props => {
         "disputeType": "DISPUTE_TYPE1",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
 
         // if DISPUTE_TYPE1, DISPUTE_TYPE2 
-        "debtorcacertificate": caAttachment.documentId !== undefined ? caAttachment.documentId : ''// this field stores the document id of "Upload CA Verified GST Input Credit Report"
+        "debtorcacertificate": caAttachment.documentId !== undefined ? caAttachment.documentId : '',
+        "supportingDocuments": ""// this field stores the document id of "Upload CA Verified GST Input Credit Report"
       }
 
     ]
