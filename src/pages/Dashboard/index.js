@@ -215,7 +215,7 @@ const Dashboard = props => {
         filterable: false,
         Cell: cellProps => {
           return <span>
-            {cellProps.cell.row.original.totalAmount}
+            {numberFormat(cellProps.cell.row.original.totalAmount)}
           </span>
         },
       },

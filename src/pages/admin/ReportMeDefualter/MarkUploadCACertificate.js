@@ -23,7 +23,7 @@ import { ToastContainer, toast } from "react-toastify"
 
 
 export const MarkUploadCACertificate = props => {
-  const { isOpen, toggle, invoiceId, setMarkCAupload, setIsOpenmark, selected } = props
+  const { isOpen, toggle, invoiceId, setMarkCAupload, setIsOpenmark, selected, submitCheck } = props
   const dispatch = useDispatch();
   const selectCACertificate = useSelector(selectCACertificateOpen);
   const uploadCAcertificate = useSelector(uploadCAcertificateSelector);
@@ -79,14 +79,15 @@ export const MarkUploadCACertificate = props => {
         "disputeType": "DISPUTE_TYPE2",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
 
         // if DISPUTE_TYPE1, DISPUTE_TYPE2 
-        "debtorcacertificate": uploadedCertificate.documentId// this field stores the document id of "Upload CA Verified GST Input Credit Report"
+        "debtorcacertificate": uploadedCertificate.documentId,
+        "supportingDocuments": "",// this field stores the document id of "Upload CA Verified GST Input Credit Report"
       }
 
     ]
     if (size > 0) {
       dispatch(recoredPaymentReportDefault(payload[0]))
-      toast.success("Record Payment Successfully")
       setuploadedCertificate('')
+      submitCheck(true)
       toggle()
     }
 

@@ -20,6 +20,7 @@ import {
 import 'react-datepicker/dist/react-datepicker.css';
 import { MarkOtherReasonModel } from "./markOtherReason";
 import { MarkUploadCACertificate } from "./MarkUploadCACertificate";
+import { ToastContainer, toast } from 'react-toastify';
 // import axios from "axios";
 
 
@@ -30,6 +31,7 @@ export const MarkDisputedPopModule = props => {
     const [markCAupload, setMarkCAupload] = useState(false)
     const [radioOption, setRadioOption] = useState("")
     const [nextBtn, setNextBtn] = useState(false)
+    const [submitSuccess, setSubmitSuccess] = useState(false)
 
     const OtherReasonOpen = () => {
         setOtherReason(!otherReason)
@@ -54,10 +56,16 @@ export const MarkDisputedPopModule = props => {
         }
     }
 
+    const submitCheck = (value) => {
+        if (value) toast.success("Request send Successfully")
+    }
+
+
+
     return (
         <>
-            <MarkOtherReasonModel isOpen={otherReason} toggle={OtherReasonOpen} setIsOpenmark={setIsOpenmark} selected={currentindex} />
-            <MarkUploadCACertificate isOpen={markCAupload} toggle={marCAUpload} setMarkCAupload={setMarkCAupload} setIsOpenmark={setIsOpenmark} selected={currentindex} />
+            <MarkOtherReasonModel isOpen={otherReason} toggle={OtherReasonOpen} setIsOpenmark={setIsOpenmark} selected={currentindex} submitCheck={submitCheck} />
+            <MarkUploadCACertificate isOpen={markCAupload} toggle={marCAUpload} setMarkCAupload={setMarkCAupload} setIsOpenmark={setIsOpenmark} selected={currentindex} submitCheck={submitCheck} />
             <Modal
                 isOpen={isOpen}
                 role="dialog"
@@ -125,6 +133,7 @@ export const MarkDisputedPopModule = props => {
                     </ModalFooter>
                 </div>
             </Modal >
+            <ToastContainer />
         </>
     )
 }

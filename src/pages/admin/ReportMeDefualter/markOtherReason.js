@@ -27,7 +27,7 @@ import { recoredPaymentReportDefault } from "../../../store/debtors/debtors.acti
 
 
 export const MarkOtherReasonModel = props => {
-  const { isOpen, toggle, setIsOpenmark, selected } = props
+  const { isOpen, toggle, setIsOpenmark, selected, submitCheck } = props
   const dispatch = useDispatch()
 
   const [salutations, setsalutations] = useState([
@@ -76,7 +76,6 @@ export const MarkOtherReasonModel = props => {
 
 
   const handleSubmit = () => {
-    debugger
     var size = Object.keys(attachment).length;
     if (size > 0) {
       setAttachmentValid(false)
@@ -98,16 +97,18 @@ export const MarkOtherReasonModel = props => {
         "disputeType": "DISPUTE_TYPE3",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
 
         // if DISPUTE_TYPE1, DISPUTE_TYPE2 
-        "debtorcacertificate": ''// this field stores the document id of "Upload CA Verified GST Input Credit Report"
+        "debtorcacertificate": '',// this field stores the document id of "Upload CA Verified GST Input Credit Report"
+        "supportingDocuments": attachment.documentId,
       }
 
     ]
     if (size > 0 && textBox.length <= 250) {
-      // dispatch(recoredPaymentReportDefault(payload[0]))
-      toast.success("Record Payment Successfully")
+      dispatch(recoredPaymentReportDefault(payload[0]))
       setAttachment('')
       setTextBox('')
+      submitCheck(true)
       toggle()
+
     }
   }
 

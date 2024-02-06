@@ -33,7 +33,7 @@ const MarkDisputedMadal = props => {
   const [selectedOption, setSelectedOption] = useState("")
 
   const [isProceed, setisProceed] = useState(false)
-  const { isOpen, toggle, selected, setIsOpenmark } = props
+  const { isOpen, toggle, selected, setIsOpenmark, submitCheckRqust1 } = props
   const dispatch = useDispatch()
   const colourStyles = {
     menuList: styles => ({
@@ -70,6 +70,7 @@ const MarkDisputedMadal = props => {
   const [payMentDateValid, setpayMentDateValid] = useState(false)
   const [payMentModeValid, setpayMentModeValid] = useState(false)
   const [attachmentValid, setAttachmentValid] = useState(false)
+  const [attachmentCAValid, setAttachmentCAValid] = useState(false)
 
   const handleFileChange = (event, fieldName,) => {
     const files = event.target.files
@@ -111,7 +112,8 @@ const MarkDisputedMadal = props => {
   }
 
   const handleSubmit = () => {
-    var size = Object.keys(attachment).length;
+    const size = Object.keys(attachment).length;
+    const size2 = Object.keys(caAttachment).length;
     if (amount.length > 0) {
       setAmountValid(false)
     } else {
@@ -135,6 +137,11 @@ const MarkDisputedMadal = props => {
     } else {
       setAttachmentValid(true)
     }
+    if (size2 > 0) {
+      setAttachmentCAValid(false)
+    } else {
+      setAttachmentCAValid(true)
+    }
     const payload = [
       {
         "defaulterEntryId": selected.id,
@@ -150,13 +157,14 @@ const MarkDisputedMadal = props => {
         "disputeType": "DISPUTE_TYPE1",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
 
         // if DISPUTE_TYPE1, DISPUTE_TYPE2 
-        "debtorcacertificate": caAttachment.documentId !== undefined ? caAttachment.documentId : ''// this field stores the document id of "Upload CA Verified GST Input Credit Report"
+        "debtorcacertificate": caAttachment.documentId !== undefined ? caAttachment.documentId : '',
+        "supportingDocuments": ""// this field stores the document id of "Upload CA Verified GST Input Credit Report"
       }
 
     ]
     if (amount !== '' && date !== '' && payentMode !== '' && size > 0) {
       dispatch(recoredPaymentReportDefault(payload[0]))
-      toast.success("Record Payment Successfully")
+      submitCheckRqust1(true)
       setAmount('')
       setDate('')
       setPaymentMode('')
@@ -246,7 +254,7 @@ const MarkDisputedMadal = props => {
                       </Col>
                       <Col md={6}>
                         <div className="d-inline">
-                          <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount)} />
+                          <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount + '')} />
                           <span>Full amount ({selected.totalAmount})</span>
                         </div>
                       </Col>
@@ -383,7 +391,7 @@ const MarkDisputedMadal = props => {
                           }
                         />
                       </InputGroup>
-
+                      {attachmentCAValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Upload Upload CA Verified ledger</p>}
                       <div id="fileUploadHelp" className="form-text">
                         Choose a file to upload (PDF, PNG, JPG, JPEG).
                       </div>
