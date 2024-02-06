@@ -333,6 +333,13 @@ const SidebarContent = props => {
                     {props.t("Profile")}
                   </Link>
                 </li>
+                 <li>
+                  <Link to="/Subscription">
+                    <i className="bx bxs-crown"></i>
+
+                    {props.t("Subscription")}
+                  </Link>
+                </li> 
                 {/* <li>
                   <Link to="/notification">
                     <i className="bx bxs-notification"></i>

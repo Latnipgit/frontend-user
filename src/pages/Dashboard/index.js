@@ -243,7 +243,7 @@ const Dashboard = props => {
           <br />
           <Row>
             <Col md={8}>
-              <h5 className="m-1">Company Dashboard : {localStorage.getItem("COMPANY")}</h5>
+              <h5 className="m-1" style={{ textTransform: "capitalize"}}>Company Dashboard : {localStorage.getItem("COMPANY")}</h5>
             </Col>
             <Col md={4}>
               <Link to="/companies">

@@ -6,6 +6,8 @@ import MembersList from "../pages/admin/Members/memberlist/MembersList";
 import RegisteredCompanyList from "../pages/admin/Members/RegisteredCompany/RegisteredCompanyList";
 import DiputedBillings from "../pages/admin/DisputedBillings/DiputedBillings";
 import ApprovedTranction from "../pages/admin/ApprovedTransaction/ApprovedTranction";
+import Subscription from "../pages/admin/Subscription/subscription";
+
 import CompanySearch from "../pages/admin/company-search/companysearch";
 import DebtorsList from "../pages/admin/DebtorsList/debtorslist";
 import CrediotorList from "../pages/admin/CreditorsList/CreditorsList";
@@ -200,6 +202,7 @@ import ChangeNewPassword from "../pages/Authentication/ChangeNewPassword"
 const authProtectedRoutes = [
   //User Panel Step 1
   { path: "/companies", component: <ApprovedTranction /> },
+  { path: "/Subscription", component: <Subscription /> },
   { path: "/documents", component: <Document /> },
   { path: "/FormUpload", component: <FormUpload /> },
   { path: "/profile", component: <ContactsProfile /> },
