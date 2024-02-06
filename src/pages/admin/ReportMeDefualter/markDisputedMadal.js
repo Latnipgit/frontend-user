@@ -111,6 +111,7 @@ const MarkDisputedMadal = props => {
   }
 
   const handleSubmit = () => {
+    debugger
     var size = Object.keys(attachment).length;
     if (amount.length > 0) {
       setAmountValid(false)
@@ -247,7 +248,7 @@ const MarkDisputedMadal = props => {
                       </Col>
                       <Col md={6}>
                         <div className="d-inline">
-                          <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount)} />
+                          <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount + '')} />
                           <span>Full amount ({selected.totalAmount})</span>
                         </div>
                       </Col>

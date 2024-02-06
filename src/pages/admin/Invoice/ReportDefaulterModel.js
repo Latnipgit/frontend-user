@@ -252,7 +252,7 @@ const ReportedDefaulterModel = props => {
               <Col md={5}>
                 <div className="d-inline">
 
-                  <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount)} />
+                  <Input type="checkbox" className="" style={checkboxStyle} onClick={() => setAmount(selected.totalAmount + '')} />
 
                   <span>Full amount ({selected.totalAmount})</span>
                 </div>
