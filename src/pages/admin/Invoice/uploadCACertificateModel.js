@@ -29,6 +29,7 @@ const UploadCACertificateModel = props => {
   const uploadCAcertificate = useSelector(uploadCAcertificateSelector);
   const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
   const [uploadedCertificate, setuploadedCertificate] = useState('')
+  const [attachmentValid, setAttachmentValid] = useState(false)
 
   const handleFileChange = (event) => {
     const files = event.target.files
@@ -68,15 +69,25 @@ const UploadCACertificateModel = props => {
   }
 
   const handleSubmit = () => {
+    var size = Object.keys(uploadedCertificate).length;
 
+    if (size > 0) {
+      setAttachmentValid(false)
+    } else {
+      setAttachmentValid(true)
+    }
     const payload = [{
       "caCertificateDocument": uploadedCertificate.documentId,
       "invoiceId": invoiceId,
 
     }]
-    dispatch(uploadCACertificateID(payload))
-    toast.success("CA Certificate Updated")
-    toggle()
+
+    if (size > 0) {
+      dispatch(uploadCACertificateID(payload))
+      toast.success("CA Certificate Updated")
+      toggle()
+    }
+
 
   }
 
@@ -111,7 +122,7 @@ const UploadCACertificateModel = props => {
                   }
                 />
               </InputGroup>
-
+              {attachmentValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Upload CA Verified GST Input Credit Report</p>}
               <div id="fileUploadHelp" className="form-text">
                 Choose a file to upload (PDF, DOC, DOCX, TXT).
               </div>
