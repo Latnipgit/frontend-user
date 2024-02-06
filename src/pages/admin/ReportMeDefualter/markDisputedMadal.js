@@ -33,7 +33,7 @@ const MarkDisputedMadal = props => {
   const [selectedOption, setSelectedOption] = useState("")
 
   const [isProceed, setisProceed] = useState(false)
-  const { isOpen, toggle, selected, setIsOpenmark } = props
+  const { isOpen, toggle, selected, setIsOpenmark, submitCheckRqust1 } = props
   const dispatch = useDispatch()
   const colourStyles = {
     menuList: styles => ({
@@ -70,6 +70,7 @@ const MarkDisputedMadal = props => {
   const [payMentDateValid, setpayMentDateValid] = useState(false)
   const [payMentModeValid, setpayMentModeValid] = useState(false)
   const [attachmentValid, setAttachmentValid] = useState(false)
+  const [attachmentCAValid, setAttachmentCAValid] = useState(false)
 
   const handleFileChange = (event, fieldName,) => {
     const files = event.target.files
@@ -111,8 +112,8 @@ const MarkDisputedMadal = props => {
   }
 
   const handleSubmit = () => {
-    debugger
-    var size = Object.keys(attachment).length;
+    const size = Object.keys(attachment).length;
+    const size2 = Object.keys(caAttachment).length;
     if (amount.length > 0) {
       setAmountValid(false)
     } else {
@@ -136,6 +137,11 @@ const MarkDisputedMadal = props => {
     } else {
       setAttachmentValid(true)
     }
+    if (size2 > 0) {
+      setAttachmentCAValid(false)
+    } else {
+      setAttachmentCAValid(true)
+    }
     const payload = [
       {
         "defaulterEntryId": selected.id,
@@ -158,6 +164,7 @@ const MarkDisputedMadal = props => {
     ]
     if (amount !== '' && date !== '' && payentMode !== '' && size > 0) {
       dispatch(recoredPaymentReportDefault(payload[0]))
+      submitCheckRqust1(true)
       setAmount('')
       setDate('')
       setPaymentMode('')
@@ -166,7 +173,6 @@ const MarkDisputedMadal = props => {
       setRemark('')
       toggle()
     }
-    toast.success("Record Payment Successfully")
   }
   const handleDateChange = (value) => {
     const Dates = moment(value).format("YYYY-MM-DD")
@@ -385,7 +391,7 @@ const MarkDisputedMadal = props => {
                           }
                         />
                       </InputGroup>
-
+                      {attachmentCAValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Upload Upload CA Verified ledger</p>}
                       <div id="fileUploadHelp" className="form-text">
                         Choose a file to upload (PDF, PNG, JPG, JPEG).
                       </div>

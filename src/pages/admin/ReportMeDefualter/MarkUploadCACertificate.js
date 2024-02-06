@@ -23,7 +23,7 @@ import { ToastContainer, toast } from "react-toastify"
 
 
 export const MarkUploadCACertificate = props => {
-  const { isOpen, toggle, invoiceId, setMarkCAupload, setIsOpenmark, selected } = props
+  const { isOpen, toggle, invoiceId, setMarkCAupload, setIsOpenmark, selected, submitCheck } = props
   const dispatch = useDispatch();
   const selectCACertificate = useSelector(selectCACertificateOpen);
   const uploadCAcertificate = useSelector(uploadCAcertificateSelector);
@@ -86,8 +86,8 @@ export const MarkUploadCACertificate = props => {
     ]
     if (size > 0) {
       dispatch(recoredPaymentReportDefault(payload[0]))
-      toast.success("Record Payment Successfully")
       setuploadedCertificate('')
+      submitCheck(true)
       toggle()
     }
 

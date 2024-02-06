@@ -27,7 +27,7 @@ import { recoredPaymentReportDefault } from "../../../store/debtors/debtors.acti
 
 
 export const MarkOtherReasonModel = props => {
-  const { isOpen, toggle, setIsOpenmark, selected } = props
+  const { isOpen, toggle, setIsOpenmark, selected, submitCheck } = props
   const dispatch = useDispatch()
 
   const [salutations, setsalutations] = useState([
@@ -76,7 +76,6 @@ export const MarkOtherReasonModel = props => {
 
 
   const handleSubmit = () => {
-    debugger
     var size = Object.keys(attachment).length;
     if (size > 0) {
       setAttachmentValid(false)
@@ -105,10 +104,11 @@ export const MarkOtherReasonModel = props => {
     ]
     if (size > 0 && textBox.length <= 250) {
       dispatch(recoredPaymentReportDefault(payload[0]))
-      toast.success("Record Payment Successfully")
       setAttachment('')
       setTextBox('')
+      submitCheck(true)
       toggle()
+
     }
   }
 
