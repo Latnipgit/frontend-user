@@ -144,7 +144,28 @@ const ReportMedefulterComponent = props => {
     dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
 
   }
+  const DueSincedate = (cell) => {
+    const today = new Date();
+    const newDate = cell.cell.row.original.invoices != undefined ? cell.cell.row.original.invoices[0].dueDate.split("-").reverse().join("-") : "";
+    const currentDate = new Date(newDate);
 
+    const calculateDateDifference = () => {
+        const differenceInMilliseconds = today - currentDate;
+        const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+        return differenceInDays;
+    };
+
+    return (
+        <div className="" style={{ padding: "2px 15px" }}>
+            <div className=" text-center bg-danger rounded text-light p-1">
+                <div className="text-capitalize">
+                    {calculateDateDifference()}  &nbsp;
+                    <span className="ml-1">Days</span> </div>
+                <div className="text-capitalize" >{moment(cell.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
+            </div>
+        </div>
+    );
+};
   const columns = useMemo(
     () => [
       {
@@ -210,14 +231,15 @@ const ReportMedefulterComponent = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div className="" style={{ padding: "2px 15px" }}>
-            <div className=" text-center bg-danger rounded text-light p-1">
-              <div className="text-capitalize">
-                {getDaysArray[currentindex]}  &nbsp;
-                <span className="ml-1">Days</span> </div>
-              <div className="text-capitalize" >{moment(cellProps.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
-            </div>
-          </div>;
+        //   return  <div className="" style={{ padding: "2px 15px" }}>
+        //   <div className=" text-center bg-danger rounded text-light p-1">
+        //     <div className="text-capitalize">
+        //       {getDaysArray[currentindex]}  &nbsp;
+        //       <span className="ml-1">Days</span> </div>
+        //     <div className="text-capitalize" >{moment(cellProps.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
+        //   </div>
+        // </div>;
+        return <DueSincedate {...cellProps}/>
         },
       },
 

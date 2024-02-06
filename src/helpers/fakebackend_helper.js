@@ -48,6 +48,7 @@ export const postSocialLogin = data => post(url.SOCIAL_LOGIN, data);
 // get Products
 export const getProducts = () => get(url.GET_PRODUCTS);
 export const getAllDebtorsAPI = () => getAfter(url.GET_ALL_DEBTORS);
+export const getAllSubscription = () => getwithToken('/api/subscription/getAllSubscriptionPkgsForUser');
 
 export const getAllInvoiceList = () => getAfter("/api/defaulters/getAllDefaultInvoicesRaisedByMe")
 export const getGeneralDoucmentsAPI = () => getwithToken("/api/files/getGeneralDocuments")
@@ -108,6 +109,7 @@ export const addEmployeeList = data => addEmployeeAPImethod(url.ADD_EMPLOYEE_LIS
 export const addCustomerListAPI = data => addEmployeeAPImethod(url.ADD_CUSTOMER_LIST, data);
 export const recordPaymentAPIMethod = data => addEmployeeAPImethod("api/defaulters/initiatePaymentVerification", data);
 export const updatePendingDocument = data => addEmployeeAPImethod("api/transactions/updateInvoiceDocuments", data);
+export const addSubscriptionApiMethod = data => post("/api/subscription/addSubscription", data);
 
 //company Search
 export const getCompanySearchList = (data) => addEmployeeAPImethod("/api/debtors/search", data)

@@ -69,12 +69,14 @@ import documentsReducer from "./Documents/DocumentsdReducer";
 import { UploadPendingListReducer } from "./UploadPendingDocList/UploadPendingDocList.reducer";
 import { CompanySearchViewReducer } from "./CompanySearchView/CompanySearchView.reducer";
 import { SelectCompanyReducer } from "./selectCompany/selectCompany.reducer";
+import { SubscriptionReducer } from "./Subscription/CompanySearch/SubscriptionReducer";
 
 
 const rootReducer = combineReducers({
   // public
   Layout,
   Login,
+  SubscriptionReducer,
   register_login_reducer,
   Account,
   DebtorsReducer,

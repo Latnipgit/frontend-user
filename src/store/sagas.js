@@ -35,12 +35,14 @@ import { CompanySearchSaga } from "./CompanySearch/CompanySearch.saga";
 import documentSaga from "./Documents/documents.saga";
 import { UploadPendingListSaga } from "./UploadPendingDocList/UploadPendingDocList.saga";
 import { CompanySearchViewSaga } from "./CompanySearchView/CompanySearchView.saga";
+import { subscriptionSaga } from "./Subscription/CompanySearch/SubscriptionSaga";
 // import invoiceSaga from "./invoices/saga";
 
 export default function* rootSaga() {
   yield all([
     //public
     fork(employeeListsagaCustomer),
+    fork(subscriptionSaga),
     fork(debtorsSaga),
     fork(AccountSaga),
     fork(changePasswordSaga),
