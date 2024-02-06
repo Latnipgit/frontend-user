@@ -286,7 +286,7 @@ const Dashboard = props => {
 
             {isClickedToReported != true ?
 
-              <Row style={{ marginTop: '-20px' }} className="p-0">
+              <Row style={{ }} className="p-0">
                 <ReportMedefulterComponent isClickedToReported={isClickedToReported} />
 
               </Row>
