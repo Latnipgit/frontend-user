@@ -73,8 +73,6 @@ const ReportedDefaulterModel = props => {
 
   const handleFileChange = (event) => {
     const files = event.target.files
-
-
     const formData = new FormData();
 
     formData.append('file', files[0]);   //append the values with key, value pair
@@ -110,7 +108,6 @@ const ReportedDefaulterModel = props => {
 
 
   const handleSubmit = () => {
-    debugger
     var size = Object.keys(attachment).length;
     if (amount.length > 0) {
       setAmountValid(false)
@@ -148,16 +145,18 @@ const ReportedDefaulterModel = props => {
 
         // if disputing a transaction
         "isDispute": false, // make this flag as true whenever recording payment for a disputed transaction,
-        "disputeType": "" // values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
+        "disputeType": "",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
+
+        // if DISPUTE_TYPE1, DISPUTE_TYPE2 
+        "debtorcacertificate": "" // this field stores the document id of "Upload CA Verified GST Input Credit Report"
       }
 
     ]
-    if (amount !== '' && date !== '' && payentMode !== '' && attachment !== '') {
-      // dispatch(recoredPaymentReportDefault(payload[0]))
+    if (amount !== '' && date !== '' && payentMode !== '' && size > 0) {
+      dispatch(recoredPaymentReportDefault(payload[0]))
       toast.success("Record Payment Successfully")
       toggle()
     }
-    // dispatch(recoredPaymentReportDefault(payload[0]))
 
   }
   const handleDateChange = (value) => {

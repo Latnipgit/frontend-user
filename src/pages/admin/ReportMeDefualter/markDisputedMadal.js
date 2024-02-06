@@ -62,28 +62,28 @@ const MarkDisputedMadal = props => {
   const [amount, setAmount] = useState('')
   const [date, setDate] = useState('')
   const [payentMode, setPaymentMode] = useState('')
-  const [attachment, setAttachment] = useState('')
+  const [attachment, setAttachment] = useState({})
+  const [caAttachment, setCaAttachment] = useState({})
   const [remark, setRemark] = useState('')
 
-  const handleFileChange = (event) => {
+  const [amountValid, setAmountValid] = useState(false)
+  const [payMentDateValid, setpayMentDateValid] = useState(false)
+  const [payMentModeValid, setpayMentModeValid] = useState(false)
+  const [attachmentValid, setAttachmentValid] = useState(false)
+
+  const handleFileChange = (event, fieldName,) => {
     const files = event.target.files
 
     const formData = new FormData();
 
     formData.append('file', files[0]);   //append the values with key, value pair
-    formData.append('fieldName', "");
+    formData.append('fieldName', fieldName);
 
 
     uploadFile(formData)
 
 
   }
-
-
-
-
-
-
 
   function uploadFile(formData) {
     const token = localStorage.getItem("tokenemployeeRegister")
@@ -96,7 +96,13 @@ const MarkDisputedMadal = props => {
       headers: headers
     })
       .then((response) => {
-        setAttachment(response.data.response / documentId)
+        if (response.data.response.fieldName == "recordPayment") {
+          setAttachment(response.data.response)
+
+        }
+        if (response.data.response.fieldName == "caVerLedger") {
+          setCaAttachment(response.data.response)
+        }
         toast.success("File Upload Successfully")
       })
       .catch((error) => {
@@ -105,22 +111,54 @@ const MarkDisputedMadal = props => {
   }
 
   const handleSubmit = () => {
+    var size = Object.keys(attachment).length;
+    if (amount.length > 0) {
+      setAmountValid(false)
+    } else {
+      setAmountValid(true)
+    }
+
+    if (date.length > 0) {
+      setpayMentDateValid(false)
+    } else {
+      setpayMentDateValid(true)
+    }
+
+    if (payentMode.length > 0) {
+      setpayMentModeValid(false)
+    } else {
+      setpayMentModeValid(true)
+    }
+
+    if (size > 0) {
+      setAttachmentValid(false)
+    } else {
+      setAttachmentValid(true)
+    }
     const payload = [
       {
         "defaulterEntryId": selected.id,
         "amtPaid": amount,
-        "requestor": "CREDITOR", // CREDITOR/DEBTOR
+        "requestor": "DEBTOR", // CREDITOR/DEBTOR
         "paymentDate": date,
         "paymentMode": payentMode,
-        "attachments": attachment.documentId,
-        "isDispute": true // make this flag as true whenever recording payment for a disputed transaction
+        "attachments": [attachment.documentId],
+        "debtorRemarks": remark,
+
+        // if disputing a transaction
+        "isDispute": true, // make this flag as true whenever recording payment for a disputed transaction,
+        "disputeType": "DISPUTE_TYPE1",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
+
+        // if DISPUTE_TYPE1, DISPUTE_TYPE2 
+        "debtorcacertificate": caAttachment.documentId !== undefined ? caAttachment.documentId : ''// this field stores the document id of "Upload CA Verified GST Input Credit Report"
       }
 
     ]
-    // dispatch(recoredPaymentReportDefault(payload[0]))
-    setIsOpenmark(false)
-    toast.success("Record Payment Successfully")
-    toggle()
+    if (amount !== '' && date !== '' && payentMode !== '' && size > 0) {
+      dispatch(recoredPaymentReportDefault(payload[0]))
+      toast.success("Record Payment Successfully")
+      toggle()
+    }
   }
   const handleDateChange = (value) => {
     const Dates = moment(value).format("YYYY-MM-DD")
@@ -193,6 +231,7 @@ const MarkDisputedMadal = props => {
                             onChange={(e) => setAmount(e.target.value)}
                             placeholder="Amount Paid"
                           />
+                          {amountValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Enter Amount</p>}
                         </div>
                       </Col>
                     </Row>
@@ -229,6 +268,7 @@ const MarkDisputedMadal = props => {
                             className="form-control custom-content"
                           />
                         </div>
+                        {payMentDateValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Select Payment Date</p>}
                       </Col>
                     </Row>
 
@@ -253,7 +293,7 @@ const MarkDisputedMadal = props => {
                             onChange={selected => setPaymentMode(selected.value)}
                             placeholder="Cash"
                           />
-
+                          {payMentModeValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Select Payment Mode</p>}
                         </div>
                       </Col>
                     </Row>
@@ -280,10 +320,11 @@ const MarkDisputedMadal = props => {
                               accept=".pdf, .png, .jpg, .jpeg"
                               aria-describedby="fileUploadHelp"
                               onChange={e =>
-                                handleFileChange(e, "")
+                                handleFileChange(e, "recordPayment")
                               }
                             />
                           </InputGroup>
+                          {attachmentValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Upload Attachment</p>}
                           <div id="fileUploadHelp" className="form-text">
                             Choose a file to upload (PDF, PNG, JPG, JPEG).
                           </div>
@@ -332,7 +373,7 @@ const MarkDisputedMadal = props => {
                           accept=".pdf, .png, .jpg, .jpeg"
                           aria-describedby="fileUploadHelp"
                           onChange={e =>
-                            handleFileChange(e)
+                            handleFileChange(e, "caVerLedger")
                           }
                         />
                       </InputGroup>

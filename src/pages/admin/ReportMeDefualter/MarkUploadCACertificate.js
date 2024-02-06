@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCACertificateOpen, uploadCACertificateID } from "../../../store/debtors/debtors.actions"
 import { selectCACertificateOpen, uploadCAcertificateSelector } from "store/debtors/debtors.selecter"
 import axios from "axios"
-
+import { recoredPaymentReportDefault } from "../../../store/debtors/debtors.actions"
 import {
   Button,
   Modal,
@@ -23,12 +23,13 @@ import { ToastContainer, toast } from "react-toastify"
 
 
 export const MarkUploadCACertificate = props => {
-  const { isOpen, toggle, invoiceId, setMarkCAupload, setIsOpenmark } = props
+  const { isOpen, toggle, invoiceId, setMarkCAupload, setIsOpenmark, selected } = props
   const dispatch = useDispatch();
   const selectCACertificate = useSelector(selectCACertificateOpen);
   const uploadCAcertificate = useSelector(uploadCAcertificateSelector);
   const toggleViewModal2 = () => setMarkCAupload(!isOpen);
   const [uploadedCertificate, setuploadedCertificate] = useState('')
+  const [attachmentValid, setAttachmentValid] = useState(false)
 
   const handleFileChange = (event) => {
     const files = event.target.files
@@ -36,12 +37,8 @@ export const MarkUploadCACertificate = props => {
     const formData = new FormData();
 
     formData.append('file', files[0]);   //append the values with key, value pair
-    formData.append('fieldName', "caCertificateDocument");
-
-
+    formData.append('fieldName', "");
     uploadFile(formData)
-
-
   }
   function uploadFile(formData) {
     const token = localStorage.getItem("tokenemployeeRegister")
@@ -61,16 +58,36 @@ export const MarkUploadCACertificate = props => {
   }
 
   const handleSubmit = () => {
+    var size = Object.keys(uploadedCertificate).length;
+    if (size > 0) {
+      setAttachmentValid(false)
+    } else {
+      setAttachmentValid(true)
+    }
+    const payload = [
+      {
+        "defaulterEntryId": selected.id,
+        "amtPaid": selected.totalAmount,
+        "requestor": "DEBTOR", // CREDITOR/DEBTOR
+        "paymentDate": '',
+        "paymentMode": '',
+        "attachments": [],
+        "debtorRemarks": '',
 
-    const payload = [{
-      "caCertificateDocument": uploadedCertificate.documentId,
-      "invoiceId": invoiceId,
+        // if disputing a transaction
+        "isDispute": true, // make this flag as true whenever recording payment for a disputed transaction,
+        "disputeType": "DISPUTE_TYPE2",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
 
-    }]
-    // dispatch(uploadCACertificateID(payload))
-    setIsOpenmark(false)
-    toast.success("CA Certificate Updated")
-    toggle()
+        // if DISPUTE_TYPE1, DISPUTE_TYPE2 
+        "debtorcacertificate": uploadedCertificate.documentId// this field stores the document id of "Upload CA Verified GST Input Credit Report"
+      }
+
+    ]
+    if (size > 0) {
+      dispatch(recoredPaymentReportDefault(payload[0]))
+      toast.success("Record Payment Successfully")
+      toggle()
+    }
 
   }
 
@@ -105,10 +122,10 @@ export const MarkUploadCACertificate = props => {
                   }
                 />
               </InputGroup>
-
               <div id="fileUploadHelp" className="form-text">
                 Choose a file to upload (PDF, PNG, JPG, JPEG).
               </div>
+              {attachmentValid && <p className="text-danger" style={{ fontSize: '11px' }}>Please Upload CA Verified GST Input Credit Report</p>}
               <Row className=" mt-3">
                 <Col md={4}></Col>
                 <Col md={4}>
