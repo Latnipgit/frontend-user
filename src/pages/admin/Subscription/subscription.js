@@ -77,7 +77,7 @@ const handleSelectTenure=(item)=>{
                     />{" "} &nbsp;
                     <b>Monthly Amount : {item.monthlyAmt}</b>
                     <br/>
-                  &nbsp;  &nbsp; &nbsp; <b className="">Discount -{item.monthlyDiscount}</b>
+                  &nbsp;  &nbsp; &nbsp; <b className="">Discount : {item.monthlyDiscount}</b>
     </Label>
     <Label >
 
@@ -92,7 +92,7 @@ const handleSelectTenure=(item)=>{
                     />{" "} &nbsp;
                     <b> Yearly Amount :{item.yearlyAmt}</b>
                     <br/>
-                  &nbsp;  &nbsp; &nbsp; <b className="">Discount -{item.yearlylyDiscount}</b>
+                  &nbsp;  &nbsp; &nbsp; <b className="">Discount : {item.yearlylyDiscount}</b>
     </Label>
         
 
