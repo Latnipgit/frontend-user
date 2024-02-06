@@ -56,8 +56,8 @@ export const MarkDisputedPopModule = props => {
 
     return (
         <>
-            <MarkOtherReasonModel isOpen={otherReason} toggle={OtherReasonOpen} setIsOpenmark={setIsOpenmark} />
-            <MarkUploadCACertificate isOpen={markCAupload} toggle={marCAUpload} setMarkCAupload={setMarkCAupload} setIsOpenmark={setIsOpenmark} />
+            <MarkOtherReasonModel isOpen={otherReason} toggle={OtherReasonOpen} setIsOpenmark={setIsOpenmark} selected={currentindex} />
+            <MarkUploadCACertificate isOpen={markCAupload} toggle={marCAUpload} setMarkCAupload={setMarkCAupload} setIsOpenmark={setIsOpenmark} selected={currentindex} />
             <Modal
                 isOpen={isOpen}
                 role="dialog"
