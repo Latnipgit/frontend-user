@@ -40,6 +40,7 @@ import {
   DueAmount,
   Reating
 } from ".././company-search/companyssearchColl";
+import { differenceInDays, format } from 'date-fns';
 const ReportMedefulterComponent = props => {
   const [modal1, setModal1] = useState(false);
   const [modal2, setModal2] = useState(false);
@@ -154,12 +155,18 @@ const ReportMedefulterComponent = props => {
         const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
         return differenceInDays;
     };
-
+    const todayGet = moment(today).format("YYYY-MM-DD")
+    const CurrentDatss = moment(cell.cell.row.original.invoices[0].dueDate).format("YYYY-MM-DD")
+    const startDate = new Date(todayGet);
+    const endDate = new Date(CurrentDatss);
+    const difference = differenceInDays(startDate, endDate);
+    const formattedStartDate = format(startDate, 'dd-MM-yyyy');
+    const formattedEndDate = format(endDate, 'dd-MM-yyyy');
     return (
-        <div className="" style={{ padding: "2px 15px" }}>
+        <div className="" style={{ padding: "2px 5px" }}>
             <div className=" text-center bg-danger rounded text-light p-1">
-                <div className="text-capitalize">
-                    {calculateDateDifference()}  &nbsp;
+                <div className="text-capitalize" style={{}}>
+                {difference} &nbsp;
                     <span className="ml-1">Days</span> </div>
                 <div className="text-capitalize" >{moment(cell.cell.row.original.invoices[0].dueDate).format("DD-MM-YYYY")}</div>
             </div>
@@ -174,11 +181,11 @@ const ReportMedefulterComponent = props => {
         filterable: false,
         disableFilters: true,
         Cell: cellProps => {
-          return <div
-            className="company-name-cell"
-          >
-            {cellProps.data.length - cellProps.cell.row.index}
-          </div>;
+          return  <div
+          className="company-name-cell"
+        >
+          {cellProps.data.length-cellProps.cell.row.index}
+        </div>;
         },
       },
       {
@@ -188,9 +195,9 @@ const ReportMedefulterComponent = props => {
         filterable: false,
         Cell: cellProps => {
           return <div>
-            {cellProps.cell.row.original.debtor.companyName}
-          </div>
-
+          {cellProps.cell.row.original.debtor.companyName}
+     </div>
+          
         },
       },
       {
@@ -199,10 +206,10 @@ const ReportMedefulterComponent = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div>
-            {cellProps.cell.row.original.invoices[0].invoiceNumber}
-          </div>
-
+          return<div>
+          {cellProps.cell.row.original.invoices[0].invoiceNumber}
+     </div>
+      
         },
       },
       {
@@ -211,8 +218,8 @@ const ReportMedefulterComponent = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div>
-            {cellProps.cell.row.original.debtor.address1}<br />{cellProps.cell.row.original.debtor.address2}
+          return<div style={{ width:"200px"}}>
+               {cellProps.cell.row.original.debtor.address1}<br />{cellProps.cell.row.original.debtor.address2}
           </div>
         },
       },
@@ -242,8 +249,8 @@ const ReportMedefulterComponent = props => {
         return <DueSincedate {...cellProps}/>
         },
       },
-
-
+  
+    
       {
         Header: "Action",
         disableFilters: true,
@@ -252,39 +259,39 @@ const ReportMedefulterComponent = props => {
           return (
             <div className="d-flex">
               <div className="pt-2">
-                <button type="button" rel='noreferrer' className="btn btn-info"
-                  target='_blank' onClick={() => viewModel(cellProps.cell.row.original)
-                  }>
-                  <i className='bx bx-wallet-alt textsizing' ></i>
-                </button>
-                &nbsp;
-                <Button className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                  title="Disputed Transaction" rel='noreferrer'
-                  target='_blank' onClick={() => markOpenModule(cellProps.cell.row.original)
+              <button type="button" rel='noreferrer'className="btn btn-info"
+                target='_blank' onClick={() => viewModel(cellProps.cell.row.original)
+                }>
+                <i className='bx bx-wallet-alt textsizing' ></i>
+              </button>
+              &nbsp;
+              <Button className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Disputed Transaction"  rel='noreferrer'
+                target='_blank' onClick={() => markOpenModule(cellProps.cell.row.original)
 
-                  }>
-                  <i className='bx bx-window-close textsizing'></i>
-                </Button>
-                &nbsp;
+                }>
+                <i className='bx bx-window-close textsizing'></i>
+              </Button>
+              &nbsp;
 
-                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                  title="Upload CA Certificate" rel='noreferrer'
-                  target='_blank' onClick={() => {
-                    toggleViewModal2()
-                    setinvoiceIdsForCAcertificate(cellProps.cell.row.original.invoices[0].invoiceNumber)
-                  }
-                  }>
-                  <img src={CaImg} className="" style={{ height: "22.5px" }} />
-                </button>
-                &nbsp;
-                <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                  title="View Details" rel='noreferrer'
-                  target='_blank'
-                  onClick={() => handleViewDetail(cellProps.cell.row.original)}>
-                  <i className='fa fa-eye textsizing' style={{ fontSize: "19.5px" }}></i>   </Button>
+              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="Upload CA Certificate" rel='noreferrer'
+                target='_blank' onClick={() => {
+                  toggleViewModal2()
+                  setinvoiceIdsForCAcertificate(cellProps.cell.row.original.invoices[0].invoiceNumber)
+                }
+                }>
+                <img src={CaImg} className="" style={{ height: "22.5px" }} />
+              </button>
+              &nbsp;
+              <Button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                title="View Details" rel='noreferrer'
+                target='_blank'
+                onClick={() => handleViewDetail(cellProps.cell.row.original)}>
+                <i className='fa fa-eye textsizing' style={{ fontSize: "19.5px" }}></i>   </Button>
 
 
-              </div>
+            </div>
             </div>
           );
         },
@@ -295,12 +302,12 @@ const ReportMedefulterComponent = props => {
   const additionalValue = "Hello from additional prop!";
   return (
     <React.Fragment>
-      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} additionalValue={additionalValue} selected={selected} requestor={'DEBTOR'} />
+      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} additionalValue={additionalValue} selected={selected} />
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       {/* <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
       <MarkDisputedMadal isOpen={markAsDisputed} toggle={toggleMarkAsDisputed} selected={selectDisput} setIsOpenmark={setIsOpenmark} />
-      <MarkDisputedPopModule isOpen={isOpenmark} toggle={markOpenModule} currentindex={currentindex} markedDisputed={markedDisputed} setIsOpenmark={setIsOpenmark} selected={selectDisput} />
+      <MarkDisputedPopModule isOpen={isOpenmark} toggle={markOpenModule} currentindex={currentindex} markedDisputed={markedDisputed} setIsOpenmark={setIsOpenmark} />
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
@@ -315,13 +322,13 @@ const ReportMedefulterComponent = props => {
             : ""
           }
           <Row className="">
-            <Col md={12}>&nbsp;</Col>
+            <Col md={12}></Col>
             <Col md={10} className="pl-3">
               <h5 className="m-1">Complaints Against me</h5>
             </Col>
             {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Seller"} /> : ""}
           </Row>
-          <Row className="p-4  ml-5">
+          <Row className="  ">
             {selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ?
 
 
@@ -348,46 +355,46 @@ const ReportMedefulterComponent = props => {
               //   </tbody>
               // </table>
               // :
-
-              <div>
-
-                {/* <table className="table table-bordered table-responsive" style={{ width:"100vw"}}>
+              
+<div>
+         
+            {/* <table className="table table-bordered table-responsive" style={{ width:"100vw"}}>
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Seller Name</th>
                   {/* <th scope="col">Refrence Number</th> */}
-                {/* <th scope="col">Invoice Number</th>
+                  {/* <th scope="col">Invoice Number</th>
                   {/* <th scope="col">Status</th> */}
-                {/* <th scope="col">Address</th>
+                  {/* <th scope="col">Address</th>
                   <th scope="col">Due Amount</th>
                   <th scope="col">Due From</th>
                   <th scope="col">Action</th> */}
-                {/* <th scope="col">Upload Document</th> */}
+                  {/* <th scope="col">Upload Document</th> */}
                 {/* </tr>
-              </thead> */}
-                {/* <tbody>
+              </thead> */} 
+              {/* <tbody>
                 {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule}/> :
                  <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
               </tbody>
-            </table> */}
+            </table> */} 
 
-                <TableContainer
-                  columns={columns}
-                  data={selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ? selectReportMeDeflist : ''}
-                  isGlobalFilter={false}
-                  isAddOptions={false}
-                  customPageSize={20}
-                />
-              </div>
-              :
-              <Card style={{ height: '60vh' }}>
-                <CardBody className="text-center p-5 ">
-                  <h5 className="mt-5">
-                    No Data Found
-                  </h5>
-                </CardBody>
-              </Card>
+<TableContainer
+columns={columns}
+data= {selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ?selectReportMeDeflist:''}
+isGlobalFilter={false}
+isAddOptions={false}
+customPageSize={20}
+/>
+</div>
+            :
+            <Card style={{ height:'60vh'}}>
+              <CardBody className="text-center p-5 ">
+                <h5 className="mt-5">
+                  No Data Found
+                </h5>
+              </CardBody>
+            </Card>
             }
           </Row>
         </CardBody>
@@ -400,7 +407,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
   return (
     <>
       {selectReportMeDeflistData != undefined && selectReportMeDeflistData.length != 0 ? selectReportMeDeflistData.map((item, index) => {
-        return <tr key={item} style={{ width: "100vw" }}>
+        return <tr key={item} style={{ width:"100vw"}}>
           <th scope="row" className="pt-4" style={{ width: "5%" }}>{index + 1}</th>
           <td className="pt-4 text-capitalize" style={{ width: "15%" }}>{item.ha}</td>
           <td className="pt-4" style={{ width: "15%" }} >{item.invoices[0].invoiceNumber}</td>
@@ -462,7 +469,7 @@ const ReportMeDefulterList = ({ selectReportMeDeflistData, viewModel, toggleView
         ""
       }
 
-      1
+1
 
       <ToastContainer />
     </>

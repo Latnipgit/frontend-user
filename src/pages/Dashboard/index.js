@@ -194,8 +194,8 @@ const Dashboard = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <span>
-          {cellProps.cell.row.original.debtor.address1}       {cellProps.cell.row.original.debtor.address2}
+          return <span style={{width:"230px"}}>
+          {cellProps.cell.row.original.debtor.address1} <br/>      {cellProps.cell.row.original.debtor.address2}
         </span>
         },
       },
@@ -242,12 +242,12 @@ const Dashboard = props => {
           <br />
           <br />
           <Row>
-            <Col md={8}>
+            <Col md={9}>
               <h5 className="m-1" style={{ textTransform: "capitalize"}}>Company Dashboard : {localStorage.getItem("COMPANY")}</h5>
             </Col>
-            <Col md={4}>
+            <Col md={3}>
               <Link to="/companies">
-                <Button style={{ float: 'right' }} className="'btn btn-info p-2 backtoHomeButton" onClick={() => {
+                <Button style={{ float: 'right' }} className="'btn bg-primary p-2 backtoDashButton" onClick={() => {
                   handleMainDashboard()
                 }}>
               <i className='bx bx-arrow-back'></i> Dashboard
@@ -283,7 +283,6 @@ const Dashboard = props => {
 
 
             </Row>
-            <br />
 
             {isClickedToReported != true ?
 
