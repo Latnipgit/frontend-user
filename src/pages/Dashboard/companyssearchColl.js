@@ -21,8 +21,6 @@ const CheckBox = (cell) => {
 };
 
 const DueAmount = (cell) => {
-    console.log("cellcellcell",cell)
-
     return cell.value ? numberFormat(cell.value) : '₹0.00';
 };
 
@@ -47,7 +45,7 @@ const AADHAR = (cell) => {
     return cell.value ? cell.value : '';
 };
 const PANCARD = (cell) => {
-    console.log("cellcellcell",cell)
+
     // return cell.value ? cell.value : '';
     const divStyle = {
         textTransform: "uppercase"
@@ -66,7 +64,6 @@ const daysSinceReference = (cellValue, referenceDate) => {
 };
 
 const DueSince = (cell) => {
-    console.log("differenceInDaysdifferenceInDays",cell.row.original.createdAt)
     const valueFordate = moment(cell.row.original.createdAt).format("DD-MM-YYYY")
 
     /*  const [startDate, setStartDate] = useState(new Date('1965-04-05')); */

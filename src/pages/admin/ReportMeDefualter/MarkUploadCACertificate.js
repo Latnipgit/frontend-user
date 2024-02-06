@@ -86,6 +86,7 @@ export const MarkUploadCACertificate = props => {
     if (size > 0) {
       dispatch(recoredPaymentReportDefault(payload[0]))
       toast.success("Record Payment Successfully")
+      setuploadedCertificate('')
       toggle()
     }
 

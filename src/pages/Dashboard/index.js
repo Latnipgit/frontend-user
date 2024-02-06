@@ -158,12 +158,12 @@ const Dashboard = props => {
         filterable: false,
         disableFilters: true,
         Cell: cellProps => {
-          return  <div
-          className="company-name-cell"
-          style={{ cursor: 'pointer' }}
-        >
-          {cellProps.data.length-cellProps.cell.row.index}
-        </div>;
+          return <div
+            className="company-name-cell"
+            style={{ cursor: 'pointer' }}
+          >
+            {cellProps.data.length - cellProps.cell.row.index}
+          </div>;
         },
       },
       {
@@ -184,8 +184,8 @@ const Dashboard = props => {
         filterable: false,
         Cell: cellProps => {
           return <span>
-          {cellProps.cell.row.original.invoices[0].invoiceNumber}
-        </span>
+            {cellProps.cell.row.original.invoices[0].invoiceNumber}
+          </span>
         },
       },
       {
@@ -214,9 +214,9 @@ const Dashboard = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return  <span>
-          {cellProps.cell.row.original.totalAmount}
-        </span>
+          return <span>
+            {cellProps.cell.row.original.totalAmount}
+          </span>
         },
       },
       {
@@ -225,11 +225,11 @@ const Dashboard = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <span className=  {cellProps.cell.row.original.status == undefined ? 'text-success h6' : 'text-danger h6'}>
-        {cellProps.cell.row.original.status == undefined ? "Approved" : cellProps.cell.row.original.status} </span>
+          return <span className={cellProps.cell.row.original.status == undefined ? 'text-success h6' : 'text-danger h6'}>
+            {cellProps.cell.row.original.status == undefined ? "Approved" : cellProps.cell.row.original.status} </span>
         },
       },
-     
+
     ],
     []
   );
@@ -250,7 +250,7 @@ const Dashboard = props => {
                 <Button style={{ float: 'right' }} className="'btn bg-primary p-2 backtoDashButton" onClick={() => {
                   handleMainDashboard()
                 }}>
-              <i className='bx bx-arrow-back'></i> Dashboard
+                  <i className='bx bx-arrow-back'></i> Dashboard
                 </Button>
               </Link>
 
@@ -273,8 +273,8 @@ const Dashboard = props => {
               </Col>
               <Col md={12} className="">
                 <div className="btn-group" role="group" aria-label="Basic example">
-                  <span style={{ width: '70px', height: "5px", background: isClickedToReported == false ? " #50a5f1" : "", marginRight: "30px", marginLeft:"30px" }}></span>
-                  <span style={{ width: '70px', height: "5px", background: isClickedToReported != false ? " #50a5f1" : "",marginLeft: "50px"  }}></span>
+                  <span style={{ width: '70px', height: "5px", background: isClickedToReported == false ? " #50a5f1" : "", marginRight: "30px", marginLeft: "30px" }}></span>
+                  <span style={{ width: '70px', height: "5px", background: isClickedToReported != false ? " #50a5f1" : "", marginLeft: "50px" }}></span>
                 </div>
                 <br />
 
@@ -306,7 +306,7 @@ const Dashboard = props => {
 
                 <Row className="p-2  ml-5">
 
-                   {/* <table className="table table-bordered table-responsive w-100hmm">
+                  {/* <table className="table table-bordered table-responsive w-100hmm">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -326,13 +326,13 @@ const Dashboard = props => {
                     </tbody>
                   </table>  */}
 
- <TableContainer
-            columns={columns}
-            data={ filteredData}
-            isGlobalFilter={false}
-            isAddOptions={false}
-            customPageSize={10}
-          /> 
+                  <TableContainer
+                    columns={columns}
+                    data={filteredData}
+                    isGlobalFilter={false}
+                    isAddOptions={false}
+                    customPageSize={10}
+                  />
 
                 </Row>
               </>

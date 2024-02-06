@@ -17,8 +17,6 @@ export const selectdashboardAdminDataMap = createSelector(
       SrNo--
 
       const aatingArray = list.ratings.length !== 0 ? list.ratings.map(x => {
-        console.log("reportMeDefulterre",reportMeDefulter,list,x)
-
         if (x.rating != undefined) {
           return +x.rating
         }
@@ -27,7 +25,6 @@ export const selectdashboardAdminDataMap = createSelector(
       const CompanyName = list.companyName !== undefined ? list.companyName : "";
       const PANCARD = list.companyPan !== undefined ? list.companyPan : "";
       const GST = list.gstin !== undefined ? list.gstin : "";
-      console.log("SELECTORRRRRR",SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount )
       return { SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount }
     })
   }

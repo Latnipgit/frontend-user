@@ -22,7 +22,7 @@ const CheckBox = (cell) => {
 };
 
 const DueAmount = (cell) => {
-    console.log("cellcellcell",cell)
+
 
     return cell.value ? numberFormat(cell.value) : '₹0.00';
 };
@@ -48,7 +48,7 @@ const AADHAR = (cell) => {
     return cell.value ? cell.value : '';
 };
 const PANCARD = (cell) => {
-    console.log("cellcellcell",cell)
+
     // return cell.value ? cell.value : '';
     const divStyle = {
         textTransform: "uppercase"
@@ -93,7 +93,6 @@ const DueSince = (cell) => {
     const calculateDateDifference = () => {
         const differenceInMilliseconds = today - currentDate;
         const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-        console.log("differenceInDaysdifferenceInDays",cell)
         return differenceInDays;
 
     };

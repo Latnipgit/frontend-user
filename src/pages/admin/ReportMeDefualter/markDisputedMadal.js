@@ -157,6 +157,12 @@ const MarkDisputedMadal = props => {
     if (amount !== '' && date !== '' && payentMode !== '' && size > 0) {
       dispatch(recoredPaymentReportDefault(payload[0]))
       toast.success("Record Payment Successfully")
+      setAmount('')
+      setDate('')
+      setPaymentMode('')
+      setAttachment('')
+      setCaAttachment('')
+      setRemark('')
       toggle()
     }
   }

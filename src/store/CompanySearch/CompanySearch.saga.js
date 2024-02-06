@@ -10,8 +10,6 @@ import { getCompanySearchList, getAllCompany } from "helpers/fakebackend_helper"
 export function* fetchCompanySearchAsync(payload) {
   try {
     const ReportMeDefulterArray = yield call(getCompanySearchList, payload.payload)
-    console.log("responseresponseresponse", ReportMeDefulterArray)
-
     yield put(fetchCompanySearchSuccess(ReportMeDefulterArray.data.response))
   } catch (error) {
     yield put(fetchCompanySearchFailure(error))
@@ -22,9 +20,9 @@ export function* fetchCompanySearchAsync(payload) {
 function* getAllCompanySAGA() {
   try {
     const response = yield call(getAllCompany)
-// console.log("responseresponseresponse", response)
+    // console.log("responseresponseresponse", response)
     // if (response.data.response) {
-      yield put(getAllCompanyListActionSuccess(response.data.response))
+    yield put(getAllCompanyListActionSuccess(response.data.response))
     // } else {
     //   yield put(getAllCompanyListActionSuccess(response))
     // }

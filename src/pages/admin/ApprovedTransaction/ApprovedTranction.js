@@ -40,7 +40,6 @@ const ApprovedTranction = props => {
 
   const handleEyeIconClick = (item) => {
     localStorage.setItem("COMPANY-ID", item.id)
-    console.log("ITEMMM",item)
     localStorage.setItem("COMPANY", item.companyName)
     const newPageUrl = '/company-dashboard';
     // window.location.href = newPageUrl;
