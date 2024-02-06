@@ -282,7 +282,6 @@ const ReportMedefulterComponent = props => {
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
-          {console.log("isClickedToReported", props.isClickedToReported)}
           {props.isClickedToReported == undefined && props.isClickedToReported != false ?
             <div>
               <br />

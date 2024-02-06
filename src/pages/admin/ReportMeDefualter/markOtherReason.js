@@ -105,6 +105,8 @@ export const MarkOtherReasonModel = props => {
     if (size > 0 && textBox.length <= 250) {
       // dispatch(recoredPaymentReportDefault(payload[0]))
       toast.success("Record Payment Successfully")
+      setAttachment('')
+      setTextBox('')
       toggle()
     }
   }

@@ -159,7 +159,7 @@ const DiputedBillings = props => {
 
   }
 
-  console.log('getDaysArray', getDaysArray);
+
 
 
   function getDebtrosLists(responsData) {

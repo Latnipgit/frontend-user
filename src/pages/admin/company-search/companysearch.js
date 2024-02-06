@@ -73,15 +73,15 @@ const CompanySearch = props => {
   };
 
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
-    // const getAllCompanyList = useSelector(getAllCompanyListSelector)
+  // const getAllCompanyList = useSelector(getAllCompanyListSelector)
   const selectCompanySearchListMap = useSelector(selectdashboardAdminDataMap)
   const currentUserViewDetails = useSelector(selectCompanySearchVeiwDatilsList)
 
   const { CompanyList } = useSelector((state) => ({
-    CompanyList: state.CompanySearchReducer.companySearchList != undefined ? state.CompanySearchReducer.companySearchList:[],
-   
+    CompanyList: state.CompanySearchReducer.companySearchList != undefined ? state.CompanySearchReducer.companySearchList : [],
+
   }));
-console.log("companyListcompanyList",selectCompanySearchListMap)
+
   const viewModel = (value) => {
 
     const valueDate = value.cell.row.original
@@ -117,12 +117,12 @@ console.log("companyListcompanyList",selectCompanySearchListMap)
         filterable: false,
         disableFilters: true,
         Cell: cellProps => {
-          return  <div
-          className="company-name-cell"
-          style={{ cursor: 'pointer' }}
-        >
-          {cellProps.data.length-cellProps.cell.row.index}
-        </div>;
+          return <div
+            className="company-name-cell"
+            style={{ cursor: 'pointer' }}
+          >
+            {cellProps.data.length - cellProps.cell.row.index}
+          </div>;
         },
       },
       {
@@ -210,7 +210,7 @@ console.log("companyListcompanyList",selectCompanySearchListMap)
 
     setFilteredData(filterePANCARD);
   };
- 
+
 
   return (
     <React.Fragment>
@@ -241,7 +241,6 @@ console.log("companyListcompanyList",selectCompanySearchListMap)
             </Col>
           </Row>
         </div> */}
-{console.log("selectCompanySearchListMap", CompanyList)}
           <TableContainer
             columns={columns}
             data={filteredData.length > 0 ? filteredData : selectCompanySearchListMap}
