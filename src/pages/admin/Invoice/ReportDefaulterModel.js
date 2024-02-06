@@ -33,7 +33,7 @@ const ReportedDefaulterModel = props => {
   const [selectedOption, setSelectedOption] = useState("")
 
   const [isProceed, setisProceed] = useState(false)
-  const { isOpen, toggle, selected, } = props
+  const { isOpen, toggle, selected, requestor } = props
   const dispatch = useDispatch()
   const colourStyles = {
     menuList: styles => ({
@@ -108,6 +108,7 @@ const ReportedDefaulterModel = props => {
 
 
   const handleSubmit = () => {
+    debugger
     var size = Object.keys(attachment).length;
     if (amount.length > 0) {
       setAmountValid(false)
@@ -137,7 +138,7 @@ const ReportedDefaulterModel = props => {
       {
         "defaulterEntryId": selected.id,
         "amtPaid": amount,
-        "requestor": "CREDITOR", // CREDITOR/DEBTOR
+        "requestor": requestor, // CREDITOR/DEBTOR
         "paymentDate": date,
         "paymentMode": payentMode,
         "attachments": [attachment.documentId],
