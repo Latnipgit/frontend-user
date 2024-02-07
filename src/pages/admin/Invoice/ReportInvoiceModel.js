@@ -166,7 +166,7 @@ const ReportedDefaulterModel = props => {
 
 
   const submitInvoice = (setvalu) => {
-    debugger
+
     calculateSubtotal(data)
     const date = moment()
     const dummy =

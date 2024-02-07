@@ -21,7 +21,7 @@ import pdfImg from '../../../assets/images/newImg/pdf.png'
 import jpgImg from '../../../assets/images/newImg/png-file-.png'
 
 const ViewDetailsReportDefaultModal = props => {
-  debugger
+
   const { isOpen, toggle, viewModalData } = props
 
   const filteredCustomerDetail = viewModalData.creditor
