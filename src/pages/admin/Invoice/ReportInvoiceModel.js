@@ -165,9 +165,29 @@ const ReportedDefaulterModel = props => {
   ])
 
 
+  const calculateSubtotal = newData => {
+    // Calculate the subtotal
+
+    let totleamount = 0
+
+    newData.forEach((row, i) => {
+
+      if (row.amount !== "") {
+        const amountValue = parseFloat(row.amount)
+
+        totleamount += amountValue
+      }
+      setTotal(totleamount)
+
+    })
+
+
+  }
+
   const submitInvoice = (setvalu) => {
 
     calculateSubtotal(data)
+
     const date = moment()
     const dummy =
     {
@@ -175,8 +195,8 @@ const ReportedDefaulterModel = props => {
       "billDate": date.format("YYYY-MM-DD"),
       "billDescription": "Bill for things",
       "billNumber": "",
-      "creditAmount": total.toFixed(1),
-      "remainingAmount": total.toFixed(1),
+      "creditAmount": data[setvalu].amount != undefined ? Number(data[setvalu].amount) : '',
+      "remainingAmount": data[setvalu].amount != undefined ? Number(data[setvalu].amount) : '',
       "status": "OPEN",
       "interestRate": "",
       "creditLimitDays": "",
@@ -204,8 +224,8 @@ const ReportedDefaulterModel = props => {
           "billDate": date.format("YYYY-MM-DD"),
           "billDescription": "Bill for things",
           "billNumber": "",
-          "creditAmount": total.toFixed(1),
-          "remainingAmount": total.toFixed(1),
+          "creditAmount": data[findIdex].amount != undefined ? data[findIdex].amount : '',
+          "remainingAmount": data[findIdex].amount != undefined ? data[findIdex].amount : '',
           "status": "OPEN",
           "interestRate": "",
           "creditLimitDays": "",
@@ -437,24 +457,7 @@ const ReportedDefaulterModel = props => {
       })
   }
 
-  const calculateSubtotal = newData => {
-    // Calculate the subtotal
 
-    let totleamount = 0
-
-    newData.forEach((row, i) => {
-
-      if (row.amount !== "") {
-        const amountValue = parseFloat(row.amount)
-
-        totleamount += amountValue
-      }
-
-
-    })
-    setTotal(totleamount)
-
-  }
 
   return (
     <Modal
