@@ -121,7 +121,7 @@ const UploadPendingListModule = props => {
 
     const handleUploadFiles = (item) => {
         setuploadFilesModelDataForUpload(item)
-        dispatch(setUploadFilesOpen(!uploadFilesModalShow))
+        /*  dispatch(setUploadFilesOpen(!uploadFilesModalShow)) */
     }
 
 
@@ -370,7 +370,7 @@ const UploadPendingListModule = props => {
 
     return (
         <React.Fragment>
-            <UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} invoiceId={invoiceIdsForCAcertificate} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
+            {/*             <UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} invoiceId={invoiceIdsForCAcertificate} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
             <Card>
                 <CardBody>
                     <div className="mb-4 h4 card-title"></div>
