@@ -168,7 +168,7 @@ const ReportDefPreviewModals = props => {
                   </Col>
                 </Row>
 
-                <Row className="mt-2">
+                {/*                 <Row className="mt-2">
                   <Col md={3}>
                     <Row>
                       <Col md={8} className="pt-4">
@@ -176,7 +176,7 @@ const ReportDefPreviewModals = props => {
                       </Col>
                       <Col md={4}>
                         {item.generalDocuments != '' && item.generalDocuments != undefined ? <a href={item.generalDocuments.fileUrl} rel='noreferrer' target='_blank'>
-                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+
                           <img src={pdfImg} className="iconsImage shadow" />
                         </a> : <img src={noFile} className="iconsImage shadow" />
                         }
@@ -191,7 +191,7 @@ const ReportDefPreviewModals = props => {
                       </Col>
                       <Col md={4}>
                         {item.GSTDocument != '' && item.GSTDocument != undefined ? <a href={item.GSTDocument.fileUrl} rel='noreferrer' target='_blank'>
-                          {/*  <i className='bx bxs-file-jpg mt-2 fileSizing'></i> */}
+
                           <img src={pdfImg} className="iconsImage shadow" />
                         </a> : <img src={noFile} className="iconsImage shadow" />
                         }
@@ -207,7 +207,7 @@ const ReportDefPreviewModals = props => {
 
 
                   </Col>
-                </Row>
+                </Row> */}
 
               </Row>
 

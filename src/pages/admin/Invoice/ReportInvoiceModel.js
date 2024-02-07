@@ -696,7 +696,7 @@ const ReportedDefaulterModel = props => {
                               />
                             </InputGroup>
                           </Col> */}
-                          <Col md={4} className="p-2">
+                          {/*                 <Col md={4} className="p-2">
                             <Label><strong>Other Documents</strong></Label>
                             <InputGroup className="text-capitalize">
                               <input
@@ -711,9 +711,9 @@ const ReportedDefaulterModel = props => {
                               />
                             </InputGroup>
                             <p className="text-danger" style={{ fontSize: '11px' }}>Please upload all Documents in a single Pdf</p>
-                          </Col>
+                          </Col> */}
                           <Col md={4}></Col>
-
+                          <Col md={4}></Col>
                           <Col md={4} className="p-2">
 
                           </Col>

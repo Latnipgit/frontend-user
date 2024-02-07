@@ -53,7 +53,7 @@ import { numberFormat } from "./uploadPendingDoc"
 import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultModal"
 import { ReportRaisedByMeTable } from "./uploadRaisedByMe"
 import { ReportSentTomeTable } from "./uploadSentTome"
-
+import { selectUploadPendigDocOpen, uploadPendigDocSelector } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
 /* import './style.css' */
 // import { ToastContainer } from "react-toastify"
 import {
@@ -70,39 +70,22 @@ import {
 
 
 const UploadPendingListModule = props => {
-    const [modal1, setModal1] = useState(false);
-    const [getDaysArray, setgetDaysArray] = useState([]);
-    const [getDaysArrySecond, setgetDaysArrySecond] = useState([])
-    const [modal2, setModal2] = useState(false);
-    const [modal3, setModal3] = useState(false);
-    const [selected, setSelected] = useState('');
-    const toggleViewModal = () => setModal1(!modal1);
-    const toggleViewModal1 = () => setModal2(!modal2);
-    //const [modal4, setModal4] = useState(false);
-    /*   */
     const dispatch = useDispatch();
-    const [viewModalData, setViewModalData] = useState('');
-
     const isViewDetailModal = useSelector(isViewDetailMOdalOpenSelector);
     const isReportDefOpen = useSelector(selectReportDefOpen);
-    const uploadFilesModalShow = useSelector(uploadFilesModalOpen);
-    const selectCACertificate = useSelector(selectCACertificateOpen);
 
-    const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
-    const toggleViewModal3 = () => dispatch(setIsReportDefOpen(!isReportDefOpen));
-    const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
-    const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
 
-    const GetAllInvoice = useSelector(selectInvoiceList)
-    const uploadpendingFilelist = useSelector(selectUploadingPendingListData);
+
     const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeDataMap);
     const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeDataMap);
+
+    const uploadFilesModalShow = useSelector(selectUploadPendigDocOpen);
+    const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
+
     useEffect(() => {
         dispatch(getAllInvoice());
         dispatch(setIsViewDetailModalOpen())
         dispatch(fetchUploadPendingListStart())
-        getDays()
-
     }, [])
 
     const viewModel = (value) => {
@@ -140,51 +123,7 @@ const UploadPendingListModule = props => {
         setuploadFilesModelDataForUpload(item)
         dispatch(setUploadFilesOpen(!uploadFilesModalShow))
     }
-    const getDays = () => {
 
-        selectTransactionsRaisedByMe.length > 0 ? selectTransactionsRaisedByMe.map((item) => {
-            const a = moment(item.defaulterEntry.debtor.createdAt).format("YYYY-MM-DD")
-            const today = new Date();
-            const newDate = a.split("-").reverse().join("-");
-            const currentDate = new Date(a);
-            const differenceInMilliseconds = today - currentDate;
-            const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-            setgetDaysArray(items => [...items, differenceInDays])
-        }) : []
-
-        selectTransactionsSentToMe.length > 0 ? selectTransactionsSentToMe.map((item) => {
-            const a = moment(item.defaulterEntry.debtor.createdAt).format("YYYY-MM-DD")
-            const today = new Date();
-            const newDate = a.split("-").reverse().join("-");
-            const currentDate = new Date(a);
-            const differenceInMilliseconds = today - currentDate;
-            const differenceInDays = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
-            setgetDaysArrySecond(items => [...items, differenceInDays])
-        }) : []
-    }
-
-    const requestEdit = (item) => {
-
-        const payload = {
-            "invoiceId": item.invoices[0].invoiceNumber
-        }
-
-        dispatch(requestInvoiceDefEdit(payload))
-        toast.success("Edit Request Sent Successfully")
-    }
-
-    const handleFilterdata = (filters) => {
-        if (GetAllInvoice) {
-            if (filters === "") {
-                setFilteredData(GetAllInvoice)
-            } else {
-                const filteredResults = GetAllInvoice.filter(item => {
-                    return item.debtor.companyName.toLocaleLowerCase().includes(filters);
-                });
-                setFilteredData(filteredResults);
-            }
-        }
-    };
 
     const Reatings = (cell) => {
         return <div>4.2</div>;
@@ -431,8 +370,7 @@ const UploadPendingListModule = props => {
 
     return (
         <React.Fragment>
-            <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
-            {/* <UploadPendingDocModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} /> */}
+            <UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} invoiceId={invoiceIdsForCAcertificate} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
             <Card>
                 <CardBody>
                     <div className="mb-4 h4 card-title"></div>
@@ -452,25 +390,7 @@ const UploadPendingListModule = props => {
                             isAddOptions={false}
                             customPageSize={20}
                         />
-                        {/*                      <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Company Name</th>
 
-                                    <th scope="col">Invoice Number</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Due Amount</th>
-                                    <th scope="col">Due From</th>
-                                    <th scope="col">Ratings</th>
-                                    <th scope="col">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {selectTransactionsRaisedByMe.length > 0 ? <ReportRaisedByMeTable GetUploadPendingList={selectTransactionsRaisedByMe} viewModel={viewModel} requestEdit={requestEdit} handleUploadFiles={handleUploadFiles} toggleViewModal2={toggleViewModal2} handleViewDetail={handleViewDetail} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} /> : ''}
-                            </tbody>
-                        </table> */}
                     </Row>
                 </CardBody>
                 <CardBody>
@@ -488,25 +408,6 @@ const UploadPendingListModule = props => {
                             isAddOptions={false}
                             customPageSize={20}
                         />
-                        {/*                     <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Company Name</th>
-
-                                    <th scope="col">Invoice Number</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Due Amount</th>
-                                    <th scope="col">Due From</th>
-                                    <th scope="col">Ratings</th>
-                                    <th scope="col">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {selectTransactionsSentToMe.length > 0 ? <ReportSentTomeTable GetUploadPendingList={selectTransactionsSentToMe} handleUploadFiles={handleUploadFiles} getDaysArray={getDaysArrySecond} /> : ''}
-                            </tbody>
-                        </table> */}
                     </Row>
                 </CardBody>
             </Card>
