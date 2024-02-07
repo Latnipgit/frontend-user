@@ -472,7 +472,7 @@ const ReportedDebtorsModel = props => {
             Back
           </Button>
           <Button type="button" color="primary" onClick={() => handlePreviewShow()}>
-            Process
+            Next
           </Button>
         </ModalFooter>
       </div >

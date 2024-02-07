@@ -100,7 +100,7 @@ const confirmReportModal = props => {
       toggle={toggle}
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>Confirm Report Defaulter</ModalHeader>
+        <ModalHeader toggle={toggle}>Confirm Report On Defaulter</ModalHeader>
 
         <ModalBody className="bg-light">
 

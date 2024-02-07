@@ -724,7 +724,7 @@ const ReportedDefaulterModel = props => {
                           <Col md={4} className="p-2 text-end pt-4">
 
                             <Button className="btn btn-info mt-2" onClick={() => submitInvoice(index)}>
-                              Submit
+                              Save Invoice
                             </Button></Col>
 
                         </Row>

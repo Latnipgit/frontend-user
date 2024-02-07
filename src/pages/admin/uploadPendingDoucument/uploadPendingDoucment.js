@@ -54,6 +54,7 @@ import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultMo
 import { ReportRaisedByMeTable } from "./uploadRaisedByMe"
 import { ReportSentTomeTable } from "./uploadSentTome"
 import { selectUploadPendigDocOpen, uploadPendigDocSelector } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
+import { setUploadPednigDocOpen } from "store/UploadPendingDocList/UploadPendingDocList.action"
 /* import './style.css' */
 // import { ToastContainer } from "react-toastify"
 import {
@@ -80,7 +81,7 @@ const UploadPendingListModule = props => {
     const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeDataMap);
 
     const uploadFilesModalShow = useSelector(selectUploadPendigDocOpen);
-    const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
+    const toggleUploiadFiles = () => dispatch(setUploadPednigDocOpen(!uploadFilesModalShow));
 
     useEffect(() => {
         dispatch(getAllInvoice());
@@ -121,7 +122,7 @@ const UploadPendingListModule = props => {
 
     const handleUploadFiles = (item) => {
         setuploadFilesModelDataForUpload(item)
-        /*  dispatch(setUploadFilesOpen(!uploadFilesModalShow)) */
+        dispatch(setUploadPednigDocOpen(!uploadFilesModalShow))
     }
 
 
@@ -370,7 +371,7 @@ const UploadPendingListModule = props => {
 
     return (
         <React.Fragment>
-            {/*             <UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} invoiceId={invoiceIdsForCAcertificate} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
+            <UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} invoiceId={invoiceIdsForCAcertificate} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
             <Card>
                 <CardBody>
                     <div className="mb-4 h4 card-title"></div>

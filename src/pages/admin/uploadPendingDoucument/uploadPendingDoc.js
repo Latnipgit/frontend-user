@@ -94,7 +94,7 @@ const UploadPendingDocModel = props => {
       "transportationDocument": uploadTransportId == "" ? uploadTransportId : item.transportationDocument._id
     }
 
-    dispatch(updatePendingDocumentss(payload))
+    // dispatch(updatePendingDocumentss(payload))
   }
   return (
     <Modal

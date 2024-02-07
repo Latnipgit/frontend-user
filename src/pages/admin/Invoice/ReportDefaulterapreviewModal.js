@@ -578,7 +578,7 @@ const ReportDefPreviewModals = props => {
             Back
           </Button>
           <Button type="button" color="primary" onClick={() => handleFeedbackModal()}>
-            Process
+            Next
           </Button>
 
         </ModalFooter>
