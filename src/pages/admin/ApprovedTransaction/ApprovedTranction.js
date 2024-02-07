@@ -42,7 +42,7 @@ const ApprovedTranction = props => {
     localStorage.setItem("COMPANY-ID", item.id)
     localStorage.setItem("COMPANY", item.companyName)
     const newPageUrl = '/company-dashboard';
-    // window.location.href = newPageUrl;
+    window.location.href = newPageUrl;
     dispatch(setSelectCopenOpen(!SelectCompnayOpen))
     //  dispatch(fetchReportMeDefulterStart())
   };
