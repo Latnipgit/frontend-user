@@ -183,9 +183,11 @@ const Dashboard = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <span>
-            {cellProps.cell.row.original.invoices[0].invoiceNumber}
-          </span>
+          return <div>
+            {cellProps.cell.row.original.invoices.map((x) => {
+              return <span key={x}>{x.invoiceNumber}, &nbsp;</span>
+            })}
+          </div>
         },
       },
       {
@@ -194,9 +196,9 @@ const Dashboard = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <span style={{width:"230px"}}>
-          {cellProps.cell.row.original.debtor.address1} <br/>      {cellProps.cell.row.original.debtor.address2}
-        </span>
+          return <span style={{ width: "230px" }}>
+            {cellProps.cell.row.original.debtor.address1} <br />      {cellProps.cell.row.original.debtor.address2}
+          </span>
         },
       },
       {
@@ -243,7 +245,7 @@ const Dashboard = props => {
           <br />
           <Row>
             <Col md={9}>
-              <h5 className="m-1" style={{ textTransform: "capitalize"}}>Company Dashboard : {localStorage.getItem("COMPANY")}</h5>
+              <h5 className="m-1" style={{ textTransform: "capitalize" }}>Company Dashboard : {localStorage.getItem("COMPANY")}</h5>
             </Col>
             <Col md={3}>
               <Link to="/companies">
@@ -286,7 +288,7 @@ const Dashboard = props => {
 
             {isClickedToReported != true ?
 
-              <Row style={{ }} className="p-0">
+              <Row style={{}} className="p-0">
                 <ReportMedefulterComponent isClickedToReported={isClickedToReported} />
 
               </Row>

@@ -270,7 +270,9 @@ const DiputedBillings = props => {
         filterable: false,
         Cell: cellProps => {
           return <div>
-            {cellProps.cell.row.original.invoices[0].invoiceNumber}
+            {cellProps.cell.row.original.invoices.map((x) => {
+              return <span key={x}>{x.invoiceNumber}, &nbsp;</span>
+            })}
           </div>
 
         },
