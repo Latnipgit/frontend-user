@@ -84,7 +84,7 @@ const ReportDebtor = props => {
   const selectCACertificate = useSelector(selectCACertificateOpen);
 
   const toggleViewModal2 = () => dispatch(setCACertificateOpen(!selectCACertificate));
-  const toggleViewModal3 = () => dispatch(setIsReportDefOpen(!isReportDefOpen));
+  const toggleViewModal3 = () => pGErElo()
   const toggleUploiadFiles = () => dispatch(setUploadFilesOpen(!uploadFilesModalShow));
   const toggleDetailView = () => dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
   const toggleReqEdit = () => dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
@@ -92,6 +92,11 @@ const ReportDebtor = props => {
 
 
   const GetAllInvoice = useSelector(selectInvoiceListMap)
+
+  const pGErElo=()=>{
+    dispatch(setIsReportDefOpen(!isReportDefOpen));
+    window.location.reload()
+  }
 
   useEffect(() => {
     dispatch(getAllInvoice());

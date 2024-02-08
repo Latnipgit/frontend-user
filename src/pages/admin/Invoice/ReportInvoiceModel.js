@@ -131,6 +131,7 @@ const ReportedDefaulterModel = props => {
   useEffect(() => {
     dispatch(getAllDebtors());
     dispatch(addInvoiceBillSuccess())
+    // window.location.reload()
   }, [])
 
 
@@ -478,7 +479,8 @@ setCurrentIndex(setvalu+1)
 
         <ModalBody className="" >
           <ConfirmReportModal isOpen={showConfirmModal} toggle={handleConfirmClose} />
-          <form>
+          {
+            filteredCustomerDetail.length == 0 ?  <form>
             <Row className="selectionList">
               <Col xs={12} md={2}>
                 <div className="mt-2"><b className="mt-2">Customer Name*</b></div>
@@ -513,7 +515,7 @@ setCurrentIndex(setvalu+1)
               </Col>
 
             </Row>
-          </form>
+          </form>:""}
 
           {
             filteredCustomerDetail.length != 0 ? <Row className="mt-4">
