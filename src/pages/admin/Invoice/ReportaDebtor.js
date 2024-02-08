@@ -386,9 +386,10 @@ const ReportDebtor = props => {
           <br />
 
 
+
           <Row>
-            <Col md={10} className="pl-3">
-              <h5 className="m-1">My Complaints</h5>
+            <Col md={10} className="pl-3" style={{ textTransform:"capitalize"}}>
+              <h5 className="m-1">My Complaints  : {localStorage.getItem("COMPANY")}</h5>
             </Col>
             <Col md={2}>
 

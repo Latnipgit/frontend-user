@@ -327,10 +327,11 @@ const ReportMedefulterComponent = props => {
             </div>
             : ""
           }
+       
           <Row className="">
             <Col md={12}></Col>
-            <Col md={10} className="pl-3">
-              <h5 className="m-1">Complaints Against me</h5>
+            <Col md={10} className="pl-3" style={{ textTransform:"capitalize"}}>
+              <h5 className="m-1">Complaints Against me  {props.isClickedToReported == undefined && props.isClickedToReported != false ? <span>: {localStorage.getItem("COMPANY")}</span>:""}</h5>
             </Col>
             {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Seller"} /> : ""}
           </Row>
