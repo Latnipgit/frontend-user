@@ -270,7 +270,9 @@ const DiputedBillings = props => {
         filterable: false,
         Cell: cellProps => {
           return <div>
-            {cellProps.cell.row.original.invoices[0].invoiceNumber}
+            {cellProps.cell.row.original.invoices.map((x) => {
+              return <span key={x}>{x.invoiceNumber}, &nbsp;</span>
+            })}
           </div>
 
         },
@@ -321,12 +323,12 @@ const DiputedBillings = props => {
                   <i className='bx bx-wallet-alt textsizing' ></i>
                 </button>
                 &nbsp;
-                <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
+                {/*                 <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                   title="Request Edit" href={cellProps.cell.row.original.url} rel='noreferrer'
                   target='_blank' onClick={() => requestEdit(cellProps.cell.row.original)
                   }>
                   <i className='bx bx-edit textsizing' ></i>
-                </button>
+                </button> */}
                 &nbsp;
                 <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                   title="Upload CA Certificate" href={cellProps.cell.row.original.url} rel='noreferrer'
@@ -378,13 +380,6 @@ const DiputedBillings = props => {
           <Row className="p-4  ml-5">
             {/* <br/> */}
 
-            {/* <ReactTable
-              data={GetAllInvoice != undefined ? GetAllInvoice : []}
-              columns={columns}
-              showPagination={true}
-              defaultPageSize={5}
-            /> */}
-
             {GetAllInvoice != undefined && (<TableContainer
               columns={columns}
               data={filteredData.length > 0 ? filteredData : GetAllInvoice}
@@ -393,26 +388,6 @@ const DiputedBillings = props => {
               customPageSize={20}
             />)}
 
-            {/*             <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Company Name</th>
-                 
-                  <th scope="col">Invoice Number</th>
-                  <th scope="col" style={{ width: "300px" }}>Address</th>
-                  <th scope="col">Due Amount</th>
-                  <th scope="col">Due From</th>
-                  <th scope="col">Action</th>
-           
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.length >= 0 ? <RecordPaymentList GetAllInvoicedata={filteredData} getDaysArray={getDaysArray} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} requestEdit={requestEdit} /> : <RecordPaymentList GetAllInvoicedata={GetAllInvoice} getDaysArray={getDaysArray} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} requestEdit={requestEdit} />}
-
-              </tbody>
-            </table> */}
-
           </Row>
         </CardBody>
       </Card>
@@ -420,87 +395,6 @@ const DiputedBillings = props => {
   );
 };
 
-
-const RecordPaymentList = ({ GetAllInvoicedata, getDaysArray, viewModel, toggleViewModal2, setinvoiceIdsForCAcertificate, requestEdit }) => {
-
-  return (
-    <>
-      {GetAllInvoicedata != undefined ? GetAllInvoicedata.map((item, index) => {
-        {/* {dummyData != undefined ? dummyData.map((item, index) => { */ }
-
-
-        return <tr key={item}>
-          <th scope="row" className="pt-4">{index + 1}</th>
-          <td className="pt-4 text-capitalize">{item.debtor.companyName}</td>
-          <td className="pt-4">{item.invoices.map((item) => {
-            return <span key={item}>{item.invoiceNumber}, &nbsp;</span>
-          })}</td>
-
-          <td className="pt-4 d-flex text-capitalize" style={{ width: "300px" }}>{item.debtor.companyName}
-            <br />
-            {item.debtor.address1}  <br />{item.debtor.address2}, {item.debtor.city}</td>
-
-          <td className="pt-4" >
-            {numberFormat(item.invoices[0].remainingAmount)}
-            {/*             <CurrencyFormat value={item.invoices[0].remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} /> */}
-
-          </td>
-
-          <td >
-
-            <div className="" style={{ padding: "2px 15px" }}>
-
-              <div className=" text-center bg-danger rounded text-light">
-                <div className="text-capitalize">
-
-                  {getDaysArray[index]}  &nbsp;
-
-
-                  <span className="ml-1">Days</span> </div>
-                <div className="text-capitalize" >{moment(item.dueDate).format("DD-MM-YYYY")}</div>
-              </div>
-            </div>
-
-          </td>
-
-          <td>
-            <div className="pt-2">
-              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                title="Record Payment" href={item.url} rel='noreferrer'
-                target='_blank' onClick={() => viewModel(item)
-                }>
-                <i className='bx bx-wallet-alt textsizing' ></i>
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                title="Request Edit" href={item.url} rel='noreferrer'
-                target='_blank' onClick={() => requestEdit(item)
-                }>
-                <i className='bx bx-edit textsizing' ></i>
-              </button>
-              &nbsp;
-              <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
-                title="Upload CA Certificate" href={item.url} rel='noreferrer'
-                target='_blank' onClick={() => {
-                  toggleViewModal2()
-                  setinvoiceIdsForCAcertificate(item.invoices[0].invoiceNumber)
-                }
-                }>
-                <img src={CaImg} className="" style={{ height: "22.5px" }} />
-              </button>
-              &nbsp;
-
-
-
-            </div>
-          </td>
-
-        </tr>
-      }) : ''}
-      <ToastContainer />
-    </>
-  )
-}
 
 DiputedBillings.propTypes = {
   orders: PropTypes.array,

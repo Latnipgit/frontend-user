@@ -191,7 +191,7 @@ const ReportDebtor = props => {
     };
 
     return (
-      <div className="" style={{ padding: "2px 5px" , fontSize:"12px"}}>
+      <div className="" style={{ padding: "2px 5px", fontSize: "12px" }}>
         <div className=" text-center bg-danger rounded text-light p-1">
           <div className="text-capitalize">
             {calculateDateDifference()}  &nbsp;
@@ -212,11 +212,11 @@ const ReportDebtor = props => {
         disableFilters: true,
         Cell: cellProps => {
 
-            return  <div
-          className="company-name-cell"
-        >
-          {cellProps.data.length-cellProps.cell.row.index}
-        </div>;;
+          return <div
+            className="company-name-cell"
+          >
+            {cellProps.data.length - cellProps.cell.row.index}
+          </div>;;
         },
       },
       {
@@ -229,6 +229,7 @@ const ReportDebtor = props => {
             {cellProps.cell.row.original.debtor.companyName}
           </div>
 
+
         },
       },
       {
@@ -238,9 +239,10 @@ const ReportDebtor = props => {
         filterable: false,
         Cell: cellProps => {
           return <div>
-            {cellProps.cell.row.original.invoices[0].invoiceNumber}
+            {cellProps.cell.row.original.invoices.map((x) => {
+              return <span key={x}>{x.invoiceNumber}, &nbsp;</span>
+            })}
           </div>
-
         },
       },
       {
@@ -249,7 +251,7 @@ const ReportDebtor = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div style={{width:"200px"}}>
+          return <div style={{ width: "200px" }}>
             {cellProps.cell.row.original.debtor.address1},<br />{cellProps.cell.row.original.debtor.address2}
           </div>
         },

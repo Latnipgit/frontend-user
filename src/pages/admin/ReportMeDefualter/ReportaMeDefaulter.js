@@ -195,7 +195,7 @@ const ReportMedefulterComponent = props => {
         filterable: false,
         Cell: cellProps => {
           return <div>
-            {cellProps.cell.row.original.debtor.companyName}
+            {cellProps.cell.row.original.creditor.companyName}
           </div>
 
         },
@@ -207,7 +207,9 @@ const ReportMedefulterComponent = props => {
         filterable: false,
         Cell: cellProps => {
           return <div>
-            {cellProps.cell.row.original.invoices[0].invoiceNumber}
+            {cellProps.cell.row.original.invoices.map((x) => {
+              return <span key={x}>{x.invoiceNumber}, &nbsp;</span>
+            })}
           </div>
 
         },
@@ -219,7 +221,7 @@ const ReportMedefulterComponent = props => {
         filterable: false,
         Cell: cellProps => {
           return <div style={{ width: "200px" }}>
-            {cellProps.cell.row.original.debtor.address1}<br />{cellProps.cell.row.original.debtor.address2}
+            {cellProps.cell.row.original.creditor.address1}<br />{cellProps.cell.row.original.creditor.address2}
           </div>
         },
       },

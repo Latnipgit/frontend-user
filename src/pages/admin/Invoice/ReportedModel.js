@@ -148,13 +148,13 @@ const ReportedDebtorsModel = props => {
       toggle={toggle}
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>Customer Feedback </ModalHeader>
+        <ModalHeader toggle={toggle}>Feedback On Defaulting Customer </ModalHeader>
         <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} />
         <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue} dataForPreview={dataForPreview} />
         <ModalBody>
-          <div className="mt-3 mb-3">
+          <div className="mb-3">
             <Row>
-              <Col md={9}>  <b>Customer Feedback</b>
+              <Col md={9}>  <b></b>
               </Col>
               <Col md={3}>
                 <b className=" ">Answers</b>
@@ -162,6 +162,7 @@ const ReportedDebtorsModel = props => {
             </Row>
           </div>
           {getFeebBackQuestion.length > 0 ? getFeebBackQuestion.map((item, index) => {
+
             const opations = item.values != null && item.values.length > 0 ? item.values.map((x) => {
               return { label: x, value: x }
             }) : ''
@@ -170,7 +171,7 @@ const ReportedDebtorsModel = props => {
                 <Row>
                   <Col md={9}>
                     <span className="mb-2">
-                      {`${index + 1}. ${item.questionDesc} ?`} </span>
+                      {`${index + 1}. ${item.questionDesc} `} </span>
                   </Col>
                   <Col md={3}>
                     <Select
@@ -192,7 +193,7 @@ const ReportedDebtorsModel = props => {
               <Row>
                 <Col md={9}>
                   <span className="mb-2">
-                    {`${index + 1}. ${item.questionDesc} ?`}</span>
+                    {`${index + 1}. ${item.questionDesc} `}</span>
                 </Col>
                 <Col md={3}>
                   <span>
@@ -212,7 +213,7 @@ const ReportedDebtorsModel = props => {
               <Row>
                 <Row md={9}>
                   <span className="mb-2">
-                    {`${index + 1}. ${item.questionDesc} ?`} </span>
+                    {`${index + 1}. ${item.questionDesc} `} </span>
                 </Row>
                 <Row md={12}>
                   <span>
@@ -233,7 +234,7 @@ const ReportedDebtorsModel = props => {
             )
           }) : ""}
 
-          <div className="mt-3 mb-3">
+          {/*           <div className="mt-3 mb-3">
             <Row>
               <Col md={9}>
                 <b>Rate your customer</b>
@@ -242,15 +243,14 @@ const ReportedDebtorsModel = props => {
                 <b>0-5 stars </b>
               </Col>
             </Row>
-          </div>
+          </div> */}
 
           {getFeebBackQuestion.length > 0 ? getFeebBackQuestion.map((item, indx) => {
-            let x = 1
             return (item.questionType === "RATING" ? (<div className="mb-1">
-              <Row key={indx}>
-                <Col md={9}>
+              <Row key={indx} className="mt-2">
+                <Col md={9} >
                   <span className="mb-2">
-                    {`${x++}. ${item.questionDesc} ?`}</span>
+                    {`${indx + 1}. ${item.questionDesc} `}</span>
                 </Col>
                 <Col md={3}>
                   <span>
@@ -325,154 +325,14 @@ const ReportedDebtorsModel = props => {
               </Row>
             </div>) : "")
           }) : ''}
-          {/*           <div className="mb-1">
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  2. Responsiveness</span>
-              </Col>
-              <Col md={3}>
-                <span>
-                  <i className='bx bxs-star'
-                    onClick={(selected) => {
-                      handlefinancialdifficult({
-                        "questionDesc": "Responsiveness",
 
-                        "questionType": "RATING",
-                        "values": 1
-                      })
-                      setresponsivestarRating(1)
-                    }}
-                    style={{ color: responsivestarRating != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-                    handlefinancialdifficult({
-                      "questionDesc": "Responsiveness",
-                      "questionType": "RATING",
-                      "values": 2
-                    })
-                    setresponsivestarRating(2)
-
-                  }}
-                    style={{ color: responsivestarRating != 0 && responsivestarRating > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-                    handlefinancialdifficult({
-                      "questionDesc": "Responsiveness",
-                      "questionType": "RATING",
-                      "values": 3
-                    })
-                    setresponsivestarRating(3)
-
-                  }}
-                    style={{ color: responsivestarRating != 0 && responsivestarRating > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-                    handlefinancialdifficult({
-                      "questionDesc": "Responsiveness",
-                      "questionType": "RATING",
-                      "values": 4
-                    })
-                    setresponsivestarRating(4)
-
-                  }}
-                    style={{ color: responsivestarRating != 0 && responsivestarRating > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-                    handlefinancialdifficult({
-                      "questionDesc": "Responsiveness",
-                      "questionType": "RATING",
-                      "values": 5
-                    })
-                    setresponsivestarRating(5)
-
-                  }}
-                    style={{ color: responsivestarRating != 0 && responsivestarRating > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-              </Col>
-            </Row>
-          </div>
-          <div>
-            <Row>
-              <Col md={9}>
-                <span className="mb-2">
-                  3. Timely Payment </span>
-              </Col>
-              <Col md={3}>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-                    handlefinancialdifficult({
-                      "questionDesc": "TimelyPayment",
-                      "questionType": "RATING",
-                      "values": 1
-                    })
-                    settimelyStarRating(1)
-                  }}
-                    style={{ color: timelystarRating != 0 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-                    handlefinancialdifficult({
-                      "questionDesc": "TimelyPayment",
-                      "questionType": "RATING",
-                      "values": 2
-                    })
-                    settimelyStarRating(2)
-
-                  }}
-                    style={{ color: timelystarRating != 0 && timelystarRating > 1 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-
-                    handlefinancialdifficult({
-                      "questionDesc": "TimelyPayment",
-                      "questionType": "RATING",
-                      "values": 3
-                    })
-                    settimelyStarRating(3)
-
-                  }}
-                    style={{ color: timelystarRating != 0 && timelystarRating > 2 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-                    handlefinancialdifficult({
-                      "questionDesc": "TimelyPayment",
-                      "questionType": "RATING",
-                      "values": 4
-                    })
-                    settimelyStarRating(4)
-
-                  }}
-                    style={{ color: timelystarRating != 0 && timelystarRating > 3 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-                <span>
-                  <i className='bx bxs-star' onClick={(selected) => {
-                    handlefinancialdifficult({
-                      "questionDesc": "TimelyPayment",
-                      "questionType": "RATING",
-                      "values": 5
-                    })
-                    settimelyStarRating(5)
-
-                  }}
-                    style={{ color: timelystarRating != 0 && timelystarRating > 4 ? '  #ffdb4d' : 'gray', fontSize: '18px' }}
-                  ></i></span>
-              </Col>
-            </Row>
-          </div> */}
         </ModalBody>
         <ModalFooter>
           <Button type="button" color="secondary" onClick={toggle}>
             Back
           </Button>
           <Button type="button" color="primary" onClick={() => handlePreviewShow()}>
-            Process
+            Next
           </Button>
         </ModalFooter>
       </div >

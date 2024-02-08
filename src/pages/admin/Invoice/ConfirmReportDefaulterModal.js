@@ -100,14 +100,14 @@ const confirmReportModal = props => {
       toggle={toggle}
     >
       <div className="modal-content">
-        <ModalHeader toggle={toggle}>Confirm Report Defaulter</ModalHeader>
+        <ModalHeader toggle={toggle}>Confirm Report On Defaulter</ModalHeader>
 
         <ModalBody className="bg-light">
 
           <h5 className="text-center">Are You sure you want to Report Following Customer As a Defaulter ? </h5>
           <br />
-          <p>Confirming the report of the mentioned customer as a defaulter requires accurate information. Any inaccuracies may lead to legal action against the reporting party, impacting their credibility as a rater. </p>
-          <p className="text-center">
+          {/*           <p>Confirming the report of the mentioned customer as a defaulter requires accurate information. Any inaccuracies may lead to legal action against the reporting party, impacting their credibility as a rater. </p> */}
+          <p className="text-center" style={{ fontSize: "16px" }}>
             {/* <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} onChange={()=>handleChecked()}/>  */}
             <Input
               type="checkbox"
@@ -116,7 +116,7 @@ const confirmReportModal = props => {
               className="checkForConfirm"
               style={checkboxStyle}
             />
-            &nbsp; &nbsp;By checking the checkbox, you accept full responsibility for consequences related to the rating and grant AnandRishi Technologies Pvt Ltd permission to post this information on social media on your behalf. You absolve AnandRishi Technologies Pvt Ltd from any legal or monetary consequences arising from such actions.</p>
+            &nbsp; &nbsp;Ensure that all the provided information is accurate, as any incorrect details may result in legal action against the reporting party. It will undoubtedly affect your credibility as a rater.</p>
 
           {/* <p className="text-center text-danger"> <i className='bx bx-error'></i> &nbsp; If found the provided information is wrong or incorrect legal action will be taken on the reporting party.</p> */}
         </ModalBody>

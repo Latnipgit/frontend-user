@@ -165,9 +165,29 @@ const ReportedDefaulterModel = props => {
   ])
 
 
+  const calculateSubtotal = newData => {
+    // Calculate the subtotal
+
+    let totleamount = 0
+
+    newData.forEach((row, i) => {
+
+      if (row.amount !== "") {
+        const amountValue = parseFloat(row.amount)
+
+        totleamount += amountValue
+      }
+      setTotal(totleamount)
+
+    })
+
+
+  }
+
   const submitInvoice = (setvalu) => {
-    debugger
+
     calculateSubtotal(data)
+
     const date = moment()
     const dummy =
     {
@@ -175,8 +195,8 @@ const ReportedDefaulterModel = props => {
       "billDate": date.format("YYYY-MM-DD"),
       "billDescription": "Bill for things",
       "billNumber": "",
-      "creditAmount": total.toFixed(1),
-      "remainingAmount": total.toFixed(1),
+      "creditAmount": data[setvalu].amount != undefined ? Number(data[setvalu].amount) : '',
+      "remainingAmount": data[setvalu].amount != undefined ? Number(data[setvalu].amount) : '',
       "status": "OPEN",
       "interestRate": "",
       "creditLimitDays": "",
@@ -204,8 +224,8 @@ const ReportedDefaulterModel = props => {
           "billDate": date.format("YYYY-MM-DD"),
           "billDescription": "Bill for things",
           "billNumber": "",
-          "creditAmount": total.toFixed(1),
-          "remainingAmount": total.toFixed(1),
+          "creditAmount": data[findIdex].amount != undefined ? data[findIdex].amount : '',
+          "remainingAmount": data[findIdex].amount != undefined ? data[findIdex].amount : '',
           "status": "OPEN",
           "interestRate": "",
           "creditLimitDays": "",
@@ -437,24 +457,7 @@ const ReportedDefaulterModel = props => {
       })
   }
 
-  const calculateSubtotal = newData => {
-    // Calculate the subtotal
 
-    let totleamount = 0
-
-    newData.forEach((row, i) => {
-
-      if (row.amount !== "") {
-        const amountValue = parseFloat(row.amount)
-
-        totleamount += amountValue
-      }
-
-
-    })
-    setTotal(totleamount)
-
-  }
 
   return (
     <Modal
@@ -696,7 +699,7 @@ const ReportedDefaulterModel = props => {
                               />
                             </InputGroup>
                           </Col> */}
-                          <Col md={4} className="p-2">
+                          {/*                 <Col md={4} className="p-2">
                             <Label><strong>Other Documents</strong></Label>
                             <InputGroup className="text-capitalize">
                               <input
@@ -711,9 +714,9 @@ const ReportedDefaulterModel = props => {
                               />
                             </InputGroup>
                             <p className="text-danger" style={{ fontSize: '11px' }}>Please upload all Documents in a single Pdf</p>
-                          </Col>
+                          </Col> */}
                           <Col md={4}></Col>
-
+                          <Col md={4}></Col>
                           <Col md={4} className="p-2">
 
                           </Col>
@@ -724,7 +727,7 @@ const ReportedDefaulterModel = props => {
                           <Col md={4} className="p-2 text-end pt-4">
 
                             <Button className="btn btn-info mt-2" onClick={() => submitInvoice(index)}>
-                              Submit
+                              Save Invoice
                             </Button></Col>
 
                         </Row>
