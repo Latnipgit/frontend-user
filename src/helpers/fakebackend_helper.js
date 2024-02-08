@@ -53,6 +53,7 @@ export const getAllSubscription = () => getwithToken('/api/subscription/getAllSu
 export const getAllInvoiceList = () => getAfter("/api/defaulters/getAllDefaultInvoicesRaisedByMe")
 export const getGeneralDoucmentsAPI = () => getwithToken("/api/files/getGeneralDocuments")
 export const getFeebBackQuestionListAPI = () => getwithToken("/api/questions/getAllQuestions")
+export const getRequestEditApi = () => getwithToken("/api/defaulters/updateDefaulterEntry")
 
 export const getAllCompany = data => post(url.GET_COMPNAY_SEARCH_LIST);
 // get Product detail

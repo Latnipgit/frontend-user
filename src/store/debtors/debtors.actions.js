@@ -40,7 +40,10 @@ import {
   GET_FEEDBACKQUESTION_FAIL,
   GET_FEEDBACKQUESTION_SUCCESS,
   REQUEST_EDIT_MODAL_OPEN,
-  MARK_AS_DISPUED_MODAL_OPEN
+  MARK_AS_DISPUED_MODAL_OPEN,
+  GET_REQ_EDIT_FAIL,
+  GET_REQ_EDIT_SUCCESS,
+  GET_REQ_EDIT
 } from "./debtors.actiontype"
 
 import { createAction } from "store/utils/reducer/reducer.utils";
@@ -113,3 +116,9 @@ export const recoredPaymentReportDefaultFail = (data) => createAction(RECORD_PAY
 export const updatePendingDocumentss = (data) => createAction(UPDATE_PENDING_DOCUMENT, data)
 export const updatePendingDocumentssSucccess = (data) => createAction(UPDATE_PENDING_DOCUMENT_SUCCESS, data)
 export const updatePendingDocumentssFail = (data) => createAction(UPDATE_PENDING_DOCUMENT_FAIL, data)
+
+export const getRequestEdit = () => createAction(GET_REQ_EDIT)
+
+export const getRequestEditSuccess = (data) => createAction(GET_REQ_EDIT_SUCCESS, data)
+
+export const getRequestEditFail = (error) => createAction(GET_REQ_EDIT_FAIL, error)

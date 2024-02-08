@@ -21,7 +21,8 @@ import {
   RECORD_PAYMENT_REPORT_DEFAULT_FAIL,
   RECORD_PAYMENT_REPORT_DEFAULT_SUCCESS,
   UPDATE_PENDING_DOCUMENT,
-  GET_FEEDBACKQUESTION
+  GET_FEEDBACKQUESTION,
+  GET_REQ_EDIT
 } from "./debtors.actiontype";
 import {
   getAllDebtors,
@@ -54,14 +55,17 @@ import {
   updatePendingDocumentssFail,
   getFeebBackQuestionList,
   getFeebBackQuestionListFail,
-  getFeebBackQuestionListSuccess
+  getFeebBackQuestionListSuccess,
+  getRequestEdit,
+  getRequestEditSuccess,
+  getRequestEditFail
 
 } from "./debtors.actions";
 
 //Include Both Helper File with needed methods
 import { getAllDebtorsAPI } from "helpers/fakebackend_helper";
 import { getAllInvoiceList } from "helpers/fakebackend_helper";
-import { addInvoiceApi, addDebtorIdToarrayForPreviewAPI, addRatingofdebtor, uploadCACertificateAPIMethod, updatePendingDocument, requestAEdit, addInVoiceDefaulter, recordPaymentAPIMethod, getFeebBackQuestionListAPI } from "helpers/fakebackend_helper";
+import { addInvoiceApi, addDebtorIdToarrayForPreviewAPI, addRatingofdebtor, uploadCACertificateAPIMethod, updatePendingDocument, requestAEdit, addInVoiceDefaulter, recordPaymentAPIMethod, getFeebBackQuestionListAPI,getRequestEditApi } from "helpers/fakebackend_helper";
 
 
 function* fetchdebtors() {
@@ -160,6 +164,15 @@ function* getFeedbackQuestionSaga() {
     yield put(getFeebBackQuestionListFail(error))
   }
 }
+
+function* updateRequestEditSaga(payload) {
+  try {
+    const response = yield call(getRequestEditApi)
+    yield put(getRequestEditSuccess(response))
+  } catch (error) {
+    yield put(getRequestEditFail(error))
+  }
+}
 function* debtorsSaga() {
   //  
   yield takeEvery(GET_DEBTORS, fetchdebtors)
@@ -173,6 +186,7 @@ function* debtorsSaga() {
   yield takeEvery(RECORD_PAYMENT_REPORT_DEFAULT, recordPaymentSaga)
   yield takeEvery(UPDATE_PENDING_DOCUMENT, updatePendingDocumentSaga)
   yield takeEvery(GET_FEEDBACKQUESTION, getFeedbackQuestionSaga)
+  yield takeEvery(GET_REQ_EDIT, updateRequestEditSaga)
 }
 
 export default debtorsSaga;

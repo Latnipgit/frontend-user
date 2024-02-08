@@ -185,7 +185,8 @@ const ReportedDefaulterModel = props => {
   }
 
   const submitInvoice = (setvalu) => {
-
+console.log("setvalusetvalu",setvalu)
+setCurrentIndex(setvalu+1)
     calculateSubtotal(data)
 
     const date = moment()
@@ -728,7 +729,12 @@ const ReportedDefaulterModel = props => {
 
                             <Button className="btn btn-info mt-2" onClick={() => submitInvoice(index)}>
                               Save Invoice
-                            </Button></Col>
+                            </Button> &nbsp;
+                    
+                  {index > 0 ?  <Button className="btn btn-danger mt-2 "  onClick={() => removeFaqsRow(index)}>
+Delete
+                    </Button>:''}
+                            </Col>
 
                         </Row>
 
@@ -737,16 +743,10 @@ const ReportedDefaulterModel = props => {
 
                   </Row>
                 ))}
+                {console.log("currenIndexcurrenIndex",currenIndex)}
                 <Row>
                   <Col md={12} className="text-end">
-                    {currenIndex > 0 ? (
-                      <span
-                        className="icon-container delete-icon"
-                        onClick={() => removeFaqsRow(currenIndex)}
-                      >
-                        <span className="mdi mdi-delete icon-red"></span>
-                      </span>
-                    ) : null}
+                   
                     <Button
                       className="btn btn-info"
                       onClick={addFaqsRow}

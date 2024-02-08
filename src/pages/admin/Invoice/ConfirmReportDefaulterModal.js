@@ -63,6 +63,10 @@ const confirmReportModal = props => {
 
 
     dispatch(addInvoiceReportDefaulterInvoice(payload))
+    toast.success("Invoice submited")
+
+    window.location.reload()
+
 
   }
 
@@ -82,6 +86,8 @@ const confirmReportModal = props => {
 
     dispatch(addInvoiceReportDefaulterInvoice(payload))
     toast.success("Invoice save as Draft")
+
+    window.location.reload()
 
 
   }
@@ -118,7 +124,7 @@ const confirmReportModal = props => {
               style={checkboxStyle}
             />
             &nbsp; &nbsp;  <span style={{ fontWeight:"500"}}>By Checking This Box, You Confirm That :</span> 
-        <p style={{fontSize:"13px"}}>    - All information provided by you is correct to the best of your knowledge. <br/>
+        <p style={{fontSize:"14px"}}>    - All information provided by you is correct to the best of your knowledge. <br/>
 - You accept full responsibility for any incorrect information provided by you. Any incorrect information provided by you can Cause you to be permanently banned from this platform.<br/>
 - You understand that incorrect information provided by you can lead to legal action against you.<br/>
 - You will not use this platform with malicious intent to defame a third party.<br/>

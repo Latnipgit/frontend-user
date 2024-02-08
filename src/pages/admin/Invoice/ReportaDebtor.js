@@ -153,8 +153,11 @@ const ReportDebtor = props => {
     }) : []
   }
   const RequestEditData = useSelector(requestEditSelector)
+  const [requestedData, setrequestedData] = useState('')
 
   const requestEdit = (item) => {
+    console.log("ITEMMMMM",item)
+    setrequestedData(item)
     dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
     const payload = {
       "invoiceId": item.invoices[0].invoiceNumber
@@ -163,7 +166,7 @@ const ReportDebtor = props => {
     setisRequestedEdit(true)
 
 
-    dispatch(requestInvoiceDefEdit(payload))
+    // dispatch(requestInvoiceDefEdit(payload))
   }
 
   const handleFilterdata = (filters) => {
@@ -308,7 +311,7 @@ const ReportDebtor = props => {
 
                 &nbsp;
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
-                  title="Request Edit" href={cellProps.cell.row.original.url} rel='noreferrer'
+                  title="Request Edit"  rel='noreferrer'
                   target='_blank' onClick={() => requestEdit(cellProps.cell.row.original)
 
 
@@ -369,7 +372,7 @@ const ReportDebtor = props => {
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
-      <RequestEditMessageModal isOpen={isRequestEditModalOpen} toggle={toggleReqEdit} />
+      <RequestEditMessageModal isOpen={isRequestEditModalOpen} toggle={toggleReqEdit} requestedData={requestedData}/>
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>

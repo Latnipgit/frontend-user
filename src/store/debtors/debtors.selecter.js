@@ -42,7 +42,10 @@ export const selectInvoiceListMap = createSelector(
         return mapinvoicelist
     }
 )
-
+export const getRequestEditSelector = createSelector(
+    [selectDebtorsReducer],
+    (DebtorsReducer) => DebtorsReducer.getRequestEdit != undefined ? DebtorsReducer.getRequestEdit.response : []
+)
 
 /* export const selectInvoiceListMap = createSelector(
     [selectInvoiceList],

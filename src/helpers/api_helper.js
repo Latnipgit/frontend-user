@@ -114,7 +114,7 @@ export async function post(url, data, config = {}) {
     .catch((error) => {
       if (error.response) {
         // console.log("Server responded with an error:", error.response);
-        window.alert(error.response.data.message)
+        // window.alert(error.response.data.message)
       } else if (error.request) {
         console.log("No response received from the server:", error.request);
       }
