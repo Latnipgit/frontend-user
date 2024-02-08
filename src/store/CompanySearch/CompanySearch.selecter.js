@@ -25,7 +25,9 @@ export const selectdashboardAdminDataMap = createSelector(
       const CompanyName = list.companyName !== undefined ? list.companyName : "";
       const PANCARD = list.companyPan !== undefined ? list.companyPan : "";
       const GST = list.gstin !== undefined ? list.gstin : "";
-      return { SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount }
+      const email = list.customerEmail !== undefined ? list.customerEmail : "";
+      const customerMobile = list.customerMobile !== undefined ? list.customerMobile : "";
+      return { SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount,email,customerMobile }
     })
   }
 );
