@@ -195,7 +195,7 @@ console.log("selected",selected)
                                                 <td>{item.totalAmount != undefined ? totalAmount : ""}</td>
                                                 <td>{item.dueFrom != undefined ? item.dueFrom : ""}</td>
                                                 <td>{ratingArray}</td>
-                                                {item.status != undefined ? <td style={item.status == "APPROVED" ? { color: "green" } : item.status == "PENDING" ? { color: "red" } : item.status == "DISPUTED" ? { color: "red", filter: "2px" } : ""}>{item.status == "APPROVED" ? <b><FcCheckmark />Approved</b> : item.status == "PENDING" ? <b><FcClock /> InProcess</b> : item.status == "DISPUTED" ? <b><FcCancel /> Disputed</b> : ""} </td> : <td></td>}
+                                                {item.status != undefined ? <td style={item.status == "APPROVED" ? { color: "green" } : item.status == "PENDING" ? { color: "#ff794d" } : item.status == "DISPUTED" ? { color: "red", filter: "2px" } : ""}>{item.status == "APPROVED" ? <b><FcCheckmark />Approved</b> : item.status == "PENDING" ? <b><FcClock /> InProcess</b> : item.status == "DISPUTED" ? <b><FcCancel /> Disputed</b> : ""} </td> : <td></td>}
 
                                             </tr>
                                         }) : ''}
