@@ -441,7 +441,7 @@ const UploadPendingListModule = props => {
                     <br />
                     <Row>
                         <Col md={10} className="pl-3">
-                            <h5 className="m-1">Report a Defaulter</h5>
+                            <h5 className="m-1">My Complaints</h5>
                         </Col>
                     </Row>
                     <Row className="p-4  ml-5">
@@ -477,7 +477,7 @@ const UploadPendingListModule = props => {
                     <div className="mb-4 h4 card-title"></div>
                     <Row>
                         <Col md={10} className="pl-3">
-                            <h5 className="m-1">Reported Me As a Defaulter</h5>
+                            <h5 className="m-1">Complaints Against me </h5>
                         </Col>
                     </Row>
                     <Row className="p-4  ml-5">
