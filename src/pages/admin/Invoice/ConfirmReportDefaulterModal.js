@@ -81,6 +81,7 @@ const confirmReportModal = props => {
 
 
     dispatch(addInvoiceReportDefaulterInvoice(payload))
+    toast.success("Invoice save as Draft")
 
 
   }
@@ -107,7 +108,7 @@ const confirmReportModal = props => {
           <h5 className="text-center">Are You sure you want to Report Following Customer As a Defaulter ? </h5>
           <br />
           {/*           <p>Confirming the report of the mentioned customer as a defaulter requires accurate information. Any inaccuracies may lead to legal action against the reporting party, impacting their credibility as a rater. </p> */}
-          <p className="text-center" style={{ fontSize: "16px" }}>
+          <p className="text-left" style={{ fontSize: "16px" }}>
             {/* <Input type="checkbox" className="checkForConfirm" style={checkboxStyle} onChange={()=>handleChecked()}/>  */}
             <Input
               type="checkbox"
@@ -116,8 +117,14 @@ const confirmReportModal = props => {
               className="checkForConfirm"
               style={checkboxStyle}
             />
-            &nbsp; &nbsp;Ensure that all the provided information is accurate, as any incorrect details may result in legal action against the reporting party. It will undoubtedly affect your credibility as a rater.</p>
-
+            &nbsp; &nbsp;  <span style={{ fontWeight:"500"}}>By Checking This Box, You Confirm That :</span> 
+        <p style={{fontSize:"13px"}}>    - All information provided by you is correct to the best of your knowledge. <br/>
+- You accept full responsibility for any incorrect information provided by you. Any incorrect information provided by you can Cause you to be permanently banned from this platform.<br/>
+- You understand that incorrect information provided by you can lead to legal action against you.<br/>
+- You will not use this platform with malicious intent to defame a third party.<br/>
+- You authorize Anand Rishi Technologies Private Limited to use the information provided by you freely, including posting on social media on your behalf and using it as deemed fit.<br/>
+- You absolve Anand Rishi Technologies Private Limited of any legal or monetary consequences regarding any information posted by them on the internet on your behalf.</p>
+</p>
           {/* <p className="text-center text-danger"> <i className='bx bx-error'></i> &nbsp; If found the provided information is wrong or incorrect legal action will be taken on the reporting party.</p> */}
         </ModalBody>
         <ModalFooter>
