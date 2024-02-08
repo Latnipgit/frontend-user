@@ -39,7 +39,7 @@ const RequestEditMessageModal = props => {
                         For any queries please reach out to us on <a className="text-info">support@anandrishi.com</a>.
                         <br />
                         Please note the access will be available to you only for a period of 7 days
-                        during which your post status will be Under Process.
+                        during which your post status will be under process.
                     </p>
                 </ModalBody>
             </div>
