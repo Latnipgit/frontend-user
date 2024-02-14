@@ -26,7 +26,7 @@ const changeNewPassword = props => {
   document.title = "Forget Password | Bafana - User & Dashboard ";
 
   const dispatch = useDispatch();
-  const token = localStorage.getItem("one-time-token")
+  const token = sessionStorage.getItem("one-time-token")
   const r4 = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$');
   const r2 = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$');
   const handleSubmit = (e) => {

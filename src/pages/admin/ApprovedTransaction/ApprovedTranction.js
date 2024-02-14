@@ -30,6 +30,7 @@ import { SelectCompnay } from "store/selectCompany/selectCompany.selecter";
 import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype";
 
 import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action";
+import { selectUpdatedToken } from "store/auth/login/Login.selecter";
 
 const ApprovedTranction = props => {
   const dispatch = useDispatch();
@@ -37,10 +38,14 @@ const ApprovedTranction = props => {
   const toggleViewModal = () => setModal1(!modal1);
   const SelectCompnayOpen = useSelector(SelectCompnay)
 
+  const checkUpdateToken = useSelector(selectUpdatedToken)
+
+  console.log('selectUpdatedToken', checkUpdateToken);
+
 
   const handleEyeIconClick = (item) => {
-    localStorage.setItem("COMPANY-ID", item.id)
-    localStorage.setItem("COMPANY", item.companyName)
+    sessionStorage.setItem("COMPANY-ID", item.id)
+    sessionStorage.setItem("COMPANY", item.companyName)
     const newPageUrl = '/company-dashboard';
     window.location.href = newPageUrl;
     dispatch(setSelectCopenOpen(!SelectCompnayOpen))

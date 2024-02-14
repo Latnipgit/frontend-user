@@ -5,7 +5,10 @@ import {
   LOGOUT_USER_SUCCESS,
   API_ERROR,
   SOCIAL_LOGIN,
+  TOKEN_UPDATE,
 } from "./Login.actionTypes"
+
+import { createAction } from "store/utils/reducer/reducer.utils"
 
 export const loginUser = (user, history) => {
   return {
@@ -14,16 +17,13 @@ export const loginUser = (user, history) => {
   }
 }
 
-export const loginSuccess = user => {
-   
-  return {
-    type: LOGIN_SUCCESS,
-    payload: user,
-  }
-}
+
+export const loginSuccess = user => createAction(LOGIN_SUCCESS, user)
+export const tokenUpdate = user => createAction(TOKEN_UPDATE, user)
+
 
 export const logoutUser = history => {
-   
+
   return {
     type: LOGOUT_USER,
     payload: { history },

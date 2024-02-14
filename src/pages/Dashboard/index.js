@@ -64,7 +64,7 @@ import {
 } from "./companyssearchColl";
 
 const Dashboard = props => {
-  const companyid = localStorage.getItem("COMPANY-ID")
+  const companyid = sessionStorage.getItem("COMPANY-ID")
   const [subscribemodal, setSubscribemodal] = useState(false)
   const [filteredData, setFilteredData] = useState([]);
   const [getDaysArray, setgetDaysArray] = useState([]);
@@ -147,6 +147,7 @@ const Dashboard = props => {
 
 
   const handleMainDashboard = () => {
+    /*   sessionStorage.removeItem("tokenemployeeRegister") */
     dispatch(setSelectCopenOpen(!SelectCompnayOpen))
   };
 
@@ -245,7 +246,7 @@ const Dashboard = props => {
           <br />
           <Row>
             <Col md={9}>
-              <h5 className="m-1" style={{ textTransform: "capitalize" }}>Company Dashboard : {localStorage.getItem("COMPANY")}</h5>
+              <h5 className="m-1" style={{ textTransform: "capitalize" }}>Company Dashboard : {sessionStorage.getItem("COMPANY")}</h5>
             </Col>
             <Col md={3}>
               <Link to="/companies">

@@ -9,7 +9,7 @@ import {
 } from "reactstrap"
 
 const Sender = ({ message }) => {
-  const obj = JSON.parse(localStorage.getItem("authUser"))
+  const obj = JSON.parse(sessionStorage.getItem("authUser"))
   const name = obj && obj.username ? obj.username : message["name"]
 
   return (

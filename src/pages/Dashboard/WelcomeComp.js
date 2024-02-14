@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react"
+import React, { useState, useEffect } from "react"
 
 import { Row, Col, Card, CardBody } from "reactstrap"
 import { Link } from "react-router-dom"
@@ -7,7 +7,7 @@ import avatar1 from "../../assets/images/users/avatar-1.jpg"
 import profileImg from "../../assets/images/profile-img.png"
 
 
-const WelcomeComp = props =>{
+const WelcomeComp = props => {
   function capitalizeWords(str) {
     return str.replace(/\b\w/g, (match) => match.toUpperCase());
   }
@@ -15,35 +15,35 @@ const WelcomeComp = props =>{
   const [rol, setrole] = useState("");
   const [emailId, setemailId] = useState("");
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
+    if (sessionStorage.getItem("authUser")) {
       if (process.env.REACT_APP_DEFAULTAUTH === "jwt"
       ) {
-             
-        const obj = JSON.parse(localStorage.getItem("authUser"));
+
+        const obj = JSON.parse(sessionStorage.getItem("authUser"));
         setusername(capitalizeWords(obj.name));
         setrole(capitalizeWords('User'));
         setemailId(obj.emailId);
-  
+
       }
     }
   }, [props.success]);
-  
+
   return (
     <React.Fragment>
       <Card className="overflow-hidden">
         <div className="bg-primary bg-soft">
           <Row>
             <Col xs="3">
-            <div className="text-primary p-3">
-            <h5 className="text-primary">Welcome Back !</h5>
-            <p className="mb-0">Bafana Dashboard</p>
-            </div>
+              <div className="text-primary p-3">
+                <h5 className="text-primary">Welcome Back !</h5>
+                <p className="mb-0">Bafana Dashboard</p>
+              </div>
             </Col>
             <Col xs="6">
-             
+
             </Col>
             <Col xs="2" className="align-self-end">
-            <img src={profileImg} alt="" className="img-fluid" />
+              <img src={profileImg} alt="" className="img-fluid" />
             </Col>
           </Row>
         </div>
@@ -77,17 +77,17 @@ const WelcomeComp = props =>{
                   <Col xs="9">
                   </Col>
                   <Col xs="3">
-                  <div className="mt-4">
-                  <Link
-                    to="/profile"
-                    className="btn btn-primary  btn-sm"
-                  >
-                    View Profile <i className="mdi mdi-arrow-right ms-1"></i>
-                  </Link>
-                </div>
+                    <div className="mt-4">
+                      <Link
+                        to="/profile"
+                        className="btn btn-primary  btn-sm"
+                      >
+                        View Profile <i className="mdi mdi-arrow-right ms-1"></i>
+                      </Link>
+                    </div>
                   </Col>
                 </Row>
-               
+
               </div>
             </Col>
           </Row>

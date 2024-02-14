@@ -56,7 +56,7 @@ export const MarkOtherReasonModel = props => {
   }
 
   function uploadFile(formData) {
-    const token = localStorage.getItem("tokenemployeeRegister")
+    const token = sessionStorage.getItem("tokenemployeeRegister")
     const headers = {
       'x-access-token': token != null ? token : '',
     };

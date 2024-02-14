@@ -246,8 +246,8 @@ const Register = props => {
 
   useEffect(() => {
     // dispatch(apiError(""));
-    localStorage.removeItem("tokenemployeeRegister")
-    localStorage.removeItem("COMPANY-ID")
+    sessionStorage.removeItem("tokenemployeeRegister")
+    sessionStorage.removeItem("COMPANY-ID")
 
     if (timerStart == true) {
       const interval = setInterval(() => {

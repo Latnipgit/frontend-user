@@ -39,7 +39,7 @@ const ReportedDebtorsModel = props => {
   const [mobile, setMobile] = useState('');
   const [name, setName] = useState('');
   const [companyName, setcompanyName] = useState('');
-  const logindata = (localStorage.getItem("authUser")) != undefined ? JSON.parse(localStorage.getItem("authUser")) : ''
+  const logindata = (sessionStorage.getItem("authUser")) != undefined ? JSON.parse(sessionStorage.getItem("authUser")) : ''
   const [gstValidation, setGSTValidation] = useState({
     touched: false,
     error: ''

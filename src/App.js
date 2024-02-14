@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect ,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { layoutTypes } from "./constants/layout";
@@ -61,8 +61,9 @@ function clearStorage() {
   let session = sessionStorage.getItem('register');
 
   if (session == null) {
-  
-    localStorage.clear();
+
+    sessionStorage.clear()
+    sessionStorage.clear();
 
   }
   sessionStorage.setItem('register', 1);
@@ -79,21 +80,21 @@ const App = () => {
   const Layout = getLayout(layoutType);
   const [isLoaded, setisLoaded] = useState(true)
 
-//  const onTimeLoad=()=>{
-//   if(isLoaded){
-//     if(localStorage.getItem("authUser")== undefined){
-//       window.location.href="/login"
-//         }
-//         setisLoaded(false)
-//   }
- 
-    
-//  }
-//  useEffect(()=>{
-//   if(isLoaded){
-//   onTimeLoad()
-//   }
-//  },[])
+  //  const onTimeLoad=()=>{
+  //   if(isLoaded){
+  //     if(sessionStorage.getItem("authUser")== undefined){
+  //       window.location.href="/login"
+  //         }
+  //         setisLoaded(false)
+  //   }
+
+
+  //  }
+  //  useEffect(()=>{
+  //   if(isLoaded){
+  //   onTimeLoad()
+  //   }
+  //  },[])
   return (
     <React.Fragment>
       {/* <Loader/> */}

@@ -57,7 +57,7 @@ const uploadDocumentsModel = props => {
 
 
   function uploadFile(formData) {
-    const token = JSON.parse(localStorage.getItem("authUser")).token
+    const token = sessionStorage.getItem("tokenemployeeRegister")
     const headers = {
       'x-access-token': token != null ? token : '',
     };

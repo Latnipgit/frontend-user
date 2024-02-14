@@ -93,7 +93,7 @@ const ReportDebtor = props => {
 
   const GetAllInvoice = useSelector(selectInvoiceListMap)
 
-  const pGErElo=()=>{
+  const pGErElo = () => {
     dispatch(setIsReportDefOpen(!isReportDefOpen));
     window.location.reload()
   }
@@ -161,7 +161,7 @@ const ReportDebtor = props => {
   const [requestedData, setrequestedData] = useState('')
 
   const requestEdit = (item) => {
-    console.log("ITEMMMMM",item)
+    console.log("ITEMMMMM", item)
     setrequestedData(item)
     dispatch(setRequestEditModalOpen(!isRequestEditModalOpen))
     const payload = {
@@ -316,7 +316,7 @@ const ReportDebtor = props => {
 
                 &nbsp;
                 <button type="button" className="btn btn-info " data-toggle="tooltip" data-placement="top"
-                  title="Request Edit"  rel='noreferrer'
+                  title="Request Edit" rel='noreferrer'
                   target='_blank' onClick={() => requestEdit(cellProps.cell.row.original)
 
 
@@ -377,7 +377,7 @@ const ReportDebtor = props => {
       <ReportIncoiceModel isOpen={isReportDefOpen} toggle={toggleViewModal3} GetAllInvoice={GetAllInvoice} />
       <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
-      <RequestEditMessageModal isOpen={isRequestEditModalOpen} toggle={toggleReqEdit} requestedData={requestedData}/>
+      <RequestEditMessageModal isOpen={isRequestEditModalOpen} toggle={toggleReqEdit} requestedData={requestedData} />
       <Card>
         <CardBody>
           <div className="mb-4 h4 card-title"></div>
@@ -388,8 +388,8 @@ const ReportDebtor = props => {
 
 
           <Row>
-            <Col md={10} className="pl-3" style={{ textTransform:"capitalize"}}>
-              <h5 className="m-1">My Complaints  : {localStorage.getItem("COMPANY")}</h5>
+            <Col md={10} className="pl-3" style={{ textTransform: "capitalize" }}>
+              <h5 className="m-1">My Complaints  : {sessionStorage.getItem("COMPANY")}</h5>
             </Col>
             <Col md={2}>
 

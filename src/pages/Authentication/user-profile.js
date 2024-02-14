@@ -46,10 +46,10 @@ const UserProfile = () => {
   }));
 
   useEffect(() => {
-    if (localStorage.getItem("authUser")) {
-       
-      const obj = JSON.parse(localStorage.getItem("authUser"));
-     if (
+    if (sessionStorage.getItem("authUser")) {
+
+      const obj = JSON.parse(sessionStorage.getItem("authUser"));
+      if (
         process.env.REACT_APP_DEFAULTAUTH === "jwt"
       ) {
         setname(obj.name);
@@ -106,9 +106,9 @@ const UserProfile = () => {
                       <div className="text-muted">
                         <h5>{name}</h5>
                         <p className="mb-1 ml-3">Email Address : {email}</p>
-                        <p className="mb-1 ml-3">Id no : #{idx}</p> 
+                        <p className="mb-1 ml-3">Id no : #{idx}</p>
                         <p className="mb-1 ml-3">Role : {AdminRole}</p>
-                        
+
 
                       </div>
                     </div>

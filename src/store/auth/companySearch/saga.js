@@ -11,6 +11,7 @@ import {
 
 //Include Both Helper File with needed methods
 import { searchCompanyAPI } from "helpers/fakebackend_helper";
+import { de } from "date-fns/locale";
 
 function* searchCompanyasync(id) {
 
@@ -19,7 +20,8 @@ function* searchCompanyasync(id) {
   }
   try {
     const response = yield call(searchCompanyAPI, payload)
-    localStorage.setItem("tokenemployeeRegister", response.data.response.token)
+    sessionStorage.setItem("tokenemployeeRegister", response.data.response.token)
+    sessionStorage.setItem("refreshToken", response.data.response.refreshToken)
     yield put(searchCompanySuccess(response))
   } catch (error) {
     yield put(searchCompanyFail(error))

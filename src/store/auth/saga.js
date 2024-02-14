@@ -2,7 +2,9 @@ import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 
 // Login Redux States
 import { LOGIN_USER, LOGOUT_USER, SOCIAL_LOGIN } from "./login/Login.actionTypes";
-import { apiError, loginSuccess, logoutUserSuccess } from "./login/Login.actions";
+import { apiError, loginSuccess, logoutUserSuccess, tokenUpdate } from "./login/Login.actions";
+
+/* import useAuth from "helpers/jwt-token-access/useAuth";; */
 
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../helpers/firebase_helper";
@@ -23,8 +25,11 @@ function* loginUser({ payload: { user, history } }) {
       });
       if (response != undefined && response != null) {
         if (response.data.success) {
-          localStorage.setItem("authUser", JSON.stringify(response.data.response));
-          yield put(loginSuccess(response.data.response));
+          sessionStorage.setItem("authUser", JSON.stringify(response.data.response));
+          sessionStorage.setItem("tokenemployeeRegister", response.data.response.token)
+          sessionStorage.setItem("refreshToken", response.data.response.refreshToken)
+          yield put(loginSuccess(response.data.response))
+          yield put(tokenUpdate(response.data.response.refreshToken));
           if (response.data.response.passwordChangeNeeded == false) {
             history('/companies');
 
@@ -36,7 +41,7 @@ function* loginUser({ payload: { user, history } }) {
         } else {
           if (response.data.passwordChangeNeeded == true) {
             history('/changePassword');
-            localStorage.setItem("one-time-token", response.data.passwordChangeToken)
+            sessionStorage.setItem("one-time-token", response.data.passwordChangeToken)
             alert(response.data.message);
 
 
@@ -60,7 +65,7 @@ function* loginUser({ payload: { user, history } }) {
 
 // function* logoutUser({ payload: { history } }) {
 //   try {
-//     localStorage.removeItem("authUser");
+//     sessionStorage.removeItem("authUser");
 
 //     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
 //       const response = yield call(fireBaseBackend.logout);
@@ -81,8 +86,8 @@ function* logoutUser({ payload: { history } }) {
       yield put(logoutUserSuccess(response));
 
     }
-    localStorage.removeItem("authUser");
     history('/login');
+    // sessionStorage.clear();
   } catch (error) {
     yield put(apiError(error));
   }
@@ -98,11 +103,11 @@ function* socialLogin({ payload: { data, history, type } }) {
         data,
         type,
       );
-      localStorage.setItem("authUser", JSON.stringify(response));
+      sessionStorage.setItem("authUser", JSON.stringify(response));
       yield put(loginSuccess(response));
     } else {
       const response = yield call(postSocialLogin, data);
-      localStorage.setItem("authUser", JSON.stringify(response));
+      sessionStorage.setItem("authUser", JSON.stringify(response));
       yield put(loginSuccess(response));
     }
     history("/dashboard");

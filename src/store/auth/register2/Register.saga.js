@@ -23,7 +23,7 @@ function* registerUser_login_2({ payload: { user, history } }) {
       });
       if (response != undefined && response != null) {
 
-        // localStorage.setItem("authUser", JSON.stringify(response.data.response));
+        // sessionStorage.setItem("authUser", JSON.stringify(response.data.response));
         yield put(registerSuccess_login(response.data.success));
 
 

@@ -186,8 +186,8 @@ const ReportedDefaulterModel = props => {
   }
 
   const submitInvoice = (setvalu) => {
-console.log("setvalusetvalu",setvalu)
-setCurrentIndex(setvalu+1)
+    console.log("setvalusetvalu", setvalu)
+    setCurrentIndex(setvalu + 1)
     calculateSubtotal(data)
 
     const date = moment()
@@ -402,7 +402,7 @@ setCurrentIndex(setvalu+1)
 
 
   function uploadFile(formData, index) {
-    const token = localStorage.getItem("tokenemployeeRegister")
+    const token = sessionStorage.getItem("tokenemployeeRegister")
     const headers = {
       'x-access-token': token != null ? token : '',
     };
@@ -480,42 +480,42 @@ setCurrentIndex(setvalu+1)
         <ModalBody className="" >
           <ConfirmReportModal isOpen={showConfirmModal} toggle={handleConfirmClose} />
           {
-            filteredCustomerDetail.length == 0 ?  <form>
-            <Row className="selectionList">
-              <Col xs={12} md={2}>
-                <div className="mt-2"><b className="mt-2">Customer Name*</b></div>
-              </Col>
-              <Col xs={12} md={4}>
-                <div className="d-inline">
-                  <label
-                    className="visually-hidden custom-content"
-                    htmlFor="customerSelect"
-                  >
-                    Select Customer
-                  </label>
+            filteredCustomerDetail.length == 0 ? <form>
+              <Row className="selectionList">
+                <Col xs={12} md={2}>
+                  <div className="mt-2"><b className="mt-2">Customer Name*</b></div>
+                </Col>
+                <Col xs={12} md={4}>
+                  <div className="d-inline">
+                    <label
+                      className="visually-hidden custom-content"
+                      htmlFor="customerSelect"
+                    >
+                      Select Customer
+                    </label>
 
-                  <Select
-                    options={getDebtrosList}
-                    styles={customStyles}
-                    value={selectedOption}
-                    onChange={selected => handleSelectCustomer(selected)}
-                  />
+                    <Select
+                      options={getDebtrosList}
+                      styles={customStyles}
+                      value={selectedOption}
+                      onChange={selected => handleSelectCustomer(selected)}
+                    />
 
-                </div>
-              </Col>
-              <Col xs={12} md={3}>
-                <div className="d-inline">
-                  <Button variant="link" onClick={() => toggleAddCustomer()}>
-                    <i className="fas fa-plus-circle" />{" Add New Customer"}
-                    {/* Assuming you have an icon library */}
-                  </Button>
-                  {/*     <Modal isOpen={showModal} toggle={() => setShowModal(false)}> */}
-                  {isAddCustomerOpen && <AddcustomerFomr />}
-                </div>
-              </Col>
+                  </div>
+                </Col>
+                <Col xs={12} md={3}>
+                  <div className="d-inline">
+                    <Button variant="link" onClick={() => toggleAddCustomer()}>
+                      <i className="fas fa-plus-circle" />{" Add New Customer"}
+                      {/* Assuming you have an icon library */}
+                    </Button>
+                    {/*     <Modal isOpen={showModal} toggle={() => setShowModal(false)}> */}
+                    {isAddCustomerOpen && <AddcustomerFomr />}
+                  </div>
+                </Col>
 
-            </Row>
-          </form>:""}
+              </Row>
+            </form> : ""}
 
           {
             filteredCustomerDetail.length != 0 ? <Row className="mt-4">
@@ -732,11 +732,11 @@ setCurrentIndex(setvalu+1)
                             <Button className="btn btn-info mt-2" onClick={() => submitInvoice(index)}>
                               Save Invoice
                             </Button> &nbsp;
-                    
-                  {index > 0 ?  <Button className="btn btn-danger mt-2 "  onClick={() => removeFaqsRow(index)}>
-Delete
-                    </Button>:''}
-                            </Col>
+
+                            {index > 0 ? <Button className="btn btn-danger mt-2 " onClick={() => removeFaqsRow(index)}>
+                              Delete
+                            </Button> : ''}
+                          </Col>
 
                         </Row>
 
@@ -745,10 +745,10 @@ Delete
 
                   </Row>
                 ))}
-                {console.log("currenIndexcurrenIndex",currenIndex)}
+                {console.log("currenIndexcurrenIndex", currenIndex)}
                 <Row>
                   <Col md={12} className="text-end">
-                   
+
                     <Button
                       className="btn btn-info"
                       onClick={addFaqsRow}

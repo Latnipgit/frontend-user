@@ -4,15 +4,18 @@ import {
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
   API_ERROR,
+  TOKEN_UPDATE,
 } from "./Login.actionTypes"
 
 const initialState = {
   error: "",
   loading: false,
+  getUserSuccess: [],
+  updatedToken: [],
 }
 
 const login = (state = initialState, action) => {
-    
+
   switch (action.type) {
     case LOGIN_USER:
       state = {
@@ -25,16 +28,23 @@ const login = (state = initialState, action) => {
         ...state,
         loading: false,
         isUserLogout: false,
+        getUserSuccess: action.payload
+      }
+      break
+    case TOKEN_UPDATE:
+      state = {
+        ...state,
+        updatedToken: action.payload
       }
       break
     case LOGOUT_USER:
       state = { ...state }
       break
     case LOGOUT_USER_SUCCESS:
-      state = { ...state , isUserLogout: true}
+      state = { ...state, isUserLogout: true }
       break
     case API_ERROR:
-      state = { ...state, error: action.payload, loading: false,isUserLogout: false, }
+      state = { ...state, error: action.payload, loading: false, isUserLogout: false, }
       break
     default:
       state = { ...state }

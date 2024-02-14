@@ -34,8 +34,8 @@ const ContactsProfile = (props) => {
     { title: "Pending Projects", iconClass: "bx-hourglass", text: "12" },
     { title: "Total Revenue", iconClass: "bx-package", text: "$36,524" },
   ];
-const userData = JSON.parse(localStorage.getItem("authUser"))
-  const userProfile =userData
+  const userData = JSON.parse(sessionStorage.getItem("authUser"))
+  const userProfile = userData
 
   // const userProfile = {
   //   img: profile1,
@@ -69,53 +69,53 @@ const userData = JSON.parse(localStorage.getItem("authUser"))
   //   ],
   // };
 
-//   const columns = [
-//     {
-//       Header: "#",
-//       accessor: "id",
-//       disableFilters: true,
-//       filterable: true,
-//       Cell: (cellProps) => {
-//         return <Idno {...cellProps} />;
-//       },
-//     },
-//     {
-//       Header: "Project",
-//       accessor: "name",
-//       disableFilters: true,
-//       filterable: true,
-//       Cell: (cellProps) => {
-//         return <Name {...cellProps} />;
-//       },
-//     },
-//     {
-//       Header: "Start Date",
-//       accessor: "startDate",
-//       disableFilters: true,
-//       filterable: true,
-//       Cell: (cellProps) => {
-//         return <Pdate {...cellProps} />;
-//       },
-//     },
-//     {
-//       Header: "Deadline",
-//       accessor: "deadline",
-//       disableFilters: true,
-//       filterable: true,
-//       Cell: (cellProps) => {
-//         return <Ddate {...cellProps} />;
-//       },
-//     },
-//     {
-//       Header: "Budget",
-//       accessor: "budget",
-//       disableFilters: true,
-//       filterable: true,
-//       Cell: (cellProps) => {
-//         return <Budget {...cellProps} />;
-//       },
-//     },
-//   ];
+  //   const columns = [
+  //     {
+  //       Header: "#",
+  //       accessor: "id",
+  //       disableFilters: true,
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return <Idno {...cellProps} />;
+  //       },
+  //     },
+  //     {
+  //       Header: "Project",
+  //       accessor: "name",
+  //       disableFilters: true,
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return <Name {...cellProps} />;
+  //       },
+  //     },
+  //     {
+  //       Header: "Start Date",
+  //       accessor: "startDate",
+  //       disableFilters: true,
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return <Pdate {...cellProps} />;
+  //       },
+  //     },
+  //     {
+  //       Header: "Deadline",
+  //       accessor: "deadline",
+  //       disableFilters: true,
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return <Ddate {...cellProps} />;
+  //       },
+  //     },
+  //     {
+  //       Header: "Budget",
+  //       accessor: "budget",
+  //       disableFilters: true,
+  //       filterable: true,
+  //       Cell: (cellProps) => {
+  //         return <Budget {...cellProps} />;
+  //       },
+  //     },
+  //   ];
 
   return (
     <React.Fragment>
@@ -185,7 +185,7 @@ const userData = JSON.parse(localStorage.getItem("authUser"))
                 </CardBody>
               </Card>
               </Col> */}
-              <Col xl="12">
+            <Col xl="12">
               <Card>
                 <CardBody>
                   <CardTitle className="mb-4">Personal Information</CardTitle>

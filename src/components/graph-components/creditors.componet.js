@@ -10,7 +10,7 @@ export const CreditorsGraph = () => {
   const chartRefCreditorAgeWise = useRef(null)
   const chartRefCreditorTop10 = useRef(null)
   const chartRefCreditorDaysWise = useRef(null)
-  const isPopupOpen = JSON.parse(localStorage.getItem("IspopupOpen"))
+  const isPopupOpen = JSON.parse(sessionStorage.getItem("IspopupOpen"))
 
   const sampleDataCreditors = [
     { city: "New York", name: "Creditor 1", amountOwed: 8000, daysCount: 10 },
@@ -255,7 +255,7 @@ export const CreditorsGraph = () => {
     if (isPopupOpen) {
       setTimeout(() => {
         setSubscribemodal(true)
-        localStorage.setItem("IspopupOpen", JSON.stringify(false))
+        sessionStorage.setItem("IspopupOpen", JSON.stringify(false))
       }, 500)
     }
   }, [])
@@ -282,36 +282,32 @@ export const CreditorsGraph = () => {
           >
             <button
               type="button"
-              className={`btn btn-secondary ${
-                activeChartCreditors === "totalCreditors" ? "active" : ""
-              }`}
+              className={`btn btn-secondary ${activeChartCreditors === "totalCreditors" ? "active" : ""
+                }`}
               onClick={() => handleChartCreditorsChange("totalCreditors")}
             >
               Total Credits
             </button>
             <button
               type="button"
-              className={`btn btn-secondary ${
-                activeChartCreditors === "citywise" ? "active" : ""
-              }`}
+              className={`btn btn-secondary ${activeChartCreditors === "citywise" ? "active" : ""
+                }`}
               onClick={() => handleChartCreditorsChange("citywise")}
             >
               City Wise
             </button>
             <button
               type="button"
-              className={`btn btn-secondary ${
-                activeChartCreditors === "top10Debtors" ? "active" : ""
-              }`}
+              className={`btn btn-secondary ${activeChartCreditors === "top10Debtors" ? "active" : ""
+                }`}
               onClick={() => handleChartCreditorsChange("top10Debtors")}
             >
               Top Creditors
             </button>
             <button
               type="button"
-              className={`btn btn-secondary ${
-                activeChartCreditors === "daysWise" ? "active" : ""
-              }`}
+              className={`btn btn-secondary ${activeChartCreditors === "daysWise" ? "active" : ""
+                }`}
               onClick={() => handleChartCreditorsChange("daysWise")}
             >
               Days Wise

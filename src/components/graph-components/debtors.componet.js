@@ -48,7 +48,7 @@ export const DebtorsGraph = () => {
   const chartRef3 = useRef(null)
   const chartRef4 = useRef(null)
 
-  const isPopupOpen = JSON.parse(localStorage.getItem("IspopupOpen"))
+  const isPopupOpen = JSON.parse(sessionStorage.getItem("IspopupOpen"))
 
   const sampleData = [
     { city: "New York", amountDue: 5000, daysCount: 10, name: "Name A" },

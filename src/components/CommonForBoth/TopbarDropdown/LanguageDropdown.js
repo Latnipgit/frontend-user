@@ -18,14 +18,14 @@ const LanguageDropdown = () => {
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
-    const currentLanguage = localStorage.getItem("I18N_LANGUAGE");
+    const currentLanguage = sessionStorage.getItem("I18N_LANGUAGE");
     setSelectedLang(currentLanguage);
   }, [])
 
   const changeLanguageAction = lang => {
     //set language as i18n
     i18n.changeLanguage(lang);
-    localStorage.setItem("I18N_LANGUAGE", lang);
+    sessionStorage.setItem("I18N_LANGUAGE", lang);
     setSelectedLang(lang);
   }
 
