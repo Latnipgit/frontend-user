@@ -123,6 +123,7 @@ export const addInitiatePaymentVerification = data => addEmployeeAPImethod("/api
 export const uploadCACertificateAPIMethod = data => addEmployeeAPImethod("/api/transactions/updateInvoiceDocumentsCACertificate");
 export const requestAEdit = data => addEmployeeAPImethod("/api/transactions/requestDefaultInvoiceEdit");
 export const getcompanySerachViewDatils = data => addEmployeeAPImethod("/api/debtors/getAllCreditorsByDebtorId", data);
+export const uploadPendingDocMethod = data => addEmployeeAPImethod("/api/user/uploadSupportingDocuments", data);
 
 
 //ADD invoice

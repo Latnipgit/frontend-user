@@ -15,109 +15,40 @@ import CurrencyFormat from 'react-currency-format';
 // import ReactTooltip from "react-tooltip";
 /* import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton"; */
+import { ToastContainer, toast } from "react-toastify"
 import {
-    Container,
     Row,
     Col,
-    Button,
     Card,
     CardBody,
-    Input,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    CardHeader,
-    Table,
-    InputGroup,
-    Form,
-    CardTitle,
-    FormGroup,
-    Label,
+
 } from "reactstrap"
 import TableContainer from "../../../components/Common/TableContainer";
-import { getInvoices as ongetInvoices } from '../../../store/actions'
 import { useDispatch, useSelector } from "react-redux";
-import { success } from "toastr"
-//import { getAllInvoice as ongetAllInvoice } from '../../../../src/store/actions'
-import { getAllInvoice, setIsReportDefOpen, setUploadFilesOpen, setCACertificateOpen, requestInvoiceDefEdit, setIsViewDetailModalOpen } from "../../../store/debtors/debtors.actions"
-import { selectReportDefOpen, selectInvoiceList, uploadFilesModalOpen, selectCACertificateOpen, requestEditSelector, isViewDetailMOdalOpenSelector } from "store/debtors/debtors.selecter"
 import { fetchUploadPendingListStart } from "store/UploadPendingDocList/UploadPendingDocList.action"
-import { selectUploadingPendingListData, selectTransactionsRaisedByMeData, selectTransactionsSentToMeData, selectTransactionsRaisedByMeDataMap, selectTransactionsSentToMeDataMap } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
+import { selectTransactionsRaisedByMeDataMap, selectTransactionsSentToMeDataMap } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
 import UploadPendingDocModel from "./uploadPendingDoc"
-import UploadPendingFiles from "../Invoice/uploadFilesModal"
-import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
-import moment from 'moment'
-import { ToastContainer, toast } from 'react-toastify';
 import { numberFormat } from "./uploadPendingDoc"
-import ViewDetailsReportDefaultModal from "../Invoice/viewDetailsReportDefaultModal"
-import { ReportRaisedByMeTable } from "./uploadRaisedByMe"
-import { ReportSentTomeTable } from "./uploadSentTome"
-import { selectUploadPendigDocOpen, uploadPendigDocSelector } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
+import { selectUploadPendigDocOpen } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
 import { setUploadPednigDocOpen } from "store/UploadPendingDocList/UploadPendingDocList.action"
-/* import './style.css' */
-// import { ToastContainer } from "react-toastify"
+
 import {
-    CheckBox,
     SrNo,
-    PANCARD,
-    AADHAR,
-    GST,
-    CompanyName,
-    DueSince,
-    DueAmount,
-    Reating
 } from ".././company-search/companyssearchColl";
 
 
 const UploadPendingListModule = props => {
     const dispatch = useDispatch();
-    const isViewDetailModal = useSelector(isViewDetailMOdalOpenSelector);
-    const isReportDefOpen = useSelector(selectReportDefOpen);
-
-
-
+    const [selectType, setSelectType] = useState('')
     const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeDataMap);
     const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeDataMap);
-
     const uploadFilesModalShow = useSelector(selectUploadPendigDocOpen);
     const toggleUploiadFiles = () => dispatch(setUploadPednigDocOpen(!uploadFilesModalShow));
 
     useEffect(() => {
-        dispatch(getAllInvoice());
-        dispatch(setIsViewDetailModalOpen())
         dispatch(fetchUploadPendingListStart())
     }, [])
 
-    const viewModel = (value) => {
-        setSelected(value)
-        setModal2(true)
-    }
-
-    const viewModels = (value) => {
-        setModal3(true)
-    }
-
-
-
-    const additionalValue = "Hello from additional prop!";
-    const [invoiceIdsForCAcertificate, setinvoiceIdsForCAcertificate] = useState('')
-    const [filteredData, setFilteredData] = useState([]);
-    const handleReportDefaulter = () => {
-        // window.location.href = "/ReportDefaulter"
-        //setModal4(true)
-        dispatch(setIsReportDefOpen(!isReportDefOpen))
-    }
-
-
-    const handleViewDetail = (item) => {
-
-        // window.location.href = "/ReportDefaulter"
-        //setModal4(true)
-        setViewModalData(item)
-        dispatch(setIsViewDetailModalOpen(!isViewDetailModal))
-
-    }
     const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
 
     const handleUploadFiles = (item) => {
@@ -244,7 +175,7 @@ const UploadPendingListModule = props => {
                                 &nbsp;
                                 <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                                     title="Upload Pending Files" href={cellProps.cell.row.original.url} rel='noreferrer'
-                                    target='_blank' onClick={() => handleUploadFiles(cellProps.cell.row.original)
+                                    target='_blank' onClick={() => { handleUploadFiles(cellProps.cell.row.original), setSelectType('CREDITOR') }
 
                                     }>
                                     <i className='bx bx-cloud-upload textsizing' ></i>
@@ -352,8 +283,7 @@ const UploadPendingListModule = props => {
                                 &nbsp;
                                 <button type="button" className="btn btn-info" data-toggle="tooltip" data-placement="top"
                                     title="Upload Pending Files" href={cellProps.cell.row.original.url} rel='noreferrer'
-                                    target='_blank' onClick={() => handleUploadFiles(cellProps.cell.row.original)
-
+                                    target='_blank' onClick={() => { handleUploadFiles(cellProps.cell.row.original), setSelectType('DEBTOR') }
                                     }>
                                     <i className='bx bx-cloud-upload textsizing' ></i>
                                 </button>
@@ -369,9 +299,13 @@ const UploadPendingListModule = props => {
         []
     );
 
+    const submitCheck = (value) => {
+        if (value) toast.success("File Upload Successfully")
+    }
+
     return (
         <React.Fragment>
-            <UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} invoiceId={invoiceIdsForCAcertificate} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} />
+            <UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} selectType={selectType} submitCheck={submitCheck} />
             <Card>
                 <CardBody>
                     <div className="mb-4 h4 card-title"></div>
@@ -412,6 +346,7 @@ const UploadPendingListModule = props => {
                     </Row>
                 </CardBody>
             </Card>
+            <ToastContainer />
         </React.Fragment>
     );
 }

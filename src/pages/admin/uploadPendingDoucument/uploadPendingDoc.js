@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import moment from 'moment'
+import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux'
 import { setUploadPednigDocOpen, uploadUploadPednigDocID } from "../../../store/UploadPendingDocList/UploadPendingDocList.action"
 import { selectUploadPendigDocOpen, uploadPendigDocSelector } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
 import CurrencyFormat from 'react-currency-format';
-import { updatePendingDocsSelector } from "store/debtors/debtors.selecter"
+
+
 import {
   Button,
   Modal,
@@ -19,62 +21,86 @@ import {
   Table,
   Row, Col
 } from "reactstrap"
-import { ToastContainer, toast } from "react-toastify"
+
 import fileImg2 from '../../../assets/images/newImg/pdf.png'
 import fileImg1 from '../../../assets/images/newImg/png-file-.png'
 
 const UploadPendingDocModel = props => {
-  const { isOpen, toggle, uploadFilesModelDataForUpload } = props
-  const [uploadTransportId, setuploadTransportId] = useState('')
-  const [uploadpurchaseId, setuploadpurchaseId] = useState('')
-  const [uploadInvoiceId, setuploadInvoiceId] = useState('')
-  const [uploadChallanId, setuploadChallanId] = useState('')
-  const updatePendingDocs = useSelector(updatePendingDocsSelector)
+  const { isOpen, toggle, uploadFilesModelDataForUpload, selectType, submitCheck } = props
+  const dispatch = useDispatch()
+  const [uploadCAId, setuploadCAId] = useState('')
+  const [uploadAdditionId, setuploadAdditionId] = useState('')
+
+  const [docData, setDocData] = useState([
+    {
+      invoiceId: "",
+      uploadpurchaseId: "",
+      uploadChallanId: "",
+      uploadInvoiceId: "",
+      uploadTransportId: "",
+      uploadcaCertificateId: "",
+      uploAdadditionaldocumentsId: ""
+
+    },
+  ])
 
 
-  const handleFileChange = (event, fieldName, index) => {
+  /*  function handInvoiceID(value, currenIndex) {
+     debugger
+     const newData = [...docData]
+ 
+     const payload = 
+     newData[currenIndex].invoiceId = value
+     setDocData(newData)
+   } */
+
+  console.log('docData', docData);
+
+  const updatePendingDocs = useSelector(uploadUploadPednigDocID)
+
+
+  const handleFileChange = (event, fieldName, currenIndex) => {
     const files = event.target.files
-
     const formData = new FormData();
-
     formData.append('file', files[0]);   //append the values with key, value pair
     formData.append('fieldName', fieldName);
-
-
-    uploadFile(formData, index)
-
-
+    uploadFile(formData, currenIndex)
   }
 
-  function uploadFile(formData, index) {
+  function uploadFile(formData, currenIndex) {
     const token = sessionStorage.getItem("tokenemployeeRegister")
     const headers = {
       'x-access-token': token != null ? token : '',
     };
-
-
     axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
       headers: headers
     })
       .then((response) => {
-        // toast.success("file upload successfully")
-        if (response.data.response.fieldName == "uploadInvoice") {
-          setuploadInvoiceId(response.data.response)
-
-
-
+        if (response.data.response.fieldName == "invoiceDocument") {
+          const newData = [...docData]
+          newData[currenIndex].uploadInvoiceId = response.data.response
+          setDocData(newData)
         }
-        if (response.data.response.fieldName == "uploadPurchaseOrder") {
-          setuploadpurchaseId(response.data.response)
-
+        if (response.data.response.fieldName == "purchaseOrderDocument") {
+          const newData = [...docData]
+          newData[currenIndex].uploadpurchaseId = response.data.response
+          setDocData(newData)
         }
-        if (response.data.response.fieldName == "uploadchallanDispatchDocument") {
-          setuploadChallanId(response.data.response)
-
+        if (response.data.response.fieldName == "challanDocument") {
+          const newData = [...docData]
+          newData[currenIndex].uploadChallanId = response.data.response
+          setDocData(newData)
         }
-        if (response.data.response.fieldName == "uploadTransportationDocumentDeliveryReceipt~`") {
-          setuploadTransportId(response.data.response)
-
+        if (response.data.response.fieldName == "transportationDocument") {
+          const newData = [...docData]
+          newData[currenIndex].uploadTransportId = response.data.response
+          setDocData(newData)
+        }
+        if (response.data.response.fieldName == "cacertificate`") {
+          setuploadCAId(response.data.response)
+        }
+        if (response.data.response.fieldName == "additionaldocuments`") {
+          setuploadAdditionId(response.data.response)
         }
       })
       .catch((error) => {
@@ -82,19 +108,38 @@ const UploadPendingDocModel = props => {
       })
   }
 
-  const dispatch = useDispatch()
-
   const handleSubmit = (item) => {
 
     const payload = {
-      "invoiceId": item.invoiceNumber,
-      "purchaseOrderDocument": uploadpurchaseId == "" ? uploadpurchaseId : item.purchaseOrderDocument._id,
-      "challanDocument": uploadChallanId == "" ? uploadChallanId : item.challanDocument._id,
-      "invoiceDocument": uploadInvoiceId == "" ? uploadInvoiceId : item.invoiceDocument._id,
-      "transportationDocument": uploadTransportId == "" ? uploadTransportId : item.transportationDocument._id
-    }
+      "paymentId": "65aba5d07c7388ab35450afa",
+      "type": selectType, // DEBTOR/CREDITOR
 
-    // dispatch(updatePendingDocumentss(payload))
+      // Below documents are required for type DEBTOR
+      "debtorcacertificate": selectType == 'DEBTOR' ? uploadCAId.documentId : '',
+      "debtoradditionaldocuments": selectType == 'DEBTOR' ? uploadAdditionId.documentId : '',
+
+      // Below documents are required for type CREDITOR
+      "creditorcacertificate": selectType == 'CREDITOR' ? uploadCAId.documentId : '',
+      "creditoradditionaldocuments": selectType == 'CREDITOR' ? uploadAdditionId.documentId : '',
+      "attachment": [{
+        "invoiceId": "65ab9892bd955909076e6d0e",
+        "purchaseOrderDocument": "659ba50f91dc6f176dca2210",
+        "challanDocument": "659ba58091dc6f176dca221c",
+        "invoiceDocument": "659ba50f91dc6f176dca2210",
+        "transportationDocument": "659ba50f91dc6f176dca2210"
+      },
+      {
+        "invoiceId": "65ab9892bd955909076e6d10",
+        "purchaseOrderDocument": "659ba58091dc6f176dca221c",
+        "challanDocument": "659ba50f91dc6f176dca2210",
+        "invoiceDocument": "659ba50f91dc6f176dca2210",
+        "transportationDocument": "659ba50f91dc6f176dca2210"
+      }
+      ]
+    }
+    toggle()
+    submitCheck(true)
+    //  dispatch(updatePendingDocs(payload))
   }
   return (
     <Modal
@@ -111,7 +156,7 @@ const UploadPendingDocModel = props => {
         <ModalHeader toggle={toggle}>Upload Pending Files files</ModalHeader>
 
         <ModalBody>
-          {uploadFilesModelDataForUpload != '' && uploadFilesModelDataForUpload.defaulterEntry.invoices != undefined ? uploadFilesModelDataForUpload.defaulterEntry.invoices.map((item) => {
+          {uploadFilesModelDataForUpload != '' && uploadFilesModelDataForUpload.defaulterEntry.invoices != undefined ? uploadFilesModelDataForUpload.defaulterEntry.invoices.map((item, currenIndex) => {
             return <Row className="bg-light p-3 mt-2" key={item}>
               <Row>
                 <Col md={3}><strong>Invoice Number : {item.invoiceNumber}</strong></Col>
@@ -125,204 +170,121 @@ const UploadPendingDocModel = props => {
                 </Col>
 
               </Row>
-
-
               <Row className="mt-4">
-                {
-                  item.invoiceDocument == null ? <Col md={3}>
-                    <Row>
-
-                      <Col md={12}>
-
-                        <InputGroup className="text-capitalize">
-                          <input
-                            type="file"
-                            className="form-control"
-                            id="uploadInvoice"
-                            accept=".pdf, .doc, .docx, .txt"
-                            aria-describedby="fileUploadHelp"
-                            onChange={e =>
-                              handleFileChange(e, "uploadInvoice")
-                            }
-                          />
-                        </InputGroup>
-                        <b>Invoice Document</b>
-
+                {selectType == 'CREDITOR' && (<>
+                  {uploadFilesModelDataForUpload.documentsRequiredFromCreditor.map((value, indix) => {
+                    return (value !== "cacertificate" && value !== "additionaldocuments" && (
+                      <Col md={3} key={indix}>
+                        <Row>
+                          <Col md={12}>
+                            <InputGroup className="text-capitalize">
+                              <input
+                                type="file"
+                                className="form-control"
+                                id={value}
+                                accept=".pdf, .doc, .docx, .txt"
+                                aria-describedby="fileUploadHelp"
+                                onChange={e =>
+                                  handleFileChange(e, value, currenIndex)
+                                }
+                              />
+                            </InputGroup>
+                            <b>{value == "purchaseOrderDocument" && ('Purchase Order Document')}
+                              {value == "challanDocument" && ('Challan Document')}
+                              {value == "invoiceDocument" && ('Invoice Document')}
+                              {value == "transportationDocument" && ('Transportation Document')}
+                            </b>
+                          </Col>
+                        </Row>
                       </Col>
-                    </Row>
+                    )
 
-                  </Col>
-                    :
-                    <Col md={3} className="text-center">
-                      <a href={item.invoiceDocument != null ? item.invoiceDocument.url : ''} rel='noreferrer' target='_blank'>
-                        {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                        <img src={fileImg1} className="iconsImage" />
+                    )
+                  })}</>)}
 
-
-                      </a>
-                      <br />
-                      <b>Invoice Documnet</b>
+                {/*                 {selectType == 'DEBTOR' && (<>
+                  {uploadFilesModelDataForUpload.documentsRequiredFromDebtor.map((value, indix) => {
+                    return <Col md={3} key={indix}>
+                      <Row>
+                        <Col md={12}>
+                          <InputGroup className="text-capitalize">
+                            <input
+                              type="file"
+                              className="form-control"
+                              id={value}
+                              accept=".pdf, .doc, .docx, .txt"
+                              aria-describedby="fileUploadHelp"
+                              onChange={e =>
+                                handleFileChange(e, value)
+                              }
+                            />
+                          </InputGroup>
+                          <b>{value == "purchaseOrderDocument" && ('Purchase Order Document')}
+                            {value == "challanDocument" && ('Challan Document')}
+                            {value == "invoiceDocument" && ('Invoice Document')}
+                            {value == "transportationDocument" && ('Transportation Document')}
+                            {value == "cacertificate" && ('Cacertificate Document')}
+                            {value == "additionaldocuments" && ('Additional Document')}
+                          </b>
+                        </Col>
+                      </Row>
                     </Col>
-                }
+                  })}</>)} */}
 
-
-                {item.challanDocument == null ?
-                  <Col md={3}>
-                    <Row>
-
-                      <Col md={12} className="">
-
-                        <InputGroup className="text-capitalize">
-                          <input
-                            type="file"
-                            className="form-control"
-                            id="uploadPurchaseOrder"
-                            accept=".pdf, .doc, .docx, .txt"
-                            aria-describedby="uploadchallanDispatchDocument"
-                            onChange={e =>
-                              handleFileChange(e, "uploadchallanDispatchDocument")
-                            }
-                          />
-                        </InputGroup>
-                        <b>Dispatch Document</b>
-
-
-
-                      </Col>
-                    </Row>
-
-                  </Col>
-                  :
-
-                  <Col md={3} className="text-center">
-                    <a href={item.challanDocument != null ? item.challanDocument.url : ""} rel='noreferrer' target='_blank' className="">
-                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={fileImg2} className="iconsImage shadow" />
-
-
-                    </a>
-                    <br />
-                    <b>Challan</b>
-                  </Col>
-                }
-
-                {item.transportationDocument == null ?
-
-
-                  <Col md={3}>
-                    <Row>
-                      <Col md={12}>
-                        <InputGroup className="text-capitalize">
-                          <input
-                            type="file"
-                            className="form-control"
-                            id="uploadPurchaseOrder"
-                            accept=".pdf, .doc, .docx, .txt"
-                            aria-describedby="uploadTransportationDocumentDeliveryReceipt~`"
-                            onChange={e =>
-                              handleFileChange(e, "uploadTransportationDocumentDeliveryReceipt~`")
-                            }
-                          />
-                        </InputGroup>
-                        <b>Transportation Document</b>
-
-                      </Col>
-                    </Row>
-
-                  </Col>
-                  :
-                  <Col md={3} className="text-center">
-                    <a href={item.transportationDocument != null ? item.transportationDocument.url : ''} rel='noreferrer' target='_blank'>
-                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={fileImg2} className="iconsImage shadow" />
-
-
-                    </a>
-                    <br />
-                    <b>Transportation Documnet</b>
-                  </Col>
-
-                }
-
-                {item.purchaseOrderDocument == null ?
-
-
-                  <Col md={3}>
-                    <Row>
-                      <Col md={12}>
-                        <InputGroup className="text-capitalize">
-                          <input
-                            type="file"
-                            className="form-control"
-                            id="uploadPurchaseOrder"
-                            accept=".pdf, .doc, .docx, .txt"
-                            aria-describedby="uploadPurchaseOrder"
-                            onChange={e =>
-                              handleFileChange(e, "uploadPurchaseOrder")
-                            }
-                          />
-                        </InputGroup>
-                        <b>Purchase Order</b>
-
-                      </Col>
-                    </Row>
-
-                  </Col>
-                  :
-                  <Col md={3} className="text-center">
-                    <a href={item.purchaseOrderDocument != null ? item.purchaseOrderDocument.url : ''} rel='noreferrer' target='_blank'>
-                      {/* <i className='bx bxs-file mt-2 fileSizing'></i> */}
-                      <img src={fileImg2} className="iconsImage shadow" />
-
-
-                    </a>
-                    <br />
-                    <b>Purchase Order</b>
-                  </Col>
-                }
               </Row>
 
-
-              <Row className="mt-3">
-                <Col md={10}></Col>
-                <Col md={2} className="text-end">
-                  <Button className="btn btn-info" onClick={() => handleSubmit(item)}>Submit</Button>
-
-                </Col>
-              </Row>
             </Row>
           }) : ""}
-
-
-
-
-
-
-          <Row className="mt-3">
-            <h5>Upload Additional Documents</h5>
-            <Row>
-              <Col md={4}></Col>
-              <Col md={4}>
-
-                <InputGroup className="text-capitalize">
-                  <input
-                    type="file"
-                    className="form-control"
-                    id="uploadInvoice"
-                    accept=".pdf, .doc, .docx, .txt"
-                    aria-describedby="fileUploadHelp"
-                    onChange={e =>
-                      handleFileChange(e, "generalDocumnet")
-                    }
-                  />
-                </InputGroup>
-
+          <Row className="bg-light p-3 mt-2">
+            <Row className="mt-4">
+              <Col md={3} >
+                <Row>
+                  <Col md={12}>
+                    <InputGroup className="text-capitalize">
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="cacertificate"
+                        accept=".pdf, .doc, .docx, .txt"
+                        aria-describedby="fileUploadHelp"
+                        onChange={e =>
+                          handleFileChange(e, "cacertificate")
+                        }
+                      />
+                    </InputGroup>
+                    <b>CA Certificate Document
+                    </b>
+                  </Col>
+                </Row>
               </Col>
-              <Col md={4}></Col>
+              <Col md={3}>
+                <Row>
+                  <Col md={12}>
+                    <InputGroup className="text-capitalize">
+                      <input
+                        type="file"
+                        className="form-control"
+                        id="additionaldocuments"
+                        accept=".pdf, .doc, .docx, .txt"
+                        aria-describedby="fileUploadHelp"
+                        onChange={e =>
+                          handleFileChange(e, "additionaldocuments")
+                        }
+                      />
+                    </InputGroup>
+                    <b>Additional Document
+                    </b>
+                  </Col>
+                </Row>
+              </Col>
             </Row>
           </Row>
-
-
+          <Row className="mt-3">
+            <Col md={10}></Col>
+            <Col md={2} className="text-end">
+              <Button className="btn btn-info" onClick={() => handleSubmit()}>Submit</Button>
+            </Col>
+          </Row>
         </ModalBody>
       </div>
     </Modal>

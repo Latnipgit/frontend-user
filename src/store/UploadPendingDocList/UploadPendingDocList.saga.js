@@ -1,11 +1,11 @@
 import { takeLatest, call, put, all, fork, takeEvery } from "redux-saga/effects"
 
-import { fetchUploadPendingListSuccess, fetchUploadPendingListFailure } from "./UploadPendingDocList.action"
+import { fetchUploadPendingListSuccess, fetchUploadPendingListFailure, uploadUploadPednigDocIDSuccess, uploadUploadPednigDocIDFail } from "./UploadPendingDocList.action"
 
 import { FETCH_UPLOADING_PENDING_DOC_LIST_START, UPLOAD_PENDING_DOCUMENT_ID } from "./UploadPendingDocList.type"
 
 import { getUploaddocpendigrList } from "helpers/fakebackend_helper"
-import { uploadCACertificateAPIMethod } from "helpers/fakebackend_helper"
+import { uploadPendingDocMethod } from "helpers/fakebackend_helper"
 
 
 export function* fetchUploadPendingListAsync() {
@@ -19,10 +19,10 @@ export function* fetchUploadPendingListAsync() {
 
 function* uploadPendingDocSaga(payload) {
   try {
-    const response = yield call(uploadCACertificateAPIMethod, payload.payload)
-    yield put(uploadCACertificateIDSuccess(response))
+    const response = yield call(uploadPendingDocMethod, payload.payload)
+    yield put(uploadUploadPednigDocIDSuccess(response))
   } catch (error) {
-    yield put(uploadCACertificateIDFail(error))
+    yield put(uploadUploadPednigDocIDFail(error))
   }
 }
 
