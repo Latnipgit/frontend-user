@@ -120,27 +120,37 @@ const UploadPendingDocModel = props => {
       // Below documents are required for type CREDITOR
       "creditorcacertificate": selectType == 'CREDITOR' ? uploadCAId.documentId : '',
       "creditoradditionaldocuments": selectType == 'CREDITOR' ? uploadAdditionId.documentId : '',
-      "attachment": docData
+      "attachment": selectType == 'DEBTOR' ? docData : ''
     }
-    let checkvalue = false
-    docData.map((obj) => {
-      checkvalue = Object.values(obj).includes('')
-    })
-    if (checkvalue) {
+    if (selectType == "CREDITOR") {
+      let checkvalue = false
+      docData.map((obj) => {
+        checkvalue = Object.values(obj).includes('')
+      })
+      if (checkvalue) {
+        setWarongText(true)
+        return
+      }
+    }
+
+    const uploadCA = Object.keys(uploadCAId).length;
+    if (uploadCA == 0) {
       setWarongText(true)
       return
     }
-    const uploadCA = Object.keys(uploadCAId).length;
-    const uploadAddition = Object.keys(uploadAdditionId).length;
-    if (uploadCA < 0 || uploadAddition < 0) {
-      setWarongText(true)
-    }
 
-    if (uploadCA > 0 && uploadAddition > 0) {
-      toggle()
-      submitCheck(true)
-      dispatch(uploadUploadPednigDocID(payload))
-    }
+
+    /*     const uploadAddition = Object.keys(uploadAdditionId).length;
+        if (uploadAddition == 0) {
+          setWarongText(true)
+          return
+        } */
+
+
+    toggle()
+    submitCheck(true)
+    dispatch(uploadUploadPednigDocID(payload))
+
 
   }
 
@@ -238,7 +248,7 @@ const UploadPendingDocModel = props => {
                     )
                   })}</>)}
 
-                {selectType == 'DEBTOR' && (<>
+                {/*                 {selectType == 'DEBTOR' && (<>
                   {uploadFilesModelDataForUpload.documentsRequiredFromDebtor.map((value, indix) => {
                     return <Col md={3} key={indix}>
                       <Row>
@@ -265,7 +275,7 @@ const UploadPendingDocModel = props => {
                         </Col>
                       </Row>
                     </Col>
-                  })}</>)}
+                  })}</>)} */}
 
               </Row>
 
@@ -276,6 +286,42 @@ const UploadPendingDocModel = props => {
               <Row className="mt-4">
                 {selectType == 'CREDITOR' && (<>
                   {uploadFilesModelDataForUpload.documentsRequiredFromCreditor.map((value, indix) => {
+                    return (
+                      <>
+                        {value == "cacertificate" || value == "additionaldocuments" ? (<Col md={3} key={value}>
+                          <Row>
+                            <Col md={12}>
+                              <InputGroup className="text-capitalize">
+                                <input
+                                  type="file"
+                                  className="form-control"
+                                  id={value}
+                                  accept=".pdf, .doc, .docx, .txt"
+                                  aria-describedby="fileUploadHelp"
+                                  onChange={e =>
+                                    handleFileChange(e, value)
+                                  }
+                                />
+                              </InputGroup>
+                              <b>
+                                {value == "cacertificate" && ('CA Certificate Document')}
+                                {value == "additionaldocuments" && ('Additional Document')}
+                              </b>
+                            </Col>
+                          </Row>
+                        </Col>) : ""}
+                      </>
+                    )
+                  })}</>)}
+              </Row>
+            </Row>
+          )}
+
+          {selectType == 'DEBTOR' && (
+            <Row className="bg-light p-3 mt-2">
+              <Row className="mt-4">
+                {selectType == 'DEBTOR' && (<>
+                  {uploadFilesModelDataForUpload.documentsRequiredFromDebtor.map((value, indix) => {
                     return (
                       <>
                         {value == "cacertificate" || value == "additionaldocuments" ? (<Col md={3} key={value}>
