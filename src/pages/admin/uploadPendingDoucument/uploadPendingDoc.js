@@ -30,6 +30,8 @@ const UploadPendingDocModel = props => {
   const dispatch = useDispatch()
   const [uploadCAId, setuploadCAId] = useState('')
   const [uploadAdditionId, setuploadAdditionId] = useState('')
+  const [warongText, setWarongText] = useState(false)
+  const cuuretchek = 1
 
   const [docData, setDocData] = useState([
     {
@@ -38,9 +40,6 @@ const UploadPendingDocModel = props => {
       uploadChallanId: "",
       uploadInvoiceId: "",
       uploadTransportId: "",
-      uploadcaCertificateId: "",
-      uploAdadditionaldocumentsId: ""
-
     },
   ])
 
@@ -54,17 +53,16 @@ const UploadPendingDocModel = props => {
      setDocData(newData)
    } */
 
-  console.log('docData', docData);
-
-  const updatePendingDocs = useSelector(uploadUploadPednigDocID)
 
 
+  /*   const uploadUploadPednigFile = useSelector(uploadUploadPednigDocID) */
   const handleFileChange = (event, fieldName, currenIndex) => {
     const files = event.target.files
     const formData = new FormData();
     formData.append('file', files[0]);   //append the values with key, value pair
     formData.append('fieldName', fieldName);
     uploadFile(formData, currenIndex)
+
   }
 
   function uploadFile(formData, currenIndex) {
@@ -76,30 +74,33 @@ const UploadPendingDocModel = props => {
       headers: headers
     })
       .then((response) => {
+
         if (response.data.response.fieldName == "invoiceDocument") {
           const newData = [...docData]
-          newData[currenIndex].uploadInvoiceId = response.data.response
+          newData[currenIndex].uploadInvoiceId = response.data.response.documentId
           setDocData(newData)
         }
         if (response.data.response.fieldName == "purchaseOrderDocument") {
           const newData = [...docData]
-          newData[currenIndex].uploadpurchaseId = response.data.response
+          newData[currenIndex].uploadpurchaseId = response.data.response.documentId
           setDocData(newData)
         }
         if (response.data.response.fieldName == "challanDocument") {
           const newData = [...docData]
-          newData[currenIndex].uploadChallanId = response.data.response
+          newData[currenIndex].uploadChallanId = response.data.response.documentId
           setDocData(newData)
         }
         if (response.data.response.fieldName == "transportationDocument") {
           const newData = [...docData]
-          newData[currenIndex].uploadTransportId = response.data.response
+          newData[currenIndex].uploadTransportId = response.data.response.documentId
           setDocData(newData)
         }
-        if (response.data.response.fieldName == "cacertificate`") {
+        if (response.data.response.fieldName == "cacertificate") {
+
           setuploadCAId(response.data.response)
         }
-        if (response.data.response.fieldName == "additionaldocuments`") {
+        if (response.data.response.fieldName == "additionaldocuments") {
+
           setuploadAdditionId(response.data.response)
         }
       })
@@ -109,38 +110,72 @@ const UploadPendingDocModel = props => {
   }
 
   const handleSubmit = (item) => {
-
+    debugger
     const payload = {
       "paymentId": "65aba5d07c7388ab35450afa",
       "type": selectType, // DEBTOR/CREDITOR
-
       // Below documents are required for type DEBTOR
       "debtorcacertificate": selectType == 'DEBTOR' ? uploadCAId.documentId : '',
       "debtoradditionaldocuments": selectType == 'DEBTOR' ? uploadAdditionId.documentId : '',
-
       // Below documents are required for type CREDITOR
       "creditorcacertificate": selectType == 'CREDITOR' ? uploadCAId.documentId : '',
       "creditoradditionaldocuments": selectType == 'CREDITOR' ? uploadAdditionId.documentId : '',
-      "attachment": [{
-        "invoiceId": "65ab9892bd955909076e6d0e",
-        "purchaseOrderDocument": "659ba50f91dc6f176dca2210",
-        "challanDocument": "659ba58091dc6f176dca221c",
-        "invoiceDocument": "659ba50f91dc6f176dca2210",
-        "transportationDocument": "659ba50f91dc6f176dca2210"
-      },
-      {
-        "invoiceId": "65ab9892bd955909076e6d10",
-        "purchaseOrderDocument": "659ba58091dc6f176dca221c",
-        "challanDocument": "659ba50f91dc6f176dca2210",
-        "invoiceDocument": "659ba50f91dc6f176dca2210",
-        "transportationDocument": "659ba50f91dc6f176dca2210"
-      }
-      ]
+      "attachment": docData
     }
-    toggle()
-    submitCheck(true)
-    //  dispatch(updatePendingDocs(payload))
+    let checkvalue = false
+    docData.map((obj) => {
+      checkvalue = Object.values(obj).includes('')
+    })
+    if (checkvalue) {
+      setWarongText(true)
+      return
+    }
+    const uploadCA = Object.keys(uploadCAId).length;
+    const uploadAddition = Object.keys(uploadAdditionId).length;
+    if (uploadCA < 0 || uploadAddition < 0) {
+      setWarongText(true)
+    }
+
+    if (uploadCA > 0 && uploadAddition > 0) {
+      toggle()
+      submitCheck(true)
+      dispatch(uploadUploadPednigDocID(payload))
+    }
+
   }
+
+  const createinvoiceObj = () => {
+    uploadFilesModelDataForUpload.defaulterEntry.invoices.map((item, currenIndex, arr) => {
+      if (currenIndex == 0) {
+        const newData = [...docData]
+        newData[currenIndex].invoiceId = item._id
+        setDocData(newData)
+      }
+
+      if (currenIndex > 0) {
+        setDocData([
+          ...docData,
+          {
+            invoiceId: item._id,
+            uploadpurchaseId: "",
+            uploadChallanId: "",
+            uploadInvoiceId: "",
+            uploadTransportId: "",
+          },
+        ])
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (uploadFilesModelDataForUpload != '' && uploadFilesModelDataForUpload.defaulterEntry.invoices != undefined) {
+      createinvoiceObj()
+    }
+
+  }, [cuuretchek])
+
+  console.log('docData', docData);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -157,6 +192,7 @@ const UploadPendingDocModel = props => {
 
         <ModalBody>
           {uploadFilesModelDataForUpload != '' && uploadFilesModelDataForUpload.defaulterEntry.invoices != undefined ? uploadFilesModelDataForUpload.defaulterEntry.invoices.map((item, currenIndex) => {
+
             return <Row className="bg-light p-3 mt-2" key={item}>
               <Row>
                 <Col md={3}><strong>Invoice Number : {item.invoiceNumber}</strong></Col>
@@ -202,7 +238,7 @@ const UploadPendingDocModel = props => {
                     )
                   })}</>)}
 
-                {/*                 {selectType == 'DEBTOR' && (<>
+                {selectType == 'DEBTOR' && (<>
                   {uploadFilesModelDataForUpload.documentsRequiredFromDebtor.map((value, indix) => {
                     return <Col md={3} key={indix}>
                       <Row>
@@ -215,7 +251,7 @@ const UploadPendingDocModel = props => {
                               accept=".pdf, .doc, .docx, .txt"
                               aria-describedby="fileUploadHelp"
                               onChange={e =>
-                                handleFileChange(e, value)
+                                handleFileChange(e, value, currenIndex)
                               }
                             />
                           </InputGroup>
@@ -223,64 +259,59 @@ const UploadPendingDocModel = props => {
                             {value == "challanDocument" && ('Challan Document')}
                             {value == "invoiceDocument" && ('Invoice Document')}
                             {value == "transportationDocument" && ('Transportation Document')}
-                            {value == "cacertificate" && ('Cacertificate Document')}
+                            {value == "cacertificate" && ('CA Certificate Document')}
                             {value == "additionaldocuments" && ('Additional Document')}
                           </b>
                         </Col>
                       </Row>
                     </Col>
-                  })}</>)} */}
+                  })}</>)}
 
               </Row>
 
             </Row>
           }) : ""}
-          <Row className="bg-light p-3 mt-2">
-            <Row className="mt-4">
-              <Col md={3} >
-                <Row>
-                  <Col md={12}>
-                    <InputGroup className="text-capitalize">
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="cacertificate"
-                        accept=".pdf, .doc, .docx, .txt"
-                        aria-describedby="fileUploadHelp"
-                        onChange={e =>
-                          handleFileChange(e, "cacertificate")
-                        }
-                      />
-                    </InputGroup>
-                    <b>CA Certificate Document
-                    </b>
-                  </Col>
-                </Row>
-              </Col>
-              <Col md={3}>
-                <Row>
-                  <Col md={12}>
-                    <InputGroup className="text-capitalize">
-                      <input
-                        type="file"
-                        className="form-control"
-                        id="additionaldocuments"
-                        accept=".pdf, .doc, .docx, .txt"
-                        aria-describedby="fileUploadHelp"
-                        onChange={e =>
-                          handleFileChange(e, "additionaldocuments")
-                        }
-                      />
-                    </InputGroup>
-                    <b>Additional Document
-                    </b>
-                  </Col>
-                </Row>
-              </Col>
+          {selectType == 'CREDITOR' && (
+            <Row className="bg-light p-3 mt-2">
+              <Row className="mt-4">
+                {selectType == 'CREDITOR' && (<>
+                  {uploadFilesModelDataForUpload.documentsRequiredFromCreditor.map((value, indix) => {
+                    return (
+                      <>
+                        {value == "cacertificate" || value == "additionaldocuments" ? (<Col md={3} key={value}>
+                          <Row>
+                            <Col md={12}>
+                              <InputGroup className="text-capitalize">
+                                <input
+                                  type="file"
+                                  className="form-control"
+                                  id={value}
+                                  accept=".pdf, .doc, .docx, .txt"
+                                  aria-describedby="fileUploadHelp"
+                                  onChange={e =>
+                                    handleFileChange(e, value)
+                                  }
+                                />
+                              </InputGroup>
+                              <b>
+                                {value == "cacertificate" && ('CA Certificate Document')}
+                                {value == "additionaldocuments" && ('Additional Document')}
+                              </b>
+                            </Col>
+                          </Row>
+                        </Col>) : ""}
+                      </>
+                    )
+                  })}</>)}
+              </Row>
             </Row>
-          </Row>
+          )}
+
           <Row className="mt-3">
-            <Col md={10}></Col>
+            <Col md={10} className="text-center mt-2">
+              {warongText && <b className="text-danger ">Please Upload All Document</b>}
+
+            </Col>
             <Col md={2} className="text-end">
               <Button className="btn btn-info" onClick={() => handleSubmit()}>Submit</Button>
             </Col>

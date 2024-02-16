@@ -305,7 +305,7 @@ const UploadPendingListModule = props => {
 
     return (
         <React.Fragment>
-            <UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} selectType={selectType} submitCheck={submitCheck} />
+            {uploadFilesModalShow && (<UploadPendingDocModel isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} selectType={selectType} submitCheck={submitCheck} />)}
             <Card>
                 <CardBody>
                     <div className="mb-4 h4 card-title"></div>
