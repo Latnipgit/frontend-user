@@ -1,6 +1,6 @@
 import {
-  ADD_NEW_CUSTOMER, ADD_NEW_CUSTOMER_SUCCESS, ADD_NEW_CUSTOMER_FAIL
-} from './actionTypes'
+  ADD_NEW_CUSTOMER_LIST, ADD_NEW_CUSTOMER_SUCCESS, ADD_NEW_CUSTOMER_FAIL
+} from './sendbilltransacttion.actionTypes'
 
 const INIT_STATE = {
   empList: [],
@@ -20,7 +20,7 @@ const employeeListCusstomer = (state = INIT_STATE, action) => {
         error: action.payload,
       }
     // break
-    case ADD_NEW_CUSTOMER:
+    case ADD_NEW_CUSTOMER_LIST:
       return {
         ...state,
         addEmp: action.payload

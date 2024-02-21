@@ -110,7 +110,6 @@ const UploadPendingDocModel = props => {
   }
 
   const handleSubmit = (item) => {
-    debugger
     const payload = {
       "paymentId": "65aba5d07c7388ab35450afa",
       "type": selectType, // DEBTOR/CREDITOR
