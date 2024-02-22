@@ -66,6 +66,7 @@ import {
 const Dashboard = props => {
   const companyid = sessionStorage.getItem("COMPANY-ID")
   const [subscribemodal, setSubscribemodal] = useState(false)
+  const [isreload, setisreload] = useState(false)
   const [filteredData, setFilteredData] = useState([]);
   const [getDaysArray, setgetDaysArray] = useState([]);
   const [isClickedToReported, setisClickedToReported] = useState(false);
@@ -103,12 +104,20 @@ const Dashboard = props => {
   const GetAllInvoice = useSelector(selectInvoiceList)
 
   useEffect(() => {
-    dispatch(getAllInvoice());
-    getDays()
+    const timer = setTimeout(() => {
+        dispatch(getAllInvoice());
+
+    }, 1000);
+    return () => clearTimeout(timer);
+    // getDays()
+
   }, [])
 
   useEffect(() => {
-    dispatch(onsearchCompany(currentComany));
+   
+        dispatch(onsearchCompany(currentComany));
+  
+    
 
   }, [currentComany])
   const handleSignUp = () => {

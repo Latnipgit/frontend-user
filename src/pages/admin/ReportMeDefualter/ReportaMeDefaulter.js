@@ -53,6 +53,7 @@ const ReportMedefulterComponent = props => {
   const [selectDisput, setSelectDisput] = useState('')
 
   const [isOpenmark, setIsOpenmark] = useState(false)
+  const [isreload, setIsReloaf] = useState(false)
   const [currentindex, setCurrentindex] = useState({})
 
   const markOpenModule = (value) => {
@@ -80,10 +81,20 @@ const ReportMedefulterComponent = props => {
   const selectReportMeDeflist = useSelector(selectReportMeDefData)
 
   useEffect(() => {
-    dispatch(fetchReportMeDefulterStart())
-    dispatch(setIsViewDetailModalOpen())
-    dispatch(markAsDisputedModalOpenAction())
-    getDays()
+        
+        const timer = setTimeout(() => {
+          dispatch(setIsViewDetailModalOpen())
+          dispatch(markAsDisputedModalOpenAction())
+          getDays()
+        dispatch(fetchReportMeDefulterStart())  
+      }, 1000);
+      return () => clearTimeout(timer);
+      
+
+                 // clearing interval
+    
+ 
+  
   }, [])
 
   const viewModel = (value) => {
