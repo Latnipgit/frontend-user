@@ -19,7 +19,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter"
 import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
-import { addCustomerlist } from "store/actions"
+import { addNewCustomerlist } from "store/sendbilltransacttion/actions"
 
 // state and city select
 import { City, Country, State } from "country-state-city";
@@ -194,6 +194,7 @@ export const AddcustomerFomr = () => {
   // 
 
   const handleFormSubmit = (item, e) => {
+
     const dummy = [
       {
         "debtorType": item.customerType,
@@ -216,13 +217,10 @@ export const AddcustomerFomr = () => {
       let dummyData = dummy[0]
       let checkvalue = Object.values(dummyData).includes('')
       if (checkvalue) return
-      dispatch(addCustomerlist(dummy))
+      dispatch(addNewCustomerlist(dummy))
       toggleAddCustomer()
       e.preventDefault();
     }
-    return
-
-
   }
 
   const colourStyles = {

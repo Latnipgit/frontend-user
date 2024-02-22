@@ -1,7 +1,5 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import store from 'store';
-import { logoutUser } from 'store/actions';
+
 
 const API_URL = 'https://bafana-backend.azurewebsites.net';
 

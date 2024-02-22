@@ -4,7 +4,6 @@ import "react-datepicker/dist/react-datepicker.css"
 import withRouter from "components/Common/withRouter"
 import Select from "react-select"
 import { useFormik } from "formik"
-import { addCustomerlist } from "../../../store/actions"
 import { useSelector, useDispatch } from "react-redux"
 import {
   Container,
@@ -475,7 +474,7 @@ const SendBillTransaction = (props) => {
         "companyName": item.companyName
       }
     ]
-    dispatch(addCustomerlist(dummy))
+
   }
 
   const formikSendBill = useFormik({

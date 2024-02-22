@@ -9,9 +9,8 @@ import {
   Table,
 } from "reactstrap"
 
-
 const ApprovedTranctionModel = props => {
-  const { isOpen, toggle ,additionalValue } = props
+  const { isOpen, toggle, additionalValue } = props
   return (
     <Modal
       isOpen={isOpen}
@@ -20,7 +19,7 @@ const ApprovedTranctionModel = props => {
       centered={true}
       className="exampleModal"
       tabIndex="-1"
-      toggle={toggle} 
+      toggle={toggle}
     >
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Company Details</ModalHeader>
@@ -35,8 +34,8 @@ const ApprovedTranctionModel = props => {
             Email Address: <span className="text-primary">NealMatthews@gmail.com</span>
           </p>
           <p className="mb-4">
-            Status: <span className={"font-size-11 badge-soft-" + 
-          ("Active" === "Active" ? "success" : "danger")}>Active</span>
+            Status: <span className={"font-size-11 badge-soft-" +
+              ("Active" === "Active" ? "success" : "danger")}>Active</span>
           </p>
           <p className="mb-4">
             Contact No: <span className="text-primary">(+291)-2652652651</span>

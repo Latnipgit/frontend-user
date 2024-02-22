@@ -123,30 +123,20 @@ const confirmReportModal = props => {
               className="checkForConfirm"
               style={checkboxStyle}
             />
-            &nbsp; &nbsp;  <span style={{ fontWeight:"500"}}>By Checking This Box, You Confirm That :</span> 
-        <p style={{fontSize:"14px"}}>    - All information provided by you is correct to the best of your knowledge. <br/>
-- You accept full responsibility for any incorrect information provided by you. Any incorrect information provided by you can Cause you to be permanently banned from this platform.<br/>
-- You understand that incorrect information provided by you can lead to legal action against you.<br/>
-- You will not use this platform with malicious intent to defame a third party.<br/>
-- You authorize Anand Rishi Technologies Private Limited to use the information provided by you freely, including posting on social media on your behalf and using it as deemed fit.<br/>
-- You absolve Anand Rishi Technologies Private Limited of any legal or monetary consequences regarding any information posted by them on the internet on your behalf.</p>
-</p>
+            &nbsp; &nbsp;  <span style={{ fontWeight: "500" }}>By Checking This Box, You Confirm That :</span>
+            <p style={{ fontSize: "14px" }}>    - All information provided by you is correct to the best of your knowledge. <br />
+              - You accept full responsibility for any incorrect information provided by you. Any incorrect information provided by you can Cause you to be permanently banned from this platform.<br />
+              - You understand that incorrect information provided by you can lead to legal action against you.<br />
+              - You will not use this platform with malicious intent to defame a third party.<br />
+              - You authorize Anand Rishi Technologies Private Limited to use the information provided by you freely, including posting on social media on your behalf and using it as deemed fit.<br />
+              - You absolve Anand Rishi Technologies Private Limited of any legal or monetary consequences regarding any information posted by them on the internet on your behalf.</p>
+          </p>
           {/* <p className="text-center text-danger"> <i className='bx bx-error'></i> &nbsp; If found the provided information is wrong or incorrect legal action will be taken on the reporting party.</p> */}
         </ModalBody>
         <ModalFooter>
-          <Row>
-            <Col md={7}>
-              <Button className="text-center btn btn-secondary" onClick={() => handleDraftInvoice()}>Save as Draft</Button>
-
-            </Col>
-            <Col md={2}>
-              <Button className="text-center btn btn-info" onClick={() => handleSubmit()}
-                disabled={!isChecked}    >Submit</Button>
-
-            </Col>
-            <Col md={3}></Col>
-
-          </Row>
+          <Button className="text-center btn btn-secondary " onClick={() => handleDraftInvoice()}>Save as Draft</Button>
+          <Button className="text-center btn btn-info" onClick={() => handleSubmit()}
+            disabled={!isChecked}    >Submit</Button>
         </ModalFooter>
       </div>
       <ToastContainer />

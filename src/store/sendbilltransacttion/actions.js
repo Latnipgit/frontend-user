@@ -1,8 +1,8 @@
 /* INVOICES */
-import { ADD_NEW_CUSTOMER_SUCCESS, ADD_NEW_CUSTOMER, ADD_NEW_CUSTOMER_FAIL } from "./actionTypes"
+import { ADD_NEW_CUSTOMER_SUCCESS, ADD_NEW_CUSTOMER_LIST, ADD_NEW_CUSTOMER_FAIL } from "./sendbilltransacttion.actionTypes"
 import { createAction } from "store/utils/reducer/reducer.utils"
 
-export const addCustomerlist = (user) => createAction(ADD_NEW_CUSTOMER, user[0])
+export const addNewCustomerlist = (user) => createAction(ADD_NEW_CUSTOMER_LIST, user[0])
 export const addNewCustomerSuccess = (user) => createAction(ADD_NEW_CUSTOMER_SUCCESS, { user })
 export const addNewCustomerFail = (user) => createAction(ADD_NEW_CUSTOMER_FAIL, { user, history })
 

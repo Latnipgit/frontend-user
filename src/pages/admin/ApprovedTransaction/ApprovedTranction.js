@@ -29,7 +29,6 @@ import AddCompanyModel from "./addCompanyModel"
 import { SelectCompnay } from "store/selectCompany/selectCompany.selecter";
 import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype";
 
-import { fetchReportMeDefulterStart } from "store/ReportMeDefulter/ReportMeDefulter.action";
 import { selectUpdatedToken } from "store/auth/login/Login.selecter";
 
 const ApprovedTranction = props => {
@@ -40,16 +39,12 @@ const ApprovedTranction = props => {
 
   const checkUpdateToken = useSelector(selectUpdatedToken)
 
-  console.log('selectUpdatedToken', checkUpdateToken);
-
-
   const handleEyeIconClick = (item) => {
     sessionStorage.setItem("COMPANY-ID", item.id)
     sessionStorage.setItem("COMPANY", item.companyName)
     const newPageUrl = '/company-dashboard';
     window.location.href = newPageUrl;
     dispatch(setSelectCopenOpen(!SelectCompnayOpen))
-    //  dispatch(fetchReportMeDefulterStart())
   };
   const columns = useMemo(
     () => [
