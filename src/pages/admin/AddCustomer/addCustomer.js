@@ -22,7 +22,7 @@ import { SelectAddCustomer } from "store/addCustomer/addCustomer.selecter"
 import { setAddCustomerOpen } from "store/addCustomer/addCustomer.actiontype"
 import { CompanySerchForm } from "../ApprovedTransaction/companySearchComponet"
 import { SelectAddCustomerList } from "store/actions"
-import moment from 'moment'
+
 
 
 const AddCustomer = props => {
