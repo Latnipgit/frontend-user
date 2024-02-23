@@ -318,6 +318,7 @@ const ReportMedefulterComponent = props => {
   const submitCheckRqust1 = (value) => {
     if (value) toast.success("Request send Successfully")
   }
+console.log("selectReportMeDeflist",selectReportMeDeflist)
   return (
     <React.Fragment>
       <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} additionalValue={additionalValue} selected={selected} />
@@ -347,72 +348,24 @@ const ReportMedefulterComponent = props => {
             {selectReportMeDeflist != undefined ? <CompanySerchForm onFilter={handleFilterdata} SearchName={"Seller"} /> : ""}
           </Row>
           <Row className="  ">
-            {selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ?
+            {selectReportMeDeflist != undefined && selectReportMeDeflist != null ?
 
 
 
-
-              // <table className="table table-bordered table-responsive">
-              //   <thead>
-              //     <tr>
-              //       <th scope="col">#</th>
-              //       <th scope="col">Seller Name</th>
-              //       {/* <th scope="col">Refrence Number</th> */}
-              //       <th scope="col">Invoice Number</th>
-              //       {/* <th scope="col">Status</th> */}
-              //       <th scope="col">Address</th>
-              //       <th scope="col">Due Amount</th>
-              //       <th scope="col">Due From</th>
-              //       <th scope="col">Action</th>
-              //       {/* <th scope="col">Upload Document</th> */}
-              //     </tr>
-              //   </thead>
-              //   <tbody>
-              //     {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule} /> :
-              //       <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
-              //   </tbody>
-              // </table>
-              // :
 
               <div>
 
-                {/* <table className="table table-bordered table-responsive" style={{ width:"100vw"}}>
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Seller Name</th>
-                  {/* <th scope="col">Refrence Number</th> */}
-                {/* <th scope="col">Invoice Number</th>
-                  {/* <th scope="col">Status</th> */}
-                {/* <th scope="col">Address</th>
-                  <th scope="col">Due Amount</th>
-                  <th scope="col">Due From</th>
-                  <th scope="col">Action</th> */}
-                {/* <th scope="col">Upload Document</th> */}
-                {/* </tr>
-              </thead> */}
-                {/* <tbody>
-                {filteredData.length >= 0 ? <ReportMeDefulterList selectReportMeDeflistData={filteredData} viewModel={viewModel} toggleViewModal2={toggleViewModal2} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} toggleMarkAsDisputed={toggleMarkAsDisputed} markOpenModule={markOpenModule}/> :
-                 <ReportMeDefulterList selectReportMeDeflistData={selectReportMeDeflist} viewModel={viewModel} toggleViewModal2={toggleViewModal2} toggleMarkAsDisputed={toggleMarkAsDisputed} setinvoiceIdsForCAcertificate={setinvoiceIdsForCAcertificate} getDaysArray={getDaysArray} requestEdit={requestEdit} markedDisputed={markedDisputed} handleViewDetail={handleViewDetail} markOpenModule={markOpenModule} />}
-              </tbody>
-            </table> */}
 
                 <TableContainer
                   columns={columns}
-                  data={selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ? selectReportMeDeflist : ''}
+                  data={selectReportMeDeflist != undefined && selectReportMeDeflist != null && selectReportMeDeflist.length != 0 ? selectReportMeDeflist : []}
                   isGlobalFilter={false}
                   isAddOptions={false}
                   customPageSize={20}
                 />
               </div>
               :
-              <Card style={{ height: '60vh' }}>
-                <CardBody className="text-center p-5 ">
-                  <h5 className="mt-5">
-                    No Data Found
-                  </h5>
-                </CardBody>
-              </Card>
+           ""
             }
           </Row>
         </CardBody>
