@@ -62,7 +62,7 @@ export const AddcustomerFomr = () => {
       gstNumber: "",
       panCard: "",
       address1: "",
-      address2: "",
+      address2: undefined,
       city: "",
       state: "",
       zipcode: "",
@@ -194,6 +194,7 @@ export const AddcustomerFomr = () => {
   // 
 
   const handleFormSubmit = (item, e) => {
+    
     const dummy = [
       {
         "debtorType": item.customerType,
@@ -203,7 +204,7 @@ export const AddcustomerFomr = () => {
         "customerEmail": item.customerEmail,
         "customerMobile": item.customerPhone,
         "address1": item.address1,
-        "address2": item.address2,
+        "address2": item.address2 == "" ? undefined :item.address2,
         "city": selectedCity.value != undefined ? selectedCity.value : '',
         "state": selectedState.value != undefined ? selectedState.value : '',
         "zipcode": item.zipcode,
@@ -212,10 +213,11 @@ export const AddcustomerFomr = () => {
         "companyName": item.companyName
       }
     ]
-    if (gstNumberValid && panNumberValid && zipcodeValid && mobileNumberValid && emailidValid) {
+    if (gstNumberValid && panNumberValid && zipcodeValid && mobileNumberValid && emailidValid  ) {
       let dummyData = dummy[0]
+      debugger
       let checkvalue = Object.values(dummyData).includes('')
-      // if (checkvalue) return
+      if (checkvalue) return
       dispatch(addNewCustomerlist(dummy))
       toggleAddCustomer()
       e.preventDefault();
