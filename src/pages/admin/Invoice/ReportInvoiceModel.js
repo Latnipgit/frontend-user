@@ -375,6 +375,7 @@ const ReportedDefaulterModel = props => {
     setData(newData)
     setallInvoiceList(newDatas)
     setFaqsRow(faqsRow - 1)
+    calculateSubtotal(newData)
    return newData 
   }
   console.log("faqsRowfaqsRowfaqsRow",faqsRow,data,allInvoiceList)
@@ -383,6 +384,7 @@ const ReportedDefaulterModel = props => {
     newData[index].date = moment(value).format("YYYY-MM-DD")
     setData(newData)
     setSelectedDate(value)
+
   };
 
   const handleFileChange = (event, fieldName, index) => {
