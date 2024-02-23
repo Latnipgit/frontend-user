@@ -19,6 +19,7 @@ import {
 import noFile from '../../../assets/images/newImg/no-document.png'
 import pdfImg from '../../../assets/images/newImg/pdf.png'
 import jpgImg from '../../../assets/images/newImg/png-file-.png'
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 
 const ViewDetailsReportDefaultModal = props => {
   const { isOpen, toggle, viewModalData } = props
@@ -186,7 +187,7 @@ const ViewDetailsReportDefaultModal = props => {
             }
 
             <Row className="mt-2 mb-2">
-              <b>Total Due Amount : {viewModalData.totalAmount}</b>
+              <b>Total Due Amount : {numberFormat(viewModalData.totalAmount)}</b>
             </Row>
           </>
             : ""}
