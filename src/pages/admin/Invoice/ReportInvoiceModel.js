@@ -363,21 +363,28 @@ const ReportedDefaulterModel = props => {
     ])
   }
   const handleFeedbackModal = () => {
-    dispatch(addInvoiceArray(debtorIdArrayForPreview))
+    // dispatch(addInvoiceArray(debtorIdArrayForPreview))
     dispatch(setIsCustomerFeedbackModalOpen(!isCustomerFeedbackModalOpen))
 
   }
   const removeFaqsRow = index => {
     const newData = [...data]
+    const newDatas = [...allInvoiceList]
     newData.splice(index, 1)
+    newDatas.splice(index, 1)
     setData(newData)
+    setallInvoiceList(newDatas)
     setFaqsRow(faqsRow - 1)
+    calculateSubtotal(newData)
+   return newData 
   }
+  console.log("faqsRowfaqsRowfaqsRow",faqsRow,data,allInvoiceList)
   const handleDateChange = (value, index) => {
     const newData = [...data]
     newData[index].date = moment(value).format("YYYY-MM-DD")
     setData(newData)
     setSelectedDate(value)
+
   };
 
   const handleFileChange = (event, fieldName, index) => {
@@ -477,7 +484,7 @@ const ReportedDefaulterModel = props => {
 
 
         <ModalBody className="" >
-          <ConfirmReportModal isOpen={showConfirmModal} toggle={handleConfirmClose} />
+          {/* <ConfirmReportModal isOpen={showConfirmModal} toggle={handleConfirmClose} /> */}
           {
             filteredCustomerDetail.length == 0 ? <form>
               <Row className="selectionList">

@@ -194,7 +194,6 @@ export const AddcustomerFomr = () => {
   // 
 
   const handleFormSubmit = (item, e) => {
-
     const dummy = [
       {
         "debtorType": item.customerType,
@@ -216,7 +215,7 @@ export const AddcustomerFomr = () => {
     if (gstNumberValid && panNumberValid && zipcodeValid && mobileNumberValid && emailidValid) {
       let dummyData = dummy[0]
       let checkvalue = Object.values(dummyData).includes('')
-      if (checkvalue) return
+      // if (checkvalue) return
       dispatch(addNewCustomerlist(dummy))
       toggleAddCustomer()
       e.preventDefault();

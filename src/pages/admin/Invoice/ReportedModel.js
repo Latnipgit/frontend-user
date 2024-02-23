@@ -149,7 +149,7 @@ const ReportedDebtorsModel = props => {
     >
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Feedback On Defaulting Customer </ModalHeader>
-        <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} />
+        {/* <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} /> */}
         <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue} dataForPreview={dataForPreview} />
         <ModalBody>
           <div className="mb-3">
