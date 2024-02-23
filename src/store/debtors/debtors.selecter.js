@@ -17,8 +17,9 @@ export const selectDebtorsListMap = createSelector(
             SrNo--
             const { companyName, gstin, customerEmail, customerMobile } = item
             let customerName = item.firstname + ' ' + item.lastname
-            const address = !item.address2 && item.address2 != undefined? item.address1 + ',' + item.address2 : item.address1  
-            return { SrNo, companyName, gstin, customerEmail, customerMobile, customerName, address }
+            const address = item.address1 
+            const address2 =  item.address2 
+            return { SrNo, companyName, gstin, customerEmail, customerMobile, customerName, address ,address2}
         })
         return debtorMap
     }

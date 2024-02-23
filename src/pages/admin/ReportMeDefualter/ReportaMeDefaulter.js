@@ -232,7 +232,8 @@ const ReportMedefulterComponent = props => {
         filterable: false,
         Cell: cellProps => {
           return <div style={{ width: "200px" }}>
-            {cellProps.cell.row.original.creditor.address1}<br />{cellProps.cell.row.original.creditor.address2}
+            {console.log("cellPropscellPropscellProps",cellProps.cell.row.original)}
+            {cellProps.cell.row.original.debtor.address1}<br />{cellProps.cell.row.original.debtor.address2}
           </div>
         },
       },
