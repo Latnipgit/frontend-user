@@ -65,6 +65,7 @@ const AddCustomer = props => {
   };
 
   const CompanyName = (cell) => {
+    console.log("CompanyNameCompanyName", cell.value)
     return cell.value ? cell.value : '';
   };
 
