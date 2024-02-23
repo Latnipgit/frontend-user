@@ -214,7 +214,6 @@ const CompanySearch = props => {
     setFilteredData(filterePANCARD);
   };
 
-  debugger
   return (
     <React.Fragment>
       {CompanySearchLoder == false ? <Spinner /> : (<>
