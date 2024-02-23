@@ -50,12 +50,13 @@ import TableContainer from "../../../components/Common/TableContainer";
 import InlineFilterForm from '../ApprovedTransaction/InlineFilterForm';
 import { get } from "helpers/api_helper";
 import { fetchCompanySearchStart, getAllCompanyListAction } from "store/CompanySearch/CompanySearch.action";
-import { selectCompanySearchList, selectdashboardAdminDataMap, getAllCompanyListSelector } from "store/CompanySearch/CompanySearch.selecter";
+import { selectCompanySearchList, selectdashboardAdminDataMap, getAllCompanyListSelector, selectCompanySearchLoder } from "store/CompanySearch/CompanySearch.selecter";
 import { fetchCompanySearchViewDatatlStart } from "store/CompanySearchView/CompanySearchView.action";
 import { selectCompanySearchVeiwDatilsList } from "store/CompanySearchView/CompanySearchView.selecter";
 import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 import companyList from "store/company/Company.reducer";
 
+import { Spinner } from "../spinner/spinner";
 
 const CompanySearch = props => {
   const dispatch = useDispatch();
@@ -71,6 +72,8 @@ const CompanySearch = props => {
     const newPageUrl = '/company-dashboard';
     // window.location.href = newPageUrl;
   };
+
+  const CompanySearchLoder = useSelector(selectCompanySearchLoder)
 
   const selectCompanySearchLists = useSelector(selectCompanySearchList)
   // const getAllCompanyList = useSelector(getAllCompanyListSelector)
@@ -211,45 +214,25 @@ const CompanySearch = props => {
     setFilteredData(filterePANCARD);
   };
 
-
+  debugger
   return (
     <React.Fragment>
-      <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currentUserViewDetails} selectCompanySearchListMap={selectCompanySearchLists} />
-      {/* <ApprovedTranctionModel isOpen={modal1} toggle={toggleViewModal} additionalValue={additionalValue}/> */}
+      {CompanySearchLoder == false ? <Spinner /> : (<>
+        <CompnayViewDetails isOpen={modal1} toggle={toggleViewModal} selected={selected} currenViewList={currentUserViewDetails} selectCompanySearchListMap={selectCompanySearchLists} />
+        <InlineFilterForm onFilter={handleFilter} handleFilter={handleFilter} />
+        <Card >
+          <CardBody>
+            <TableContainer
+              columns={columns}
+              data={filteredData.length > 0 ? filteredData : selectCompanySearchListMap}
+              isGlobalFilter={false}
+              isAddOptions={false}
+              customPageSize={10}
+            />
+          </CardBody>
+        </Card></>
+      )}
 
-      <InlineFilterForm onFilter={handleFilter} handleFilter={handleFilter} />
-      <Card >
-        <CardBody>
-
-          {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}> */}
-
-          {/* <div>
-          <Row>
-            <Col md="10">
-            
-            </Col>
-            <Col md="2" className="text-right pl-2" style={{ paddingLeft:'15px'}}>
-            <Link to="/add-company">
-            <Button
-              type="button"
-              color="primary"
-              className="btn-sm "
-            >
-              Add Company
-            </Button>
-            </Link>
-            </Col>
-          </Row>
-        </div> */}
-          <TableContainer
-            columns={columns}
-            data={filteredData.length > 0 ? filteredData : selectCompanySearchListMap}
-            isGlobalFilter={false}
-            isAddOptions={false}
-            customPageSize={10}
-          />
-        </CardBody>
-      </Card>
 
     </React.Fragment>
   );
