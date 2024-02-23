@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import withRouter from "components/Common/withRouter";
+import { useDispatch } from "react-redux";
+import { setSelectCopenOpen } from "store/selectCompany/selectCompany.actiontype";
 
 //i18n
 import { withTranslation } from "react-i18next";
@@ -16,12 +18,13 @@ import logoDark from "../../assets/images/logo-dark.png";
 
 
 const Sidebar = props => {
+  const dispatch = useDispatch()
 
   return (
     <React.Fragment>
       <div className="vertical-menu">
         <div className="navbar-brand-box">
-          <Link to="/" className="logo logo-dark">
+          <Link to="/companies" className="logo logo-dark" onClick={() => dispatch(setSelectCopenOpen(false))}>
             <span className="logo-sm">
               <img src={logo} alt="" height="22" />
             </span>
@@ -30,7 +33,7 @@ const Sidebar = props => {
             </span>
           </Link>
 
-          <Link to="/" className="logo logo-light">
+          <Link to="/companies" className="logo logo-light" onClick={() => dispatch(setSelectCopenOpen(false))}>
             <span className="logo-sm">
               <img src={logobafana2} alt="" height="90" />
             </span>
