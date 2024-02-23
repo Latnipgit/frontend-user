@@ -27,7 +27,7 @@ export const selectdashboardAdminDataMap = createSelector(
       const GST = list.gstin !== undefined ? list.gstin : "";
       const email = list.customerEmail !== undefined ? list.customerEmail : "";
       const customerMobile = list.customerMobile !== undefined ? list.customerMobile : "";
-      return { SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount,email,customerMobile }
+      return { SrNo, id, CompanyName, GST, PANCARD, rating, dueFrom, totalAmount, email, customerMobile }
     })
   }
 );
@@ -39,4 +39,9 @@ export const selectDoardAdminDataLoading = createSelector(
 export const getAllCompanyListSelector = createSelector(
   [selectCompanySearchReducer],
   (reportMeDefulter) => reportMeDefulter.companyList
+);
+
+export const selectCompanySearchLoder = createSelector(
+  [selectCompanySearchReducer],
+  (reportMeDefulter) => reportMeDefulter.loading
 );
