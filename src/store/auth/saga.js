@@ -28,6 +28,7 @@ function* loginUser({ payload: { user, history } }) {
           sessionStorage.setItem("authUser", JSON.stringify(response.data.response));
           sessionStorage.setItem("tokenemployeeRegister", response.data.response.token)
           sessionStorage.setItem("refreshToken", response.data.response.refreshToken)
+          sessionStorage.setItem('register', 1)
           yield put(loginSuccess(response.data.response))
           yield put(tokenUpdate(response.data.response.refreshToken));
           if (response.data.response.passwordChangeNeeded == false) {
@@ -87,7 +88,7 @@ function* logoutUser({ payload: { history } }) {
 
     }
     history('/login');
-    // sessionStorage.clear();
+    sessionStorage.clear();
   } catch (error) {
     yield put(apiError(error));
   }

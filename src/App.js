@@ -61,8 +61,6 @@ function clearStorage() {
   let session = sessionStorage.getItem('register');
 
   if (session == null) {
-
-    sessionStorage.clear()
     sessionStorage.clear();
 
   }
