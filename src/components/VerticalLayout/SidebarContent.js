@@ -20,14 +20,13 @@ const SidebarContent = props => {
   const [currentPath, setCurrentpath] = useState('')
 
   const SelectCompnayOpen = useSelector(SelectCompnay)
-console.log("SelectCompnayOpen",SelectCompnayOpen)
   useEffect(() => {
     setCurrentpath(window.location.pathname)
     if (
       currentPath == "/companies" ||
       currentPath == "/documents" ||
       currentPath == "/profile" ||
-      currentPath == "/notification"||
+      currentPath == "/notification" ||
       currentPath == "/Subscription"
     ) {
       dispatch(setSelectCopenOpen(false))
@@ -334,13 +333,13 @@ console.log("SelectCompnayOpen",SelectCompnayOpen)
                     {props.t("Profile")}
                   </Link>
                 </li>
-                 <li>
+                <li>
                   <Link to="/Subscription">
                     <i className="bx bxs-crown"></i>
 
                     {props.t("Subscription")}
                   </Link>
-                </li> 
+                </li>
                 {/* <li>
                   <Link to="/notification">
                     <i className="bx bxs-notification"></i>
