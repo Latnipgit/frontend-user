@@ -140,7 +140,7 @@ console.log("selected",selected)
                         </Col>
                         <Col md="6" className="mt-4">
                             <Card className="mb-3 shadow-lg" >
-                                <CardBody className="seller-card-body" style={{}}>
+                                <CardBody className="seller-card-body" style={{height:"270px", overflow:'scroll', overflowX:'hidden'}}>
                                     <b className="mb-2"style={{ fontSize: '13px' }}>Key Points</b>
                                     <Row className="mb-2"><Col md={12}>
                                         <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#00b300' }}>1. Approved : </b>
@@ -157,6 +157,53 @@ console.log("selected",selected)
                                     <Row className="mb-2"><Col md={12}>
                                         <span style={{ fontSize: '13px', }}> <b className="" style={{ color: '#ffc61a ' }}>4. Rating : </b>
                                             The buyer's creditworthiness is depicted on a scale of 0 to 5, where zero signifies the lowest creditworthiness and five indicates the highest.</span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>5. Buyer May Be a Defaulter : </b>
+                                        This complaint has been analyzed based on documents submitted by both parties. It appears that the other party has not responded or submitted any documents even after repeated reminders.</span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>6.Fraudulent Complaint Lodged by Seller : </b>
+                                        The supplier has submitted false documents as part of their complaint.
+                                        </span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>7.Documents Under Verification : </b>
+                                        The documents provided by both parties are currently under verification.
+                                        </span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>8.Complaints Filed Without Sufficient Evidence : </b>
+                                        Some complaints have been filed without adequate evidence to support the claims.
+                                        </span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>9.Pending Investigation : </b>
+                                        The complaint is currently under investigation. Relevant parties are reviewing the evidence and assessing the situation.
+                                        </span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>10.Awaiting Additional Documentation : </b>
+                                        The complaint requires further documentation or evidence from either party. Once submitted, the process will continue.
+                                        </span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>11.Escalated Complaint : </b>
+                                        The complaint has escalated to a higher level due to complexity, urgency, or unresolved issues.
+                                        </span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>12.Fully Resolved - Payment Received: </b>
+                                        The complaint has been successfully resolved, and the agreed-upon payment has been received by the relevant party.
+                                        </span>
+                                    </Col></Row> 
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>13.Partially Resolved - Partial Payment Received : </b>
+                                        While the complaint is not fully resolved, progress has been made. A partial payment has been received, but further negotiations or actions are still required.                                        </span>
+                                    </Col></Row>
+                                    <Row className="mb-2"><Col md={12}>
+                                        <span style={{ fontSize: '13px' }}> <b className="" style={{ color: '#000000' }}>14.Payment Pending - Agreement Reached : </b>
+                                        Both parties have reached an agreement, but the actual payment is pending. The resolution process is in its final stages.            </span>
                                     </Col></Row>
                                     {/* <Row className="mb-2"><Col md={3}><h5>2. InProcess :</h5></Col> <Col md={9}>The evaluation of the buyer's defaulter status is pending until their response is received or one week has passed from the complainant's date, whichever occurs first.
                                     </Col></Row> */}

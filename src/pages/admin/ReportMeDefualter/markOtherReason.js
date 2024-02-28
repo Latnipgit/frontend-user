@@ -180,24 +180,26 @@ console.log("selectedFilesselectedFilesselectedFiles",selectedFiles)
             <FormGroup tag="fieldset">
                                         <FormGroup check className="mb-2">
                                             <Input
-                                                name="radio1"
+                                                // name="radio1"
                                                 type="radio"
                                                 onChange={() => handleToggleItem("radio1")}
                                             />
                                             {' '}
                                             <Label check>
-                                            Poor Quality of Product Recieve
+                                            {/* Poor Quality of Product Recieve
+                                             */}
+                                             Goods received are of unferior quality
                                             </Label>
                                         </FormGroup>
                                         <FormGroup check className="mb-2">
                                             <Input
-                                                name="radio1"
+                                                // name="radio1"
                                                 type="radio"
                                                 onChange={() => handleToggleItem("radio2")}
                                             />
                                             {' '}
                                             <Label check>
-                                            Goods Recieved in Damage Conditions
+                                            Goods received in damage conditions
                                             </Label>
                                         </FormGroup>
                                         <FormGroup
@@ -205,13 +207,14 @@ console.log("selectedFilesselectedFilesselectedFiles",selectedFiles)
                                             className="mb-2"
                                         >
                                             <Input
-                                                name="radio1"
+                                                // name="radio1"
                                                 type="radio"
                                                 onChange={() => handleToggleItem("radio3")}
                                             />
                                             {' '}
                                             <Label check>
-                                            Quantity is Less then Invoice Quantity
+                                            {/* Quantity is less then Invoice Quantity */}
+                                            Actual quantity received is lower than billed quantity
                                             </Label>
                                         </FormGroup>
                                     </FormGroup>
