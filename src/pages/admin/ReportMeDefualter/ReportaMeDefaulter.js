@@ -284,7 +284,8 @@ const ReportMedefulterComponent = props => {
                   target='_blank' onClick={() => markOpenModule(cellProps.cell.row.original)
 
                   }>
-                  <i className='bx bx-window-close textsizing'></i>
+                  {/* <i className='bx bx-window-close textsizing'></i> */}
+                  <i className='bx bx-x-circle textsizing'></i>
                 </Button>
                 &nbsp;
 
