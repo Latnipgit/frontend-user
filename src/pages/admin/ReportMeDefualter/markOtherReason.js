@@ -50,6 +50,7 @@ export const MarkOtherReasonModel = props => {
     setRadioOption(radio)
 }
   const [attachment, setAttachment] = useState('')
+  const [isSubmited, setisSubmited] = useState(false)
   const [textBox, setTextBox] = useState("")
   const [error, setError] = useState("")
   const [attachmentValid, setAttachmentValid] = useState(false)
@@ -107,6 +108,8 @@ export const MarkOtherReasonModel = props => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
   }
   const handleSubmit = () => {
+
+setisSubmited(true)
     var size = Object.keys(attachment).length;
     if (size > 0) {
       setAttachmentValid(false)
@@ -175,13 +178,13 @@ console.log("selectedFilesselectedFilesselectedFiles",selectedFiles)
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Other Reasons</ModalHeader>
         <ModalBody>
-          <form>
+          {isSubmited == false ?<form>
             <Row>
             <FormGroup tag="fieldset">
                                         <FormGroup check className="mb-2">
                                             <Input
                                                 // name="radio1"
-                                                type="radio"
+                                                type="checkbox"
                                                 onChange={() => handleToggleItem("radio1")}
                                             />
                                             {' '}
@@ -194,7 +197,7 @@ console.log("selectedFilesselectedFilesselectedFiles",selectedFiles)
                                         <FormGroup check className="mb-2">
                                             <Input
                                                 // name="radio1"
-                                                type="radio"
+                                                type="checkbox"
                                                 onChange={() => handleToggleItem("radio2")}
                                             />
                                             {' '}
@@ -208,7 +211,7 @@ console.log("selectedFilesselectedFilesselectedFiles",selectedFiles)
                                         >
                                             <Input
                                                 // name="radio1"
-                                                type="radio"
+                                                type="checkbox"
                                                 onChange={() => handleToggleItem("radio3")}
                                             />
                                             {' '}
@@ -280,6 +283,7 @@ console.log("selectedFilesselectedFilesselectedFiles",selectedFiles)
               </Col>
             </Row>
             <Row>
+              <Col md={10}>
                     <Dropzone
                       onDrop={acceptedFiles => {
                         handleAcceptedFiles(acceptedFiles)
@@ -303,7 +307,7 @@ console.log("selectedFilesselectedFilesselectedFiles",selectedFiles)
                       )}
                     </Dropzone>
 
-                 
+                    </Col>
                     <div className="dropzone-previews mt-3" id="file-previews">
                       {selectedFiles.map((f, i) => {
                         return (
@@ -346,11 +350,17 @@ console.log("selectedFilesselectedFilesselectedFiles",selectedFiles)
                     </div>
             </Row>
           </form>
+          :<Row>
+<h5>To proceed with the submission of your documents and the subsequent verification, a payment of Rs 100/- is required. Please be aware that this nominal charge is essential for us to verify your documents and make a fair assessment of the complaint.
+
+  <br/>
+  If you decide to cancel this payment, your documents will *not* be submitted. In such a scenario, our assessment will rely solely on the documents provided by the complainant.
+</h5>
+          </Row>}
         </ModalBody>
         <ModalFooter>
           <Button type="button" color="primary" onClick={() => handleSubmit(true)}>
-            Submit
-          </Button>
+          {isSubmited == false ?"Next":"Proceed to payment "}           </Button>
 
           <Button type="button" color="secondary" onClick={toggle}>
             Close
