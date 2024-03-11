@@ -49,6 +49,8 @@ const UploadPendingListModule = props => {
         dispatch(fetchUploadPendingListStart())
     }, [])
 
+    console.log('selectTransactionsRaisedByMe', selectTransactionsRaisedByMe);
+
     const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
 
     const handleUploadFiles = (item) => {

@@ -197,6 +197,7 @@ import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import Register2 from "pages/Authentication/register2";
 import AddCompany from "pages/admin/ApprovedTransaction/add-company";
 import ChangeNewPassword from "../pages/Authentication/ChangeNewPassword"
+import { UploadPendingLinkModule } from "pages/admin/uploadPendingDocLink/uploadPendingDocLink";
 
 
 const authProtectedRoutes = [
@@ -223,6 +224,7 @@ const authProtectedRoutes = [
   { path: "/Report-me-defaulter", component: <ReportMedefulterComponent /> },
   { path: "/Customer-list", component: <AddCustomer /> },
   { path: "/upload-pending-documents", component: <UploadPendingListModule /> },
+  { path: "/upd-link", component: <UploadPendingLinkModule /> },
 
 
   { path: "/login-register", component: <Register2 /> },
