@@ -224,7 +224,7 @@ const authProtectedRoutes = [
   { path: "/Report-me-defaulter", component: <ReportMedefulterComponent /> },
   { path: "/Customer-list", component: <AddCustomer /> },
   { path: "/upload-pending-documents", component: <UploadPendingListModule /> },
-  { path: "/upd-link", component: <UploadPendingLinkModule /> },
+
 
 
   { path: "/login-register", component: <Register2 /> },
@@ -243,7 +243,7 @@ const publicRoutes = [
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
   { path: "/changePassword", component: <ChangeNewPassword /> },
-
+  { path: "/upload-supporting-document-direct", component: <UploadPendingLinkModule /> },
 
   // { path: "/pages-maintenance", component: <PagesMaintenance /> },
   // { path: "/pages-comingsoon", component: <PagesComingsoon /> },

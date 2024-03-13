@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useMemo } from "react"
+import { useLocation } from 'react-router-dom'
 import { useFormik } from "formik"
-import * as Yup from "yup"
-import DatePicker from "react-datepicker"
+
+import axios from "axios";
+
 import "react-datepicker/dist/react-datepicker.css"
-import withRouter from "components/Common/withRouter"
-import Select, { components } from "react-select"
+
+
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
-import ReportedDebtorsModel from "../Invoice/ReportedModel"
-import ReportedDefaulterModel from "../Invoice/ReportDefaulterModel"
-/* import ReportIncoiceModel from './ReportInvoiceModel' */
+
 import 'react-table-6/react-table.css'
-import ReactTable from 'react-table-6'
+
 import CurrencyFormat from 'react-currency-format';
 // import ReactTooltip from "react-tooltip";
 /* import Tooltip from "@material-ui/core/Tooltip";
@@ -39,18 +39,53 @@ import {
 } from ".././company-search/companyssearchColl";
 
 
+const API_URL = 'https://bafana-backend.azurewebsites.net';
+
+const axiosApi = axios.create({
+    baseURL: API_URL,
+});
+
+
 export const UploadPendingLinkModule = props => {
     const dispatch = useDispatch();
     const [selectType, setSelectType] = useState('')
-    const selectTransactionsRaisedByMe = useSelector(selectTransactionsRaisedByMeDataMap);
-    const selectTransactionsSentToMe = useSelector(selectTransactionsSentToMeDataMap);
-    const uploadFilesModalShow = useSelector(selectUploadPendigDocOpen);
-    const toggleUploiadFiles = () => dispatch(setUploadPednigDocOpen(!uploadFilesModalShow));
+
+    const [apidata, setapiData] = useState(null)
+
+    console.log('apidata', apidata);
+
+    // Create a URL object
+    const location = useLocation()
+
+    // Get the token parameter value
+    const newtoken = new URLSearchParams(location.search).get('token');
+
+    console.log('token', newtoken);
 
     useEffect(() => {
         dispatch(fetchUploadPendingListStart())
         setSelectType('CREDITOR')
+        getDataFromToken(newtoken)
     }, [])
+
+
+    const getDataFromToken = async (newtoken, config = {}) => {
+        debugger
+        const data = { token: newtoken }
+        return axiosApi
+            .post('/api/admin/getDocumentsRequiredFromPaymentId', { ...data }, config)
+            .then((response) => response)
+            .catch((error) => {
+                if (error.response) {
+                } else if (error.request) {
+                    console.log("No response received from the server:", error.request);
+                }
+            });
+    };
+
+
+
+
 
     const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState({
         "_id": "659ac60b09487214a4524532",
@@ -349,11 +384,12 @@ export const UploadPendingLinkModule = props => {
     }
 
     function uploadFile(formData, currenIndex) {
-        const token = sessionStorage.getItem("tokenemployeeRegister")
+        debugger
+        const token = newtoken
         const headers = {
             'x-access-token': token != null ? token : '',
         };
-        axios.post('https://bafana-backend.azurewebsites.net/api/files/upload', formData, {
+        axiosApi.post('/api/files/upload', formData, {
             headers: headers
         })
             .then((response) => {
@@ -394,7 +430,7 @@ export const UploadPendingLinkModule = props => {
 
     const handleSubmit = (item) => {
         const payload = {
-            "paymentId": "65aba5d07c7388ab35450afa",
+            "token": newtoken,
             "type": selectType, // DEBTOR/CREDITOR
             // Below documents are required for type DEBTOR
             "debtorcacertificate": selectType == 'DEBTOR' ? uploadCAId.documentId : '',
@@ -404,6 +440,8 @@ export const UploadPendingLinkModule = props => {
             "creditoradditionaldocuments": selectType == 'CREDITOR' ? uploadAdditionId.documentId : '',
             "attachment": selectType == 'DEBTOR' ? docData : ''
         }
+
+
         if (selectType == "CREDITOR") {
             let checkvalue = false
             docData.map((obj) => {
