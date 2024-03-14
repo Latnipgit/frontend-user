@@ -382,7 +382,7 @@ export const UploadPendingLinkModule = props => {
 
                     <Row className="mt-3">
                         <Col md={10} className="text-center mt-2">
-                            {warongText && <b className="text-danger ">Please Upload All Document</b>}
+                            {warongText && <b className="text-danger ">Please Upload All Documents</b>}
 
                         </Col>
                         <Col md={2} className="text-end">
