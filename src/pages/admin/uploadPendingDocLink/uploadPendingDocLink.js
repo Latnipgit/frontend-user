@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react"
 import { useLocation } from 'react-router-dom'
-import { useFormik } from "formik"
+
 
 import axios from "axios";
 
@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
 
 import 'react-table-6/react-table.css'
+
 
 import CurrencyFormat from 'react-currency-format';
 // import ReactTooltip from "react-tooltip";
@@ -23,20 +24,13 @@ import {
     Card,
     CardBody,
     Button,
-    InputGroup
+    InputGroup,
+    Container,
+    CardFooter
 } from "reactstrap"
 import TableContainer from "../../../components/Common/TableContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUploadPendingListStart } from "store/UploadPendingDocList/UploadPendingDocList.action"
-import { selectTransactionsRaisedByMeDataMap, selectTransactionsSentToMeDataMap } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
 
-
-import { selectUploadPendigDocOpen } from "store/UploadPendingDocList/UploadPendingDocList.selecter"
-import { setUploadPednigDocOpen } from "store/UploadPendingDocList/UploadPendingDocList.action"
-
-import {
-    SrNo,
-} from ".././company-search/companyssearchColl";
 
 
 const API_URL = 'https://bafana-backend.azurewebsites.net';
@@ -50,297 +44,34 @@ export const UploadPendingLinkModule = props => {
     const dispatch = useDispatch();
     const [selectType, setSelectType] = useState('')
 
-    const [apidata, setapiData] = useState(null)
+    const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
 
-    console.log('apidata', apidata);
-
+    console.log('token', uploadFilesModelDataForUpload);
     // Create a URL object
     const location = useLocation()
 
     // Get the token parameter value
     const newtoken = new URLSearchParams(location.search).get('token');
 
-    console.log('token', newtoken);
+    useEffect(() => {
+        setSelectType('CREDITOR')
+    }, [])
+
 
     useEffect(() => {
-        dispatch(fetchUploadPendingListStart())
-        setSelectType('CREDITOR')
+        const getDataFromToken = async (newtoken, config = {}) => {
+            try {
+                const data = { token: newtoken }
+                const response = await axiosApi.post('/api/admin/getDocumentsRequiredFromPaymentId', { ...data }, config)
+                setuploadFilesModelDataForUpload(response.data.response)
+            } catch (error) {
+                console.log('error', error);
+            }
+        }
         getDataFromToken(newtoken)
     }, [])
 
 
-    const getDataFromToken = async (newtoken, config = {}) => {
-        debugger
-        const data = { token: newtoken }
-        return axiosApi
-            .post('/api/admin/getDocumentsRequiredFromPaymentId', { ...data }, config)
-            .then((response) => response)
-            .catch((error) => {
-                if (error.response) {
-                } else if (error.request) {
-                    console.log("No response received from the server:", error.request);
-                }
-            });
-    };
-
-
-
-
-
-    const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState({
-        "_id": "659ac60b09487214a4524532",
-        "defaulterEntryId": "6597242c61de1d0e991d5ee6",
-        "defaulterEntry": {
-            "_id": "6597242c61de1d0e991d5ee6",
-            "debtor": {
-                "_id": "658ea4412a986850aee3851d",
-                "companyName": "ltim",
-                "gstin": "99693257",
-                "companyPan": "ltim",
-                "creditorCompanyId": "658c45c62a986850aee382d9",
-                "debtorType": "Business",
-                "salutation": "Mr.",
-                "firstname": "Rohan",
-                "lastname": "Sharma",
-                "customerEmail": "santathenoobda2000@gmail.com",
-                "customerMobile": "9969325740",
-                "address1": "address1",
-                "address2": "address2",
-                "city": "city",
-                "state": "state",
-                "zipcode": "zipcode",
-                "createdAt": "2023-12-29T10:49:37.889Z",
-                "updatedAt": "2024-01-06T11:48:39.536Z",
-                "__v": 0,
-                "ratings": [
-                    "658ead01153533b5c9a64815",
-                    "658eae3435fed113fd8946bc",
-                    "658ff0821e6170796a2da0a5",
-                    "65993e1751e7593b89f1adda"
-                ]
-            },
-            "creditorCompanyId": "658c45c62a986850aee382d9",
-            "invoices": [
-                {
-                    "_id": "6597242c61de1d0e991d5ede",
-                    "billDate": "2023-12-04",
-                    "billDescription": "Bill for things",
-                    "billNumber": 11223344,
-                    "creditAmount": 1200000,
-                    "remainingAmount": 800000,
-                    "interestRate": 10,
-                    "creditLimitDays": 20,
-                    "remark": "remarks",
-                    "items": [
-                        {
-                            "name": "V8 Engine",
-                            "quantity": "1",
-                            "cost": "1000000"
-                        },
-                        {
-                            "name": "Anti-waffe Tyres",
-                            "quantity": "1",
-                            "cost": "1000000"
-                        }
-                    ],
-                    "subTotal": 500,
-                    "tax": 50,
-                    "referenceNumber": "12",
-                    "invoiceNumber": "123",
-                    "dueDate": "2023-12-24T00:00:00.000Z",
-                    "percentage": "45",
-                    "type": "EXTERNAL",
-                    "purchaseOrderDocument": [
-                        {
-                            "_id": "659ba50f91dc6f176dca2210",
-                            "userId": "658c5db12a986850aee382ed",
-                            "name": "WAY2023055 (1).pdf",
-                            "url": "https://bafanabackendfilestorage.blob.core.windows.net/bafana-backend-files-container/1704699150785-4e572cadd6b78a12-WAY2023055%20(1).pdf",
-                            "uniqueName": "1704699150785-4e572cadd6b78a12-WAY2023055 (1).pdf",
-                            "createdAt": "2024-01-08T07:32:31.710Z",
-                            "updatedAt": "2024-01-08T07:32:31.710Z",
-                            "__v": 0
-                        }
-                    ],
-                    "challanDocument": [
-                        {
-                            "_id": "659ba58091dc6f176dca221c",
-                            "userId": "658c5db12a986850aee382ed",
-                            "name": "WAY2023055 (2).pdf",
-                            "url": "https://bafanabackendfilestorage.blob.core.windows.net/bafana-backend-files-container/1704699263803-662f0f6d9aa40a7f-WAY2023055%20(2).pdf",
-                            "uniqueName": "1704699263803-662f0f6d9aa40a7f-WAY2023055 (2).pdf",
-                            "createdAt": "2024-01-08T07:34:24.736Z",
-                            "updatedAt": "2024-01-08T07:34:24.736Z",
-                            "__v": 0
-                        }
-                    ],
-                    "invoiceDocument": [
-                        {
-                            "_id": "659ba50f91dc6f176dca2210",
-                            "userId": "658c5db12a986850aee382ed",
-                            "name": "WAY2023055 (1).pdf",
-                            "url": "https://bafanabackendfilestorage.blob.core.windows.net/bafana-backend-files-container/1704699150785-4e572cadd6b78a12-WAY2023055%20(1).pdf",
-                            "uniqueName": "1704699150785-4e572cadd6b78a12-WAY2023055 (1).pdf",
-                            "createdAt": "2024-01-08T07:32:31.710Z",
-                            "updatedAt": "2024-01-08T07:32:31.710Z",
-                            "__v": 0
-                        }
-                    ],
-                    "transportationDocument": [
-                        {
-                            "_id": "659ba50f91dc6f176dca2210",
-                            "userId": "658c5db12a986850aee382ed",
-                            "name": "WAY2023055 (1).pdf",
-                            "url": "https://bafanabackendfilestorage.blob.core.windows.net/bafana-backend-files-container/1704699150785-4e572cadd6b78a12-WAY2023055%20(1).pdf",
-                            "uniqueName": "1704699150785-4e572cadd6b78a12-WAY2023055 (1).pdf",
-                            "createdAt": "2024-01-08T07:32:31.710Z",
-                            "updatedAt": "2024-01-08T07:32:31.710Z",
-                            "__v": 0
-                        }
-                    ],
-                    "createdAt": "2024-01-04T21:33:32.886Z",
-                    "updatedAt": "2024-01-20T09:33:16.314Z",
-                    "__v": 0,
-                    "otherDocuments": []
-                },
-                {
-                    "_id": "6597242c61de1d0e991d5ee4",
-                    "billDate": "2023-12-04",
-                    "billDescription": "Bill for things",
-                    "billNumber": 11223344,
-                    "creditAmount": 1200000,
-                    "remainingAmount": 800000,
-                    "interestRate": 10,
-                    "creditLimitDays": 20,
-                    "remark": "remarks",
-                    "items": [
-                        {
-                            "name": "V8 Engine",
-                            "quantity": "1",
-                            "cost": "1000000"
-                        },
-                        {
-                            "name": "Anti-waffe Tyres",
-                            "quantity": "1",
-                            "cost": "1000000"
-                        }
-                    ],
-                    "subTotal": 500,
-                    "tax": 50,
-                    "referenceNumber": "12",
-                    "invoiceNumber": "123",
-                    "dueDate": "2023-12-24T00:00:00.000Z",
-                    "percentage": "45",
-                    "type": "EXTERNAL",
-                    "purchaseOrderDocument": [
-                        {
-                            "_id": "659ba58091dc6f176dca221c",
-                            "userId": "658c5db12a986850aee382ed",
-                            "name": "WAY2023055 (2).pdf",
-                            "url": "https://bafanabackendfilestorage.blob.core.windows.net/bafana-backend-files-container/1704699263803-662f0f6d9aa40a7f-WAY2023055%20(2).pdf",
-                            "uniqueName": "1704699263803-662f0f6d9aa40a7f-WAY2023055 (2).pdf",
-                            "createdAt": "2024-01-08T07:34:24.736Z",
-                            "updatedAt": "2024-01-08T07:34:24.736Z",
-                            "__v": 0
-                        }
-                    ],
-                    "challanDocument": [
-                        {
-                            "_id": "659ba50f91dc6f176dca2210",
-                            "userId": "658c5db12a986850aee382ed",
-                            "name": "WAY2023055 (1).pdf",
-                            "url": "https://bafanabackendfilestorage.blob.core.windows.net/bafana-backend-files-container/1704699150785-4e572cadd6b78a12-WAY2023055%20(1).pdf",
-                            "uniqueName": "1704699150785-4e572cadd6b78a12-WAY2023055 (1).pdf",
-                            "createdAt": "2024-01-08T07:32:31.710Z",
-                            "updatedAt": "2024-01-08T07:32:31.710Z",
-                            "__v": 0
-                        }
-                    ],
-                    "invoiceDocument": [
-                        {
-                            "_id": "659ba50f91dc6f176dca2210",
-                            "userId": "658c5db12a986850aee382ed",
-                            "name": "WAY2023055 (1).pdf",
-                            "url": "https://bafanabackendfilestorage.blob.core.windows.net/bafana-backend-files-container/1704699150785-4e572cadd6b78a12-WAY2023055%20(1).pdf",
-                            "uniqueName": "1704699150785-4e572cadd6b78a12-WAY2023055 (1).pdf",
-                            "createdAt": "2024-01-08T07:32:31.710Z",
-                            "updatedAt": "2024-01-08T07:32:31.710Z",
-                            "__v": 0
-                        }
-                    ],
-                    "transportationDocument": [
-                        {
-                            "_id": "659ba50f91dc6f176dca2210",
-                            "userId": "658c5db12a986850aee382ed",
-                            "name": "WAY2023055 (1).pdf",
-                            "url": "https://bafanabackendfilestorage.blob.core.windows.net/bafana-backend-files-container/1704699150785-4e572cadd6b78a12-WAY2023055%20(1).pdf",
-                            "uniqueName": "1704699150785-4e572cadd6b78a12-WAY2023055 (1).pdf",
-                            "createdAt": "2024-01-08T07:32:31.710Z",
-                            "updatedAt": "2024-01-08T07:32:31.710Z",
-                            "__v": 0
-                        }
-                    ],
-                    "createdAt": "2024-01-04T21:33:32.936Z",
-                    "updatedAt": "2024-01-20T09:33:18.016Z",
-                    "__v": 0,
-                    "otherDocuments": []
-                }
-            ],
-            "totalAmount": "-800000",
-            "createdAt": "2024-01-04T21:33:32.949Z",
-            "updatedAt": "2024-01-08T16:27:35.258Z",
-            "__v": 0,
-            "status": "PAID",
-            "creditor": {
-                "_id": "658c45c62a986850aee382d9",
-                "companyName": "Rohan Test Company",
-                "gstin": "29GGGGG1314R9Z6",
-                "companyPan": "ABCTY1234D",
-                "createdAt": "2023-12-27T15:41:58.381Z",
-                "updatedAt": "2023-12-27T15:41:58.381Z",
-                "__v": 0,
-                "city": "Mumbai",
-                "state": "Maharashtra"
-            }
-        },
-        "amtPaid": "260000",
-        "requestor": "DEBTOR",
-        "paymentDate": "22-12-2023",
-        "debtorAttachments": [],
-        "creditorAttachments": [],
-        "status": "DOCUMENTS_NEEDED",
-        "pendingWith": "USER",
-        "approvedByCreditor": "false",
-        "isDispute": false,
-        "createdAt": "2024-01-07T15:40:59.599Z",
-        "updatedAt": "2024-02-06T08:38:14.858Z",
-        "__v": 1,
-        "documentsPendingSince": "2024-02-06T00:00:00.000Z",
-        "creditoradditionaldocuments": [
-            "659ba58091dc6f176dca221c"
-        ],
-        "creditorcacertificate": [
-            "659ba50f91dc6f176dca2210"
-        ],
-        "debtoradditionaldocuments": [],
-        "debtorcacertificate": [],
-        "adminRemarksForCreditor": "Creditor Should upload all documents again",
-        "adminRemarksForDebtor": "debtor should upload cacertificate and additionaldocuments",
-        "documentsRequiredFromCreditor": [
-            "purchaseOrderDocument",
-            "challanDocument",
-            "invoiceDocument",
-            "transportationDocument",
-            "cacertificate",
-            "additionaldocuments"
-        ],
-        "documentsRequiredFromDebtor": [
-            "cacertificate",
-            "additionaldocuments"
-        ],
-        "isDocumentsRequiredByCreditor": true,
-        "SrNo": 4
-    })
 
     const submitCheck = (value) => {
         if (value) toast.success("File Upload Successfully")
@@ -504,6 +235,17 @@ export const UploadPendingLinkModule = props => {
 
     }, [cuuretchek])
 
+    const footerStyles = {
+        //   backgroundColor: '#333',
+        color: '#333',
+        padding: '20px',
+        textAlign: 'center',
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+    };
+
     return (
         <React.Fragment>
             <Card>
@@ -570,7 +312,7 @@ export const UploadPendingLinkModule = props => {
                         <Row className="bg-light p-3 mt-2">
                             <Row className="mt-4">
                                 {selectType == 'CREDITOR' && (<>
-                                    {uploadFilesModelDataForUpload.documentsRequiredFromCreditor.map((value, indix) => {
+                                    {uploadFilesModelDataForUpload != '' ? uploadFilesModelDataForUpload.documentsRequiredFromCreditor.map((value, indix) => {
                                         return (
                                             <>
                                                 {value == "cacertificate" || value == "additionaldocuments" ? (<Col md={3} key={value}>
@@ -597,7 +339,7 @@ export const UploadPendingLinkModule = props => {
                                                 </Col>) : ""}
                                             </>
                                         )
-                                    })}</>)}
+                                    }) : ''}</>)}
                             </Row>
                         </Row>
                     )}
@@ -606,7 +348,7 @@ export const UploadPendingLinkModule = props => {
                         <Row className="bg-light p-3 mt-2">
                             <Row className="mt-4">
                                 {selectType == 'DEBTOR' && (<>
-                                    {uploadFilesModelDataForUpload.documentsRequiredFromDebtor.map((value, indix) => {
+                                    {uploadFilesModelDataForUpload != '' ? uploadFilesModelDataForUpload.documentsRequiredFromDebtor.map((value, indix) => {
                                         return (
                                             <>
                                                 {value == "cacertificate" || value == "additionaldocuments" ? (<Col md={3} key={value}>
@@ -633,7 +375,7 @@ export const UploadPendingLinkModule = props => {
                                                 </Col>) : ""}
                                             </>
                                         )
-                                    })}</>)}
+                                    }) : ''}</>)}
                             </Row>
                         </Row>
                     )}
@@ -648,8 +390,26 @@ export const UploadPendingLinkModule = props => {
                         </Col>
                     </Row>
                 </CardBody>
+
             </Card>
             <ToastContainer />
+            <CardFooter>
+                <footer style={footerStyles}>
+                    <Row>
+                        <Col md={6} >
+                            <div className="text-sm-start d-none d-sm-block">
+                                {new Date().getFullYear()} © Bafana.
+                            </div>
+                        </Col>
+                        <Col md={6}>
+                            <div className="text-sm-end d-none d-sm-block">
+                                Design & Develop by Latnip IT Solutions
+                            </div>
+                        </Col>
+                    </Row>
+                </footer>
+            </CardFooter>
+
         </React.Fragment>
     );
 }
