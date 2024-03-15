@@ -108,14 +108,14 @@ export const MarkOtherReasonModel = props => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
   }
   const handleSubmit = () => {
-
+    debugger
     setisSubmited(true)
     var size = Object.keys(attachment).length;
-    if (size > 0) {
-      setAttachmentValid(false)
-    } else {
-      setAttachmentValid(true)
-    }
+    /*  if (size > 0) {
+       setAttachmentValid(false)
+     } else {
+       setAttachmentValid(true)
+     } */
     const payload = [
       {
         "defaulterEntryId": selected.id,
@@ -136,13 +136,17 @@ export const MarkOtherReasonModel = props => {
       }
 
     ]
-    if (size > 0 && textBox.length <= 250) {
-      dispatch(recoredPaymentReportDefault(payload[0]))
+    if (/* size > 0 &&  */textBox.length <= 250) {
+      // dispatch(recoredPaymentReportDefault(payload[0]))
       setAttachment('')
       setTextBox('')
       submitCheck(true)
-      toggle()
 
+    }
+
+    if (isSubmited) {
+      window.location.reload()
+      toggle()
     }
   }
 
