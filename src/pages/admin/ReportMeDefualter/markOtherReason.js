@@ -168,6 +168,7 @@ export const MarkOtherReasonModel = props => {
   console.log("selectedFilesselectedFilesselectedFiles", selectedFiles)
 
 
+
   return (
     <Modal
       isOpen={isOpen}
@@ -185,47 +186,45 @@ export const MarkOtherReasonModel = props => {
           {isSubmited == false ? <form>
             <Row>
               <FormGroup tag="fieldset">
-                <FormGroup check className="mb-2">
-                  <Input
-                    // name="radio1"
-                    type="radio"
-                    onChange={() => handleToggleItem("radio1")}
-                  />
-                  {' '}
-                  <Label check>
-                    {/* Poor Quality of Product Recieve
-                                             */}
-                    Goods received are of unferior quality
-                  </Label>
-                </FormGroup>
-                <FormGroup check className="mb-2">
-                  <Input
-                    // name="radio1"
-                    type="radio"
-                    onChange={() => handleToggleItem("radio2")}
-                  />
-                  {' '}
-                  <Label check>
-                    Goods received in damage conditions
-                  </Label>
-                </FormGroup>
-                <FormGroup
-                  check
-                  className="mb-2"
-                >
-                  <Input
-                    // name="radio1"
-                    type="radio"
-                    onChange={() => handleToggleItem("radio3")}
-                  />
-                  {' '}
-                  <Label check>
-                    {/* Quantity is less then Invoice Quantity */}
-                    Actual quantity received is lower than billed quantity
-                  </Label>
-                </FormGroup>
+                <Form>
+                  <FormGroup check className="mb-2">
+                    <Input
+                      // name="checkbox1"
+                      type="checkbox"
+                      onChange={() => handleToggleItem("checkbox1")}
+                    />
+                    {' '}
+                    <Label check>
+                      Goods received are of inferior quality
+                    </Label>
+                  </FormGroup>
+                  <FormGroup check className="mb-2">
+                    <Input
+                      // name="checkbox2"
+                      type="checkbox"
+                      onChange={() => handleToggleItem("checkbox2")}
+                    />
+                    {' '}
+                    <Label check>
+                      Goods received in damaged condition
+                    </Label>
+                  </FormGroup>
+                  <FormGroup check className="mb-2">
+                    <Input
+                      // name="checkbox3"
+                      type="checkbox"
+                      onChange={() => handleToggleItem("checkbox3")}
+                    />
+                    {' '}
+                    <Label check>
+                      Actual quantity received is lower than billed quantity
+                    </Label>
+                  </FormGroup>
+                </Form>
+
               </FormGroup>
             </Row>
+
             <Row>
               <Col className="selectionListss">
                 <Col md={3}>
