@@ -1,21 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useLocation } from 'react-router-dom'
-
-
 import axios from "axios";
-
 import "react-datepicker/dist/react-datepicker.css"
-
-
 import "../../Dashboard/users/send-bill-transaction/sendbillTransaction"
-
 import 'react-table-6/react-table.css'
-
-
-import CurrencyFormat from 'react-currency-format';
-// import ReactTooltip from "react-tooltip";
-/* import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton"; */
+import { numberFormat } from "../uploadPendingDoucument/uploadPendingDoc";
 import moment from 'moment'
 import { ToastContainer, toast } from "react-toastify"
 import {
@@ -28,50 +17,62 @@ import {
     Container,
     CardFooter
 } from "reactstrap"
-import TableContainer from "../../../components/Common/TableContainer";
 import { useDispatch, useSelector } from "react-redux";
-
-
-
 const API_URL = 'https://bafana-backend.azurewebsites.net';
-
-const axiosApi = axios.create({
-    baseURL: API_URL,
-});
-
+const axiosApi = axios.create({ baseURL: API_URL });
+const currenNumner = 1
 
 export const UploadPendingLinkModule = props => {
     const dispatch = useDispatch();
-    const [selectType, setSelectType] = useState('')
-
     const [uploadFilesModelDataForUpload, setuploadFilesModelDataForUpload] = useState('')
 
+
+
     console.log('token', uploadFilesModelDataForUpload);
-    // Create a URL object
+
     const location = useLocation()
-
-    // Get the token parameter value
-    const newtoken = new URLSearchParams(location.search).get('token');
-
-    useEffect(() => {
-        setSelectType('CREDITOR')
-    }, [])
-
+    const newtoken = useMemo(() => new URLSearchParams(location.search).get('token'), [location.search]);
+    const selectType = useMemo(() => new URLSearchParams(location.search).get('userType'), [location.search]);
 
     useEffect(() => {
-        const getDataFromToken = async (newtoken, config = {}) => {
-            try {
-                const data = { token: newtoken }
-                const response = await axiosApi.post('/api/admin/getDocumentsRequiredFromPaymentId', { ...data }, config)
-                setuploadFilesModelDataForUpload(response.data.response)
-            } catch (error) {
-                console.log('error', error);
-            }
-        }
         getDataFromToken(newtoken)
     }, [])
 
+    const getDataFromToken = async (newtoken, config = {}) => {
+        try {
+            const data = { token: newtoken };
+            const response = await axiosApi.post('/api/admin/getDocumentsRequiredFromPaymentId', { ...data }, config);
+            setuploadFilesModelDataForUpload(response.data.response);
+        } catch (error) {
+            console.log('error', error);
+        }
+    };
 
+    const [docData, setDocData] = useState([])
+
+    console.log('docDa', docData);
+
+    const createinvoiceObj = () => {
+        const newDataArray = uploadFilesModelDataForUpload.defaulterEntry.invoices.map((item, currentIndex) => {
+            const docObj = {};
+            uploadFilesModelDataForUpload.documentsRequiredFromCreditor.forEach((value) => {
+                if (value !== "cacertificate" && value !== "additionaldocuments" && value !== "PaymentSeller") {
+                    docObj[value] = '';
+                }
+            });
+            docObj.invoiceId = item._id;
+            return docObj;
+        });
+        const updatedDocData = [...docData, ...newDataArray];
+        setDocData(updatedDocData);
+    };
+
+
+    useEffect(() => {
+        if (uploadFilesModelDataForUpload && uploadFilesModelDataForUpload.defaulterEntry && uploadFilesModelDataForUpload.defaulterEntry.invoices) {
+            createinvoiceObj();
+        }
+    }, [uploadFilesModelDataForUpload])
 
     const submitCheck = (value) => {
         if (value) toast.success("File Upload Successfully")
@@ -80,28 +81,6 @@ export const UploadPendingLinkModule = props => {
     const [uploadCAId, setuploadCAId] = useState('')
     const [uploadAdditionId, setuploadAdditionId] = useState('')
     const [warongText, setWarongText] = useState(false)
-    const cuuretchek = 1
-
-    const [docData, setDocData] = useState([
-        {
-            invoiceId: "",
-            uploadpurchaseId: "",
-            uploadChallanId: "",
-            uploadInvoiceId: "",
-            uploadTransportId: "",
-        },
-    ])
-
-
-    /*  function handInvoiceID(value, currenIndex) {
-       debugger
-       const newData = [...docData]
-   
-       const payload = 
-       newData[currenIndex].invoiceId = value
-       setDocData(newData)
-     } */
-
 
 
     /*   const uploadUploadPednigFile = useSelector(uploadUploadPednigDocID) */
@@ -109,40 +88,34 @@ export const UploadPendingLinkModule = props => {
         const files = event.target.files
         const formData = new FormData();
         formData.append('file', files[0]);   //append the values with key, value pair
-        formData.append('fieldName', fieldName);
+        formData.append('fieldName', fieldName)
+        formData.append('token', newtoken);
         uploadFile(formData, currenIndex)
 
     }
 
     function uploadFile(formData, currenIndex) {
-        debugger
-        const token = newtoken
-        const headers = {
-            'x-access-token': token != null ? token : '',
-        };
-        axiosApi.post('/api/files/upload', formData, {
-            headers: headers
-        })
+        axiosApi.post('/api/files/uploadDirect', formData)
             .then((response) => {
 
                 if (response.data.response.fieldName == "invoiceDocument") {
                     const newData = [...docData]
-                    newData[currenIndex].uploadInvoiceId = response.data.response.documentId
+                    newData[currenIndex].invoiceDocument = response.data.response.documentId
                     setDocData(newData)
                 }
                 if (response.data.response.fieldName == "purchaseOrderDocument") {
                     const newData = [...docData]
-                    newData[currenIndex].uploadpurchaseId = response.data.response.documentId
+                    newData[currenIndex].purchaseOrderDocument = response.data.response.documentId
                     setDocData(newData)
                 }
                 if (response.data.response.fieldName == "challanDocument") {
                     const newData = [...docData]
-                    newData[currenIndex].uploadChallanId = response.data.response.documentId
+                    newData[currenIndex].challanDocument = response.data.response.documentId
                     setDocData(newData)
                 }
                 if (response.data.response.fieldName == "transportationDocument") {
                     const newData = [...docData]
-                    newData[currenIndex].uploadTransportId = response.data.response.documentId
+                    newData[currenIndex].transportationDocument = response.data.response.documentId
                     setDocData(newData)
                 }
                 if (response.data.response.fieldName == "cacertificate") {
@@ -188,6 +161,8 @@ export const UploadPendingLinkModule = props => {
         if (uploadCA == 0) {
             setWarongText(true)
             return
+        } else {
+            setWarongText(false)
         }
 
 
@@ -196,44 +171,24 @@ export const UploadPendingLinkModule = props => {
               setWarongText(true)
               return
             } */
-
-
-        toggle()
         submitCheck(true)
-        dispatch(uploadUploadPednigDocID(payload))
+        sumbitDataSuccessFull(payload)
 
-
+        setTimeout(() => {
+            window.location.href = '/login'
+        }, 1000);
     }
 
-    const createinvoiceObj = () => {
-        uploadFilesModelDataForUpload.defaulterEntry.invoices.map((item, currenIndex, arr) => {
-            if (currenIndex == 0) {
-                const newData = [...docData]
-                newData[currenIndex].invoiceId = item._id
-                setDocData(newData)
-            }
-
-            if (currenIndex > 0) {
-                setDocData([
-                    ...docData,
-                    {
-                        invoiceId: item._id,
-                        uploadpurchaseId: "",
-                        uploadChallanId: "",
-                        uploadInvoiceId: "",
-                        uploadTransportId: "",
-                    },
-                ])
-            }
-        })
-    }
-
-    useEffect(() => {
-        if (uploadFilesModelDataForUpload != '' && uploadFilesModelDataForUpload.defaulterEntry.invoices != undefined) {
-            createinvoiceObj()
+    const sumbitDataSuccessFull = async (payload, config = {}) => {
+        try {
+            const response = await axiosApi.post('/api/user/uploadSupportingDocumentsDirect', { ...payload }, config);
+        } catch (error) {
+            console.log('error', error);
         }
+    };
 
-    }, [cuuretchek])
+
+
 
     const footerStyles = {
         //   backgroundColor: '#333',
@@ -265,10 +220,7 @@ export const UploadPendingLinkModule = props => {
                             <Row>
                                 <Col md={3}><strong>Invoice Number : {item.invoiceNumber}</strong></Col>
                                 <Col md={3}><strong>Due Date : {moment(item.dueDate).format("DD-MM-YYYY")}</strong></Col>
-                                <Col md={4}><strong className="d-flex">Due Amount :
-                                    <CurrencyFormat value={item.remainingAmount.toFixed(1)} thousandSpacing={2} displayType={'text'} thousandSeparator={true} renderText={value => <div>{value}{0}</div>} />
-
-                                </strong></Col>
+                                <Col md={4}><strong className="d-flex">Due Amount : {numberFormat(item.remainingAmount)}</strong></Col>
                                 <Col md={2}>
 
                                 </Col>
@@ -277,8 +229,8 @@ export const UploadPendingLinkModule = props => {
                             <Row className="mt-4">
                                 {selectType == 'CREDITOR' && (<>
                                     {uploadFilesModelDataForUpload.documentsRequiredFromCreditor.map((value, indix) => {
-                                        return (value !== "cacertificate" && value !== "additionaldocuments" && (
-                                            <Col md={3} key={indix}>
+                                        return (value !== "cacertificate" && value !== "additionaldocuments" && value !== "PaymentSeller" && (
+                                            <Col md={3} key={value}>
                                                 <Row>
                                                     <Col md={12}>
                                                         <InputGroup className="text-capitalize">
@@ -312,31 +264,32 @@ export const UploadPendingLinkModule = props => {
                         <Row className="bg-light p-3 mt-2">
                             <Row className="mt-4">
                                 {selectType == 'CREDITOR' && (<>
-                                    {uploadFilesModelDataForUpload != '' ? uploadFilesModelDataForUpload.documentsRequiredFromCreditor.map((value, indix) => {
+                                    {uploadFilesModelDataForUpload != '' ? uploadFilesModelDataForUpload.documentsRequiredFromCreditor.map((value, index) => {
                                         return (
                                             <>
-                                                {value == "cacertificate" || value == "additionaldocuments" ? (<Col md={3} key={value}>
-                                                    <Row>
-                                                        <Col md={12}>
-                                                            <InputGroup className="text-capitalize">
-                                                                <input
-                                                                    type="file"
-                                                                    className="form-control"
-                                                                    id={value}
-                                                                    accept=".pdf, .png, .jpg, .jpeg"
-                                                                    aria-describedby="fileUploadHelp"
-                                                                    onChange={e =>
-                                                                        handleFileChange(e, value)
-                                                                    }
-                                                                />
-                                                            </InputGroup>
-                                                            <b>
-                                                                {value == "cacertificate" && ('CA Certificate Document')}
-                                                                {value == "additionaldocuments" && ('Additional Document')}
-                                                            </b>
-                                                        </Col>
-                                                    </Row>
-                                                </Col>) : ""}
+                                                {value == "cacertificate" || value == "additionaldocuments" ? (
+                                                    <Col md={3} key={index}>
+                                                        <Row >
+                                                            <Col md={12}>
+                                                                <InputGroup className="text-capitalize">
+                                                                    <input
+                                                                        type="file"
+                                                                        className="form-control"
+                                                                        id={value}
+                                                                        accept=".pdf, .png, .jpg, .jpeg"
+                                                                        aria-describedby="fileUploadHelp"
+                                                                        onChange={e =>
+                                                                            handleFileChange(e, value)
+                                                                        }
+                                                                    />
+                                                                </InputGroup>
+                                                                <b>
+                                                                    {value == "cacertificate" && ('CA Certificate Document')}
+                                                                    {value == "additionaldocuments" && ('Additional Document')}
+                                                                </b>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>) : ""}
                                             </>
                                         )
                                     }) : ''}</>)}
@@ -351,28 +304,29 @@ export const UploadPendingLinkModule = props => {
                                     {uploadFilesModelDataForUpload != '' ? uploadFilesModelDataForUpload.documentsRequiredFromDebtor.map((value, indix) => {
                                         return (
                                             <>
-                                                {value == "cacertificate" || value == "additionaldocuments" ? (<Col md={3} key={value}>
-                                                    <Row>
-                                                        <Col md={12}>
-                                                            <InputGroup className="text-capitalize">
-                                                                <input
-                                                                    type="file"
-                                                                    className="form-control"
-                                                                    id={value}
-                                                                    accept=".pdf, .png, .jpg, .jpeg"
-                                                                    aria-describedby="fileUploadHelp"
-                                                                    onChange={e =>
-                                                                        handleFileChange(e, value)
-                                                                    }
-                                                                />
-                                                            </InputGroup>
-                                                            <b>
-                                                                {value == "cacertificate" && ('CA Certificate Document')}
-                                                                {value == "additionaldocuments" && ('Additional Document')}
-                                                            </b>
-                                                        </Col>
-                                                    </Row>
-                                                </Col>) : ""}
+                                                {value == "cacertificate" || value == "additionaldocuments" ? (
+                                                    <Col md={3} key={`${value} ${indix}`}>
+                                                        <Row>
+                                                            <Col md={12}>
+                                                                <InputGroup className="text-capitalize">
+                                                                    <input
+                                                                        type="file"
+                                                                        className="form-control"
+                                                                        id={value}
+                                                                        accept=".pdf, .png, .jpg, .jpeg"
+                                                                        aria-describedby="fileUploadHelp"
+                                                                        onChange={e =>
+                                                                            handleFileChange(e, value)
+                                                                        }
+                                                                    />
+                                                                </InputGroup>
+                                                                <b>
+                                                                    {value == "cacertificate" && ('CA Certificate Document')}
+                                                                    {value == "additionaldocuments" && ('Additional Document')}
+                                                                </b>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>) : ""}
                                             </>
                                         )
                                     }) : ''}</>)}
