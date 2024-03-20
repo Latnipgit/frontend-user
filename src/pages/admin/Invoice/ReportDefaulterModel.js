@@ -142,14 +142,18 @@ const ReportedDefaulterModel = props => {
         "paymentDate": date,
         "paymentMode": payentMode,
         "attachments": [attachment.documentId],
-        "debtorRemarks": remark,
+
 
         // if disputing a transaction
         "isDispute": false, // make this flag as true whenever recording payment for a disputed transaction,
         "disputeType": "",// values = DISPUTE_TYPE1,DISPUTE_TYPE2, DISPUTE_TYPE3
 
         // if DISPUTE_TYPE1, DISPUTE_TYPE2 
-        "debtorcacertificate": "" // this field stores the document id of "Upload CA Verified GST Input Credit Report"
+        "debtorcacertificate": "", // this field stores the document id of "Upload CA Verified GST Input Credit Report"
+
+        //if DISPUTE_TYPE1,DISPUTE_TYPE3
+        "debtorRemarks": remark,
+        "supportingDocuments": ""
       }
 
     ]
