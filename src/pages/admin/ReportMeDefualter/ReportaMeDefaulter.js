@@ -81,20 +81,20 @@ const ReportMedefulterComponent = props => {
   const selectReportMeDeflist = useSelector(selectReportMeDefData)
 
   useEffect(() => {
-        
-        const timer = setTimeout(() => {
-          dispatch(setIsViewDetailModalOpen())
-          dispatch(markAsDisputedModalOpenAction())
-          getDays()
-        dispatch(fetchReportMeDefulterStart())  
-      }, 1000);
-      return () => clearTimeout(timer);
-      
 
-                 // clearing interval
-    
- 
-  
+    const timer = setTimeout(() => {
+      dispatch(setIsViewDetailModalOpen())
+      dispatch(markAsDisputedModalOpenAction())
+      getDays()
+      dispatch(fetchReportMeDefulterStart())
+    }, 1000);
+    return () => clearTimeout(timer);
+
+
+    // clearing interval
+
+
+
   }, [])
 
   const viewModel = (value) => {
@@ -232,7 +232,7 @@ const ReportMedefulterComponent = props => {
         filterable: false,
         Cell: cellProps => {
           return <div style={{ width: "200px" }}>
-            {console.log("cellPropscellPropscellProps",cellProps.cell.row.original)}
+            {console.log("cellPropscellPropscellProps", cellProps.cell.row.original)}
             {cellProps.cell.row.original.debtor.address1}<br />{cellProps.cell.row.original.debtor.address2}
           </div>
         },
@@ -320,10 +320,10 @@ const ReportMedefulterComponent = props => {
   const submitCheckRqust1 = (value) => {
     if (value) toast.success("Request send Successfully")
   }
-console.log("selectReportMeDeflist",selectReportMeDeflist)
+  console.log("selectReportMeDeflist", selectReportMeDeflist)
   return (
     <React.Fragment>
-      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} additionalValue={additionalValue} selected={selected} />
+      <ReportedDefaulterModel isOpen={modal2} toggle={toggleViewModal1} additionalValue={additionalValue} selected={selected} requestor={"DEBTOR"} />
       <UploadCACertificateModel isOpen={selectCACertificate} toggle={toggleViewModal2} invoiceId={invoiceIdsForCAcertificate} />
       {/* <UploadPendingFiles isOpen={uploadFilesModalShow} toggle={toggleUploiadFiles} uploadFilesModelDataForUpload={uploadFilesModelDataForUpload} /> */}
       <ViewDetailsReportDefaultModal isOpen={isViewDetailModal} toggle={toggleDetailView} viewModalData={viewModalData} />
@@ -367,7 +367,7 @@ console.log("selectReportMeDeflist",selectReportMeDeflist)
                 />
               </div>
               :
-           ""
+              ""
             }
           </Row>
         </CardBody>

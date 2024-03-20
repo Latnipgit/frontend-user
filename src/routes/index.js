@@ -197,6 +197,7 @@ import ContactsList from "../pages/Contacts/ContactList/contacts-list";
 import Register2 from "pages/Authentication/register2";
 import AddCompany from "pages/admin/ApprovedTransaction/add-company";
 import ChangeNewPassword from "../pages/Authentication/ChangeNewPassword"
+import { UploadPendingLinkModule } from "pages/admin/uploadPendingDocLink/uploadPendingDocLink";
 
 
 const authProtectedRoutes = [
@@ -225,6 +226,7 @@ const authProtectedRoutes = [
   { path: "/upload-pending-documents", component: <UploadPendingListModule /> },
 
 
+
   { path: "/login-register", component: <Register2 /> },
 
   { path: "/add-company", component: <AddCompany /> },
@@ -241,7 +243,7 @@ const publicRoutes = [
   { path: "/forgot-password", component: <ForgetPwd /> },
   { path: "/register", component: <Register /> },
   { path: "/changePassword", component: <ChangeNewPassword /> },
-
+  { path: "/upload-supporting-document-direct", component: <UploadPendingLinkModule /> },
 
   // { path: "/pages-maintenance", component: <PagesMaintenance /> },
   // { path: "/pages-comingsoon", component: <PagesComingsoon /> },

@@ -227,7 +227,7 @@ const UploadPendingDocModel = props => {
                                 type="file"
                                 className="form-control"
                                 id={value}
-                                accept=".pdf, .doc, .docx, .txt"
+                                accept=".pdf, .png, .jpg, .jpeg"
                                 aria-describedby="fileUploadHelp"
                                 onChange={e =>
                                   handleFileChange(e, value, currenIndex)
@@ -246,38 +246,7 @@ const UploadPendingDocModel = props => {
 
                     )
                   })}</>)}
-
-                {/*                 {selectType == 'DEBTOR' && (<>
-                  {uploadFilesModelDataForUpload.documentsRequiredFromDebtor.map((value, indix) => {
-                    return <Col md={3} key={indix}>
-                      <Row>
-                        <Col md={12}>
-                          <InputGroup className="text-capitalize">
-                            <input
-                              type="file"
-                              className="form-control"
-                              id={value}
-                              accept=".pdf, .doc, .docx, .txt"
-                              aria-describedby="fileUploadHelp"
-                              onChange={e =>
-                                handleFileChange(e, value, currenIndex)
-                              }
-                            />
-                          </InputGroup>
-                          <b>{value == "purchaseOrderDocument" && ('Purchase Order Document')}
-                            {value == "challanDocument" && ('Challan Document')}
-                            {value == "invoiceDocument" && ('Invoice Document')}
-                            {value == "transportationDocument" && ('Transportation Document')}
-                            {value == "cacertificate" && ('CA Certificate Document')}
-                            {value == "additionaldocuments" && ('Additional Document')}
-                          </b>
-                        </Col>
-                      </Row>
-                    </Col>
-                  })}</>)} */}
-
               </Row>
-
             </Row>
           }) : ""}
           {selectType == 'CREDITOR' && (
@@ -295,7 +264,7 @@ const UploadPendingDocModel = props => {
                                   type="file"
                                   className="form-control"
                                   id={value}
-                                  accept=".pdf, .doc, .docx, .txt"
+                                  accept=".pdf, .png, .jpg, .jpeg"
                                   aria-describedby="fileUploadHelp"
                                   onChange={e =>
                                     handleFileChange(e, value)
@@ -331,7 +300,7 @@ const UploadPendingDocModel = props => {
                                   type="file"
                                   className="form-control"
                                   id={value}
-                                  accept=".pdf, .doc, .docx, .txt"
+                                  accept=".pdf, .png, .jpg, .jpeg"
                                   aria-describedby="fileUploadHelp"
                                   onChange={e =>
                                     handleFileChange(e, value)
