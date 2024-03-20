@@ -215,7 +215,7 @@ export const AddcustomerFomr = () => {
     ]
     if (gstNumberValid && panNumberValid && zipcodeValid && mobileNumberValid && emailidValid  ) {
       let dummyData = dummy[0]
-      debugger
+      
       let checkvalue = Object.values(dummyData).includes('')
       if (checkvalue) return
       dispatch(addNewCustomerlist(dummy))

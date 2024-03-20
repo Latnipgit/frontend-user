@@ -108,7 +108,7 @@ export const MarkOtherReasonModel = props => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
   }
   const handleSubmit = () => {
-    debugger
+    
     setisSubmited(true)
     var size = Object.keys(attachment).length;
     /*  if (size > 0) {
