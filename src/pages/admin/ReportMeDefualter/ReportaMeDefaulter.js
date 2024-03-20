@@ -217,7 +217,7 @@ const ReportMedefulterComponent = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div>
+          return <div >
             {cellProps.cell.row.original.invoices.map((x) => {
               return <span key={x}>{x.invoiceNumber}, &nbsp;</span>
             })}

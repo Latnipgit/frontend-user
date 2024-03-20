@@ -336,7 +336,7 @@ const ReportedDefaulterModel = props => {
   }
 
   const addFaqsRow = () => {
-
+    setisDisabled(true)
     // Check if any of the previous row's fields are empty
     const lastIndex = data.length - 1
     const lastRow = data[lastIndex]
@@ -364,6 +364,7 @@ const ReportedDefaulterModel = props => {
   }
   const handleFeedbackModal = () => {
     // dispatch(addInvoiceArray(debtorIdArrayForPreview))
+    
     dispatch(setIsCustomerFeedbackModalOpen(!isCustomerFeedbackModalOpen))
 
   }
@@ -419,7 +420,7 @@ const ReportedDefaulterModel = props => {
     })
       .then((response) => {
         /* toast.success("file upload successfully") */
-        setisDisabled(false)
+        // setisDisabled(false)
         if (response.data.response.fieldName == "uploadInvoice") {
           setuploadInvoiceId(response.data.response)
           const newData = [...data]
@@ -758,7 +759,7 @@ const ReportedDefaulterModel = props => {
                     <Button
                       className="btn btn-info"
                       onClick={addFaqsRow}
-                      disabled={isDisabled == true}
+                      disabled={isDisabled == true }
                     >
                       Add Another Invoice
                       {/* <span className="mdi mdi-plus icon-yellow"></span> */}
@@ -796,7 +797,8 @@ const ReportedDefaulterModel = props => {
             <Col md={11}></Col>
             <Col md={1} className="">
               <Button className="btn w-100 btn-info" onClick={() => handleFeedbackModal()}
-                disabled={isDisabled == true}
+                disabled={ isDisabled == true  }
+                
 
               ><span className="h5">Next</span></Button>
 
