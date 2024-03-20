@@ -108,7 +108,7 @@ const ReportedDefaulterModel = props => {
 
 
   const handleSubmit = () => {
-
+    debugger
     var size = Object.keys(attachment).length;
     if (amount.length > 0) {
       setAmountValid(false)
