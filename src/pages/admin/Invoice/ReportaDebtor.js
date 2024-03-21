@@ -279,7 +279,7 @@ const ReportDebtor = props => {
         disableFilters: true,
         filterable: false,
         Cell: cellProps => {
-          return <div className="pt-4  text-capitalize"><span className="text-danger ">{cellProps.cell.row.original.status}</span></div>
+          return <div className="  text-capitalize"><span className="text-danger ">{cellProps.cell.row.original.status}</span></div>
         },
       },
 

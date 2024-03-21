@@ -336,7 +336,7 @@ const ReportedDefaulterModel = props => {
   }
 
   const addFaqsRow = () => {
-    setisDisabled(true)
+    setisDisabled(false)
     // Check if any of the previous row's fields are empty
     const lastIndex = data.length - 1
     const lastRow = data[lastIndex]
@@ -364,7 +364,7 @@ const ReportedDefaulterModel = props => {
   }
   const handleFeedbackModal = () => {
     // dispatch(addInvoiceArray(debtorIdArrayForPreview))
-    
+
     dispatch(setIsCustomerFeedbackModalOpen(!isCustomerFeedbackModalOpen))
 
   }
@@ -377,9 +377,9 @@ const ReportedDefaulterModel = props => {
     setallInvoiceList(newDatas)
     setFaqsRow(faqsRow - 1)
     calculateSubtotal(newData)
-   return newData 
+    return newData
   }
-  console.log("faqsRowfaqsRowfaqsRow",faqsRow,data,allInvoiceList)
+  console.log("faqsRowfaqsRowfaqsRow", faqsRow, data, allInvoiceList)
   const handleDateChange = (value, index) => {
     const newData = [...data]
     newData[index].date = moment(value).format("YYYY-MM-DD")
@@ -481,7 +481,7 @@ const ReportedDefaulterModel = props => {
     >
       <div className="modal-contents">
         <ModalHeader toggle={toggle}>Report A Defaulter</ModalHeader>
-        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1} filteredCustomerDetail={filteredCustomerDetail} allInvoiceList={allInvoiceList} dataForPreview={data} />
+        <ReportedDebtorsModel isOpen={isCustomerFeedbackModalOpen} toggle={toggleViewModal1} filteredCustomerDetail={filteredCustomerDetail} allInvoiceList={allInvoiceList} dataForPreview={data} debtorId={selectedOption.value} />
 
 
         <ModalBody className="" >
@@ -759,7 +759,7 @@ const ReportedDefaulterModel = props => {
                     <Button
                       className="btn btn-info"
                       onClick={addFaqsRow}
-                      disabled={isDisabled == true }
+                      disabled={isDisabled == true}
                     >
                       Add Another Invoice
                       {/* <span className="mdi mdi-plus icon-yellow"></span> */}
@@ -797,8 +797,8 @@ const ReportedDefaulterModel = props => {
             <Col md={11}></Col>
             <Col md={1} className="">
               <Button className="btn w-100 btn-info" onClick={() => handleFeedbackModal()}
-                disabled={ isDisabled == true  }
-                
+                disabled={isDisabled == true}
+
 
               ><span className="h5">Next</span></Button>
 
