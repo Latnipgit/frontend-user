@@ -65,9 +65,17 @@ const Subscriptions = props => {
             {SubscriptionList != undefined ? SubscriptionList.map((item) => {
               return <Col md={4} key={item}>
 
-                <Card className="p-4 shadow-lg rounded" >
-                  <Label > <b>Plan Name : {item.subscriptionPkgName}</b></Label >
-                  <Label >  <b>Create Date : {moment(item.createdAt).format("DD-MM-YYYY")}</b></Label >
+                <Card className="text-center shadow-lg rounded" >
+                  <div style={{background:"rgb(175, 144, 225)"}} className="p-3 text-light">
+                  <h4 > <b>{item.subscriptionPkgName}</b></h4 >
+
+                  </div>
+                  <div className="p-3 text-center">
+
+              
+                  <Label >  <b>Date : {moment(item.createdAt).format("DD-MMM-YYYY")}</b></Label >
+                  </div>
+                  <div className="p-1 text-center">
                   <Label >
 
                     <Input
@@ -78,10 +86,13 @@ const Subscriptions = props => {
                       value="Monthly"
                       onChange={() => handleSelectTenure("Monthly")}
                     />{" "} &nbsp;
-                    <b>Monthly Amount : {item.monthlyAmt}</b>
+                    <b>Monthly Amount : {item.monthlyAmt}/-</b>
                     <br />
-                    &nbsp;  &nbsp; &nbsp; <b className="">Discount : {item.monthlyDiscount}</b>
+                    &nbsp;  &nbsp; &nbsp; <b className="text-success">Discount : {item.monthlyDiscount}</b>
                   </Label>
+                  </div>
+                  <div className="p-1 pb-3 text-center">
+
                   <Label >
 
                     <Input
@@ -95,24 +106,21 @@ const Subscriptions = props => {
                     />{" "} &nbsp;
                     <b> Yearly Amount :{item.yearlyAmt}</b>
                     <br />
-                    &nbsp;  &nbsp; &nbsp; <b className="">Discount : {item.yearlylyDiscount}</b>
+                    &nbsp;  &nbsp; &nbsp; <b className="text-success">Discount : {item.yearlylyDiscount}/-</b>
                   </Label>
+                  </div>
+
+                 
 
 
-
-
-                  <Row>
-                    <Col md={5}>
-                      <Button className="btn btn-info p-2" style={{ width: "130px" }} onClick={() => handleSubmit(item)}
+                  <div className="mb-3"> 
+                      <Button className="btn btn-info p-2" style={{ width: "130px",background:"rgb(175, 144, 225)", border:"none" }} onClick={() => handleSubmit(item)}
                         disabled={selected == undefined}
                       >
                         Subscribe Now
                       </Button>
-                    </Col>
-                    <Col md={6}>
-
-                    </Col>
-                  </Row>
+                  
+                  </div>
                 </Card>
               </Col>
             })
@@ -120,6 +128,7 @@ const Subscriptions = props => {
 
             }
           </Row>
+          
 
 
         </CardBody>
