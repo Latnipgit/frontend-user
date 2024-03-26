@@ -26,7 +26,7 @@ const ReportedDebtorsModel = props => {
   const [timelystarRating, settimelyStarRating] = useState(0)
   const [responsivestarRating, setresponsivestarRating] = useState(0)
   const [Integrity, setIntegrity] = useState(0)
-  const { isOpen, toggle, filteredCustomerDetail, allInvoiceList, dataForPreview } = props
+  const { isOpen, toggle, filteredCustomerDetail, allInvoiceList, dataForPreview, debtorId } = props
   const colourStyles = {
     menuList: styles => ({
       ...styles,
@@ -117,18 +117,31 @@ const ReportedDebtorsModel = props => {
   ])
   const [selectedOption, setSelectedOption] = useState("")
   const [feedbackdataPaylod, setfeedbackdataPaylod] = useState([])
+  const [feedbackdataPaylodTwo, setfeedbackdataPaylodTwo] = useState([])
 
 
   const handlefinancialdifficult = (selected) => {
 
-    const userFeedbackcheck = feedbackdataPaylod.findIndex(x => x.questionDesc == selected.questionDesc)
+    const userFeedbackcheck = feedbackdataPaylod.findIndex(x => x.questionId == selected.questionId)
     if (userFeedbackcheck !== -1) {
-      feedbackdataPaylod[userFeedbackcheck].values = selected.values
+      feedbackdataPaylod[userFeedbackcheck].response = selected.values
     } else {
       setfeedbackdataPaylod(lists => [...lists, selected])
 
     }
   }
+
+  const handlefinancialdifficultTwo = (selected) => {
+
+    const userFeedbackcheck = feedbackdataPaylodTwo.findIndex(x => x.questionDesc == selected.questionDesc)
+    if (userFeedbackcheck !== -1) {
+      feedbackdataPaylodTwo[userFeedbackcheck].values = selected.values
+    } else {
+      setfeedbackdataPaylodTwo(lists => [...lists, selected])
+
+    }
+  }
+
   const [ratingValue, setratingValue] = useState([])
 
   useEffect(() => {
@@ -150,7 +163,7 @@ const ReportedDebtorsModel = props => {
       <div className="modal-content">
         <ModalHeader toggle={toggle}>Feedback On Defaulting Customer </ModalHeader>
         {/* <ConfirmReportModal isOpen={isConfirmModalOpen} toggle={toggleViewModal} filteredCustomerDetail={filteredCustomerDetail} /> */}
-        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylod} allInvoiceList={allInvoiceList} ratingValue={ratingValue} dataForPreview={dataForPreview} />
+        <ReportDefPreviewModals isOpen={isPreviewModalShow} toggle={togglePreviwModal} filteredCustomerDetail={filteredCustomerDetail} feedbackdataPaylod={feedbackdataPaylodTwo} allInvoiceList={allInvoiceList} ratingValue={ratingValue} dataForPreview={dataForPreview} />
         <ModalBody>
           <div className="mb-3">
             <Row>
@@ -180,11 +193,15 @@ const ReportedDebtorsModel = props => {
                       options={opations}
                       styles={colourStyles}
                       placeholder={item.values.join("/")}
-                      onChange={(selected) => handlefinancialdifficult({
+                      onChange={(selected) => (handlefinancialdifficult({
+                        "debtorId": debtorId,
+                        "questionId": item.id,
+                        "response": selected.value
+                      }), handlefinancialdifficultTwo({
                         "questionDesc": item.questionDesc,
                         "questionType": item.questionType,
                         "values": selected.value
-                      })}
+                      }))}
                     />
                   </Col>
                 </Row>
@@ -200,11 +217,15 @@ const ReportedDebtorsModel = props => {
                     <Input
                       className={`form-control custom-content`}
                       placeholder="Input in years"
-                      onChange={(e) => handlefinancialdifficult({
+                      onChange={(e) => (handlefinancialdifficult({
+                        "debtorId": debtorId,
+                        "questionId": item.id,
+                        "response": e.target.value
+                      }), handlefinancialdifficultTwo({
                         "questionDesc": item.questionDesc,
                         "questionType": item.questionType,
                         "values": e.target.value
-                      })}
+                      }))}
                     />
                   </span>
                 </Col>
@@ -221,11 +242,15 @@ const ReportedDebtorsModel = props => {
                       rows={5}
                       className={`form-control custom-content`}
                       placeholder="Write you Review"
-                      onChange={(e) => handlefinancialdifficult({
+                      onChange={(e) => (handlefinancialdifficult({
+                        "debtorId": debtorId,
+                        "questionId": item.id,
+                        "response": e.target.value
+                      }), handlefinancialdifficultTwo({
                         "questionDesc": item.questionDesc,
                         "questionType": item.questionType,
                         "values": e.target.value
-                      })}
+                      }))}
                     />
                   </span>
                 </Row>
@@ -259,11 +284,15 @@ const ReportedDebtorsModel = props => {
                       //     setIntegrity(1)
                       //  }} 
                       onClick={(selected) => {
-                        handlefinancialdifficult({
+                        (handlefinancialdifficult({
+                          "debtorId": debtorId,
+                          "questionId": item.id,
+                          "response": 1
+                        }), handlefinancialdifficultTwo({
                           "questionDesc": item.questionDesc,
                           "questionType": item.questionType,
                           "values": 1
-                        })
+                        }))
                         setIntegrity(1)
                       }
                       }
@@ -272,11 +301,15 @@ const ReportedDebtorsModel = props => {
                   <span>
                     <i className='bx bxs-star'
                       onClick={(selected) => {
-                        handlefinancialdifficult({
+                        (handlefinancialdifficult({
+                          "debtorId": debtorId,
+                          "questionId": item.id,
+                          "response": 2
+                        }), handlefinancialdifficultTwo({
                           "questionDesc": item.questionDesc,
                           "questionType": item.questionType,
                           "values": 2
-                        })
+                        }))
                         setIntegrity(2)
                       }
                       }
@@ -285,11 +318,15 @@ const ReportedDebtorsModel = props => {
                   <span>
                     <i className='bx bxs-star'
                       onClick={(selected) => {
-                        handlefinancialdifficult({
+                        (handlefinancialdifficult({
+                          "debtorId": debtorId,
+                          "questionId": item.id,
+                          "response": 3
+                        }), handlefinancialdifficultTwo({
                           "questionDesc": item.questionDesc,
                           "questionType": item.questionType,
                           "values": 3
-                        })
+                        }))
                         setIntegrity(3)
                       }
                       }
@@ -298,11 +335,15 @@ const ReportedDebtorsModel = props => {
                   <span>
                     <i className='bx bxs-star'
                       onClick={(selected) => {
-                        handlefinancialdifficult({
+                        (handlefinancialdifficult({
+                          "debtorId": debtorId,
+                          "questionId": item.id,
+                          "response": 4
+                        }), handlefinancialdifficultTwo({
                           "questionDesc": item.questionDesc,
                           "questionType": item.questionType,
                           "values": 4
-                        })
+                        }))
                         setIntegrity(4)
                       }
                       }
@@ -311,11 +352,15 @@ const ReportedDebtorsModel = props => {
                   <span>
                     <i className='bx bxs-star'
                       onClick={(selected) => {
-                        handlefinancialdifficult({
+                        (handlefinancialdifficult({
+                          "debtorId": debtorId,
+                          "questionId": item.id,
+                          "response": 5
+                        }), handlefinancialdifficultTwo({
                           "questionDesc": item.questionDesc,
                           "questionType": item.questionType,
                           "values": 5
-                        })
+                        }))
                         setIntegrity(5)
                       }
                       }
